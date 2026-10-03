@@ -1424,20 +1424,28 @@
 
     <!-- 🌟 대형 피드백 팝업 -->
     <div id="feedbackModal" class="modal">
-        <div style="flex:1; display:flex; flex-direction:column; justify-content:center; align-items:center; width:100%;">
-            <div id="fbArtBox" class="art-box" style="margin-bottom:8px; height:160px;"></div>
+        <div style="flex:1; 
+            display:flex; 
+            flex-direction:column; 
+            justify-content: flex-start; 
+            align-items:center; 
+            width:100%; 
+            padding-top: 50px;">
+
+            <div id="fbArtBox" class="art-box" style="margin-bottom:10px; margin-top:10px; height:160px;"></div>
             
             <!-- ⚡ 찰나의 공명 달성 시 터지는 번개 배너 -->
-            <div id="fbResonanceNotice" class="resonance-banner">
+            <div id="fbResonanceNotice" class="resonance-banner" style="margin-top:10px;">
                 ⚡ [찰나의 공명!] 본능적 교감으로 숙련도 +2 급상승!
             </div>
 
             <!-- 🌟 영원의 계약 성립 배너 -->
-            <div id="fbContractNotice" class="contract-master-banner">
-                🌟 [영원의 계약 성립!] 이 정령의 진명을 완벽히 깨우쳤습니다!
+            <div id="fbContractNotice" class="contract-master-banner" style="margin-bottom:10px; margin-top:10px;">
+                🌟 이 정령의 진명을 완벽히 깨우쳤습니다!
             </div>
 
-            <h3 id="fbTitle" class="feedback-title" style="margin:2px 0 4px 0;">교감 성공!</h3>
+            <h3 id="fbTitle" class="feedback-title" style="margin:10px 0;">교감 성공!</h3>
+
             <div class="feedback-card">
                 <span class="fb-label">단어</span>
                 <span id="fbWord" class="fb-word">apple</span>
@@ -3207,6 +3215,8 @@
                 if (fbTitle) {
                     fbTitle.innerText = "🌟 영원의 계약 성립! 🌟";
                     fbTitle.style.color = "#d97706";
+                    fbTitle.style.margin = "0 0 13px"; 
+
                 }
                 Sound.fanfare();
 
@@ -3253,6 +3263,8 @@
             fbContractNotice.style.display = "none";
             fbTitle.innerText = "교감 실패 (정령이 숨었습니다) 🍂";
             fbTitle.style.color = "#b91c1c";
+            fbTitle.style.margin = "10px 0 20px 0"; 
+
             fbMeaning.className = "fb-meaning wrong-case";
 
             if (!wrongPool.some(item => item.id === q.id)) {

@@ -1,0 +1,3569 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>단어 정령의 위기: EXAM의 시련 - 옥정고1 편</title>
+    <!-- 세련된 프리텐다드 웹폰트 -->
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" />
+    <script src="words.js"></script>
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
+            letter-spacing: -0.3px;
+            -webkit-tap-highlight-color: transparent;
+        }
+        
+        body {
+            background: radial-gradient(circle at center, #3d2314 0%, #1c0e07 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 10px;
+            color: #2c1a0e;
+        }
+
+        /* 📱 메인 프레임 */
+        .game-container {
+            background: #27160c;
+            border: 8px solid #52311b;
+            border-radius: 26px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.8), inset 0 0 15px rgba(0,0,0,0.9);
+            padding: 12px;
+            width: 100%;
+            max-width: 440px;
+            height: 86vh;
+            max-height: 760px;
+            min-height: 580px;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .parchment-inner {
+            background: #fbf6ea;
+            background-image: radial-gradient(#f4ecd8 15%, transparent 16%);
+            background-size: 16px 16px;
+            border: 2px solid #c2a679;
+            border-radius: 18px;
+            padding: 12px 14px;
+            box-shadow: inset 0 0 18px rgba(181, 148, 97, 0.35);
+            flex: 1;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: stretch;
+            overflow-y: auto;
+            position: relative;
+        }
+        .parchment-inner::-webkit-scrollbar { width: 4px; }
+        .parchment-inner::-webkit-scrollbar-thumb { background: #c2a679; border-radius: 4px; }
+
+        .screen-view {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: stretch;
+            text-align: center;
+        }
+
+        .error-banner {
+            display: none;
+            background: #fee2e2;
+            border: 2px solid #ef4444;
+            color: #991b1b;
+            padding: 8px 10px;
+            border-radius: 8px;
+            font-size: 11px;
+            font-weight: bold;
+            margin-bottom: 8px;
+            text-align: left;
+            line-height: 1.4;
+        }
+
+        .art-box {
+            width: 100%;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 2px solid #c9b48c;
+            box-shadow: 0 3px 8px rgba(0,0,0,0.12);
+            flex-shrink: 0;
+            position: relative;
+        }
+        .art-svg { display: block; width: 100%; height: auto; }
+
+        /* ============================
+           📜 0. 프롤로그 화면
+           ============================ */
+        #introScreen { display: flex; }
+        
+        .intro-top-group {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            flex-shrink: 0;
+            margin-bottom: 2px;
+        }
+        .intro-title-tag { 
+            font-size: 11px; 
+            font-weight: 800; 
+            color: #dc2626; 
+            letter-spacing: 2.5px; 
+            text-transform: uppercase; 
+        }
+        .intro-heading { 
+            font-size: 24px; 
+            font-weight: 900; 
+            color: #450a0a; 
+            margin: 2px 0 6px 0; 
+            letter-spacing: -0.5px;
+        }
+
+        .intro-art-box {
+            width: 100%;
+            border-radius: 14px;
+            overflow: hidden;
+            border: 2px solid #854d0e;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            flex-shrink: 0;
+            position: relative;
+            background: #0f050b;
+        }
+
+        .prologue-scroll-box {
+            background: #f5eedc;
+            border: 2px solid #d4c19c;
+            border-radius: 12px;
+            padding: 14px 15px;
+            margin: 8px 0;
+            text-align: left;
+            box-shadow: inset 0 0 14px rgba(181, 148, 97, 0.3);
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 10px;
+        }
+        .prologue-p {
+            font-size: 14px;
+            color: #2e1a0d;
+            line-height: 1.7;
+            word-break: keep-all;
+            margin: 0;
+            font-weight: 600;
+        }
+        .prologue-highlight { color: #dc2626; font-weight: 900; }
+        .prologue-stone { color: #047857; font-weight: 900; }
+
+        /* ============================
+           🏛️ 1. 타이틀 화면 (세련된 RPG 폰트 & 널찍한 구성)
+           ============================ */
+        #titleScreen { display: none; }
+
+        .title-art-wrapper {
+            width: 100%;
+            border-radius: 14px;
+            overflow: hidden;
+            border: 2px solid #c9b48c;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.22);
+            background: #1c2617;
+            position: relative;
+            flex-shrink: 0;
+            margin-bottom: 6px;
+        }
+        .title-art-overlay {
+            position: absolute;
+            left: 0; right: 0; bottom: 0; top: 0;
+            background: linear-gradient(180deg, rgba(20, 10, 5, 0.25) 0%, rgba(24, 12, 6, 0.94) 85%);
+            padding: 12px 14px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            align-items: center;
+            text-align: center;
+        }
+        .title-main-text {
+            font-size: 25px;
+            font-weight: 900;
+            color: #ffffff;
+            margin: 0;
+            letter-spacing: -0.6px;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.95);
+            line-height: 1.2;
+        }
+        .title-sub-text {
+            font-size: 13.5px;
+            font-weight: 800;
+            color: #fde047;
+            letter-spacing: -0.2px;
+            text-shadow: 0 1px 5px rgba(0,0,0,0.9);
+            margin-top: 4px;
+        }
+
+        .player-hero-card {
+            background: #ede3cc;
+            border: 2px solid #c9b48c;
+            border-radius: 12px;
+            padding: 8px 12px;
+            margin-bottom: 6px;
+            text-align: left;
+            flex-shrink: 0;
+        }
+        .hero-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 3px; }
+        .hero-tier-pill {
+            font-size: 11px;
+            font-weight: 800;
+            padding: 3px 9px;
+            border-radius: 10px;
+            color: white;
+        }
+        .hero-exp-txt { font-size: 11px; font-weight: 800; color: #785a3e; }
+
+        .boss-raid-btn {
+            display: none;
+            background: linear-gradient(180deg, #b91c1c 0%, #7f1d1d 100%);
+            border: 2px solid #ef4444;
+            color: #fee2e2;
+            padding: 10px 12px;
+            border-radius: 10px;
+            font-size: 12.5px;
+            font-weight: 900;
+            cursor: pointer;
+            width: 100%;
+            margin-bottom: 6px;
+            justify-content: center;
+            align-items: center;
+            flex-shrink: 0;
+            box-shadow: 0 0 12px rgba(239, 68, 68, 0.4);
+            animation: bossBtnPulse 1.8s infinite;
+        }
+        @keyframes bossBtnPulse { 0% { transform: scale(1); } 50% { transform: scale(1.02); } 100% { transform: scale(1); } }
+
+        .map-select-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 12px;
+            font-weight: 800;
+            color: #4b301c;
+            margin-bottom: 6px;
+            border-bottom: 2px dashed #c9b48c;
+            padding-bottom: 3px;
+            flex-shrink: 0;
+        }
+        
+        .title-map-list {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            flex: 1;
+            min-height: 90px;
+            overflow-y: auto;
+            padding-right: 2px;
+            margin-bottom: 6px;
+        }
+        .title-map-card {
+            background: #fdfaf2;
+            border: 2px solid #c9b48c;
+            border-radius: 10px;
+            padding: 8px 10px;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-align: left;
+        }
+        .title-map-card:hover {
+            border-color: #8f603a;
+            background: #fffdf7;
+            transform: translateY(-1px);
+        }
+        .map-card-top { display: flex; justify-content: space-between; align-items: center; }
+        .map-card-name { font-size: 13px; font-weight: 800; color: #2c1a0e; }
+        .map-mastery-badge { font-size: 10px; font-weight: 800; padding: 2px 6px; border-radius: 6px; }
+        .map-card-desc { font-size: 10.5px; color: #8c6d46; font-weight: 600; margin-top: 2px; line-height: 1.3; word-break: keep-all; }
+        .map-card-progress { font-size: 10px; color: #785a3e; font-weight: 700; margin-top: 3px; }
+        .map-mini-bar { background: #d8c7a6; height: 5px; border-radius: 3px; overflow: hidden; margin-top: 3px; }
+        .map-mini-bar-fill { height: 100%; background: linear-gradient(90deg, #10b981, #059669); width: 0%; }
+
+        .title-bottom-links {
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+            padding-top: 2px;
+            flex-shrink: 0;
+        }
+        .link-sub {
+            background: none; border: none; color: #a18366; font-size: 11px; font-weight: 700;
+            cursor: pointer; text-decoration: underline; transition: color 0.2s;
+        }
+        .link-sub:hover { color: #dc2626; }
+
+        /* ============================
+           🏕️ 1.5 탐험 전초기지
+           ============================ */
+        #mapLobbyScreen { display: none; }
+
+        .lobby-art-box {
+            width: 100%;
+            height: 95px;
+            border-radius: 12px;
+            border: 2px solid #b59f77;
+            overflow: hidden;
+            margin-bottom: 6px;
+            flex-shrink: 0;
+            box-shadow: 0 3px 8px rgba(0,0,0,0.15);
+            background: #111;
+        }
+
+        .lobby-card {
+            background: #ede3cc;
+            border: 2px solid #c9b48c;
+            border-radius: 12px;
+            padding: 8px 12px;
+            margin-bottom: 6px;
+            text-align: left;
+            flex-shrink: 0;
+        }
+        .lobby-top-row { display: flex; justify-content: space-between; align-items: center; }
+        .lobby-map-title { font-size: 16px; font-weight: 900; color: #3b2211; margin: 0; }
+        .lobby-map-desc { font-size: 11.5px; color: #785a3e; line-height: 1.4; margin: 3px 0 5px 0; word-break: keep-all; font-weight: 500; }
+
+        .sector-list-box {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            flex: 1;
+            min-height: 110px;
+            overflow-y: auto;
+            margin-bottom: 6px;
+            padding-right: 2px;
+        }
+        .sector-card {
+            background: #fdfaf2;
+            border: 2px solid #c9b48c;
+            border-radius: 10px;
+            padding: 8px 10px;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-align: left;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .sector-card:hover {
+            border-color: #10b981;
+            background: #f0fdf4;
+            transform: translateY(-1px);
+        }
+        .sector-card.conquered {
+            border-color: #10b981;
+            background: #f0fdf4;
+        }
+        .sector-left { display: flex; flex-direction: column; gap: 1px; }
+        .sector-title { font-size: 13px; font-weight: 900; color: #2c1a0e; }
+        .sector-range { font-size: 10.5px; color: #785a3e; font-weight: 700; }
+
+        .guardian-trial-btn {
+            background: linear-gradient(180deg, #10b981 0%, #059669 100%);
+            border: 2px solid #047857;
+            color: #ffffff;
+            padding: 10px 12px;
+            border-radius: 10px;
+            font-size: 13px;
+            font-weight: 900;
+            cursor: pointer;
+            width: 100%;
+            margin-bottom: 5px;
+            flex-shrink: 0;
+            box-shadow: 0 3px 6px rgba(16, 185, 129, 0.3);
+            transition: all 0.2s;
+        }
+        .guardian-trial-btn.locked {
+            background: #78716c;
+            border-color: #57534e;
+            color: #d6d3d1;
+            cursor: not-allowed;
+            box-shadow: none;
+            opacity: 0.9;
+        }
+        .guardian-trial-btn.cracked {
+            background: linear-gradient(180deg, #b45309 0%, #78350f 100%);
+            border-color: #f59e0b;
+            color: #fef3c7;
+            animation: lockShake 2.5s infinite;
+        }
+        @keyframes lockShake {
+            0%, 90%, 100% { transform: translateX(0); }
+            92% { transform: translateX(-3px); }
+            94% { transform: translateX(3px); }
+            96% { transform: translateX(-3px); }
+            98% { transform: translateX(3px); }
+        }
+
+        /* ============================
+           🎮 2. 인게임 퀴즈 화면
+           ============================ */
+        #gameScreen { display: none; }
+
+        .top-bar-quiz {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 4px;
+            flex-shrink: 0;
+        }
+        .top-btn {
+            background: #5c3a21; color: #f7edd4; border: 1px solid #8f603a;
+            padding: 5px 11px; border-radius: 12px; font-size: 11px; font-weight: 800;
+            cursor: pointer; box-shadow: 0 2px 4px rgba(0,0,0,0.2); transition: all 0.2s;
+        }
+        .top-btn:hover { background: #73492a; }
+
+        .in-game-map-title { font-size: 12.5px; font-weight: 900; color: #784c25; margin-bottom: 1px; }
+        .grove-info { font-size: 11px; font-weight: 800; color: #a18366; margin-bottom: 3px; }
+
+        .status-bar {
+            margin-bottom: 6px;
+            padding: 5px 8px;
+            background: #ede3cc;
+            border-radius: 10px;
+            border: 1px solid #d4c29d;
+            flex-shrink: 0;
+        }
+        .tier-badges-row { display: flex; justify-content: center; gap: 8px; margin-bottom: 2px; }
+        .tier-badge {
+            font-size: 10px;
+            font-weight: 800;
+            padding: 2px 8px;
+            border-radius: 8px;
+            color: white;
+        }
+
+        .battle-arena-box {
+            width: 100%;
+            height: 85px;
+            border-radius: 12px;
+            border: 2px solid #b59f77;
+            overflow: hidden;
+            background: linear-gradient(180deg, #1d3124 0%, #2e4a36 60%, #18261c 100%);
+            margin-bottom: 6px;
+            flex-shrink: 0;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.4);
+            position: relative;
+        }
+
+        .combo-streak-badge {
+            display: none;
+            position: absolute;
+            top: 6px;
+            left: 8px;
+            background: linear-gradient(90deg, #ef4444, #f97316);
+            color: white;
+            font-size: 10.5px;
+            font-weight: 900;
+            padding: 2px 8px;
+            border-radius: 10px;
+            box-shadow: 0 0 8px rgba(239, 68, 68, 0.6);
+            animation: pulseCombo 0.8s infinite alternate;
+        }
+        @keyframes pulseCombo {
+            0% { transform: scale(0.95); }
+            100% { transform: scale(1.05); }
+        }
+
+        .question-box {
+            margin-bottom: 6px;
+            min-height: 48px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .tags-wrapper { display: flex; justify-content: center; align-items: center; flex-wrap: wrap; gap: 5px; margin-bottom: 3px; }
+        .tag { font-size: 10px; font-weight: 700; padding: 2px 7px; border-radius: 8px; }
+        .review-tag {
+            color: #991b1b; background: #fee2e2; border: 1px solid #f87171;
+            animation: pulse 1.5s infinite;
+        }
+        @keyframes pulse { 0% { opacity: 0.8; } 50% { opacity: 1; } 100% { opacity: 0.8; } }
+        
+        .word {
+            font-size: 26px; font-weight: 900; color: #3b2211; margin: 0;
+            letter-spacing: -0.5px;
+            word-break: keep-all;
+        }
+
+        .choices-grid { display: grid; grid-template-columns: 1fr; gap: 6px; flex-shrink: 0; }
+        .choice-btn {
+            background: #fdfaf2; border: 2px solid #c9b48c; color: #3d2514;
+            padding: 11px 12px; border-radius: 11px; font-size: 15px; font-weight: 800;
+            cursor: pointer; transition: all 0.15s ease; box-shadow: 0 2px 5px rgba(109, 75, 47, 0.14);
+            min-height: 42px;
+        }
+        .choice-btn:hover { border-color: #8f603a; background: #f4ecda; }
+        .choice-btn:active { transform: scale(0.98); }
+        .choice-btn.correct { background: #dcfce7 !important; border-color: #10b981 !important; color: #047857 !important; }
+        .choice-btn.wrong { background: #fee2e2 !important; border-color: #ef4444 !important; color: #b91c1c !important; }
+
+        /* ============================
+           ⚔️ 3. 보스전 공용 화면
+           ============================ */
+        #bossScreen { display: none; }
+
+        .boss-top-status {
+            background: #2a1421;
+            border: 2px solid #831843;
+            border-radius: 12px;
+            padding: 8px 10px;
+            margin-bottom: 6px;
+            text-align: left;
+            flex-shrink: 0;
+        }
+        .boss-top-status.midboss-mode { background: #1b281f; border-color: #047857; }
+
+        .boss-hp-row {
+            display: flex; justify-content: space-between; align-items: center;
+            font-size: 11px; font-weight: 900; color: #f43f5e; margin-bottom: 2px;
+        }
+        .boss-hp-row.midboss-mode { color: #34d399; }
+
+        .boss-hp-track {
+            background: #4c0519; height: 7px; border-radius: 4px; overflow: hidden;
+            border: 1px solid #be123c; margin-bottom: 4px;
+        }
+        .boss-hp-track.midboss-mode { background: #064e3b; border-color: #059669; }
+        .boss-hp-fill { height: 100%; background: linear-gradient(90deg, #f43f5e, #e11d48); width: 100%; transition: width 0.3s ease; }
+        .boss-hp-fill.midboss-mode { background: linear-gradient(90deg, #10b981, #059669); }
+
+        .player-shields-row { display: flex; justify-content: space-between; font-size: 11px; font-weight: 800; color: #fbcfe8; }
+
+        .boss-timer-container {
+            background: #3f121a; border: 1px solid #991b1b; border-radius: 5px;
+            height: 8px; overflow: hidden; margin-bottom: 6px; flex-shrink: 0;
+        }
+        .boss-timer-bar { height: 100%; background: linear-gradient(90deg, #38bdf8, #818cf8); width: 100%; transition: width 0.1s linear; }
+        .boss-timer-bar.urgent { background: linear-gradient(90deg, #ef4444, #dc2626) !important; animation: timerBlink 0.3s infinite; }
+        @keyframes timerBlink { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+
+        .countdown-overlay {
+            display: none;
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(18, 9, 5, 0.88);
+            z-index: 50;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+        .countdown-num {
+            font-size: 96px;
+            font-weight: 900;
+            color: #fbbf24;
+            text-shadow: 0 0 25px rgba(251, 191, 36, 0.8), 0 5px 15px rgba(0,0,0,0.9);
+            animation: countZoom 0.85s ease-out forwards;
+        }
+        @keyframes countZoom {
+            0% { transform: scale(0.3); opacity: 0; }
+            50% { transform: scale(1.15); opacity: 1; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        /* ============================
+           모달 공통 레이아웃
+           ============================ */
+        .modal {
+            display: none; position: absolute;
+            top: 8px; left: 8px; right: 8px; bottom: 8px;
+            background: #fbf6ea; border: 3px solid #8f603a; border-radius: 16px;
+            flex-direction: column; justify-content: space-between; align-items: stretch;
+            padding: 14px; z-index: 20; box-shadow: 0 10px 30px rgba(0,0,0,0.7);
+            overflow-y: auto;
+        }
+
+        .btn-wood {
+            background: #5c3a21; color: #f7edd4; border: 1px solid #3d2314;
+            padding: 10px; border-radius: 10px; font-size: 13px; font-weight: 800;
+            cursor: pointer; box-shadow: 0 3px 6px rgba(0,0,0,0.2); width: 100%; transition: all 0.2s;
+            flex-shrink: 0;
+        }
+        .btn-wood:hover { background: #73492a; }
+
+        .btn-sub-wood {
+            background: #ede3cc; color: #5c3a21; border: 1px solid #c9b48c;
+            padding: 8px; border-radius: 10px; font-size: 12px; font-weight: 800;
+            cursor: pointer; width: 100%; transition: all 0.2s;
+            flex-shrink: 0;
+        }
+        .btn-sub-wood:hover { background: #dfd2b5; }
+
+        .feedback-card {
+            background: #ede3cc; border: 2px solid #d4c29d; border-radius: 12px;
+            padding: 9px 12px; width: 100%; margin-bottom: 6px;
+        }
+        .fb-label { font-size: 10px; font-weight: 700; color: #785a3e; display: block; }
+        .fb-word { font-size: 21px; font-weight: 900; color: #2e1a0d; margin-bottom: 2px; display: block; }
+        .fb-meaning { font-size: 17px; font-weight: 800; color: #15803d; display: block; word-break: keep-all; }
+        .fb-meaning.wrong-case { color: #b91c1c; }
+
+        .contract-master-banner {
+            display: none;
+            background: linear-gradient(90deg, #fef3c7, #fde68a);
+            border: 2px solid #f59e0b;
+            color: #92400e;
+            padding: 5px 8px;
+            border-radius: 8px;
+            font-size: 11px;
+            font-weight: 900;
+            margin-bottom: 6px;
+            box-shadow: 0 2px 6px rgba(245, 158, 11, 0.3);
+            animation: bounceIn 0.5s ease-out;
+        }
+        @keyframes bounceIn {
+            0% { transform: scale(0.8); opacity: 0; }
+            70% { transform: scale(1.05); }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .scarcity-box {
+            background: #fdfaf2;
+            border: 1.5px dashed #d97706;
+            border-radius: 8px;
+            padding: 6px 10px;
+            font-size: 11.5px;
+            font-weight: 800;
+            color: #b45309;
+            margin: 4px 0 6px 0;
+            line-height: 1.4;
+            word-break: keep-all;
+        }
+
+        .book-modal-content { display: flex; flex-direction: column; width: 100%; height: 100%; text-align: left; justify-content: space-between; }
+        .book-tab-bar { display: flex; gap: 6px; margin-bottom: 8px; border-bottom: 2px solid #c9b48c; padding-bottom: 6px; flex-shrink: 0; }
+        .tab-btn {
+            background: #ede3cc; border: 1px solid #c9b48c; color: #785a3e;
+            padding: 5px 10px; border-radius: 8px; font-size: 11px; font-weight: 800; cursor: pointer;
+        }
+        .tab-btn.active { background: #5c3a21; color: #f7edd4; border-color: #3d2314; }
+        .tab-content { display: none; overflow-y: auto; flex: 1; padding-right: 2px; }
+        .tab-content.active { display: block; }
+
+        .stamp-box-wrapper { background: #f4ecda; border: 2px solid #d8c7a6; border-radius: 10px; padding: 8px 10px; margin-bottom: 8px; }
+        .stamp-title-row { display: flex; justify-content: space-between; font-size: 11px; font-weight: 800; color: #4b301c; margin-bottom: 4px; }
+        .overall-gauge-container { background: #d8c7a6; height: 8px; border-radius: 4px; overflow: hidden; }
+        .overall-gauge-bar { height: 100%; background: linear-gradient(90deg, #f59e0b, #ef4444); width: 0%; transition: width 0.4s ease; }
+
+        .word-item-clean {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 10px;
+            background: #fdfaf2;
+            border: 1px solid #d8c7a6;
+            border-left: 5px solid #cbd5e1;
+            border-radius: 8px;
+            margin-bottom: 5px;
+        }
+        .word-item-clean.stage-0 { border-left-color: #94a3b8; }
+        .word-item-clean.stage-1 { border-left-color: #f59e0b; }
+        .word-item-clean.stage-2 { border-left-color: #10b981; }
+        .word-item-clean.stage-3 { border-left-color: #eab308; background: #fffbeb; }
+
+        .word-text-group { display: flex; flex-direction: column; gap: 1px; flex: 1; padding-right: 6px; text-align: left; }
+        .word-main-eng { font-size: 14px; font-weight: 900; color: #1c0e07; }
+        .word-sub-kor { font-size: 11px; font-weight: 600; color: #6d5035; word-break: keep-all; }
+        .word-mini-status { font-size: 10px; font-weight: 800; padding: 2px 6px; border-radius: 6px; white-space: nowrap; }
+
+        .roadmap-card { background: #fdfaf2; border: 1px solid #d8c7a6; border-radius: 10px; padding: 8px 10px; margin-bottom: 8px; }
+        .roadmap-card h4 { margin: 0 0 6px 0; font-size: 12px; color: #4b301c; border-bottom: 1px dashed #d8c7a6; padding-bottom: 3px; }
+        .timeline-item {
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 6px 8px; border-radius: 6px; margin-bottom: 3px; font-size: 11px;
+            background: #fbf6ea; border: 1px solid transparent;
+        }
+        .timeline-item.current-tier { border: 2px solid #f59e0b; background: #fffbeb; font-weight: 800; box-shadow: 0 0 6px rgba(245, 158, 11, 0.3); }
+
+        .world-summary-card {
+            background: #fdfaf2; border: 1px solid #d8c7a6; border-radius: 10px; padding: 8px 10px; margin-bottom: 5px;
+        }
+        .world-summary-top {
+            display: flex; justify-content: space-between; align-items: center; font-size: 11px; font-weight: 800; color: #2c1a0e; margin-bottom: 2px;
+        }
+
+        .ending-card-box {
+            background: linear-gradient(180deg, #fffdf5 0%, #fef3c7 100%);
+            border: 2px solid #d97706; border-radius: 12px; padding: 12px 10px; margin-bottom: 8px;
+            box-shadow: 0 4px 15px rgba(217, 119, 6, 0.2); width: 100%; text-align: center;
+            flex-shrink: 0;
+        }
+        .ending-badge-top { font-size: 10px; font-weight: 800; color: #b45309; letter-spacing: 2px; margin-bottom: 2px; display: block; }
+        .ending-title { font-size: 18px; font-weight: 900; color: #78350f; margin: 0 0 6px 0; }
+        .ending-divider { color: #d97706; font-size: 9px; margin-bottom: 6px; opacity: 0.7; }
+        .ending-desc { font-size: 11.5px; color: #5c3a21; line-height: 1.55; word-break: keep-all; margin: 0 0 8px 0; font-weight: 500; }
+        .ending-stat-pill { background: #fde68a; border: 1px solid #f59e0b; padding: 4px 10px; border-radius: 16px; font-size: 10px; font-weight: 900; color: #92400e; display: inline-block; }
+
+        .tierup-box {
+            background: linear-gradient(180deg, #ecfdf5 0%, #d1fae5 100%); border: 2px solid #10b981;
+            border-radius: 12px; padding: 12px 10px; margin-bottom: 8px; box-shadow: 0 4px 15px rgba(16, 185, 129, 0.25);
+            width: 100%; text-align: center;
+            flex-shrink: 0;
+        }
+
+/* ============================
+           ⚔️ 전투 타격감 & 피격 애니메이션
+           ============================ */
+        /* 1. 보스 피격 진동 & 번쩍임 */
+        .enemy-hit-shake {
+            animation: enemyShake 0.3s ease-out;
+        }
+        @keyframes enemyShake {
+            0% { transform: translate(0, 0); filter: brightness(2.5) contrast(1.5); }
+            20% { transform: translate(-7px, 4px); filter: brightness(2); }
+            40% { transform: translate(7px, -4px); }
+            60% { transform: translate(-4px, -2px); }
+            80% { transform: translate(4px, 2px); }
+            100% { transform: translate(0, 0); filter: none; }
+        }
+
+        /* 2. 플레이어 피격 시 화면 전체 지진 */
+        .screen-damage-shake {
+            animation: screenShake 0.4s ease-out !important;
+        }
+        @keyframes screenShake {
+            0% { transform: translate(0, 0); }
+            15% { transform: translate(-8px, 6px); }
+            30% { transform: translate(8px, -6px); }
+            50% { transform: translate(-5px, 4px); }
+            70% { transform: translate(5px, -3px); }
+            100% { transform: translate(0, 0); }
+        }
+
+        /* 3. 피격 시 붉은 화면 번쩍임 (비네팅) */
+        .damage-vignette-overlay {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            border-radius: 18px;
+            box-shadow: inset 0 0 50px rgba(220, 38, 38, 0.85);
+            pointer-events: none;
+            z-index: 40;
+            animation: vignetteFade 0.45s ease-out forwards;
+        }
+        @keyframes vignetteFade {
+            0% { opacity: 1; }
+            100% { opacity: 0; }
+        }
+
+        /* 4. 참격(Slash) 광선 이펙트 */
+        .slash-beam {
+            position: absolute;
+            top: 50%; left: -20%; width: 140%; height: 4px;
+            background: linear-gradient(90deg, transparent, #ffffff, #fde047, #f97316, transparent);
+            box-shadow: 0 0 14px #fbbf24, 0 0 25px #ffffff;
+            transform: translateY(-50%) rotate(-35deg) scaleX(0);
+            pointer-events: none;
+            z-index: 30;
+            animation: slashAnim 0.28s ease-out forwards;
+        }
+        .slash-beam.cross {
+            transform: translateY(-50%) rotate(35deg) scaleX(0);
+            animation: slashAnim 0.28s 0.05s ease-out forwards;
+        }
+        @keyframes slashAnim {
+            0% { transform: translateY(-50%) rotate(var(--rot, -35deg)) scaleX(0); opacity: 1; }
+            50% { transform: translateY(-50%) rotate(var(--rot, -35deg)) scaleX(1); opacity: 1; height: 7px; }
+            100% { transform: translateY(-50%) rotate(var(--rot, -35deg)) scaleX(1.2); opacity: 0; height: 1px; }
+        }
+
+        /* 5. 솟구치는 데미지 텍스트 */
+        .floating-damage-txt {
+            position: absolute;
+            top: 35%; left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 21px;
+            font-weight: 900;
+            color: #fef08a;
+            text-shadow: 0 0 8px #ea580c, 0 2px 4px #000;
+            pointer-events: none;
+            z-index: 35;
+            animation: floatUpDmg 0.6s cubic-bezier(0.18, 0.89, 0.32, 1.28) forwards;
+        }
+        @keyframes floatUpDmg {
+            0% { transform: translate(-50%, 0) scale(0.6); opacity: 0; }
+            40% { transform: translate(-50%, -25px) scale(1.2); opacity: 1; }
+            100% { transform: translate(-50%, -45px) scale(1); opacity: 0; }
+        }
+
+        /* 6. 일반전 빛의 교감 탄환 */
+        .spirit-bullet {
+            position: absolute;
+            width: 14px; height: 14px;
+            background: radial-gradient(circle, #ffffff 30%, #34d399 70%, transparent 100%);
+            border-radius: 50%;
+            box-shadow: 0 0 10px #10b981;
+            pointer-events: none;
+            z-index: 25;
+            top: 40px; left: 85px;
+            animation: bulletFly 0.32s ease-in forwards;
+        }
+        @keyframes bulletFly {
+            0% { transform: translate(0, 0) scale(0.6); opacity: 0.8; }
+            100% { transform: translate(195px, -15px) scale(1.6); opacity: 0; }
+        }
+
+/* ============================
+           🏆 칭호 및 명예의 전당 스타일
+           ============================ */
+        .title-equipped-tag {
+            background: linear-gradient(90deg, #b45309, #d97706);
+            color: #fffbeb;
+            border: 1px solid #fef3c7;
+            font-size: 10.5px;
+            font-weight: 900;
+            padding: 3px 8px;
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+            display: inline-block;
+        }
+
+        .record-dashboard-card {
+            background: #ede3cc;
+            border: 2px solid #c9b48c;
+            border-radius: 12px;
+            padding: 10px 12px;
+            margin-bottom: 10px;
+            text-align: left;
+        }
+        .record-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 6px;
+            margin-top: 6px;
+        }
+        .record-item-box {
+            background: #fdfaf2;
+            border: 1px solid #d8c7a6;
+            border-radius: 8px;
+            padding: 6px 8px;
+        }
+        .record-item-label { font-size: 9.5px; font-weight: 700; color: #785a3e; display: block; }
+        .record-item-val { font-size: 13px; font-weight: 900; color: #b45309; }
+
+        .achieve-list-container {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            margin-top: 6px;
+        }
+        .achieve-card {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #fdfaf2;
+            border: 1.5px solid #d8c7a6;
+            border-radius: 9px;
+            padding: 7px 10px;
+            transition: all 0.2s;
+        }
+        .achieve-card.locked {
+            opacity: 0.55;
+            background: #f1f5f9;
+            border-color: #cbd5e1;
+        }
+        .achieve-card.equipped {
+            border-color: #f59e0b;
+            background: #fffbeb;
+            box-shadow: 0 0 6px rgba(245, 158, 11, 0.35);
+        }
+        .achieve-info { text-align: left; flex: 1; padding-right: 6px; }
+        .achieve-title { font-size: 12.5px; font-weight: 900; color: #2c1a0e; display: block; }
+        .achieve-desc { font-size: 10px; color: #785a3e; font-weight: 600; }
+        .achieve-btn {
+            background: #5c3a21;
+            color: #fdf6ea;
+            border: none;
+            border-radius: 6px;
+            font-size: 10px;
+            font-weight: 800;
+            padding: 4px 8px;
+            cursor: pointer;
+            white-space: nowrap;
+        }
+        .achieve-btn.equipped {
+            background: #10b981;
+            cursor: default;
+        }
+
+/* ⚡ 찰나의 공명 도파민 배너 */
+        .resonance-banner {
+            display: none;
+            background: linear-gradient(90deg, #0284c7, #0ea5e9, #f59e0b);
+            border: 2px solid #fef08a;
+            color: #ffffff;
+            padding: 6px 10px;
+            border-radius: 9px;
+            font-size: 11.5px;
+            font-weight: 900;
+            margin-bottom: 6px;
+            box-shadow: 0 0 15px rgba(56, 189, 248, 0.7), 0 0 25px rgba(245, 158, 11, 0.4);
+            animation: resonancePulse 0.5s ease-out;
+            letter-spacing: -0.2px;
+        }
+        @keyframes resonancePulse {
+            0% { transform: scale(0.7); opacity: 0; }
+            60% { transform: scale(1.08); }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="game-container">
+    <div class="parchment-inner">
+        <div id="errorBanner" class="error-banner">
+            ⚠️ <b>[words.js 파일 인식 실패]</b><br>
+            같은 폴더에 <code>words.js</code>가 있는지 확인해 주세요.
+        </div>
+
+        <!-- ==============================================
+             📜 0. 프롤로그
+             ============================================== -->
+        <div id="introScreen" class="screen-view">
+            <div class="intro-top-group">
+                <div class="intro-title-tag">⚠ CRISIS OF THE REALM</div>
+                <h2 class="intro-heading">마왕 『EXAM』의 시련</h2>
+            </div>
+
+            <div class="intro-art-box">
+                <svg class="art-svg" viewBox="0 0 400 175" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <linearGradient id="doomSky" x1="0%" y1="0%" x2="0%" y2="100%">
+                            <stop offset="0%" stop-color="#240713"/><stop offset="50%" stop-color="#450a0a"/><stop offset="100%" stop-color="#18040a"/>
+                        </linearGradient>
+                        <radialGradient id="bloodMoon" cx="50%" cy="50%" r="50%">
+                            <stop offset="0%" stop-color="#fee2e2"/><stop offset="45%" stop-color="#ef4444"/><stop offset="90%" stop-color="#991b1b"/><stop offset="100%" stop-color="#450a0a"/>
+                        </radialGradient>
+                        <radialGradient id="evilGlow" cx="50%" cy="50%" r="50%">
+                            <stop offset="0%" stop-color="#ff0055"/><stop offset="100%" stop-color="#7f1d1d" stop-opacity="0"/>
+                        </radialGradient>
+                    </defs>
+                    <rect width="400" height="175" fill="url(#doomSky)"/>
+                    <circle cx="200" cy="85" r="58" fill="url(#bloodMoon)"/>
+                    <polyline points="80,-5 95,45 85,75 110,130" stroke="#fef08a" stroke-width="2" fill="none" opacity="0.6"/>
+                    <polyline points="320,-5 305,40 315,65 290,120" stroke="#fef08a" stroke-width="2" fill="none" opacity="0.6"/>
+                    <path d="M120,180 Q140,80 170,95 Q140,40 90,25 Q135,55 160,80 Q180,60 200,60 Q220,60 240,80 Q265,55 310,25 Q260,40 230,95 Q260,80 280,180 Z" fill="#090104"/>
+                    <ellipse cx="178" cy="88" rx="8" ry="4" fill="url(#evilGlow)"/>
+                    <circle cx="178" cy="88" r="2.5" fill="#fff"/>
+                    <ellipse cx="222" cy="88" rx="8" ry="4" fill="url(#evilGlow)"/>
+                    <circle cx="222" cy="88" r="2.5" fill="#fff"/>
+                    <polygon points="0,175 60,135 120,165 170,140 230,165 290,138 350,165 400,140 400,175" fill="#1f090d"/>
+                    <polygon points="140,125 155,100 165,130" fill="#dc2626" opacity="0.7"/>
+                    <polygon points="235,120 245,95 260,125" fill="#dc2626" opacity="0.7"/>
+                </svg>
+            </div>
+
+            <div class="prologue-scroll-box">
+                <p class="prologue-p">
+                    세상의 모든 자유와 즐거움을 지워버리려는 절대적인 재앙, <span class="prologue-highlight">마왕 『EXAM』</span>의 검은 마력 폭풍이 온 대륙을 집어삼켰습니다.
+                </p>
+                <p class="prologue-p">
+                    안개 속에 갇힌 정령들은 자신의 본래 이름을 잃은 채 방황하고, 각 영지의 수호령들마저 폭주하고 있습니다.
+                </p>
+                <p class="prologue-p">
+                    자랑스런 <span class="prologue-stone">옥정고1</span> 전사들이여! 각 영지를 탐사해 고대 정령들의 진명을 밝히고 <span class="prologue-stone">영원의 계약</span>을 맺으십시오. 최강의 정령술사 <b>『정령왕의 벗 👑』</b>으로 각성하여 마왕의 시련을 깨뜨릴 자는 오직 그대들뿐입니다!
+                </p>
+            </div>
+
+            <button class="btn-wood" style="background:#b45309; border-color:#92400e; padding:12px; font-size:14px;" onclick="enterTitleFromIntro()">
+                ⚔️ 영원의 계약을 맹세하며 출발 ➔
+            </button>
+        </div>
+
+        <!-- ==============================================
+             🏛️ 1. 타이틀 화면 (정돈된 세련된 타이포그래피)
+             ============================================== -->
+        <div id="titleScreen" class="screen-view">
+            <div class="title-art-wrapper">
+                <svg class="art-svg" viewBox="0 0 400 145" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <linearGradient id="skyGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                            <stop offset="0%" stop-color="#4a3b32"/><stop offset="50%" stop-color="#8c6d46"/><stop offset="100%" stop-color="#fdf6e2"/>
+                        </linearGradient>
+                        <radialGradient id="crystalGlow" cx="50%" cy="50%" r="50%">
+                            <stop offset="0%" stop-color="#a7f3d0"/><stop offset="60%" stop-color="#10b981"/><stop offset="100%" stop-color="#047857" stop-opacity="0"/>
+                        </radialGradient>
+                    </defs>
+                    <rect width="400" height="145" fill="url(#skyGrad)"/>
+                    <circle cx="160" cy="70" r="26" fill="#ffffff" opacity="0.4"/>
+                    <path d="M-20,95 Q80,75 180,95 T380,85 L420,145 L-20,145 Z" fill="#2a3d2b"/>
+                    <path d="M-10,110 Q60,95 140,107 T320,100 T410,115 L410,145 L-10,145 Z" fill="#142215"/>
+                    <path d="M190,145 Q230,110 290,105 Q360,100 410,115 L410,145 Z" fill="#18130e"/>
+                    <g transform="translate(305, 52)">
+                        <path d="M8,26 Q-2,38 -12,48 Q-4,50 6,48 Q16,49 22,46 Q16,36 12,26 Z" fill="#3f2e21"/>
+                        <path d="M6,13 Q10,12 12,13 Q15,17 18,28 Q14,32 10,36 Q8,28 7,20 Z" fill="#f5eedc"/>
+                        <ellipse cx="9" cy="13" rx="5" ry="6" fill="#f5eedc"/>
+                        <line x1="21" y1="2" x2="25" y2="58" stroke="#5c3f24" stroke-width="2.5" stroke-linecap="round"/>
+                        <circle cx="21" cy="-2" r="8" fill="url(#crystalGlow)"/><circle cx="21" cy="-2" r="3" fill="#ecfdf5"/>
+                    </g>
+                </svg>
+                <div class="title-art-overlay">
+                    <h1 class="title-main-text">The Crisis of Word Spirits</h1>
+                    <div class="title-sub-text">the trial of EXAM · 옥정고1 편</div>
+                </div>
+            </div>
+
+            <div class="player-hero-card">
+                <div class="hero-top">
+                    <!-- 계급과 칭호가 나란히 예쁘게 묶여서 나옵니다 -->
+                    <div style="display:flex; align-items:center; gap:5px;">
+                        <span id="titleGlobalTierBadge" class="hero-tier-pill">숲의 견습생 🌱</span>
+                        <span id="titleEquippedBadge" class="title-equipped-tag">🌱 첫 걸음의 탐색자</span>
+                    </div>
+                    <span id="titleGlobalExpText" class="hero-exp-txt">전체 계약: 0 / 0마리</span>
+                </div>
+                <div style="font-size: 11px; color: #785a3e;">
+                    다음 승급까지: <span id="titleNextExpText" style="font-weight:bold; color:#15803d;">0마리 계약 필요</span>
+                </div>
+                <div class="overall-gauge-container" style="height:5px; margin-top:3px;">
+                    <div id="titleProgressBar" class="overall-gauge-bar"></div>
+                </div>
+            </div>
+
+
+            <!-- 마왕 레이드 버튼 (클리어 여부에 따라 문구 동적 변경) -->
+            <button id="titleBossRaidBtn" class="boss-raid-btn" onclick="startFinalBossRaid()">
+                👑 마왕 『EXAM』과의 결전 개막 (5초 타임어택)
+            </button>
+
+            <div class="map-select-header">
+                <span>🗺️ 탐험할 영지 선택</span>
+                <div style="display:flex; gap:6px; align-items:center;">
+                    <button id="soundToggleBtn" class="top-btn" style="padding: 2px 7px; font-size: 11px;" onclick="toggleSound()">🔊 소리</button>
+                    <button class="top-btn" style="padding: 2px 7px; font-size: 11px;" onclick="openWordBook(true)">📖 모험 일지</button>
+                </div>
+            </div>
+
+            <div class="title-map-list" id="titleMapListContainer"></div>
+
+            <div class="title-bottom-links">
+                <button class="link-sub" onclick="openIntroScreen()">📜 프롤로그 다시보기</button>
+                <button class="link-sub" onclick="handleFullReset()">모든 모험 기록 초기화</button>
+            </div>
+        </div>
+
+        <!-- ==============================================
+             🏕️ 1.5 탐험 전초기지
+             ============================================== -->
+        <div id="mapLobbyScreen" class="screen-view">
+            <div class="top-bar-quiz">
+                <button class="top-btn" onclick="backToTitleScreen()">🗺️ 대륙 지도로</button>
+                <div style="font-size:12px; font-weight:800; color:#785a3e;">영지 전초기지</div>
+            </div>
+
+            <div class="lobby-art-box" id="lobbyArtBox"></div>
+
+            <div class="lobby-card">
+                <div class="lobby-top-row">
+                    <h2 class="lobby-map-title" id="lobbyMapTitle">풍요와 도약의 숲</h2>
+                    <span id="lobbyMapMasteryBadge" class="tier-badge" style="font-size:10.5px; padding:2px 8px;">안개 낀 미답지 🌫️</span>
+                </div>
+                <div class="lobby-map-desc" id="lobbyMapDesc">상승과 개선, 증가 등의 성격을 지닌 정령들이 노니는 곳</div>
+
+                <div class="overall-gauge-container" style="height:6px; margin:2px 0 2px 0;">
+                    <div class="overall-gauge-bar" id="lobbyGaugeBar"></div>
+                </div>
+                <div style="font-size:10.5px; font-weight:800; color:#785a3e; text-align:right;" id="lobbyProgressText">계약 완료: 0 / 0마리 (0%)</div>
+            </div>
+
+            <div style="font-size:11.5px; font-weight:800; color:#4b301c; text-align:left; margin-bottom:4px; padding-left:2px;">
+                📍 탐험할 하위 구역 선택 (구역당 20단어)
+            </div>
+            <div class="sector-list-box" id="lobbySectorListContainer"></div>
+
+            <button id="lobbyGuardianTrialBtn" class="guardian-trial-btn locked" onclick="handleGuardianBannerClick()">
+                🔒 성역의 심장 : 수호령의 시련 (모든 구역 정복 필요)
+            </button>
+
+            <div>
+                <button class="btn-sub-wood" style="background:#fffdf7;" onclick="openWordBook(false)">
+                    📖 이 영지의 정령 도감 (단어장) 확인
+                </button>
+            </div>
+        </div>
+
+        <!-- ==============================================
+             🎮 2. 인게임 퀴즈 화면
+             ============================================== -->
+        <div id="gameScreen" class="screen-view">
+            <div class="top-bar-quiz">
+                <button class="top-btn" onclick="backToLobbyFromQuiz()">🏕️ 전초기지로</button>
+                <div style="font-size:12px; font-weight:800; color:#a16207;">⚔️ 집중 탐사 중</div>
+            </div>
+
+            <div>
+                <div class="in-game-map-title" id="inGameMapTitle">영지 이름 - 제1구역</div>
+                <div class="grove-info" id="groveInfoDisplay">🌿 탐사 1 / 5</div>
+
+                <div class="status-bar">
+                    <div class="tier-badges-row">
+                        <div id="gameGlobalTierBadge" class="tier-badge">숲의 견습생 🌱</div>
+                        <div id="gameSectorBadge" class="tier-badge" style="background:#0284c7;">제1구역 탐사</div>
+                    </div>
+                    <div style="font-size: 11px; color: #6d5035; font-weight: 700;">
+                        이 구역 계약: <span id="expText" style="color: #15803d;">0 / 20마리</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="battle-arena-box">
+                <div id="comboStreakBadge" class="combo-streak-badge">🔥 2연속 교감!</div>
+
+                <svg class="art-svg" viewBox="0 0 380 85" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <radialGradient id="spiritPlatform" cx="50%" cy="50%" r="50%">
+                            <stop offset="0%" stop-color="#a7f3d0" stop-opacity="0.8"/>
+                            <stop offset="70%" stop-color="#10b981" stop-opacity="0.3"/>
+                            <stop offset="100%" stop-color="#064e3b" stop-opacity="0"/>
+                        </radialGradient>
+                        <radialGradient id="spiritAura" cx="50%" cy="50%" r="50%">
+                            <stop offset="0%" stop-color="#ffffff"/>
+                            <stop offset="40%" stop-color="#fef08a"/>
+                            <stop offset="80%" stop-color="#34d399"/>
+                            <stop offset="100%" stop-color="#059669" stop-opacity="0"/>
+                        </radialGradient>
+                    </defs>
+
+                    <ellipse cx="285" cy="52" rx="65" ry="15" fill="url(#spiritPlatform)"/>
+                    <ellipse cx="85" cy="76" rx="75" ry="16" fill="#1e3a24"/>
+
+                    <g transform="translate(250, 8)">
+                        <path d="M12,20 C-4,8 0,-4 20,6 C12,12 10,16 12,20 Z" fill="#6ee7b7" opacity="0.85"/>
+                        <path d="M58,20 C74,8 70,-4 50,6 C58,12 60,16 58,20 Z" fill="#6ee7b7" opacity="0.85"/>
+                        <circle cx="35" cy="20" r="15" fill="url(#spiritAura)"/>
+                        <path d="M35,4 Q30,-2 35,-8 Q40,-2 35,4 Z" fill="#10b981"/>
+                        <ellipse cx="30" cy="19" rx="2" ry="2.5" fill="#064e3b"/>
+                        <ellipse cx="40" cy="19" rx="2" ry="2.5" fill="#064e3b"/>
+                        <circle cx="10" cy="28" r="1.5" fill="#fef08a"/>
+                        <circle cx="60" cy="12" r="2" fill="#a7f3d0"/>
+                    </g>
+
+                    <g transform="translate(45, 20)">
+                        <path d="M22,34 Q38,30 54,34 Q64,62 52,62 Q38,55 24,62 Q12,62 22,34 Z" fill="#15803d"/>
+                        <ellipse cx="38" cy="23" rx="13" ry="14" fill="#f59e0b"/>
+                        <path d="M25,23 Q38,37 51,23 Q53,33 47,39 Q38,42 29,39 Z" fill="#d97706"/>
+                        <polygon points="25,22 15,18 26,26" fill="#fde68a"/>
+                        <polygon points="51,22 61,18 50,26" fill="#fde68a"/>
+                        <line x1="60" y1="58" x2="67" y2="10" stroke="#78350f" stroke-width="2.5" stroke-linecap="round"/>
+                        <circle cx="67" cy="9" r="5" fill="#38bdf8"/>
+                        <circle cx="67" cy="9" r="2" fill="#ffffff"/>
+                    </g>
+                </svg>
+            </div>
+
+            <div class="question-box">
+                <div class="tags-wrapper">
+                    <span id="reviewTag" class="tag review-tag" style="display:none;">🍂 경계하는 정령</span>
+                    <span id="masteryTag" class="tag">야생의 정령 🌿</span>
+                </div>
+                <div id="wordDisplay" class="word">불러오는 중...</div>
+            </div>
+
+            <div id="choicesGrid" class="choices-grid"></div>
+        </div>
+
+        <!-- ==============================================
+             ⚔️ 3. 보스전 공용 화면
+             ============================================== -->
+        <div id="bossScreen" class="screen-view">
+            <div class="boss-top-status" id="bossTopStatusBox">
+                <div class="boss-hp-row" id="bossHpRow">
+                    <span id="bossNameDisplay">👑 마왕 『EXAM』의 장벽</span>
+                    <span id="bossHpText">HP: 5 / 5</span>
+                </div>
+                <div class="boss-hp-track" id="bossHpTrack">
+                    <div id="bossHpBar" class="boss-hp-fill"></div>
+                </div>
+                <div class="player-shields-row">
+                    <span>정령술사의 결계</span>
+                    <span id="playerShieldsText">❤️❤️❤️</span>
+                </div>
+            </div>
+
+            <div class="art-box" id="bossArtBox" style="height:110px;"></div>
+
+            <div class="boss-timer-container">
+                <div id="bossTimerBar" class="boss-timer-bar"></div>
+            </div>
+
+            <div class="question-box" style="flex:1;">
+                <div class="tags-wrapper">
+                    <span id="bossQuestionTag" class="tag" style="background:#831843; color:#fbcfe8;">⚡ 마왕의 시련 주문</span>
+                </div>
+                <div id="bossWordDisplay" class="word" style="color:#831843;">SPELL</div>
+            </div>
+
+            <div id="bossChoicesGrid" class="choices-grid"></div>
+        </div>
+    </div>
+
+    <!-- 🌟 대형 카운트다운 오버레이 -->
+    <div id="battleCountdownOverlay" class="countdown-overlay">
+        <div id="countdownNumDisplay" class="countdown-num">3</div>
+    </div>
+
+    <!-- 🌟 구역 정복 완료 축하 팝업 -->
+    <div id="sectorClearModal" class="modal">
+        <div style="flex:1; display:flex; flex-direction:column; justify-content:center; align-items:center; width:100%;">
+            <div class="art-box" style="margin-bottom:8px; border-color:#10b981;">
+                <svg class="art-svg" viewBox="0 0 380 120" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <radialGradient id="secSun" cx="50%" cy="50%" r="50%">
+                            <stop offset="0%" stop-color="#fef08a"/><stop offset="60%" stop-color="#10b981"/><stop offset="100%" stop-color="#064e3b"/>
+                        </radialGradient>
+                    </defs>
+                    <rect width="380" height="120" fill="#064e3b"/>
+                    <circle cx="190" cy="60" r="50" fill="url(#secSun)"/>
+                    <polygon points="190,30 200,50 222,53 206,69 210,91 190,80 170,91 174,69 158,53 180,50" fill="#fbbf24"/>
+                </svg>
+            </div>
+            <div class="ending-card-box" style="border-color:#10b981; background:#ecfdf5;">
+                <span class="ending-badge-top" style="color:#047857;">SECTOR PURIFIED</span>
+                <h2 class="ending-title" id="sectorClearTitle" style="color:#065f46; font-size:18px;">제1구역 정복 완료!</h2>
+                <div class="ending-divider" style="color:#10b981;">❖ ❖ ❖</div>
+                <div class="ending-desc" style="color:#064e3b;">
+                    축하합니다! 이 구역의 모든 정령과 영원의 계약을 맺었습니다.<br>
+                    영지의 모든 구역을 정복하여 성역의 수호령을 깨우십시오!
+                </div>
+            </div>
+        </div>
+        <div>
+            <button class="btn-wood" style="background:#16a34a; border-color:#15803d; margin-bottom:6px;" onclick="backToLobbyFromSectorClear()">
+                🏕️ 전초기지로 돌아가 다음 구역 공략하기 ➔
+            </button>
+        </div>
+    </div>
+
+    <!-- 🌟 중간보스(수호령) 진입 전 확인 화면 모달 -->
+    <div id="midBossNoticeModal" class="modal">
+        <div style="flex:1; display:flex; flex-direction:column; justify-content:center; align-items:center; width:100%;">
+            <div class="art-box" id="midBossNoticeArtBox" style="margin-bottom:8px; border-color:#059669; height:120px;"></div>
+            <div class="ending-card-box" style="border-color:#059669; background:#ecfdf5;">
+                <span class="ending-badge-top" id="midBossNoticeSubBadge" style="color:#047857;">GUARDIAN'S TRIAL READY</span>
+                <h2 class="ending-title" id="midBossNoticeTitle" style="color:#065f46; font-size:18px;">수호령의 시련 대면</h2>
+                <div class="ending-divider" style="color:#059669;">✦ ✦ ✦</div>
+                <div class="ending-desc" style="color:#064e3b;" id="midBossNoticeDesc">
+                    이 영지의 모든 하위 구역을 완벽히 정복했습니다!<br>
+                    영지를 완전히 정화하기 위해선 수호령과의 시련(체력 5 / 7초 타임어택)을 통과해야 합니다.
+                </div>
+            </div>
+        </div>
+        <div>
+            <button id="midBossNoticeStartBtn" class="btn-wood" style="background:#10b981; border-color:#059669; font-size:14px; padding:11px; margin-bottom:6px;" onclick="confirmStartMidBoss()">
+                ⚔️ 수호령과의 시련 시작! (도전) ➔
+            </button>
+            <button class="btn-sub-wood" style="background:#fffdf7; margin-bottom:6px;" onclick="openWordBook(false)">
+                📖 정령 도감 (단어장) 최종 복습하기
+            </button>
+            <button class="btn-sub-wood" onclick="backToLobbyFromMidBossNotice()">
+                🏕️ 전초기지로 돌아가기
+            </button>
+        </div>
+    </div>
+
+    <!-- 🌟 대형 피드백 팝업 -->
+    <div id="feedbackModal" class="modal">
+        <div style="flex:1; display:flex; flex-direction:column; justify-content:center; align-items:center; width:100%;">
+            <div id="fbArtBox" class="art-box" style="margin-bottom:6px; height:95px;"></div>
+            <!-- ⚡ 찰나의 공명 달성 시 터지는 번개 배너 -->
+            <div id="fbResonanceNotice" class="resonance-banner">
+                ⚡ [찰나의 공명 (0.8초)!] 본능적 교감으로 숙련도 +2 급상승!
+            </div>
+
+            <div id="fbContractNotice" class="contract-master-banner">
+                🌟 [영원의 계약 성립!] 이 정령의 진명을 완벽히 깨우쳤습니다!
+            </div>
+
+            <h3 id="fbTitle" class="feedback-title" style="margin:2px 0 4px 0;">교감 성공!</h3>
+            <div class="feedback-card">
+                <span class="fb-label">단어</span>
+                <span id="fbWord" class="fb-word">apple</span>
+                <span class="fb-label">뜻</span>
+                <span id="fbMeaning" class="fb-meaning">사과</span>
+            </div>
+        </div>
+        <button class="btn-wood" onclick="nextQuestion()">다음 정령 찾기 ➔</button>
+    </div>
+
+    <!-- 계급 승급 모달 -->
+    <div id="tierUpModal" class="modal">
+        <div style="flex:1; display:flex; flex-direction:column; justify-content:center; align-items:center; width:100%;">
+            <div class="art-box" style="margin-bottom:8px;">
+                <svg class="art-svg" viewBox="0 0 360 115" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <radialGradient id="ascendGlow" cx="50%" cy="50%" r="50%">
+                            <stop offset="0%" stop-color="#fef08a"/><stop offset="60%" stop-color="#10b981"/><stop offset="100%" stop-color="#064e3b"/>
+                        </radialGradient>
+                    </defs>
+                    <rect width="360" height="115" fill="#064e3b"/>
+                    <circle cx="180" cy="58" r="50" fill="url(#ascendGlow)"/>
+                    <path d="M180,25 L190,45 L212,48 L196,64 L200,86 L180,75 L160,86 L164,64 L148,48 L170,45 Z" fill="#fbbf24" stroke="#f59e0b" stroke-width="2"/>
+                    <circle cx="180" cy="55" r="8" fill="#ffffff"/>
+                </svg>
+            </div>
+            <div class="tierup-box">
+                <span style="font-size:10px; font-weight:800; color:#047857; letter-spacing:2px; display:block; margin-bottom:3px;">TIER ELEVATION</span>
+                <h2 style="font-size:19px; font-weight:900; color:#065f46; margin:0 0 6px 0;">정령술사 계급 승급!</h2>
+                <div style="font-size:13px; font-weight:800; color:#047857;" id="tierUpFlowText">
+                    [숲의 견습생 🌱] ➔ [방랑 탐색자 🐾]
+                </div>
+                <div style="font-size:11px; color:#065f46; margin-top:5px; line-height:1.4;">
+                    전 대륙 정령들과의 유대가 깊어져 더 높은 경지에 도달했습니다!
+                </div>
+            </div>
+        </div>
+        <button class="btn-wood" style="background:#10b981; border-color:#059669;" onclick="closeTierUpModal()">
+            영광을 안고 모험 계속하기 ➔
+        </button>
+    </div>
+
+    <!-- 🌟 모닥불 휴식 모달 -->
+    <div id="roundModal" class="modal">
+        <div style="flex:1; display:flex; flex-direction:column; justify-content:center; align-items:center; width:100%;">
+            <div class="art-box" style="margin-bottom:6px;">
+                <svg class="art-svg" viewBox="0 0 380 140" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <linearGradient id="nightSky2" x1="0%" y1="0%" x2="0%" y2="100%">
+                            <stop offset="0%" stop-color="#0a0f1d"/><stop offset="60%" stop-color="#1e1b4b"/><stop offset="100%" stop-color="#2a1b15"/>
+                        </linearGradient>
+                        <radialGradient id="fireAura" cx="50%" cy="50%" r="50%">
+                            <stop offset="0%" stop-color="#ffedd5" stop-opacity="1"/>
+                            <stop offset="35%" stop-color="#f97316" stop-opacity="0.7"/>
+                            <stop offset="70%" stop-color="#c2410c" stop-opacity="0.3"/>
+                            <stop offset="100%" stop-color="#7c2d12" stop-opacity="0"/>
+                        </radialGradient>
+                    </defs>
+                    <rect width="380" height="140" fill="url(#nightSky2)"/>
+                    <circle cx="45" cy="22" r="1.5" fill="#fef08a"/><circle cx="120" cy="16" r="1" fill="#ffffff"/>
+                    <circle cx="340" cy="26" r="1.5" fill="#fef08a"/><circle cx="280" cy="14" r="1" fill="#ffffff"/>
+                    <path d="M320,13 A11,11 0 1,0 334,24 A13,13 0 1,1 320,13 Z" fill="#fef08a"/>
+                    <path d="M0,110 Q100,95 200,108 T400,105 L400,140 L0,140 Z" fill="#1b120c"/>
+                    <circle cx="190" cy="105" r="55" fill="url(#fireAura)"/>
+                    <line x1="174" y1="120" x2="206" y2="112" stroke="#451a03" stroke-width="5" stroke-linecap="round"/>
+                    <line x1="176" y1="112" x2="204" y2="120" stroke="#451a03" stroke-width="5" stroke-linecap="round"/>
+                    <path d="M183,116 Q187,92 190,85 Q193,92 197,116 Q190,108 183,116 Z" fill="#f97316"/>
+                    <g transform="translate(100, 68)">
+                        <rect x="15" y="45" width="28" height="15" rx="4" fill="#3f2e21"/>
+                        <path d="M20,25 Q32,22 40,25 L44,48 Q30,52 16,48 Z" fill="#15803d"/>
+                        <circle cx="30" cy="16" r="8" fill="#f59e0b"/>
+                        <polygon points="20,16 10,13 21,19" fill="#fde68a"/>
+                        <path d="M35,32 Q48,30 52,28" stroke="#fde68a" stroke-width="3" stroke-linecap="round" fill="none"/>
+                    </g>
+                    <g transform="translate(245, 88)">
+                        <circle cx="15" cy="15" r="10" fill="#6ee7b7" opacity="0.9"/>
+                        <circle cx="15" cy="15" r="5" fill="#fef08a"/>
+                        <path d="M15,5 Q10,-2 15,-6 Q20,-2 15,5 Z" fill="#10b981"/>
+                    </g>
+                </svg>
+            </div>
+            <h2 id="modalTitle" style="margin: 0 0 2px; font-size: 17px; color: #3b2211;">🌿 모닥불 가의 휴식</h2>
+            <div style="font-size: 12.5px; color: #5a3d24; margin: 1px 0;" id="modalScore">교감 성공: 5 / 5</div>
+            
+            <div id="modalScarcityBox" class="scarcity-box">
+                🔥 [완전 정복 직전!] 구역 정복까지 단 2마리 남았습니다!
+            </div>
+
+            <div style="font-size: 11px; font-weight: bold; margin: 2px 0;" id="modalReviewRemaining"></div>
+        </div>
+        <div>
+            <button class="btn-wood" style="background:#16a34a; border-color:#15803d; margin-bottom:6px;" onclick="startNextRound()">
+                이 구역 더 깊이 나아가기 (단 15초 소요 ⚡) ➔
+            </button>
+            <button class="btn-sub-wood" style="background:#fffdf7; margin-bottom:5px;" onclick="openWordBook(false)">
+                📖 모닥불 앞에서 정령 도감(단어장) 복습하기
+            </button>
+            <button class="btn-sub-wood" onclick="backToLobbyFromRound()">
+                🏕️ 전초기지로 복귀
+            </button>
+        </div>
+    </div>
+
+    <!-- 맵 정복 완료 모달 -->
+    <div id="endingModal" class="modal">
+        <div style="flex:1; display:flex; flex-direction:column; justify-content:center; align-items:center; width:100%;">
+            <div class="art-box" style="margin-bottom:8px;">
+                <svg class="art-svg" viewBox="0 0 380 125" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <linearGradient id="sanctuarySky" x1="0%" y1="0%" x2="0%" y2="100%">
+                            <stop offset="0%" stop-color="#fde047"/><stop offset="40%" stop-color="#a7f3d0"/><stop offset="100%" stop-color="#fdf6e2"/>
+                        </linearGradient>
+                        <radialGradient id="treeAura" cx="50%" cy="50%" r="50%">
+                            <stop offset="0%" stop-color="#fef08a"/><stop offset="100%" stop-color="#15803d" stop-opacity="0"/>
+                        </radialGradient>
+                    </defs>
+                    <rect width="380" height="125" fill="url(#sanctuarySky)"/>
+                    <circle cx="190" cy="48" r="55" fill="url(#treeAura)"/>
+                    <path d="M190,65 Q150,45 130,25 Q160,5 200,20 Q240,0 260,25 Q230,45 190,65 Z" fill="#15803d"/>
+                    <g transform="translate(180, 60)">
+                        <line x1="16" y1="2" x2="16" y2="52" stroke="#451a03" stroke-width="2.8"/>
+                        <circle cx="16" cy="2" r="10" fill="#10b981"/>
+                    </g>
+                </svg>
+            </div>
+            <div class="ending-card-box">
+                <span class="ending-badge-top" id="endingSubBadge">GUARDIAN PURIFIED</span>
+                <h2 class="ending-title" id="endingTitle">축복받은 영원의 낙원</h2>
+                <div class="ending-divider">❖ ❖ ❖</div>
+                <div class="ending-desc" id="endingDesc">
+                    수호령의 시련을 이겨내고 이 영지의 모든 정령과 영원의 계약을 맺었습니다!
+                </div>
+                <div class="ending-stat-pill" id="endingContractStats">
+                    정령 계약 완료: 10 / 10마리 (100%)
+                </div>
+            </div>
+        </div>
+        <div>
+            <button class="btn-wood" style="background:#16a34a; border-color:#15803d; margin-bottom:6px;" onclick="backToLobbyFromEnding()">
+                🏕️ 탐험 전초기지로 돌아가기
+            </button>
+            <button class="btn-sub-wood" onclick="backToTitleScreen()">
+                🗺️ 대륙 지도로 이동
+            </button>
+        </div>
+    </div>
+
+    <!-- 🌟 전 대륙 제패 & 마왕 결전 각성 팝업 -->
+    <div id="greatAwakeningModal" class="modal" style="background:#1f0910; border-color:#ef4444; color:#fff;">
+        <div style="flex:1; display:flex; flex-direction:column; justify-content:center; align-items:center; width:100%;">
+            <div class="art-box" style="margin-bottom:8px; border-color:#ef4444;">
+                <svg class="art-svg" viewBox="0 0 380 125" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <radialGradient id="redFlash" cx="50%" cy="50%" r="50%">
+                            <stop offset="0%" stop-color="#ffedd5"/><stop offset="40%" stop-color="#ef4444"/><stop offset="100%" stop-color="#450a0a"/>
+                        </radialGradient>
+                    </defs>
+                    <rect width="380" height="125" fill="#2d0612"/>
+                    <circle cx="190" cy="60" r="65" fill="url(#redFlash)" opacity="0.8"/>
+                    <polygon points="190,25 205,55 240,60 215,85 220,120 190,100 160,120 165,85 140,60 175,55" fill="#fef08a"/>
+                </svg>
+            </div>
+            <div class="ending-card-box" style="background:#3b0717; border-color:#ef4444;">
+                <span class="ending-badge-top" style="color:#f87171;">THE FINAL SEAL SHATTERED</span>
+                <h2 class="ending-title" style="color:#fee2e2; font-size:20px;">대륙의 모든 정령 해방!</h2>
+                <div class="ending-divider" style="color:#ef4444;">✦ ✦ ✦</div>
+                <div class="ending-desc" style="color:#fecdd3;">
+                    전 대륙 모든 영지의 수호령들이 정화되었습니다!<br>
+                    정령들의 결속에 분노한 <b>마왕 『EXAM』</b>이 최후의 결전을 위해 강림했습니다!
+                </div>
+                <div class="ending-stat-pill" style="background:#7f1d1d; border-color:#ef4444; color:#fee2e2;">
+                    👑 전설의 계급: [정령왕의 벗] 각성 완료
+                </div>
+            </div>
+        </div>
+        <div>
+            <button class="btn-wood" style="background:linear-gradient(180deg, #dc2626 0%, #991b1b 100%); border-color:#ef4444; font-size:14px; padding:12px; margin-bottom:6px;" onclick="goToBossFromAwakening()">
+                ⚔️ 마왕 『EXAM』 즉시 토벌하러 가기! ➔
+            </button>
+            <button class="btn-sub-wood" style="background:#27141b; color:#fca5a5; border-color:#831843;" onclick="closeAwakeningToTitle()">
+                🗺️ 대륙 지도로 이동해 준비하기
+            </button>
+        </div>
+    </div>
+
+    <!-- 마왕 격파 진엔딩 모달 -->
+    <div id="bossVictoryModal" class="modal">
+        <div style="flex:1; display:flex; flex-direction:column; justify-content:center; align-items:center; width:100%;">
+            <!-- 🌟 찬란한 여명과 4대 수호령 알현 일러스트 -->
+            <div class="art-box" style="margin-bottom:8px; border-color:#d97706; height:130px;">
+                <svg class="art-svg" viewBox="0 0 380 130" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <linearGradient id="victoryDawnSky" x1="0%" y1="0%" x2="0%" y2="100%">
+                            <stop offset="0%" stop-color="#4a154b"/><stop offset="35%" stop-color="#9a3412"/><stop offset="70%" stop-color="#d97706"/><stop offset="100%" stop-color="#fef3c7"/>
+                        </linearGradient>
+                        <radialGradient id="victorySunGlow" cx="50%" cy="50%" r="50%">
+                            <stop offset="0%" stop-color="#ffffff"/><stop offset="45%" stop-color="#fef08a"/><stop offset="80%" stop-color="#f59e0b"/><stop offset="100%" stop-color="#f59e0b" stop-opacity="0"/>
+                        </radialGradient>
+                    </defs>
+                    <!-- 황금빛 아침 여명 하늘 -->
+                    <rect width="380" height="130" fill="url(#victoryDawnSky)"/>
+                    <circle cx="190" cy="75" r="65" fill="url(#victorySunGlow)" opacity="0.9"/>
+                    
+                    <!-- 지혜의 영원한 산맥 라인 -->
+                    <path d="M0,130 Q90,95 190,110 T380,105 L380,130 L0,130 Z" fill="#291a10"/>
+                    <path d="M-10,130 Q100,105 200,118 T390,115 L390,130 L-10,130 Z" fill="#170d07"/>
+                    
+                    <!-- [수호령 1] 숲의 성록 (좌측 경배 실루엣) -->
+                    <g transform="translate(60, 75)" fill="#fbbf24" opacity="0.9">
+                        <ellipse cx="15" cy="25" rx="12" ry="8"/>
+                        <path d="M22,22 Q28,12 26,4 Q24,0 20,4 Z"/>
+                        <path d="M25,5 Q32,0 35,-6 M27,2 Q36,2 40,-2" stroke="#fbbf24" stroke-width="2" fill="none" stroke-linecap="round"/>
+                        <line x1="8" y1="28" x2="6" y2="45" stroke="#fbbf24" stroke-width="2.5"/>
+                        <line x1="20" y1="28" x2="22" y2="45" stroke="#fbbf24" stroke-width="2.5"/>
+                    </g>
+
+                    <!-- [수호령 2] 심해의 해수 (좌측 하단 물결 도약) -->
+                    <g transform="translate(10, 95)" fill="#38bdf8" opacity="0.85">
+                        <path d="M0,15 Q25,-5 48,8 Q35,16 20,18 Z"/>
+                        <polygon points="45,6 55,-2 52,12"/>
+                    </g>
+
+                    <!-- [수호령 3] 천공의 환조 (우측 하늘 선회) -->
+                    <g transform="translate(285, 30)" fill="#fef08a" opacity="0.95">
+                        <path d="M25,18 Q15,0 0,6 Q16,18 20,28 Q26,18 42,6 Q28,0 25,18 Z"/>
+                        <line x1="21" y1="26" x2="16" y2="42" stroke="#fef08a" stroke-width="1.8" stroke-dasharray="2,2"/>
+                        <line x1="23" y1="26" x2="27" y2="42" stroke="#fef08a" stroke-width="1.8" stroke-dasharray="2,2"/>
+                    </g>
+
+                    <!-- [수호령 4] 영겁의 신수 (우측 절벽 경배 실루엣) -->
+                    <g transform="translate(275, 78)" fill="#fbbf24" opacity="0.9">
+                        <ellipse cx="20" cy="22" rx="14" ry="9"/>
+                        <circle cx="9" cy="15" r="7"/>
+                        <polygon points="6,9 4,2 10,7"/>
+                        <path d="M30,24 Q42,20 40,32" stroke="#fbbf24" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+                        <line x1="12" y1="26" x2="10" y2="44" stroke="#fbbf24" stroke-width="2.5"/>
+                        <line x1="26" y1="26" x2="28" y2="44" stroke="#fbbf24" stroke-width="2.5"/>
+                    </g>
+
+                    <!-- 중앙: 각성한 정령왕의 지팡이 & 뿜어져 나오는 지혜의 빛 -->
+                    <g transform="translate(175, 20)">
+                        <line x1="15" y1="20" x2="15" y2="105" stroke="#78350f" stroke-width="3.5" stroke-linecap="round"/>
+                        <circle cx="15" cy="18" r="16" fill="#fef08a" opacity="0.4"/>
+                        <polygon points="15,4 19,14 30,15 21,23 24,33 15,27 6,33 9,23 0,15 11,14" fill="#fbbf24"/>
+                        <circle cx="15" cy="18" r="5" fill="#ffffff"/>
+                    </g>
+                </svg>
+            </div>
+
+            <!-- 🌟 진엔딩 스토리 & 명예 헌정 배너 -->
+            <div class="ending-card-box" style="padding:14px 12px; margin-bottom:8px; background:linear-gradient(180deg, #fffdf7 0%, #fef3c7 100%); border-color:#d97706;">
+                <span class="ending-badge-top" style="color:#b45309; letter-spacing:2.5px;">✦ THE ABSOLUTE MASTER OF WORDS ✦</span>
+                <h2 class="ending-title" style="color:#92400e; font-size:18px; margin:2px 0 4px 0;">
+                    마왕 『EXAM』 완전 격파!<br>
+                    <span style="font-size:15px; color:#b45309;">단어의 지배자, 1등급의 여명을 열다</span>
+                </h2>
+                <div class="ending-divider" style="color:#d97706; margin:4px 0 6px 0;">❖ ❖ ❖</div>
+                <div class="ending-desc" style="color:#451a03; font-size:11px; line-height:1.6; margin-bottom:8px;">
+                    세상을 망각에 빠뜨렸던 마왕 『EXAM』의 가혹한 시험이<br>
+                    당신의 압도적인 지혜 앞에 산산이 부서져 내렸습니다.<br><br>
+                    대륙의 모든 정령이 본래의 진명을 되찾아 노래하고,<br>
+                    4대 성역의 수호령들이 무릎 꿇어 그대를 경배합니다.<br><br>
+                    <b>최고의 정령술사여!</b><br>
+                    수백 번의 망각을 이겨내고 단어의 주인이 된 당신에게,<br>
+                    다가올 현실의 시험 또한 찬란한 <b>증명의 무대</b>일 뿐입니다!
+                </div>
+                <div class="ending-stat-pill" style="background:#fde68a; border-color:#d97706; color:#78350f; font-size:10.5px; padding:5px 12px;">
+                    👑 칭호 : [대륙의 구원자 · 내신 정복의 전설] 영구 각성
+                </div>
+            </div>
+        </div>
+        <button class="btn-wood" style="background:#b45309; padding:11px;" onclick="backToTitleFromBossVictory()">
+            🏆 영광의 타이틀로 복귀
+        </button>
+    </div>
+
+
+    <!-- 모험 일지 모달 -->
+    <div id="bookModal" class="modal">
+        <div class="book-modal-content">
+            <div class="book-tab-bar">
+                <button class="tab-btn active" id="tabBtn1" onclick="switchBookTab(1)">🌿 정령 도감</button>
+                <button class="tab-btn" id="tabBtn2" onclick="switchBookTab(2)">📜 성장 로드맵</button>
+                <button class="tab-btn" id="tabBtn3" onclick="switchBookTab(3)">🏆 명예 & 칭호</button>
+            </div>
+
+            <!-- 1번 탭: 정령 도감 -->
+            <div class="tab-content active" id="tabContent1">
+                <div id="inGameBookView">
+                    <div class="stamp-box-wrapper">
+                        <div class="stamp-title-row">
+                            <span id="mapBookTitleText">🌟 이 영지의 교감도</span>
+                            <span id="overallPercentageText" style="font-weight:900; color:#b45309;">0%</span>
+                        </div>
+                        <div class="overall-gauge-container">
+                            <div class="overall-gauge-bar" id="overallGaugeBar"></div>
+                        </div>
+                    </div>
+                    <div id="wordListContainer"></div>
+                </div>
+
+                <div id="titleBookView" style="display:none;">
+                    <div class="stamp-box-wrapper" style="margin-bottom:8px;">
+                        <div class="stamp-title-row">
+                            <span>👑 전 대륙 통합 성취도</span>
+                            <span id="titleOverallPercentText" style="font-weight:900; color:#b45309;">0%</span>
+                        </div>
+                        <div class="overall-gauge-container">
+                            <div class="overall-gauge-bar" id="titleOverallGaugeBar"></div>
+                        </div>
+                        <div style="font-size:10px; color:#785a3e; text-align:right; font-weight:700; margin-top:3px;" id="titleTotalWordsSummary">계약: 0 / 0마리</div>
+                    </div>
+                    <div id="titleWorldMapOverviewList"></div>
+                </div>
+            </div>
+
+            <!-- 2번 탭: 성장 로드맵 -->
+            <div class="tab-content" id="tabContent2">
+                <div class="roadmap-card">
+                    <h4>🧙‍♂️ 정령술사 7단계 계급 (전 대륙 정령 계약 비례)</h4>
+                    <div id="tierRoadmapList"></div>
+                </div>
+                <div class="roadmap-card">
+                    <h4>🗺️ 영지 정복 5단계 여정 (정화와 교감)</h4>
+                    <div id="mapMasteryRoadmapList"></div>
+                </div>
+                <div class="roadmap-card">
+                    <h4>💖 개별 정령 교감 4단계 (3회 달성 시 영원의 계약)</h4>
+                    <div class="timeline-item">
+                        <span>야생의 정령 🌿</span>
+                        <span style="color:#785a3e; font-weight:700;">미개방 (0회)</span>
+                    </div>
+                    <div class="timeline-item">
+                        <span>서먹한 대면 🐾</span>
+                        <span style="color:#b45309; font-weight:700;">1회 달성</span>
+                    </div>
+                    <div class="timeline-item">
+                        <span>따스한 유대 🍃</span>
+                        <span style="color:#15803d; font-weight:700;">2회 달성</span>
+                    </div>
+                    <div class="timeline-item" style="border: 1px solid #f59e0b; background:#fffbeb;">
+                        <span style="color:#b45309; font-weight:800;">영원의 계약 🌟</span>
+                        <span style="color:#b45309; font-weight:900;">완벽 마스터 (3회 완료)</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3번 탭: 🌟 명예의 전당 & 칭호 수집 (신규) -->
+            <div class="tab-content" id="tabContent3">
+                <div class="record-dashboard-card">
+                    <div style="font-size:12px; font-weight:900; color:#4b301c; border-bottom:1px dashed #c9b48c; padding-bottom:3px;">
+                        👑 개인 신기록 명예의 전당
+                    </div>
+                    <div class="record-grid">
+                        <div class="record-item-box">
+                            <span class="record-item-label">⚡ 마왕 토벌 최단시간</span>
+                            <span class="record-item-val" id="recFastestTime">기록 없음</span>
+                        </div>
+                        <div class="record-item-box">
+                            <span class="record-item-label">🔥 역대 최고 콤보</span>
+                            <span class="record-item-val" id="recMaxStreak">0연속</span>
+                        </div>
+                        <div class="record-item-box">
+                            <span class="record-item-label">👑 마왕 노데미지 완승</span>
+                            <span class="record-item-val" id="recNoDamage">미달성</span>
+                        </div>
+                        <div class="record-item-box">
+                            <span class="record-item-label">⚔️ 마왕 누적 토벌</span>
+                            <span class="record-item-val" id="recBossClearCount">0회</span>
+                        </div>
+                        <div class="record-item-box">
+                            <span class="record-item-label">🍂 총 오답 정령</span>
+                            <span class="record-item-val" id="recTotalWrong">0회</span>
+                        </div>
+                        <div class="record-item-box">
+                            <span class="record-item-label">⏳ 타임오버 횟수</span>
+                            <span class="record-item-val" id="recTimeOutCount">0회</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="font-size:12px; font-weight:900; color:#4b301c; text-align:left; margin:6px 0 2px 2px;">
+                    🎖️ 칭호 도감 (클릭하여 장착)
+                </div>
+                <div class="achieve-list-container" id="achieveListContainer"></div>
+            </div>
+
+            <button class="btn-wood" style="margin-top: 8px; padding: 9px;" onclick="closeWordBook()">모험 일지 덮기</button>
+        </div>
+    </div>
+</div>
+
+<script>
+
+/* ========================================================
+       🎖️ 칭호 15종 및 명예의 전당 기록 시스템
+       ======================================================== */
+    const ALL_TITLES = [
+        { id: "first_bond", name: "🌱 첫 걸음의 탐색자", desc: "첫 번째 정령과 영원의 계약 완료" },
+        { id: "ten_bonds", name: "🍃 삼세번의 미덕", desc: "누적 10마리 정령과 계약 체결" },
+        { id: "all_master", name: "📚 걸어 다니는 단어장", desc: "대륙의 모든 정령(100%) 계약 완료" },
+        { id: "combo_7", name: "🔥 불꽃의 암기 머신", desc: "퀴즈에서 7연속 콤보 달성" },
+        { id: "combo_15", name: "⚡ 신들린 뇌세포", desc: "퀴즈에서 15연속 콤보 달성" },
+        { id: "mid_no_dmg", name: "🛡️ 철벽의 결계사", desc: "수호령전을 노데미지(하트 3개 온존)로 클리어" },
+        { id: "speed_demon", name: "⏱️ 광속의 정령술사", desc: "마왕 『EXAM』을 25초 이내에 토벌" },
+        { id: "boss_3", name: "👑 마왕의 천적", desc: "마왕 『EXAM』을 3회 이상 토벌" },
+        { id: "clutch_win", name: "🩸 피 1로 버틴 턱걸이", desc: "하트 1개 남은 빈사 상태로 마왕 격파" },
+        { id: "legend_ok", name: "🌟 옥정 1등급의 전설", desc: "마왕전을 노데미지(하트 3개 온존)로 완전 토벌" },
+        { id: "wrong_20", name: "🍂 정령 기피 대상 1호", desc: "누적 오답 20회 달성 (정령들이 당신을 피합니다)" },
+        { id: "wrong_50", name: "🌾 오답도 거름이 된다", desc: "누적 오답 50회 달성 (실패는 1등급의 어머니)" },
+        { id: "time_out", name: "⏳ 시간을 달리는 멍때림", desc: "보스전에서 시간 초과(Time Over) 3회 겪음" },
+        { id: "mental_break", name: "💔 깨진 유리 멘탈", desc: "보스전에서 하트 3개를 모두 잃고 패배" },
+        { id: "phoenix", name: "🩹 칠전팔기 불사조", desc: "보스전에서 패배한 직후 다시 도전해서 승리" }
+    ];
+
+    let gameRecords = safeStorageGet('spirit_records_data', {
+        fastestBossTime: null,
+        maxStreak: 0,
+        bossClearCount: 0,
+        bossNoDamage: false,
+        totalWrong: 0,
+        timeOutCount: 0,
+        bossDefeatCount: 0,
+        equippedTitle: "🌱 첫 걸음의 탐색자",
+        unlocked: ["first_bond"]
+    });
+
+    let bossStartTime = 0;
+    let hadBossDefeatBefore = false;
+
+    function saveRecords() {
+        safeStorageSet('spirit_records_data', gameRecords);
+        updateEquippedBadgeDisplay();
+    }
+
+    function unlockTitle(titleId) {
+        if (!gameRecords.unlocked.includes(titleId)) {
+            gameRecords.unlocked.push(titleId);
+            saveRecords();
+            const t = ALL_TITLES.find(item => item.id === titleId);
+            if (t) {
+                setTimeout(() => alert(`🎖️ [새로운 칭호 획득!]\n"${t.name}"\n${t.desc}`), 500);
+            }
+        }
+    }
+
+    function equipTitle(titleId) {
+        const t = ALL_TITLES.find(item => item.id === titleId);
+        if (!t || !gameRecords.unlocked.includes(titleId)) return;
+        gameRecords.equippedTitle = t.name;
+        saveRecords();
+        renderTitleAndRecordsTab();
+        Sound.fanfare();
+    }
+
+    function updateEquippedBadgeDisplay() {
+        const badge = document.getElementById("titleEquippedBadge");
+        if (badge) badge.innerText = gameRecords.equippedTitle || "🌱 칭호 없음";
+    }
+
+    function renderTitleAndRecordsTab() {
+        // 기록판 갱신
+        document.getElementById("recFastestTime").innerText = gameRecords.fastestBossTime ? `${gameRecords.fastestBossTime}초 ⚡` : "기록 없음";
+        document.getElementById("recMaxStreak").innerText = `${gameRecords.maxStreak}연속`;
+        document.getElementById("recNoDamage").innerText = gameRecords.bossNoDamage ? "👑 달성 완료!" : "미달성";
+        document.getElementById("recBossClearCount").innerText = `${gameRecords.bossClearCount}회`;
+        document.getElementById("recTotalWrong").innerText = `${gameRecords.totalWrong}회`;
+        document.getElementById("recTimeOutCount").innerText = `${gameRecords.timeOutCount}회`;
+
+        // 칭호 목록 갱신
+        const container = document.getElementById("achieveListContainer");
+        if (!container) return;
+        container.innerHTML = "";
+
+        ALL_TITLES.forEach(t => {
+            const isUnlocked = gameRecords.unlocked.includes(t.id);
+            const isEquipped = (gameRecords.equippedTitle === t.name);
+
+            const card = document.createElement("div");
+            card.className = `achieve-card ${!isUnlocked ? 'locked' : ''} ${isEquipped ? 'equipped' : ''}`;
+            card.innerHTML = `
+                <div class="achieve-info">
+                    <span class="achieve-title">${isUnlocked ? t.name : '🔒 ' + t.name}</span>
+                    <span class="achieve-desc">${t.desc}</span>
+                </div>
+                <div>
+                    ${!isUnlocked 
+                        ? '<span style="font-size:10px; color:#94a3b8; font-weight:800;">잠김</span>'
+                        : (isEquipped 
+                            ? '<button class="achieve-btn equipped">장착 중</button>' 
+                            : `<button class="achieve-btn" onclick="equipTitle('${t.id}')">장착</button>`)}
+                </div>
+            `;
+            container.appendChild(card);
+        });
+    }
+
+
+
+
+
+    const WORDS_PER_SECTOR = 20;
+
+    /* ========================================================
+       🎵 사운드 엔진
+       ======================================================== */
+    const Sound = {
+        ctx: null,
+        muted: safeStorageGet('spirit_muted', false),
+        init() {
+            if (!this.ctx) {
+                const AudioContext = window.AudioContext || window.webkitAudioContext;
+                if (AudioContext) this.ctx = new AudioContext();
+            }
+            if (this.ctx && this.ctx.state === 'suspended') {
+                this.ctx.resume();
+            }
+        },
+        toggleMute() {
+            this.muted = !this.muted;
+            safeStorageSet('spirit_muted', this.muted);
+            return this.muted;
+        },
+        playTone(freq, type, duration, startVol = 0.2, endVol = 0) {
+            if (this.muted) return;
+            this.init();
+            if (!this.ctx) return;
+            try {
+                const osc = this.ctx.createOscillator();
+                const gain = this.ctx.createGain();
+                osc.type = type;
+                osc.frequency.setValueAtTime(freq, this.ctx.currentTime);
+                gain.gain.setValueAtTime(startVol, this.ctx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(Math.max(0.0001, endVol), this.ctx.currentTime + duration);
+                osc.connect(gain);
+                gain.connect(this.ctx.destination);
+                osc.start();
+                osc.stop(this.ctx.currentTime + duration);
+            } catch(e) {}
+        },
+        click() {
+            this.playTone(700, 'triangle', 0.04, 0.12, 0.001);
+        },
+        countdownTick() {
+            this.playTone(550, 'sine', 0.09, 0.25, 0.01);
+        },
+        countdownStart() {
+            this.playTone(880, 'triangle', 0.35, 0.35, 0.001);
+        },
+        correct(combo = 0) {
+            if (this.muted) return;
+            this.init();
+            const pitchBonus = Math.min(combo * 40, 240);
+            const notes = [523.25 + pitchBonus, 659.25 + pitchBonus, 783.99 + pitchBonus, 1046.50 + pitchBonus];
+            notes.forEach((freq, idx) => {
+                setTimeout(() => {
+                    this.playTone(freq, 'sine', 0.16, 0.22, 0.001);
+                }, idx * 55);
+            });
+        },
+        wrong() {
+            if (this.muted) return;
+            this.init();
+            this.playTone(220, 'sawtooth', 0.2, 0.18, 0.001);
+            setTimeout(() => this.playTone(164.81, 'sawtooth', 0.25, 0.18, 0.001), 90);
+        },
+        fanfare() {
+            if (this.muted) return;
+            this.init();
+            const melody = [
+                { f: 523.25, d: 0.12 },
+                { f: 659.25, d: 0.12 },
+                { f: 783.99, d: 0.14 },
+                { f: 1046.50, d: 0.42 }
+            ];
+            let delay = 0;
+            melody.forEach(m => {
+                setTimeout(() => {
+                    this.playTone(m.f, 'triangle', m.d, 0.25, 0.001);
+                }, delay);
+                delay += m.d * 1000 + 25;
+            });
+        },
+        hit() {
+            if (this.muted) return;
+            this.init();
+            this.playTone(950, 'square', 0.07, 0.18, 0.01);
+        },
+        damage() {
+            if (this.muted) return;
+            this.init();
+            this.playTone(130, 'sawtooth', 0.3, 0.28, 0.01);
+        }
+    };
+
+    function toggleSound() {
+        const isMuted = Sound.toggleMute();
+        const btn = document.getElementById("soundToggleBtn");
+        if (btn) btn.innerText = isMuted ? "🔇 음소거" : "🔊 소리";
+    }
+
+    /* ========================================================
+       🗺️ 4대 테마 및 수호령 엔진
+       ======================================================== */
+    function getMapTheme(mapName, mapId) {
+        const name = (mapName || "").toLowerCase();
+        
+        if (name.includes('숲') || name.includes('나무') || name.includes('식물') || name.includes('정원') || name.includes('골짜기') || name.includes('자연') || name.includes('forest') || name.includes('tree')) {
+            return { type: 'forest', name: '신록의 숲', guardianName: '숲의 성록', defaultDesc: '자연의 생명력과 싱그러운 지혜를 품은 정령들이 노니는 곳' };
+        }
+        if (name.includes('호수') || name.includes('바다') || name.includes('물') || name.includes('강') || name.includes('샘') || name.includes('폭포') || name.includes('섬') || name.includes('ocean') || name.includes('lake') || name.includes('sea')) {
+            return { type: 'water', name: '푸른 수정 호수', guardianName: '심해의 해수', defaultDesc: '맑고 투명한 물결과 신비로운 마력이 깃든 정령들이 노니는 곳' };
+        }
+        if (name.includes('하늘') || name.includes('바람') || name.includes('구름') || name.includes('산') || name.includes('고원') || name.includes('언덕') || name.includes('별') || name.includes('sky') || name.includes('wind')) {
+            return { type: 'sky', name: '천공의 바람 고원', guardianName: '천공의 환조', defaultDesc: '높은 바람과 자유로운 날개를 지닌 정령들이 노니는 곳' };
+        }
+        if (name.includes('유적') || name.includes('신전') || name.includes('사원') || name.includes('도서관') || name.includes('책') || name.includes('고대') || name.includes('교과서') || name.includes('temple') || name.includes('ruin') || name.includes('book')) {
+            return { type: 'ruins', name: '황혼의 고대 신전', guardianName: '영겁의 신수', defaultDesc: '고대 선현들의 깊은 언어와 지혜의 숨결이 깃든 정령들이 노니는 곳' };
+        }
+
+        const themes = ['forest', 'water', 'sky', 'ruins'];
+        const fallbackType = themes[Math.abs(hashCode(mapId)) % themes.length];
+        if (fallbackType === 'water') return { type: 'water', name: '푸른 수정 호수', guardianName: '심해의 해수', defaultDesc: '맑고 투명한 물결과 신비로운 마력이 깃든 정령들이 노니는 곳' };
+        if (fallbackType === 'sky') return { type: 'sky', name: '천공의 바람 고원', guardianName: '천공의 환조', defaultDesc: '높은 바람과 자유로운 날개를 지닌 정령들이 노니는 곳' };
+        if (fallbackType === 'ruins') return { type: 'ruins', name: '황혼의 고대 신전', guardianName: '영겁의 신수', defaultDesc: '고대 선현들의 깊은 언어와 지혜의 숨결이 깃든 정령들이 노니는 곳' };
+        return { type: 'forest', name: '신록의 숲', guardianName: '숲의 성록', defaultDesc: '자연의 생명력과 싱그러운 지혜를 품은 정령들이 노니는 곳' };
+    }
+
+    function getThemeLandscapeSVG(themeType) {
+        if (themeType === 'water') {
+            return `
+            <svg class="art-svg" viewBox="0 0 380 95" xmlns="http://www.w3.org/2000/svg">
+                <defs><linearGradient id="waterSky" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stop-color="#082f49"/><stop offset="60%" stop-color="#0369a1"/><stop offset="100%" stop-color="#38bdf8"/></linearGradient></defs>
+                <rect width="380" height="95" fill="url(#waterSky)"/>
+                <path d="M120,40 Q160,20 210,30 Q260,40 280,25 Q270,50 240,55 Q180,62 130,50 Z" fill="#0284c7" opacity="0.35"/>
+                <polygon points="260,35 275,18 280,33" fill="#38bdf8" opacity="0.4"/>
+                <ellipse cx="190" cy="78" rx="200" ry="25" fill="#075985"/>
+                <ellipse cx="190" cy="88" rx="190" ry="18" fill="#0c4a6e"/>
+                <path d="M20,85 Q80,78 150,85 T300,82 T380,85" stroke="#7dd3fc" stroke-width="1.5" fill="none" opacity="0.6"/>
+            </svg>`;
+        } else if (themeType === 'sky') {
+            return `
+            <svg class="art-svg" viewBox="0 0 380 95" xmlns="http://www.w3.org/2000/svg">
+                <defs><linearGradient id="skySky" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stop-color="#2e1065"/><stop offset="50%" stop-color="#5b21b6"/><stop offset="100%" stop-color="#ddd6fe"/></linearGradient></defs>
+                <rect width="380" height="95" fill="url(#skySky)"/>
+                <path d="M190,40 Q150,12 110,22 Q145,40 170,50 Q190,60 210,50 Q235,40 270,22 Q230,12 190,40 Z" fill="#c084fc" opacity="0.45"/>
+                <polygon points="30,95 75,50 120,95" fill="#1e1b4b"/>
+                <polygon points="260,95 310,42 360,95" fill="#1e1b4b"/>
+                <ellipse cx="190" cy="88" rx="200" ry="16" fill="#f5f3ff" opacity="0.9"/>
+            </svg>`;
+        } else if (themeType === 'ruins') {
+            return `
+            <svg class="art-svg" viewBox="0 0 380 95" xmlns="http://www.w3.org/2000/svg">
+                <defs><linearGradient id="ruinSky" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stop-color="#451a03"/><stop offset="60%" stop-color="#b45309"/><stop offset="100%" stop-color="#fef3c7"/></linearGradient></defs>
+                <rect width="380" height="95" fill="url(#ruinSky)"/>
+                <ellipse cx="190" cy="45" rx="35" ry="18" fill="#78350f" opacity="0.4"/>
+                <polygon points="162,26 166,15 174,24" fill="#f59e0b" opacity="0.5"/>
+                <polygon points="172,26 178,15 184,24" fill="#f59e0b" opacity="0.5"/>
+                <rect x="50" y="38" width="14" height="57" fill="#292524"/>
+                <rect x="310" y="38" width="14" height="57" fill="#292524"/>
+                <rect x="0" y="80" width="380" height="15" fill="#1c1917"/>
+            </svg>`;
+        } else {
+            return `
+            <svg class="art-svg" viewBox="0 0 380 95" xmlns="http://www.w3.org/2000/svg">
+                <defs><linearGradient id="forestSky" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stop-color="#064e3b"/><stop offset="60%" stop-color="#047857"/><stop offset="100%" stop-color="#a7f3d0"/></linearGradient></defs>
+                <rect width="380" height="95" fill="url(#forestSky)"/>
+                <path d="M190,50 L175,30 L145,18 L160,38 L135,40 L158,52 L142,68 L168,64 L180,78 L190,58 L200,78 L212,64 L238,68 L222,52 L245,40 L220,38 L235,18 L205,30 Z" fill="#065f46" opacity="0.4"/>
+                <path d="M-20,80 Q80,60 180,76 T380,68 L400,95 L-20,95 Z" fill="#064e3b"/>
+                <path d="M-10,85 Q100,76 220,85 T400,80 L400,95 L-10,95 Z" fill="#022c22"/>
+                <circle cx="90" cy="65" r="2" fill="#fef08a" opacity="0.8"/><circle cx="280" cy="60" r="2" fill="#a7f3d0" opacity="0.8"/>
+            </svg>`;
+        }
+    }
+
+    function getThemeGuardianBossSVG(themeType) {
+        if (themeType === 'water') {
+            return `
+            <svg class="art-svg" viewBox="0 0 380 110" xmlns="http://www.w3.org/2000/svg">
+                <defs><radialGradient id="waterAura" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#38bdf8"/><stop offset="70%" stop-color="#0284c7"/><stop offset="100%" stop-color="#082f49"/></radialGradient></defs>
+                <rect width="380" height="110" fill="#082f49"/>
+                <circle cx="190" cy="55" r="50" fill="url(#waterAura)" opacity="0.7"/>
+                <path d="M100,60 Q150,25 220,40 Q280,50 300,35 Q290,68 250,75 Q180,85 110,70 Z" fill="#0284c7"/>
+                <polygon points="265,48 290,20 295,45" fill="#38bdf8"/>
+                <circle cx="135" cy="56" r="4" fill="#ffffff"/><circle cx="135" cy="56" r="2" fill="#082f49"/>
+                <polygon points="180,32 186,44 178,44" fill="#fef08a"/>
+            </svg>`;
+        } else if (themeType === 'sky') {
+            return `
+            <svg class="art-svg" viewBox="0 0 380 110" xmlns="http://www.w3.org/2000/svg">
+                <defs><radialGradient id="skyAura" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#c084fc"/><stop offset="70%" stop-color="#7c3aed"/><stop offset="100%" stop-color="#2e1065"/></radialGradient></defs>
+                <rect width="380" height="110" fill="#1e1035"/>
+                <circle cx="190" cy="55" r="50" fill="url(#skyAura)" opacity="0.7"/>
+                <path d="M190,40 Q140,5 90,20 Q135,45 165,60 Q190,75 215,60 Q245,45 290,20 Q240,5 190,40 Z" fill="#a855f7"/>
+                <polygon points="190,20 180,45 200,45" fill="#fbbf24"/>
+                <circle cx="180" cy="48" r="4" fill="#fff"/><circle cx="200" cy="48" r="4" fill="#fff"/>
+            </svg>`;
+        } else if (themeType === 'ruins') {
+            return `
+            <svg class="art-svg" viewBox="0 0 380 110" xmlns="http://www.w3.org/2000/svg">
+                <defs><radialGradient id="ruinAura" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#fde047"/><stop offset="70%" stop-color="#d97706"/><stop offset="100%" stop-color="#451a03"/></radialGradient></defs>
+                <rect width="380" height="110" fill="#271305"/>
+                <circle cx="190" cy="55" r="50" fill="url(#ruinAura)" opacity="0.7"/>
+                <circle cx="190" cy="55" r="28" fill="#d97706"/><circle cx="190" cy="55" r="20" fill="#fef3c7"/>
+                <polygon points="172,32 176,15 186,28" fill="#b45309"/><polygon points="208,32 204,15 194,28" fill="#b45309"/>
+                <circle cx="182" cy="52" r="4" fill="#b45309"/><circle cx="198" cy="52" r="4" fill="#b45309"/>
+            </svg>`;
+        } else {
+            return `
+            <svg class="art-svg" viewBox="0 0 380 110" xmlns="http://www.w3.org/2000/svg">
+                <defs><radialGradient id="forestAura" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#34d399"/><stop offset="60%" stop-color="#059669"/><stop offset="100%" stop-color="#022c22"/></radialGradient></defs>
+                <rect width="380" height="110" fill="#022c22"/>
+                <circle cx="190" cy="55" r="50" fill="url(#forestAura)" opacity="0.6"/>
+                <path d="M190,15 L175,40 L140,25 L160,52 L130,55 L160,70 L145,95 L175,85 L190,105 L205,85 L235,95 L220,70 L250,55 L220,52 L240,25 L205,40 Z" fill="#10b981"/>
+                <circle cx="178" cy="55" r="5" fill="#38bdf8"/><circle cx="178" cy="55" r="2" fill="#fff"/>
+                <circle cx="202" cy="55" r="5" fill="#38bdf8"/><circle cx="202" cy="55" r="2" fill="#fff"/>
+                <polygon points="190,32 195,42 190,50 185,42" fill="#fef08a"/>
+            </svg>`;
+        }
+    }
+
+
+/* ========================================================
+       💥 실시간 전투 타격 이펙트 제어기
+       ======================================================== */
+    // 보스 피격 참격 & 흔들림 & 데미지 텍스트
+    function triggerBossHitEffect(isCrit = false) {
+        const bossBox = document.getElementById("bossArtBox");
+        if (!bossBox) return;
+
+        // 1. 참격 광선 (크리티컬 시 더블 참격)
+        const slash1 = document.createElement("div");
+        slash1.className = "slash-beam";
+        slash1.style.setProperty("--rot", "-32deg");
+        bossBox.appendChild(slash1);
+
+        if (isCrit) {
+            const slash2 = document.createElement("div");
+            slash2.className = "slash-beam cross";
+            slash2.style.setProperty("--rot", "32deg");
+            bossBox.appendChild(slash2);
+        }
+
+        // 2. 보스 진동 & 번쩍임
+        bossBox.classList.remove("enemy-hit-shake");
+        void bossBox.offsetWidth; // 리플로우 강제
+        bossBox.classList.add("enemy-hit-shake");
+
+        // 3. 플로팅 데미지 텍스트
+        const dmgText = document.createElement("div");
+        dmgText.className = "floating-damage-txt";
+        dmgText.innerText = isCrit ? "💥 CRITICAL! -1 HP" : "⚡ HIT! -1 HP";
+        bossBox.appendChild(dmgText);
+
+        setTimeout(() => {
+            slash1.remove();
+            if (isCrit) slash2.remove();
+            dmgText.remove();
+            bossBox.classList.remove("enemy-hit-shake");
+        }, 650);
+    }
+
+    // 플레이어 피격 시 화면 진동 & 붉은 번쩍임
+    function triggerPlayerDamageEffect() {
+        const container = document.querySelector(".game-container");
+        const inner = document.querySelector(".parchment-inner");
+        if (!container || !inner) return;
+
+        // 1. 게임 프레임 흔들림
+        container.classList.remove("screen-damage-shake");
+        void container.offsetWidth;
+        container.classList.add("screen-damage-shake");
+
+        // 2. 붉은 비네팅 오버레이 생성
+        const vignette = document.createElement("div");
+        vignette.className = "damage-vignette-overlay";
+        inner.appendChild(vignette);
+
+        setTimeout(() => {
+            container.classList.remove("screen-damage-shake");
+            vignette.remove();
+        }, 500);
+    }
+
+    // 일반 구역 퀴즈 시 교감 탄환 발사
+    function triggerSpiritTameEffect() {
+        const arena = document.querySelector(".battle-arena-box");
+        if (!arena) return;
+
+        const bullet = document.createElement("div");
+        bullet.className = "spirit-bullet";
+        arena.appendChild(bullet);
+
+        setTimeout(() => bullet.remove(), 350);
+    }
+
+
+    /* ========================================================
+       👑 마왕 『EXAM』 전투 그래픽 (A안: 붉은 시계와 오답 낙인의 군주)
+       ======================================================== */
+    function getDemonLordArtSVG() {
+        return `
+        <svg class="art-svg" viewBox="0 0 380 110" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+                <linearGradient id="abyssVoid" x1="0%" y1="0%" x2="0%" y2="100%">
+                    <stop offset="0%" stop-color="#140208"/><stop offset="50%" stop-color="#3b0816"/><stop offset="100%" stop-color="#0a0104"/>
+                </linearGradient>
+                <radialGradient id="clockAura" cx="50%" cy="50%" r="50%">
+                    <stop offset="0%" stop-color="#ef4444" stop-opacity="0.65"/>
+                    <stop offset="70%" stop-color="#991b1b" stop-opacity="0.25"/>
+                    <stop offset="100%" stop-color="#140208" stop-opacity="0"/>
+                </radialGradient>
+                <radialGradient id="eyeGlowHex" cx="50%" cy="50%" r="50%">
+                    <stop offset="0%" stop-color="#ffffff"/><stop offset="40%" stop-color="#ff0055"/><stop offset="100%" stop-color="#7f1d1d"/>
+                </radialGradient>
+            </defs>
+            <!-- 1. 칠흑의 마력 심연 배경 -->
+            <rect width="380" height="110" fill="url(#abyssVoid)"/>
+            
+            <!-- 2. 시한폭탄 같은 마왕의 운명 괘종 톱니바퀴 (Doomsday Gear) -->
+            <circle cx="190" cy="55" r="54" fill="url(#clockAura)"/>
+            <circle cx="190" cy="55" r="48" stroke="#991b1b" stroke-width="1.5" stroke-dasharray="4,6" fill="none" opacity="0.6"/>
+            <circle cx="190" cy="55" r="39" stroke="#ef4444" stroke-width="1" stroke-dasharray="2,7" fill="none" opacity="0.4"/>
+
+            <!-- 3. 날카로운 붉은 채점 잉크 & 오답(X)의 낙인 참격선 -->
+            <g opacity="0.45" stroke="#ef4444" stroke-width="2.2" stroke-linecap="round">
+                <line x1="45" y1="20" x2="85" y2="75"/>
+                <line x1="85" y1="20" x2="45" y2="75"/>
+                <line x1="295" y1="25" x2="335" y2="80"/>
+                <line x1="335" y1="25" x2="295" y2="80"/>
+            </g>
+
+            <!-- 4. 공중에 부유하는 깨진 알파벳 룬 조각들 -->
+            <polygon points="118,35 124,42 116,45" fill="#f87171" opacity="0.75"/>
+            <polygon points="262,30 268,36 260,40" fill="#f87171" opacity="0.75"/>
+            <polygon points="140,88 147,93 141,97" fill="#f87171" opacity="0.6"/>
+            <polygon points="238,85 244,90 239,94" fill="#f87171" opacity="0.6"/>
+
+            <!-- 5. 가시 왕관을 쓴 마왕 EXAM의 거대한 흑철 실루엣 -->
+            <path d="M95,110 Q120,60 145,52 Q130,22 88,6 Q125,26 152,43 Q170,12 190,4 Q210,12 228,43 Q255,26 292,6 Q250,22 235,52 Q260,60 285,110 Z" fill="#080104"/>
+            <!-- 흉갑 및 어깨 칼날 망토 -->
+            <path d="M148,110 L165,58 L190,72 L215,58 L232,110 Z" fill="#1b030b"/>
+            <!-- 가슴 중앙의 심연 코어 슬릿 -->
+            <polygon points="190,70 197,84 190,95 183,84" fill="#ef4444" opacity="0.9"/>
+
+            <!-- 6. 4개의 불타는 붉은 마안 (상/하 2쌍의 안광) -->
+            <ellipse cx="178" cy="42" rx="5.5" ry="2.8" fill="url(#eyeGlowHex)"/>
+            <circle cx="178" cy="42" r="1.5" fill="#fff"/>
+            <ellipse cx="202" cy="42" rx="5.5" ry="2.8" fill="url(#eyeGlowHex)"/>
+            <circle cx="202" cy="42" r="1.5" fill="#fff"/>
+            
+            <ellipse cx="180" cy="51" rx="4" ry="2" fill="url(#eyeGlowHex)"/>
+            <ellipse cx="200" cy="51" rx="4" ry="2" fill="url(#eyeGlowHex)"/>
+
+            <!-- 이마 중앙의 진홍빛 파멸 보석 -->
+            <polygon points="190,20 195,28 190,34 185,28" fill="#f43f5e"/>
+        </svg>`;
+    }
+
+    function parseTextToWorlds(rawText) {
+        if (!rawText) return [];
+        const lines = rawText.split('\n');
+        const maps = [];
+        let currentMap = null;
+
+        lines.forEach(line => {
+            line = line.trim();
+            if (!line) return;
+
+            if (line.startsWith('[') && line.includes(']')) {
+                let rawHeader = line.substring(1, line.indexOf(']')).trim();
+                let mapName = rawHeader;
+                let mapDesc = "";
+                if (rawHeader.includes('|')) {
+                    const parts = rawHeader.split('|');
+                    mapName = parts[0].trim();
+                    mapDesc = parts.slice(1).join('|').trim();
+                }
+                const mapId = 'map_' + Math.abs(hashCode(mapName));
+                currentMap = { id: mapId, name: mapName, desc: mapDesc, words: [] };
+                maps.push(currentMap);
+                return;
+            }
+
+            if (line.startsWith('#') || line.startsWith('//')) {
+                if (currentMap && !currentMap.desc) {
+                    currentMap.desc = line.replace(/^[#/]+\s*/, '').trim();
+                }
+                return;
+            }
+
+            if (currentMap) {
+                let eng = "", kor = "";
+                if (line.includes(':')) {
+                    const p = line.split(':');
+                    eng = p[0].trim();
+                    kor = p.slice(1).join(':').trim();
+                } else if (line.includes('\t')) {
+                    const p = line.split('\t');
+                    eng = p[0].trim();
+                    kor = p.slice(1).join(' ').trim();
+                } else if (line.includes(',')) {
+                    const p = line.split(',');
+                    eng = p[0].trim();
+                    kor = p.slice(1).join(',').trim();
+                }
+                if (eng && kor) currentMap.words.push({ eng, kor });
+            }
+        });
+
+        maps.forEach(m => {
+            if (!m.desc) {
+                const theme = getMapTheme(m.name, m.id);
+                m.desc = theme.defaultDesc;
+            }
+        });
+
+        return maps.filter(m => m.words.length >= 4);
+    }
+
+    function hashCode(str) {
+        let hash = 0;
+        for (let i = 0; i < str.length; i++) {
+            hash = ((hash << 5) - hash) + str.charCodeAt(i);
+            hash |= 0;
+        }
+        return hash;
+    }
+
+    let worldMaps = [];
+    if (typeof WORLD_MAPS_TEXT !== 'undefined') {
+        worldMaps = parseTextToWorlds(WORLD_MAPS_TEXT);
+    } else if (typeof WORLD_MAPS !== 'undefined') {
+        worldMaps = WORLD_MAPS.map(m => ({
+            id: m.id,
+            name: m.name,
+            desc: m.desc || getMapTheme(m.name, m.id).defaultDesc,
+            words: typeof m.words === 'string' ? parseOldWords(m.words) : m.words
+        })).filter(m => m.words.length >= 4);
+    }
+
+    function parseOldWords(txt) {
+        return txt.split('\n').map(l => {
+            const p = l.split(':');
+            return p.length >= 2 ? { eng: p[0].trim(), kor: p.slice(1).join(':').trim() } : null;
+        }).filter(Boolean);
+    }
+
+    if (worldMaps.length === 0) {
+        document.getElementById("errorBanner").style.display = "block";
+        worldMaps = [{
+            id: "fallback_map",
+            name: "📖 비상용 기본 숲",
+            desc: "기초를 닦는 평화롭고 싱그러운 숲",
+            words: [
+                { eng: "apple", kor: "사과" },
+                { eng: "banana", kor: "바나나" },
+                { eng: "coffee", kor: "커피" },
+                { eng: "library", kor: "도서관" }
+            ]
+        }];
+    }
+
+    function getMapSectors(map) {
+        const sectors = [];
+        const total = map.words.length;
+        const count = Math.ceil(total / WORDS_PER_SECTOR) || 1;
+        for (let i = 0; i < count; i++) {
+            const start = i * WORDS_PER_SECTOR;
+            const end = Math.min(start + WORDS_PER_SECTOR, total);
+            const sectorWords = map.words.slice(start, end);
+            sectors.push({
+                id: `${map.id}_sec_${i}`,
+                index: i,
+                name: `제${i + 1}구역`,
+                rangeText: `정령 ${start + 1}~${end}번 (${sectorWords.length}마리)`,
+                words: sectorWords
+            });
+        }
+        return sectors;
+    }
+
+    const mapMasteryTiers = [
+        { level: 0, name: "안개 낀 미답지 🌫️", range: "0%", bg: "#94a3b8", color: "#f8fafc" },
+        { level: 1, name: "희미한 오솔길 🌿", range: "1~29%", bg: "#b45309", color: "#fffbeb" },
+        { level: 2, name: "온기 깃든 안식처 🏕️", range: "30~59%", bg: "#0284c7", color: "#f0f9ff" },
+        { level: 3, name: "공명하는 성역 🍃", range: "60~99%", bg: "#16a34a", color: "#f0fdf4" },
+        { level: 4, name: "영원의 낙원 🌟", range: "100%", bg: "#d97706", color: "#fef3c7" }
+    ];
+
+    function safeStorageGet(key, defaultVal) {
+        try {
+            const item = localStorage.getItem(key);
+            if (!item || item === "undefined" || item === "null") return defaultVal;
+            return JSON.parse(item);
+        } catch (e) { return defaultVal; }
+    }
+
+    function safeStorageSet(key, val) {
+        try { localStorage.setItem(key, JSON.stringify(val)); } catch (e) {}
+    }
+
+    function isMapBossDefeated(mapId) {
+        return safeStorageGet(`spirit_boss_cleared_${mapId}`, false);
+    }
+
+    function isFinalExamDefeated() {
+        return safeStorageGet('spirit_exam_cleared', false);
+    }
+
+    function getMapCalculatedTier(mapId, wordsLength, contractedCount) {
+        let percent = wordsLength > 0 ? Math.round((contractedCount / wordsLength) * 100) : 0;
+        const bossDefeated = isMapBossDefeated(mapId);
+
+        if (percent >= 100 && !bossDefeated) {
+            return {
+                tier: { level: 3, name: "수호령의 시련 대기 ⚔️", range: "구역 정복 완료", bg: "#059669", color: "#ecfdf5" },
+                percent: 99,
+                isConquered: false
+            };
+        }
+
+        if (percent === 0) return { tier: mapMasteryTiers[0], percent: 0, isConquered: false };
+        if (percent < 30) return { tier: mapMasteryTiers[1], percent, isConquered: false };
+        if (percent < 60) return { tier: mapMasteryTiers[2], percent, isConquered: false };
+        if (percent < 100 || !bossDefeated) return { tier: mapMasteryTiers[3], percent, isConquered: false };
+        return { tier: mapMasteryTiers[4], percent: 100, isConquered: true };
+    }
+
+    function getGlobalTotalStats() {
+        let totalWords = 0;
+        let totalContracted = 0;
+        let allMapsConquered = true;
+
+        worldMaps.forEach(map => {
+            totalWords += map.words.length;
+            const savedMastery = (map.id === currentMapId && typeof wordMastery !== 'undefined')
+                ? wordMastery
+                : safeStorageGet(`spirit_mastery_${map.id}`, {});
+
+            let mapContracted = 0;
+            map.words.forEach(w => {
+                if ((savedMastery[w.eng] || 0) >= 3) mapContracted++;
+            });
+            totalContracted += mapContracted;
+
+            const bossDefeated = isMapBossDefeated(map.id);
+            if (mapContracted < map.words.length || !bossDefeated) {
+                allMapsConquered = false;
+            }
+        });
+        return { totalWords, totalContracted, allMapsConquered };
+    }
+
+    function getDynamicGlobalTiers(totalWords) {
+        return [
+            { req: 0, name: "숲의 견습생 🌱", color: "#64748b" },
+            { req: Math.max(1, Math.floor(totalWords * 0.15)), name: "방랑 탐색자 🐾", color: "#92400e" },
+            { req: Math.max(2, Math.floor(totalWords * 0.35)), name: "정령 교감자 🍃", color: "#166534" },
+            { req: Math.max(3, Math.floor(totalWords * 0.55)), name: "원소 조율사 🌊", color: "#0369a1" },
+            { req: Math.max(4, Math.floor(totalWords * 0.75)), name: "고위 소환사 🦅", color: "#6d28d9" },
+            { req: Math.max(5, Math.floor(totalWords * 0.90)), name: "숲의 대현자 📜", color: "#b45309" },
+            { req: totalWords, name: "정령왕의 벗 👑", color: "#be185d" }
+        ];
+    }
+
+    function getGlobalTier() {
+        const { totalWords, totalContracted, allMapsConquered } = getGlobalTotalStats();
+        const tiers = getDynamicGlobalTiers(totalWords);
+        let idx = 0;
+        for (let i = 0; i < tiers.length; i++) {
+            if (totalContracted >= tiers[i].req) idx = i;
+            else break;
+        }
+        return { tier: tiers[idx], tierIndex: idx, next: tiers[idx + 1] || null, totalWords, totalContracted, tiers, allMapsConquered };
+    }
+
+    let currentMapId = safeStorageGet('spirit_current_map_id', worldMaps[0].id);
+    let currentSectorIndex = 0;
+    let currentRound = 1;
+    let wrongPool = [];
+    let wordMastery = {};
+    let rawWords = [];
+    let streakCount = 0;
+    let recentRoundWords = []; // 🌟 직전 라운드 출제 단어 기억 (쿨다운용)
+
+
+    const QUESTIONS_PER_ROUND = 5;
+    let roundQuestions = [];
+    let currentQuestionIdx = 0;
+    let roundCorrectCount = 0;
+    let pendingTierUp = null;
+
+    /* ⚔️ 보스전 변수 */
+    let bossMode = "final";
+    let bossMaxHp = 7;
+    let bossHp = 7;
+    const PLAYER_MAX_SHIELDS = 3;
+    let playerShields = PLAYER_MAX_SHIELDS;
+    let bossTimeLimit = 5.0;
+    let bossTimerInterval = null;
+    let bossTimeLeft = 5.0;
+    let currentBossQuestion = null;
+    let isBossChecking = false;
+    let bossWordPool = [];
+
+    function saveCurrentMapState() {
+        safeStorageSet('spirit_current_map_id', currentMapId);
+        safeStorageSet(`spirit_round_${currentMapId}_sec_${currentSectorIndex}`, currentRound);
+        safeStorageSet(`spirit_wrong_${currentMapId}_sec_${currentSectorIndex}`, wrongPool);
+        safeStorageSet(`spirit_mastery_${currentMapId}`, wordMastery);
+    }
+
+    function loadMapData(mapId) {
+        currentMapId = mapId;
+        wordMastery = safeStorageGet(`spirit_mastery_${currentMapId}`, {});
+    }
+
+    function loadSectorData(sectorIndex) {
+        currentSectorIndex = sectorIndex;
+        const activeMap = worldMaps.find(m => m.id === currentMapId) || worldMaps[0];
+        const sectors = getMapSectors(activeMap);
+        const sector = sectors[sectorIndex] || sectors[0];
+        rawWords = sector.words;
+
+        currentRound = safeStorageGet(`spirit_round_${currentMapId}_sec_${currentSectorIndex}`, 1);
+        wrongPool = safeStorageGet(`spirit_wrong_${currentMapId}_sec_${currentSectorIndex}`, []);
+        streakCount = 0;
+
+        document.getElementById("inGameMapTitle").innerText = `${activeMap.name} - ${sector.name}`;
+        document.getElementById("gameSectorBadge").innerText = `${sector.name} (${sector.rangeText})`;
+    }
+
+    function getMasteryInfo(count) {
+        if (!count || count === 0) return { stage: 0, text: "0/3", bg: "#f1f5f9", color: "#64748b" };
+        if (count === 1) return { stage: 1, text: "🐾 1/3", bg: "#fef3c7", color: "#b45309" };
+        if (count === 2) return { stage: 2, text: "🍃 2/3", bg: "#dcfce7", color: "#15803d" };
+        return { stage: 3, text: "🌟 완료", bg: "#fef08a", color: "#854d0e" };
+    }
+
+    function enterTitleFromIntro() {
+        Sound.click();
+        document.getElementById("introScreen").style.display = "none";
+        document.getElementById("titleScreen").style.display = "flex";
+        renderTitleScreen();
+    }
+
+    function openIntroScreen() {
+        Sound.click();
+        document.getElementById("titleScreen").style.display = "none";
+        document.getElementById("introScreen").style.display = "flex";
+    }
+
+    function renderTitleScreen() {
+        const { tier, tierIndex, next, totalWords, totalContracted, allMapsConquered } = getGlobalTier();
+        safeStorageSet('spirit_last_tier_idx', tierIndex);
+
+        const badge = document.getElementById("titleGlobalTierBadge");
+        badge.innerText = tier.name;
+        badge.style.backgroundColor = tier.color;
+        document.getElementById("titleGlobalExpText").innerText = `전체 계약: ${totalContracted} / ${totalWords}마리`;
+
+        if (next) {
+            const remain = next.req - totalContracted;
+            document.getElementById("titleNextExpText").innerText = `앞으로 ${remain}마리 계약 필요`;
+            const currentLevelMin = tier.req;
+            const percentage = ((totalContracted - currentLevelMin) / (next.req - currentLevelMin)) * 100;
+            document.getElementById("titleProgressBar").style.width = Math.min(percentage, 100) + "%";
+        } else {
+            document.getElementById("titleNextExpText").innerText = "전설의 정령왕의 벗 달성!";
+            document.getElementById("titleProgressBar").style.width = "100%";
+        }
+
+        // 🌟 마왕 결전 버튼 (최초 및 재도전 문구 동적 변화)
+        const bossRaidBtn = document.getElementById("titleBossRaidBtn");
+        if (allMapsConquered) {
+            bossRaidBtn.style.display = "flex";
+            if (isFinalExamDefeated()) {
+                bossRaidBtn.innerText = "🔥 부활하려는 마왕 『EXAM』과의 재결전 (5초 타임어택)";
+                bossRaidBtn.style.background = "linear-gradient(180deg, #991b1b 0%, #450a0a 100%)";
+                bossRaidBtn.style.borderColor = "#f87171";
+            } else {
+                bossRaidBtn.innerText = "👑 마왕 『EXAM』과의 결전 개막 (5초 타임어택)";
+                bossRaidBtn.style.background = "linear-gradient(180deg, #b91c1c 0%, #7f1d1d 100%)";
+                bossRaidBtn.style.borderColor = "#ef4444";
+            }
+        } else {
+            bossRaidBtn.style.display = "none";
+        }
+
+        const soundBtn = document.getElementById("soundToggleBtn");
+        if (soundBtn) soundBtn.innerText = Sound.muted ? "🔇 음소거" : "🔊 소리";
+
+        const container = document.getElementById("titleMapListContainer");
+        container.innerHTML = "";
+
+        worldMaps.forEach(map => {
+            const savedMastery = safeStorageGet(`spirit_mastery_${map.id}`, {});
+            let contracted = 0;
+            map.words.forEach(w => {
+                if ((savedMastery[w.eng] || 0) >= 3) contracted++;
+            });
+            const { tier: mTier, percent } = getMapCalculatedTier(map.id, map.words.length, contracted);
+
+            const card = document.createElement("div");
+            card.className = "title-map-card";
+            card.onclick = () => { Sound.click(); openMapLobby(map.id); };
+            card.innerHTML = `
+                <div class="map-card-top">
+                    <span class="map-card-name">${map.name}</span>
+                    <span class="map-mastery-badge" style="background:${mTier.bg}; color:${mTier.color};">${mTier.name}</span>
+                </div>
+                <div class="map-card-desc">${map.desc}</div>
+                <div class="map-card-progress">
+                    계약 완료: ${contracted} / ${map.words.length}마리 (${percent}%)
+                </div>
+                <div class="map-mini-bar">
+                    <div class="map-mini-bar-fill" style="width: ${percent}%;"></div>
+                </div>
+            `;
+            container.appendChild(card);
+        });
+
+        document.getElementById("titleScreen").style.display = "flex";
+        document.getElementById("mapLobbyScreen").style.display = "none";
+        document.getElementById("gameScreen").style.display = "none";
+        document.getElementById("bossScreen").style.display = "none";
+    }
+
+    function openMapLobby(mapId) {
+        loadMapData(mapId);
+        saveCurrentMapState();
+
+        const activeMap = worldMaps.find(m => m.id === currentMapId) || worldMaps[0];
+        document.getElementById("lobbyMapTitle").innerText = activeMap.name;
+        document.getElementById("lobbyMapDesc").innerText = activeMap.desc;
+
+        const mapTheme = getMapTheme(activeMap.name, activeMap.id);
+        document.getElementById("lobbyArtBox").innerHTML = getThemeLandscapeSVG(mapTheme.type);
+
+        let mapContracted = 0;
+        activeMap.words.forEach(w => {
+            if ((wordMastery[w.eng] || 0) >= 3) mapContracted++;
+        });
+        const { tier: mTier, percent } = getMapCalculatedTier(currentMapId, activeMap.words.length, mapContracted);
+        const bossDefeated = isMapBossDefeated(currentMapId);
+
+        const mBadge = document.getElementById("lobbyMapMasteryBadge");
+        mBadge.innerText = mTier.name;
+        mBadge.style.backgroundColor = mTier.bg;
+        mBadge.style.color = mTier.color;
+
+        document.getElementById("lobbyGaugeBar").style.width = `${percent}%`;
+        document.getElementById("lobbyProgressText").innerText = `계약 완료: ${mapContracted} / ${activeMap.words.length}마리 (${percent}%)`;
+
+        const sectors = getMapSectors(activeMap);
+        const sectorContainer = document.getElementById("lobbySectorListContainer");
+        sectorContainer.innerHTML = "";
+
+        let allSectorsConquered = true;
+        let conqueredSectorsCount = 0;
+
+        sectors.forEach((sec, idx) => {
+            let secContracted = 0;
+            sec.words.forEach(w => {
+                if ((wordMastery[w.eng] || 0) >= 3) secContracted++;
+            });
+            const isSecDone = (secContracted >= sec.words.length);
+            if (isSecDone) conqueredSectorsCount++;
+            else allSectorsConquered = false;
+
+            const secCard = document.createElement("div");
+            secCard.className = `sector-card ${isSecDone ? 'conquered' : ''}`;
+            secCard.onclick = () => startSectorQuiz(idx);
+            secCard.innerHTML = `
+                <div class="sector-left">
+                    <span class="sector-title">${sec.name} ${isSecDone ? '🌟 (완료)' : ''}</span>
+                    <span class="sector-range">${sec.rangeText}</span>
+                </div>
+                <div style="text-align:right;">
+                    <span class="tag" style="background:${isSecDone ? '#10b981' : '#f59e0b'}; color:white; font-size:10px;">
+                        ${secContracted} / ${sec.words.length}
+                    </span>
+                </div>
+            `;
+            sectorContainer.appendChild(secCard);
+        });
+
+        const guardianBtn = document.getElementById("lobbyGuardianTrialBtn");
+        if (bossDefeated) {
+            guardianBtn.className = "guardian-trial-btn";
+            guardianBtn.style.background = "linear-gradient(180deg, #d97706 0%, #b45309 100%)";
+            guardianBtn.style.borderColor = "#f59e0b";
+            guardianBtn.innerHTML = `⚔️ ${mapTheme.guardianName} 재대결 (시련 재도전) ➔`;
+        } else if (allSectorsConquered) {
+            guardianBtn.className = "guardian-trial-btn";
+            guardianBtn.style.background = "linear-gradient(180deg, #10b981 0%, #059669 100%)";
+            guardianBtn.style.borderColor = "#047857";
+            guardianBtn.innerHTML = `⚔️ ${mapTheme.guardianName}의 시련 대면 (도전 가능!) ➔`;
+        } else {
+            const unlockPercent = Math.round((conqueredSectorsCount / sectors.length) * 100);
+            if (unlockPercent > 0) {
+                guardianBtn.className = "guardian-trial-btn cracked";
+                guardianBtn.innerHTML = `🔒 성역의 심장 : 봉인 ${unlockPercent}% 해제! (자물쇠 균열)`;
+            } else {
+                guardianBtn.className = "guardian-trial-btn locked";
+                guardianBtn.innerHTML = `🔒 성역의 심장 : 수호령의 시련 (모든 구역 정복 필요)`;
+            }
+        }
+
+        document.getElementById("titleScreen").style.display = "none";
+        document.getElementById("mapLobbyScreen").style.display = "flex";
+        document.getElementById("gameScreen").style.display = "none";
+        document.getElementById("bossScreen").style.display = "none";
+    }
+
+    function handleGuardianBannerClick() {
+        const activeMap = worldMaps.find(m => m.id === currentMapId) || worldMaps[0];
+        let mapContracted = 0;
+        activeMap.words.forEach(w => {
+            if ((wordMastery[w.eng] || 0) >= 3) mapContracted++;
+        });
+
+        if (mapContracted >= activeMap.words.length) {
+            Sound.click();
+            showMidBossNoticeModal();
+        } else {
+            Sound.wrong();
+            alert("🔒 아직 정복하지 못한 하위 구역이 남아있습니다!\n영지의 모든 구역(단어)과 계약해야 수호령이 깨어납니다.");
+        }
+    }
+
+    function startSectorQuiz(sectorIndex) {
+        Sound.click();
+        loadSectorData(sectorIndex);
+        document.getElementById("mapLobbyScreen").style.display = "none";
+        document.getElementById("gameScreen").style.display = "flex";
+        updateInGameTiers();
+        setupRound();
+    }
+
+    function backToTitleScreen() {
+        Sound.click();
+        saveCurrentMapState();
+        renderTitleScreen();
+    }
+
+    function backToLobbyFromQuiz() {
+        Sound.click();
+        if (confirm("탐사를 중단하고 전초기지로 돌아가시겠습니까?")) {
+            saveCurrentMapState();
+            openMapLobby(currentMapId);
+        }
+    }
+
+    function backToLobbyFromRound() {
+        Sound.click();
+        document.getElementById("roundModal").style.display = "none";
+        saveCurrentMapState();
+        openMapLobby(currentMapId);
+    }
+
+    function backToLobbyFromEnding() {
+        Sound.click();
+        document.getElementById("endingModal").style.display = "none";
+        saveCurrentMapState();
+        openMapLobby(currentMapId);
+    }
+
+    function backToLobbyFromSectorClear() {
+        Sound.click();
+        document.getElementById("sectorClearModal").style.display = "none";
+        saveCurrentMapState();
+        openMapLobby(currentMapId);
+    }
+
+    function updateInGameTiers() {
+        const { tier } = getGlobalTier();
+        const gBadge = document.getElementById("gameGlobalTierBadge");
+        gBadge.innerText = tier.name;
+        gBadge.style.backgroundColor = tier.color;
+
+        let secContracted = 0;
+        rawWords.forEach(w => {
+            if ((wordMastery[w.eng] || 0) >= 3) secContracted++;
+        });
+        document.getElementById("expText").innerText = `${secContracted} / ${rawWords.length}마리`;
+    }
+
+/* ========================================================
+       🧠 스마트 단어 출제 엔진 (중복 원천 차단 & 쿨다운 순환)
+       ======================================================== */
+    function setupRound() {
+        roundQuestions = [];
+        currentQuestionIdx = 0;
+        roundCorrectCount = 0;
+
+        const pickedWords = []; // 이번 5문제에 들어갈 '서로 다른' 단어들
+
+        // 1. [1순위] 오답 복습 단어 (최대 2마리, 이번 라운드 중복 방지)
+        const reviewCandidates = [...wrongPool].sort(() => Math.random() - 0.5);
+        for (const rw of reviewCandidates) {
+            if (pickedWords.length >= 2) break;
+            const wordObj = rawWords.find(w => w.eng === rw.engWord);
+            if (wordObj && !pickedWords.some(p => p.eng === wordObj.eng)) {
+                pickedWords.push({ ...wordObj, isReview: true });
+            }
+        }
+
+        // 2. [2순위] 아직 마스터 안 된 단어 추출 (wordMastery < 3)
+        const unmastered = rawWords.filter(w => (wordMastery[w.eng] || 0) < 3 && !pickedWords.some(p => p.eng === w.eng));
+
+        // 🌟 쿨다운 적용: 방금 직전 라운드에 풀었던 단어는 잠시 휴식(후순위)
+        const freshUnmastered = unmastered.filter(w => !recentRoundWords.includes(w.eng));
+        const cooldownUnmastered = unmastered.filter(w => recentRoundWords.includes(w.eng));
+
+        // 0회 정답 ➔ 1회 정답 ➔ 2회 정답 순으로 정렬
+        function sortByMastery(list) {
+            const g0 = list.filter(w => (wordMastery[w.eng] || 0) === 0).sort(() => Math.random() - 0.5);
+            const g1 = list.filter(w => (wordMastery[w.eng] || 0) === 1).sort(() => Math.random() - 0.5);
+            const g2 = list.filter(w => (wordMastery[w.eng] || 0) === 2).sort(() => Math.random() - 0.5);
+            return [...g0, ...g1, ...g2];
+        }
+
+        const candidateQueue = [
+            ...sortByMastery(freshUnmastered),
+            ...sortByMastery(cooldownUnmastered)
+        ];
+
+        for (const w of candidateQueue) {
+            if (pickedWords.length >= QUESTIONS_PER_ROUND) break;
+            pickedWords.push({ ...w, isReview: false });
+        }
+
+        // 3. [3순위] 종반부 스마트 보충 (미완료 단어가 1~2개뿐이라 5문제가 안 채워질 때)
+        // 🌟 이미 마스터한 18개 단어 중 직전 라운드에 안 나왔던 단어들을 '중복 없이 1개씩만' 차출
+        if (pickedWords.length < QUESTIONS_PER_ROUND) {
+            const mastered = rawWords.filter(w => !pickedWords.some(p => p.eng === w.eng));
+            const freshMastered = mastered.filter(w => !recentRoundWords.includes(w.eng)).sort(() => Math.random() - 0.5);
+            const fallbackMastered = mastered.filter(w => recentRoundWords.includes(w.eng)).sort(() => Math.random() - 0.5);
+            const fillerQueue = [...freshMastered, ...fallbackMastered];
+
+            for (const fw of fillerQueue) {
+                if (pickedWords.length >= QUESTIONS_PER_ROUND) break;
+                pickedWords.push({ ...fw, isReview: false });
+            }
+        }
+
+        // 4. 다음 라운드 쿨타임을 위해 이번에 출제된 단어 5개 기억
+        recentRoundWords = pickedWords.map(w => w.eng);
+
+        // 5. [1단어 1문제 원칙] 한 단어당 딱 1문제씩만 생성 (E2K or K2E 50% 랜덤 결정, 동일 라운드 중복 원천 차단!)
+        for (const w of pickedWords) {
+            const type = Math.random() < 0.5 ? "E2K" : "K2E";
+            const qId = `${currentMapId}_${type}_${w.eng}_r${currentRound}`;
+            roundQuestions.push({
+                id: qId,
+                wordKey: w.eng,
+                engWord: w.eng,
+                korMeaning: w.kor,
+                type: type,
+                prompt: type === "E2K" ? w.eng : w.kor,
+                correct: type === "E2K" ? w.kor : w.eng,
+                pool: type === "E2K" ? rawWords.map(item => item.kor) : rawWords.map(item => item.eng),
+                isReview: !!w.isReview
+            });
+        }
+
+        // 6. 문제 순서 무작위 셔플 후 첫 문제 출제
+        roundQuestions.sort(() => Math.random() - 0.5);
+        loadQuestion();
+    }
+
+let questionStartTime = 0; // 🌟 문제 출제 시점 기록
+
+    function loadQuestion() {
+        if (currentQuestionIdx >= QUESTIONS_PER_ROUND) {
+            showRoundResult();
+            return;
+        }
+
+        questionStartTime = Date.now(); // 🌟 문제 표시되는 순간 타이머 스타트!
+
+        document.getElementById("groveInfoDisplay").innerText = `🌿 탐사 ${currentQuestionIdx + 1} / ${QUESTIONS_PER_ROUND}`;
+
+        const q = roundQuestions[currentQuestionIdx];
+        document.getElementById("wordDisplay").innerText = q.prompt;
+        document.getElementById("reviewTag").style.display = q.isReview ? "inline-block" : "none";
+
+        const count = wordMastery[q.wordKey] || 0;
+        const mInfo = getMasteryInfo(count);
+        const mTag = document.getElementById("masteryTag");
+        mTag.innerText = mInfo.stage === 3 ? "영원의 계약 🌟" : (mInfo.stage === 2 ? "따스한 유대 🍃" : (mInfo.stage === 1 ? "서먹한 대면 🐾" : "야생의 정령 🌿"));
+        mTag.style.backgroundColor = mInfo.bg;
+        mTag.style.color = mInfo.color;
+        mTag.style.border = `1px solid ${mInfo.stage === 3 ? '#eab308' : '#cbd5e1'}`;
+
+        const streakBadge = document.getElementById("comboStreakBadge");
+        if (streakCount >= 2) {
+            streakBadge.style.display = "block";
+            if (streakCount >= 5) streakBadge.innerText = `⚡ ${streakCount}연속 FEVER!`;
+            else streakBadge.innerText = `🔥 ${streakCount}연속 교감!`;
+        } else {
+            streakBadge.style.display = "none";
+        }
+
+        const wrongChoices = q.pool.filter(item => item !== q.correct).sort(() => Math.random() - 0.5).slice(0, 3);
+        const choices = [...wrongChoices, q.correct].sort(() => Math.random() - 0.5);
+
+        const choicesGrid = document.getElementById("choicesGrid");
+        choicesGrid.innerHTML = "";
+        choices.forEach(choice => {
+            const btn = document.createElement("button");
+            btn.className = "choice-btn";
+            btn.innerText = choice;
+            btn.onclick = () => selectAnswer(choice, q);
+            choicesGrid.appendChild(btn);
+        });
+    }
+
+    function getFeedbackArtSVG(isCorrect) {
+        if (isCorrect) {
+            return `
+            <svg class="art-svg" viewBox="0 0 360 95" xmlns="http://www.w3.org/2000/svg">
+                <defs><radialGradient id="fbCorrectGlow" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#fef08a"/><stop offset="50%" stop-color="#10b981"/><stop offset="100%" stop-color="#064e3b"/></radialGradient></defs>
+                <rect width="360" height="95" fill="#042f24"/>
+                <circle cx="180" cy="48" r="45" fill="url(#fbCorrectGlow)" opacity="0.85"/>
+                <g transform="translate(105, 20)">
+                    <circle cx="20" cy="18" r="11" fill="#f59e0b"/><path d="M12,28 Q20,24 28,28 L30,48 Q20,52 10,48 Z" fill="#15803d"/>
+                    <polygon points="12,18 4,14 13,22" fill="#fde68a"/><line x1="26" y1="34" x2="48" y2="30" stroke="#fde68a" stroke-width="3" stroke-linecap="round"/>
+                </g>
+                <g transform="translate(195, 16)">
+                    <circle cx="25" cy="25" r="15" fill="#fef08a"/><path d="M25,8 Q20,2 25,-4 Q30,2 25,8 Z" fill="#10b981"/>
+                    <ellipse cx="20" cy="24" rx="2" ry="3" fill="#064e3b"/><ellipse cx="30" cy="24" rx="2" ry="3" fill="#064e3b"/>
+                    <path d="M7,22 C-4,10 0,0 15,8 Z" fill="#6ee7b7"/><path d="M43,22 C54,10 50,0 35,8 Z" fill="#6ee7b7"/>
+                </g>
+                <path d="M180,22 C176,15 168,17 168,23 C168,31 180,37 180,37 C180,37 192,31 192,23 C192,17 184,15 180,22 Z" fill="#ef4444"/>
+            </svg>`;
+        } else {
+            return `
+            <svg class="art-svg" viewBox="0 0 360 95" xmlns="http://www.w3.org/2000/svg">
+                <rect width="360" height="95" fill="#2d1519"/>
+                <path d="M180,40 Q240,20 280,70 L280,95 L150,95 Z" fill="#1e293b"/>
+                <g transform="translate(240, 32)"><circle cx="18" cy="18" r="13" fill="#cbd5e1"/><ellipse cx="14" cy="17" rx="2" ry="3" fill="#475569"/><ellipse cx="22" cy="17" rx="2" ry="3" fill="#475569"/></g>
+                <g transform="translate(90, 20)"><circle cx="20" cy="18" r="11" fill="#f59e0b"/><path d="M12,28 Q20,24 28,28 L30,50 Q20,54 10,50 Z" fill="#52525b"/><polygon points="12,18 4,14 13,22" fill="#fde68a"/><path d="M24,36 Q34,22 25,12" stroke="#fde68a" stroke-width="2.5" stroke-linecap="round" fill="none"/></g>
+                <text x="175" y="44" font-size="20" fill="#f87171" font-weight="bold">?</text>
+            </svg>`;
+        }
+    }
+
+function selectAnswer(selectedAnswer, q) {
+        const isCorrect = (selectedAnswer === q.correct);
+        const elapsedSec = parseFloat(((Date.now() - questionStartTime) / 1000).toFixed(1)); // 반응 시간 계산
+        const isResonance = isCorrect && (elapsedSec <= 1.5); // 🌟 1.5초 이내 정답 여부
+
+        const fbModal = document.getElementById("feedbackModal");
+        const fbTitle = document.getElementById("fbTitle");
+        const fbWord = document.getElementById("fbWord");
+        const fbMeaning = document.getElementById("fbMeaning");
+        const fbArtBox = document.getElementById("fbArtBox");
+        const fbContractNotice = document.getElementById("fbContractNotice");
+        const fbResonanceNotice = document.getElementById("fbResonanceNotice");
+
+        fbArtBox.innerHTML = getFeedbackArtSVG(isCorrect);
+        fbWord.innerText = q.engWord;
+        fbMeaning.innerText = q.korMeaning;
+
+        const beforeTierIdx = getGlobalTier().tierIndex;
+        const currentCountBefore = wordMastery[q.wordKey] || 0;
+
+        if (isCorrect) {
+            streakCount++;
+            Sound.correct(streakCount);
+            triggerSpiritTameEffect();
+
+            // 콤보 칭호 체크
+            if (streakCount > gameRecords.maxStreak) {
+                gameRecords.maxStreak = streakCount;
+                saveRecords();
+            }
+            if (streakCount >= 7) unlockTitle("combo_7");
+            if (streakCount >= 15) unlockTitle("combo_15");
+
+            roundCorrectCount++;
+
+            // 🌟 [찰나의 공명 밸런스]: 1.5초 컷이면 숙련도 +2, 일반 정답이면 +1
+            const gain = isResonance ? 2 : 1;
+            const newCount = Math.min(3, currentCountBefore + gain);
+            wordMastery[q.wordKey] = newCount;
+
+            // 🌟 찰나의 공명 연출 (반응 속도 초단위 표기!)
+            if (isResonance) {
+                fbResonanceNotice.style.display = "block";
+                fbResonanceNotice.innerHTML = `⚡ <b>[찰나의 공명 (${elapsedSec}초)!]</b> 본능적 교감으로 숙련도 <b>+2</b> 급상승!`;
+            } else {
+                fbResonanceNotice.style.display = "none";
+            }
+
+            // 영원의 계약(3회 완벽 달성) 처리
+            if (newCount === 3) {
+                fbContractNotice.style.display = "block";
+                fbTitle.innerText = isResonance ? "🌟 찰나의 영원 계약 성립! 🌟" : "🌟 영원의 계약 성립! 🌟";
+                fbTitle.style.color = "#d97706";
+                Sound.fanfare();
+
+                const { totalWords, totalContracted } = getGlobalTotalStats();
+                if (totalContracted >= 1) unlockTitle("first_bond");
+                if (totalContracted >= 10) unlockTitle("ten_bonds");
+                if (totalContracted >= totalWords) unlockTitle("all_master");
+            } else {
+                fbContractNotice.style.display = "none";
+                if (isResonance) {
+                    fbTitle.innerText = `⚡ 찰나의 공명 교감 성공! (+2) ✨`;
+                    fbTitle.style.color = "#0284c7";
+                } else {
+                    fbTitle.innerText = streakCount >= 2 ? `교감 성공! (${streakCount}연속) ✨` : "교감 성공! ✨";
+                    fbTitle.style.color = "#15803d";
+                }
+            }
+
+            fbMeaning.className = "fb-meaning";
+
+            if (q.isReview) {
+                wrongPool = wrongPool.filter(item => item.id !== q.id);
+            }
+            saveCurrentMapState();
+
+            const afterTierObj = getGlobalTier();
+            if (afterTierObj.tierIndex > beforeTierIdx) {
+                pendingTierUp = {
+                    oldTier: afterTierObj.tiers[beforeTierIdx],
+                    newTier: afterTierObj.tier
+                };
+            }
+        } else {
+            streakCount = 0;
+            Sound.wrong();
+            triggerPlayerDamageEffect();
+
+            // 오답 칭호 체크
+            gameRecords.totalWrong++;
+            saveRecords();
+            if (gameRecords.totalWrong >= 20) unlockTitle("wrong_20");
+            if (gameRecords.totalWrong >= 50) unlockTitle("wrong_50");
+            
+            fbResonanceNotice.style.display = "none";
+            fbContractNotice.style.display = "none";
+            fbTitle.innerText = "교감 실패 (정령이 숨었습니다) 🍂";
+            fbTitle.style.color = "#b91c1c";
+            fbMeaning.className = "fb-meaning wrong-case";
+
+            if (!wrongPool.some(item => item.id === q.id)) {
+                wrongPool.push(q);
+            }
+            saveCurrentMapState();
+        }
+
+        updateInGameTiers();
+        fbModal.style.display = "flex";
+    }
+
+
+    function nextQuestion() {
+        Sound.click();
+        document.getElementById("feedbackModal").style.display = "none";
+        if (pendingTierUp) {
+            showTierUpModal(pendingTierUp.oldTier, pendingTierUp.newTier);
+            pendingTierUp = null;
+            return;
+        }
+        currentQuestionIdx++;
+        loadQuestion();
+    }
+
+    function showTierUpModal(oldTier, newTier) {
+        Sound.fanfare();
+        document.getElementById("tierUpFlowText").innerHTML = `
+            ${oldTier.name} ➔ <span style="color:#047857; text-decoration:underline;">${newTier.name}</span>
+        `;
+        document.getElementById("tierUpModal").style.display = "flex";
+    }
+
+    function closeTierUpModal() {
+        Sound.click();
+        document.getElementById("tierUpModal").style.display = "none";
+        currentQuestionIdx++;
+        loadQuestion();
+    }
+
+    function showRoundResult() {
+        let secContracted = 0;
+        rawWords.forEach(w => {
+            if ((wordMastery[w.eng] || 0) >= 3) secContracted++;
+        });
+
+        if (secContracted >= rawWords.length && rawWords.length > 0) {
+            Sound.fanfare();
+            const activeMap = worldMaps.find(m => m.id === currentMapId) || worldMaps[0];
+            const sectors = getMapSectors(activeMap);
+            const sec = sectors[currentSectorIndex] || sectors[0];
+            document.getElementById("sectorClearTitle").innerText = `${sec.name} 정복 완료!`;
+            document.getElementById("sectorClearModal").style.display = "flex";
+            return;
+        }
+
+        Sound.fanfare();
+        document.getElementById("modalScore").innerText = `교감 성공: ${roundCorrectCount} / ${QUESTIONS_PER_ROUND}`;
+
+        const remainCount = rawWords.length - secContracted;
+        const scarcityBox = document.getElementById("modalScarcityBox");
+        if (remainCount <= 3) {
+            scarcityBox.innerHTML = `🔥 <b>[완전 정복 직전!]</b> 구역 정복까지 단 <b>${remainCount}마리</b> 남았습니다!`;
+            scarcityBox.style.borderColor = "#ef4444";
+            scarcityBox.style.color = "#b91c1c";
+            scarcityBox.style.background = "#fef2f2";
+        } else {
+            scarcityBox.innerHTML = `✨ <b>[구역 탐사 진척도]</b> 완전 정복까지 ${remainCount}마리의 정령이 남아있습니다.`;
+            scarcityBox.style.borderColor = "#d97706";
+            scarcityBox.style.color = "#b45309";
+            scarcityBox.style.background = "#fdfaf2";
+        }
+
+        const reviewText = document.getElementById("modalReviewRemaining");
+        if (wrongPool.length > 0) {
+            reviewText.innerText = `🍂 경계하는 정령: ${wrongPool.length}마리 (다음 구역에서 재등장)`;
+            reviewText.style.color = "#b91c1c";
+        } else {
+            reviewText.innerText = `✨ 모든 정령과 온전히 교감했습니다!`;
+            reviewText.style.color = "#15803d";
+        }
+
+        document.getElementById("roundModal").style.display = "flex";
+    }
+
+    function showMidBossNoticeModal() {
+        Sound.fanfare();
+        const activeMap = worldMaps.find(m => m.id === currentMapId) || worldMaps[0];
+        const theme = getMapTheme(activeMap.name, activeMap.id);
+        const bossDefeated = isMapBossDefeated(activeMap.id);
+
+        if (bossDefeated) {
+            document.getElementById("midBossNoticeSubBadge").innerText = "GUARDIAN RE-MATCH";
+            document.getElementById("midBossNoticeTitle").innerText = `[${activeMap.name}] ${theme.guardianName} 재대결`;
+            document.getElementById("midBossNoticeDesc").innerHTML = `
+                이미 정화된 성역이지만, 지혜의 감각을 날카롭게 유지하기 위해<br>
+                <b>${theme.guardianName}</b>과의 시련(체력 5 / 7초 타임어택)을 다시 치릅니다!
+            `;
+            document.getElementById("midBossNoticeStartBtn").innerText = `⚔️ ${theme.guardianName} 재대결 수련 시작! ➔`;
+        } else {
+            document.getElementById("midBossNoticeSubBadge").innerText = "GUARDIAN'S TRIAL READY";
+            document.getElementById("midBossNoticeTitle").innerText = `[${activeMap.name}] 수호령의 시련 대면`;
+            document.getElementById("midBossNoticeDesc").innerHTML = `
+                이 영지의 모든 하위 구역을 완벽히 정복했습니다!<br>
+                영지를 완전히 정화하기 위해선 <b>${theme.guardianName}</b>과의 시련(체력 5 / 7초 타임어택)을 통과해야 합니다.
+            `;
+            document.getElementById("midBossNoticeStartBtn").innerText = `⚔️ 수호령과의 시련 시작! (도전) ➔`;
+        }
+
+        document.getElementById("midBossNoticeArtBox").innerHTML = getThemeGuardianBossSVG(theme.type);
+        document.getElementById("midBossNoticeModal").style.display = "flex";
+    }
+
+    function confirmStartMidBoss() {
+        Sound.click();
+        document.getElementById("midBossNoticeModal").style.display = "none";
+        startMidBossRaid();
+    }
+
+    function backToLobbyFromMidBossNotice() {
+        Sound.click();
+        document.getElementById("midBossNoticeModal").style.display = "none";
+        saveCurrentMapState();
+        openMapLobby(currentMapId);
+    }
+
+    function startNextRound() {
+        Sound.click();
+        document.getElementById("roundModal").style.display = "none";
+        currentRound++;
+        saveCurrentMapState();
+        setupRound();
+    }
+
+    /* ========================================================
+       ⚔️ 3. 보스전 시스템
+       ======================================================== */
+    function runBattleCountdown(callback) {
+        const overlay = document.getElementById("battleCountdownOverlay");
+        const display = document.getElementById("countdownNumDisplay");
+        overlay.style.display = "flex";
+
+        let count = 3;
+        display.innerText = count;
+        display.style.animation = 'none';
+        display.offsetHeight;
+        display.style.animation = null;
+        Sound.countdownTick();
+
+        const countInterval = setInterval(() => {
+            count--;
+            if (count > 0) {
+                display.innerText = count;
+                display.style.animation = 'none';
+                display.offsetHeight;
+                display.style.animation = null;
+                Sound.countdownTick();
+            } else if (count === 0) {
+                display.innerText = "START!";
+                display.style.color = "#10b981";
+                display.style.animation = 'none';
+                display.offsetHeight;
+                display.style.animation = null;
+                Sound.countdownStart();
+            } else {
+                clearInterval(countInterval);
+                overlay.style.display = "none";
+                display.style.color = "#fbbf24";
+                callback();
+            }
+        }, 900);
+    }
+
+    function startMidBossRaid() {
+        bossMode = "mid";
+        bossMaxHp = 5;
+        bossHp = bossMaxHp;
+        playerShields = PLAYER_MAX_SHIELDS;
+        bossTimeLimit = 7.0;
+
+        const activeMap = worldMaps.find(m => m.id === currentMapId) || worldMaps[0];
+        bossWordPool = [...activeMap.words];
+        const theme = getMapTheme(activeMap.name, activeMap.id);
+
+        document.getElementById("bossTopStatusBox").className = "boss-top-status midboss-mode";
+        document.getElementById("bossHpRow").className = "boss-hp-row midboss-mode";
+        document.getElementById("bossHpTrack").className = "boss-hp-track midboss-mode";
+        document.getElementById("bossHpBar").className = "boss-hp-fill midboss-mode";
+        document.getElementById("bossNameDisplay").innerText = `🛡️ ${theme.guardianName}`;
+        document.getElementById("bossQuestionTag").innerText = "🌿 수호령의 영지 종합 시험 (7초)";
+        document.getElementById("bossQuestionTag").style.background = "#065f46";
+        document.getElementById("bossQuestionTag").style.color = "#a7f3d0";
+        document.getElementById("bossWordDisplay").style.color = "#065f46";
+
+        document.getElementById("bossArtBox").innerHTML = getThemeGuardianBossSVG(theme.type);
+
+        document.getElementById("titleScreen").style.display = "none";
+        document.getElementById("mapLobbyScreen").style.display = "none";
+        document.getElementById("gameScreen").style.display = "none";
+        document.getElementById("bossScreen").style.display = "flex";
+
+        updateBossUI();
+        runBattleCountdown(() => {
+            loadNextBossQuestion();
+        });
+    }
+
+function startFinalBossRaid() {
+        Sound.click();
+        bossStartTime = Date.now(); // 🌟 마왕전 스피드런 시간 측정 시작!
+        bossMode = "final";
+        bossMaxHp = 7;
+        bossHp = bossMaxHp;
+        playerShields = PLAYER_MAX_SHIELDS;
+        bossTimeLimit = 5.0;
+        bossWordPool = getAllUniverseWords();
+
+        document.getElementById("bossTopStatusBox").className = "boss-top-status";
+        document.getElementById("bossHpRow").className = "boss-hp-row";
+        document.getElementById("bossHpTrack").className = "boss-hp-track";
+        document.getElementById("bossHpBar").className = "boss-hp-fill";
+        document.getElementById("bossNameDisplay").innerText = "👑 마왕 『EXAM』의 심판";
+        document.getElementById("bossQuestionTag").innerText = "⚡ 마왕의 시련 주문 (5초)";
+        document.getElementById("bossQuestionTag").style.background = "#831843";
+        document.getElementById("bossQuestionTag").style.color = "#fbcfe8";
+        document.getElementById("bossWordDisplay").style.color = "#831843";
+
+        document.getElementById("bossArtBox").innerHTML = getDemonLordArtSVG();
+
+        document.getElementById("titleScreen").style.display = "none";
+        document.getElementById("mapLobbyScreen").style.display = "none";
+        document.getElementById("gameScreen").style.display = "none";
+        document.getElementById("bossScreen").style.display = "flex";
+
+        updateBossUI();
+        runBattleCountdown(() => {
+            loadNextBossQuestion();
+        });
+    }
+
+    function getAllUniverseWords() {
+        const pool = [];
+        worldMaps.forEach(map => {
+            map.words.forEach(w => {
+                if (!pool.some(item => item.eng === w.eng)) pool.push(w);
+            });
+        });
+        return pool;
+    }
+
+    function updateBossUI() {
+        document.getElementById("bossHpText").innerText = `HP: ${bossHp} / ${bossMaxHp}`;
+        const bossHpPercent = (bossHp / bossMaxHp) * 100;
+        document.getElementById("bossHpBar").style.width = `${bossHpPercent}%`;
+
+        let heartsStr = "";
+        for (let i = 0; i < PLAYER_MAX_SHIELDS; i++) {
+            heartsStr += (i < playerShields) ? "❤️" : "🖤";
+        }
+        document.getElementById("playerShieldsText").innerText = heartsStr;
+    }
+
+    function loadNextBossQuestion() {
+        if (bossHp <= 0) {
+            clearInterval(bossTimerInterval);
+            document.getElementById("bossScreen").style.display = "none";
+
+            if (bossMode === "mid") {
+                if (playerShields === 3) unlockTitle("mid_no_dmg");
+                if (hadBossDefeatBefore) unlockTitle("phoenix");
+                hadBossDefeatBefore = false;
+                handleMidBossVictory();
+            } else {
+                safeStorageSet('spirit_exam_cleared', true);
+                Sound.fanfare();
+
+                // 🌟 마왕 토벌 기록 및 칭호 갱신
+                const elapsedSec = parseFloat(((Date.now() - bossStartTime) / 1000).toFixed(1));
+                if (!gameRecords.fastestBossTime || elapsedSec < gameRecords.fastestBossTime) {
+                    gameRecords.fastestBossTime = elapsedSec;
+                }
+                gameRecords.bossClearCount++;
+
+                if (elapsedSec <= 25.0) unlockTitle("speed_demon");
+                if (playerShields === 3) {
+                    gameRecords.bossNoDamage = true;
+                    unlockTitle("legend_ok");
+                }
+                if (playerShields === 1) unlockTitle("clutch_win");
+                if (gameRecords.bossClearCount >= 3) unlockTitle("boss_3");
+                if (hadBossDefeatBefore) unlockTitle("phoenix");
+                hadBossDefeatBefore = false;
+
+                saveRecords();
+                document.getElementById("bossVictoryModal").style.display = "flex";
+            }
+            return;
+        }
+
+        if (playerShields <= 0) {
+            clearInterval(bossTimerInterval);
+            Sound.damage();
+            hadBossDefeatBefore = true;
+            gameRecords.bossDefeatCount++;
+            unlockTitle("mental_break");
+            saveRecords();
+
+            if (bossMode === "mid") {
+                alert("🛡️ 수호령의 시험에 패배했습니다...\n영지의 모든 정령들을 복습한 후 다시 도전하십시오!");
+                document.getElementById("bossScreen").style.display = "none";
+                openMapLobby(currentMapId);
+            } else {
+                alert("💥 마왕 『EXAM』의 시련에 결계가 무너졌습니다...\n재정비 후 다시 도전하십시오!");
+                document.getElementById("bossScreen").style.display = "none";
+                renderTitleScreen();
+            }
+            return;
+        }
+
+        isBossChecking = false;
+        const targetWord = bossWordPool[Math.floor(Math.random() * bossWordPool.length)];
+        const isE2K = Math.random() < 0.5;
+
+        currentBossQuestion = {
+            prompt: isE2K ? targetWord.eng : targetWord.kor,
+            correct: isE2K ? targetWord.kor : targetWord.eng,
+            pool: isE2K ? bossWordPool.map(w => w.kor) : bossWordPool.map(w => w.eng)
+        };
+
+        document.getElementById("bossWordDisplay").innerText = currentBossQuestion.prompt;
+
+        const wrongChoices = currentBossQuestion.pool.filter(item => item !== currentBossQuestion.correct).sort(() => Math.random() - 0.5).slice(0, 3);
+        const choices = [...wrongChoices, currentBossQuestion.correct].sort(() => Math.random() - 0.5);
+
+        const choicesGrid = document.getElementById("bossChoicesGrid");
+        choicesGrid.innerHTML = "";
+        choices.forEach(choice => {
+            const btn = document.createElement("button");
+            btn.className = "choice-btn";
+            btn.innerText = choice;
+            btn.onclick = () => selectBossAnswer(btn, choice);
+            choicesGrid.appendChild(btn);
+        });
+
+        startBossTimer();
+    }
+
+
+    function startBossTimer() {
+        clearInterval(bossTimerInterval);
+        bossTimeLeft = bossTimeLimit;
+        const timerBar = document.getElementById("bossTimerBar");
+        timerBar.className = "boss-timer-bar";
+        timerBar.style.width = "100%";
+
+        bossTimerInterval = setInterval(() => {
+            bossTimeLeft -= 0.1;
+            const percent = (bossTimeLeft / bossTimeLimit) * 100;
+            timerBar.style.width = `${Math.max(0, percent)}%`;
+
+            if (bossTimeLeft <= 2.0) {
+                timerBar.classList.add("urgent");
+            }
+
+            if (bossTimeLeft <= 0) {
+                clearInterval(bossTimerInterval);
+                handleBossTimeOut();
+            }
+        }, 100);
+    }
+
+    function selectBossAnswer(btn, choice) {
+        if (isBossChecking) return;
+        isBossChecking = true;
+        clearInterval(bossTimerInterval);
+
+        if (choice === currentBossQuestion.correct) {
+            Sound.hit();
+            btn.classList.add("correct");
+            bossHp--;
+            // 🌟 정답 시 보스에게 참격 + 흔들림 + 데미지 텍스트 (보스 HP가 2 이하일 땐 크리티컬 더블 참격!)
+            triggerBossHitEffect(bossHp <= 2);
+        } else {
+            Sound.damage();
+            btn.classList.add("wrong");
+            playerShields--;
+            // 🌟 오답 시 플레이어 화면 지진 + 붉은 번쩍임
+            triggerPlayerDamageEffect();
+            document.querySelectorAll("#bossChoicesGrid .choice-btn").forEach(b => {
+                if (b.innerText === currentBossQuestion.correct) b.classList.add("correct");
+            });
+        }
+
+        updateBossUI();
+        setTimeout(loadNextBossQuestion, 800);
+    }
+
+    function handleBossTimeOut() {
+        if (isBossChecking) return;
+        isBossChecking = true;
+        Sound.damage();
+        playerShields--;
+        triggerPlayerDamageEffect();
+
+        // 타임오버 칭호 체크
+        gameRecords.timeOutCount++;
+        saveRecords();
+        if (gameRecords.timeOutCount >= 3) unlockTitle("time_out");
+
+        updateBossUI();
+
+        document.querySelectorAll("#bossChoicesGrid .choice-btn").forEach(b => {
+            if (b.innerText === currentBossQuestion.correct) b.classList.add("correct");
+        });
+
+        setTimeout(loadNextBossQuestion, 1000);
+    }
+
+    function handleMidBossVictory() {
+        safeStorageSet(`spirit_boss_cleared_${currentMapId}`, true);
+        saveCurrentMapState();
+        Sound.fanfare();
+
+        const { allMapsConquered } = getGlobalTotalStats();
+
+        if (allMapsConquered) {
+            document.getElementById("greatAwakeningModal").style.display = "flex";
+        } else {
+            const activeMap = worldMaps.find(m => m.id === currentMapId) || worldMaps[0];
+            document.getElementById("endingSubBadge").innerText = "GUARDIAN PURIFIED";
+            document.getElementById("endingTitle").innerText = `정화된 ${activeMap.name}`;
+            document.getElementById("endingDesc").innerHTML = `
+                수호령의 시련을 완벽하게 통과했습니다!<br>
+                성역의 수호령이 당신의 권능을 인정하고 영원한 낙원의 축복이 내렸습니다!
+            `;
+            document.getElementById("endingContractStats").innerText = `모든 구역 계약 및 수호령 정화 완료 (100%)`;
+            document.getElementById("endingModal").style.display = "flex";
+        }
+    }
+
+    function goToBossFromAwakening() {
+        Sound.click();
+        document.getElementById("greatAwakeningModal").style.display = "none";
+        startFinalBossRaid();
+    }
+
+    function closeAwakeningToTitle() {
+        Sound.click();
+        document.getElementById("greatAwakeningModal").style.display = "none";
+        renderTitleScreen();
+    }
+
+    function backToTitleFromBossVictory() {
+        document.getElementById("bossVictoryModal").style.display = "none";
+        renderTitleScreen();
+    }
+
+    /* 📖 모험 일지 */
+    function switchBookTab(tabNum) {
+        Sound.click();
+        document.getElementById("tabBtn1").className = tabNum === 1 ? "tab-btn active" : "tab-btn";
+        document.getElementById("tabBtn2").className = tabNum === 2 ? "tab-btn active" : "tab-btn";
+        document.getElementById("tabBtn3").className = tabNum === 3 ? "tab-btn active" : "tab-btn";
+        document.getElementById("tabContent1").className = tabNum === 1 ? "tab-content active" : "tab-content";
+        document.getElementById("tabContent2").className = tabNum === 2 ? "tab-content active" : "tab-content";
+        document.getElementById("tabContent3").className = tabNum === 3 ? "tab-content active" : "tab-content";
+
+        if (tabNum === 3) {
+            renderTitleAndRecordsTab();
+        }
+    }
+
+
+    function openWordBook(fromTitle = false) {
+        Sound.click();
+        const inGameView = document.getElementById("inGameBookView");
+        const titleView = document.getElementById("titleBookView");
+
+        if (fromTitle) {
+            inGameView.style.display = "none";
+            titleView.style.display = "block";
+
+            const { totalWords, totalContracted } = getGlobalTotalStats();
+            const totalPercent = totalWords > 0 ? Math.round((totalContracted / totalWords) * 100) : 0;
+
+            document.getElementById("titleOverallPercentText").innerText = `${totalPercent}%`;
+            document.getElementById("titleOverallGaugeBar").style.width = `${totalPercent}%`;
+            document.getElementById("titleTotalWordsSummary").innerText = `계약: ${totalContracted} / ${totalWords}마리`;
+
+            const overviewList = document.getElementById("titleWorldMapOverviewList");
+            overviewList.innerHTML = "";
+
+            worldMaps.forEach(map => {
+                const savedMastery = safeStorageGet(`spirit_mastery_${map.id}`, {});
+                let mapContracted = 0;
+                map.words.forEach(w => {
+                    if ((savedMastery[w.eng] || 0) >= 3) mapContracted++;
+                });
+                const { tier: mTier, percent } = getMapCalculatedTier(map.id, map.words.length, mapContracted);
+
+                const card = document.createElement("div");
+                card.className = "world-summary-card";
+                card.innerHTML = `
+                    <div class="world-summary-top">
+                        <span>${map.name}</span>
+                        <span class="tag" style="background:${mTier.bg}; color:${mTier.color}; padding:2px 7px; font-size:10px;">${mTier.name}</span>
+                    </div>
+                    <div style="font-size:10px; color:#8c6d46; margin-bottom:2px;">${map.desc}</div>
+                    <div class="overall-gauge-container" style="height:6px; margin:4px 0 2px 0;">
+                        <div class="overall-gauge-bar" style="width:${percent}%;"></div>
+                    </div>
+                    <div style="font-size:10px; color:#785a3e; text-align:right; font-weight:700;">
+                        ${mapContracted} / ${map.words.length}마리 (${percent}%)
+                    </div>
+                `;
+                overviewList.appendChild(card);
+            });
+        } else {
+            inGameView.style.display = "block";
+            titleView.style.display = "none";
+
+            const listContainer = document.getElementById("wordListContainer");
+            listContainer.innerHTML = "";
+
+            const activeMap = worldMaps.find(m => m.id === currentMapId) || worldMaps[0];
+            const currentWords = activeMap.words;
+            const currentSavedMastery = safeStorageGet(`spirit_mastery_${activeMap.id}`, {});
+
+            let boundCount = 0;
+            currentWords.forEach(item => {
+                const count = currentSavedMastery[item.eng] || 0;
+                if (count >= 3) boundCount++;
+                const mInfo = getMasteryInfo(count);
+
+                const row = document.createElement("div");
+                row.className = `word-item-clean stage-${mInfo.stage}`;
+                row.innerHTML = `
+                    <div class="word-text-group">
+                        <span class="word-main-eng">${item.eng}</span>
+                        <span class="word-sub-kor">${item.kor}</span>
+                    </div>
+                    <span class="word-mini-status" style="background:${mInfo.bg}; color:${mInfo.color}; border: 1px solid ${mInfo.stage === 3 ? '#eab308' : '#cbd5e1'};">
+                        ${mInfo.text}
+                    </span>
+                `;
+                listContainer.appendChild(row);
+            });
+
+            const overallPercent = currentWords.length > 0 ? Math.round((boundCount / currentWords.length) * 100) : 0;
+            document.getElementById("overallPercentageText").innerText = `${boundCount} / ${currentWords.length}마리 (${overallPercent}%)`;
+            document.getElementById("overallGaugeBar").style.width = overallPercent + "%";
+            document.getElementById("mapBookTitleText").innerText = `🌟 ${activeMap.name} 교감도`;
+        }
+
+        const tierListContainer = document.getElementById("tierRoadmapList");
+        tierListContainer.innerHTML = "";
+        const { tier: currentTier, totalWords, tiers } = getGlobalTier();
+
+        tiers.forEach((t, idx) => {
+            const isCurrent = (t.name === currentTier.name);
+            const item = document.createElement("div");
+            item.className = `timeline-item ${isCurrent ? 'current-tier' : ''}`;
+            let reqText = (idx === tiers.length - 1) ? `전체 ${totalWords}마리 완벽 계약` : `${t.req}마리 계약 달성`;
+            if (idx === 0) reqText = "시작 (0마리)";
+
+            item.innerHTML = `
+                <span style="font-weight:bold; color:${isCurrent ? '#b45309' : '#334155'};">${t.name}</span>
+                <span style="font-size:11px; color:${isCurrent ? '#b45309' : '#64748b'}; font-weight:700;">
+                    ${isCurrent ? '📍 [현재 계급]' : reqText}
+                </span>
+            `;
+            tierListContainer.appendChild(item);
+        });
+
+        const mapRoadmapContainer = document.getElementById("mapMasteryRoadmapList");
+        mapRoadmapContainer.innerHTML = "";
+        
+        const activeMap = worldMaps.find(m => m.id === currentMapId) || worldMaps[0];
+        const savedMastery = safeStorageGet(`spirit_mastery_${activeMap.id}`, {});
+        let mapContracted = 0;
+        activeMap.words.forEach(w => {
+            if ((savedMastery[w.eng] || 0) >= 3) mapContracted++;
+        });
+        const { tier: currentMapTier } = getMapCalculatedTier(currentMapId, activeMap.words.length, mapContracted);
+
+        mapMasteryTiers.forEach((mt) => {
+            const isCurrent = (mt.name === currentMapTier.name);
+            const item = document.createElement("div");
+            item.className = `timeline-item ${isCurrent ? 'current-tier' : ''}`;
+            item.innerHTML = `
+                <span style="font-weight:bold; color:${isCurrent ? '#b45309' : '#334155'};">${mt.name}</span>
+                <span style="font-size:11px; color:${isCurrent ? '#b45309' : '#64748b'}; font-weight:700;">
+                    ${isCurrent ? '📍 [현재 상태]' : mt.range}
+                </span>
+            `;
+            mapRoadmapContainer.appendChild(item);
+        });
+
+        switchBookTab(1);
+        document.getElementById("bookModal").style.display = "flex";
+    }
+
+    function closeWordBook() { 
+        Sound.click();
+        document.getElementById("bookModal").style.display = "none"; 
+    }
+
+    function handleFullReset() {
+        Sound.click();
+        if (confirm("⚠️ 정말로 모든 모험 기록을 초기화하시겠습니까?")) {
+            if (confirm("🚨 [최종 경고]\n정령술사 총 계급과 모든 영지의 정령 계약 기록이 영구히 삭제됩니다.\n정말 초기화하시겠습니까?")) {
+                localStorage.clear();
+                alert("✨ 모든 기록이 초기화되었습니다. 새로운 모험을 시작합니다!");
+                location.reload();
+            }
+        }
+    }
+
+   window.onload = function() {
+        document.getElementById("introScreen").style.display = "flex";
+        document.getElementById("titleScreen").style.display = "none";
+        document.getElementById("mapLobbyScreen").style.display = "none";
+        document.getElementById("gameScreen").style.display = "none";
+        document.getElementById("bossScreen").style.display = "none";
+        updateEquippedBadgeDisplay(); // 🌟 초기 칭호 장착 표시
+    };
+</script>
+</body>
+</html>

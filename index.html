@@ -2678,17 +2678,6 @@
         }, 500);
     }
 
-    function triggerSpiritTameEffect() {
-        const arena = document.querySelector(".battle-arena-box");
-        if (!arena) return;
-
-        const bullet = document.createElement("div");
-        bullet.className = "spirit-bullet";
-        arena.appendChild(bullet);
-
-        setTimeout(() => bullet.remove(), 350);
-    }
-
     function saveCurrentMapState() {
         safeStorageSet('spirit_current_map_id', currentMapId);
         safeStorageSet(`spirit_round_${currentMapId}_sec_${currentSectorIndex}`, currentRound);

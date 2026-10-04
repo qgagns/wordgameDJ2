@@ -10,18 +10,18 @@ const WORLD_MAPS_TEXT = `
 [실모의 숲]
 # 
 clear the way towards	[숙]	~로 가는 길을 열어주다
-originate	[동]	비롯되다, 유래하다
+originate from, stem from	[동]	비롯되다, 유래하다
 occurrence	[명]	발생, 사건
 rare occurrence	[숙]	드물게 일어나는 일
-emergence	[명]	출현, 부상
+emergence, rise	[명]	출현, 부상
 proliferation	[명]	급증, 확산
 generate, create	[동]	창출하다, 생성하다, 만들다
 prompt, trigger	[동]	촉발하다, 유발하다, 자극하다
 accelerate, facilitate, promote, foster	[동]	가속하다, 촉진하다, 육성하다
 evolve, develop	[동]	진화하다, 발전시키다, 개발하다
-evolution	[명]	진화, 발전
+evolution, development	[명]	진화, 발전
 evolutionary	[형]	진화의, 진화론적인
-transform	[동]	변형시키다, 바꾸다
+transform, convert	[동]	변형시키다, 바꾸다
 self-transformation	[명]	자기 변화
 render	[동]	(어떤 상태로) 만들다
 lengthen, prolong, extend	[동]	늘이다, 연장하다
@@ -33,14 +33,12 @@ premature	[형]	시기상조의, 너무 이른
 frequent	[형]	빈번한, 잦은
 gradual	[형]	점진적인
 simultaneous	[형]	동시의
-simultaneously	[부]	동시에
 meanwhile	[부]	한편, 그동안에
 reinforce, strengthen	[동]	강화하다
 diminish, weaken	[동]	줄이다, 감소시키다, 약화시키다
 hinder, impede	[동]	방해하다, 저해하다
 suppress	[동]	억누르다, 억압하다
 confine	[동]	한정하다, 국한하다
-confined to	[숙]	~에 국한된
 accept	[동]	받아들이다, 수락하다
 acknowledge, recognize	[동]	인정하다, 인지하다, 알아보다
 refuse, reject	[동]	거부하다, 거절하다
@@ -53,7 +51,6 @@ rival	[명]	경쟁자, 라이벌; [형] 경쟁하는
 allied	[형]	연합한, 동맹의
 criticize	[동]	비판하다, 비난하다
 criticism	[명]	비판, 비평
-social criticism	[명]	사회 비판
 constructive	[형]	건설적인
 destructive	[형]	파괴적인
 peace treaty	[명]	평화 협정
@@ -74,33 +71,33 @@ cooperative	[형]	협력적인
 stay away from, distance oneself from	[숙]	~을 피하다, 멀리하다, 거리를 두다
 status, standing	[명]	지위, 신분, 평판
 dominance	[명]	지배, 우세
-govern	[동]	지배하다, 통치하다
+govern, rule	[동]	지배하다, 통치하다
 liberation	[명]	해방, 석방
 block party	[명]	블록 파티, 동네 축제
 ghetto	[명]	빈민가, 게토
 domestic	[형]	가정의; 국내의
 relocate	[동]	이주하다, 이전하다
-cognitive	[형]	인지의, 인식의
+cognitive, perceptive	[형]	인지의, 인식의
 analytical	[형]	분석적인
 critical insight	[숙]	비판적 통찰력
 perspective	[명]	관점, 시각
 misunderstanding	[명]	오해
 distort	[동]	왜곡하다
-reflect	[동]	반영하다, 나타내다
+reflect, represent	[동]	반영하다, 나타내다
 embody	[동]	구현하다, 나타내다
-underlie	[동]	~의 기저를 이루다
+underlie	[동]	~의 기저[핵심]를 이루다
 unexplained	[형]	설명되지 않은, 원인 불명의
 persuasive	[형]	설득력 있는
 immersion	[명]	몰입, 몰두
-capability	[명]	능력, 역량
+capability, capacity	[명]	능력, 역량
 incapable of	[숙]	~을 할 수 없는
 empower	[동]	권한을 주다, 힘을 북돋우다
-enable	[동]	가능하게 하다
+enable O toR	[동]	O가 R할수 있게 하다
 strive, take pains	[동/숙]	노력하다, 분투하다, 공을 들이다, 애를 쓰다
-pursue	[동]	추구하다
-motive	[명]	동기, 유인
+pursue, seek	[동]	추구하다
+motive, motivation	[명]	동기, 유인
 with great ease	[숙]	아주 쉽게
-manage	[동]	관리하다, 다루다
+manage, handle	[동]	관리하다, 다루다
 
 
 
@@ -109,20 +106,19 @@ manage	[동]	관리하다, 다루다
 opt for	[숙]	~을 선택하다
 determine	[동]	결정하다, 밝히다
 have no choice but toR	[숙]	~하지 않을 수 없다
-resort to, rely on	[숙]	~에 의지하다, 기대다
-reliance	[명]	의존, 의지
+resort to, rely on, depend on	[숙]	~에 의지하다, 기대다
+reliance, dependence	[명]	의존, 의지
 try out	[숙]	시험해 보다
-customize, personalize	[동]	맞춤 제작하다, 개인화하다
-individualized	[형]	개별화된
-standardized	[형]	표준화된
+customize, personalize, individualize	[동]	맞춤 제작하다, 개인화하다
+standardize	[동]	표준화하다
 moral, ethical	[형]	도덕적인, 윤리적인
 moral licensing	[명]	도덕적 허가
 eco-guilt	[명]	환경 죄책감
 eco-friendly	[형]	친환경적인
 grief	[명]	비탄, 애도
-comfort, relieve	[명/동]	위로, 편안함, 덜다, 안도하게 하다
+comfort, relieve, ease	[명/동]	위로, 편안함, 덜다, 안도하게 하다
 restorative	[형]	회복시키는
-self-esteem	[명]	자존감, 자부심
+self-esteem, self-regard	[명]	자존감, 자부심
 psychotherapist	[명]	심리치료사
 impulsive	[형]	충동적인
 voluntary	[형]	자발적인
@@ -135,11 +131,10 @@ syntax	[명]	통사론, 구문론
 pronoun	[명]	대명사
 lyrics	[명]	가사
 rhyme	[명/동]	운, 각운; 운을 맞추다
-Pulitzer Prize	[명]	퓰리처상
 drafting	[명]	초고 작성, 기초 작업
 curriculum	[명]	교육과정
 heritage, tradition	[명]	유산, 전통
-customary	[형]	통상적인, 관례적인
+customary, conventioal	[형]	통상적인, 관례적인
 ceremony	[명]	의식, 식
 audience	[명]	청중, 관객
 recreational	[형]	여가의, 오락의
@@ -150,15 +145,14 @@ commercial	[형]	상업적인
 economic recession	[명]	경기 침체
 convenient	[형]	편리한
 accessibility	[명]	접근성
-multitasking, multi-tasking	[명]	다중 작업, 멀티태스킹
 appetite	[명]	식욕
 dining	[명]	식사, 정찬
-digestion	[명]	소화(력)
-vacant	[형]	비어 있는
+digestion, ingestion	[명]	소화(력)
+vacant, empty	[형]	비어 있는
 secure	[동/형]	확보하다; 안전한
 license	[동/명]	허가하다, 면허를 주다; 면허
-import	[동]	들여오다, 수입하다
-transmit	[동]	전송하다, 전달하다
+import	[동/명]	들여오다, 수입하다; 수입, 도입
+transmit	[동/명]	전송하다, 전달하다; 전송, 전달
 consequently, hence, therefore	[부]	그 결과, 따라서, 그러므로
 consequence	[명]	결과; 중요성
 besides	[부]	게다가, 뿐만 아니라
@@ -166,20 +160,20 @@ relative	[형]	상대적인; 관련된
 relevant, to the point	[형/숙]	유의미한, 관련된, 적절한, 요점을 짚는
 disadvantage	[명]	단점, 불리한 점
 neutral	[형]	중립적인
-universal	[형]	보편적인, 일반적인
-diverse	[형]	다양한
+universal, general	[형]	보편적인, 일반적인
+diverse, various	[형]	다양한
 distinctive	[형]	독특한, 차별적인
-appealing	[형]	매력적인, 흥미를 끄는
+appealing, charming, attractive	[형]	매력적인, 흥미를 끄는
 unappealing	[형]	매력 없는, 흥미를 끌지 못하는
 notable, intriguing	[형]	주목할 만한, 눈에 띄는, 아주 흥미로운
 popularity	[명]	인기
 mainstream	[명/형]	주류; 주류의
-boast	[동]	자랑하다, 뽐내다
+boast, show off	[동]	자랑하다, 뽐내다
 display	[동/명]	보여주다, 발휘하다; 전시
 appreciate	[동]	높이 평가하다; 감사하다; 감상하다
-propose	[동]	제안하다
+propose, suggest	[동]	제안하다
 procedure, technique	[명]	절차, 순서, 기법, 기술
-strategy	[명]	전략, 책략
+strategy, taxtic	[명]	전략, 책략, 전술
 mechanism	[명]	기제, 메커니즘
 function	[동/명]	기능하다, 작동하다; 기능
 feedback	[명]	피드백, 조언
@@ -189,14 +183,14 @@ intermediate	[형/명]	중간의; 중급자
 physiological	[형]	생리적인, 생리학의
 balance	[동/명]	균형을 맞추다; 균형
 strict	[형]	엄격한
-acquire	[동]	습득하다, 얻다
+acquire, attain	[동]	습득하다, 얻다
 accompany	[동]	동반하다, 수반하다
 accuracy	[명]	정확성, 정확도
-emphasis	[명]	강조, 역점
-establish	[동]	확립하다, 설립하다
+emphasis, stress	[명]	강조, 역점
+establish, found	[동]	확립하다, 설립하다
 pivotal, principal	[형]	중추적인, 결정적인, 주요한, 주된
 primarily	[부]	주로, 본래
-scarce	[형]	부족한, 드문
+scarce, rare	[형]	부족한, 드문
 situational	[형]	상황에 따른, 상황적인
 
 

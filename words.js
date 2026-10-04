@@ -173,7 +173,7 @@ display	[동/명]	보여주다, 발휘하다; 전시
 appreciate	[동]	높이 평가하다; 감사하다; 감상하다
 propose, suggest	[동]	제안하다
 procedure, technique	[명]	절차, 순서, 기법, 기술
-strategy, taxtic	[명]	전략, 책략, 전술
+strategy, tactic	[명]	전략, 책략, 전술
 mechanism	[명]	기제, 메커니즘
 function	[동/명]	기능하다, 작동하다; 기능
 feedback	[명]	피드백, 조언

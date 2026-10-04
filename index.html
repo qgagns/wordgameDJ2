@@ -2131,7 +2131,14 @@
 
     // 🌟 클라우드 ➔ 브라우저(localStorage)로 진도 덮어쓰기
     function restoreDataFromCloud(cloudData) {
+        const currentUid = currentUserDocId || safeStorageGet('spirit_current_uid', null);
+        const savedHeroName = safeStorageGet('spirit_hero_name', null);
+
         localStorage.clear(); // 👈 맨 윗줄에 이 1줄 추가!
+
+        if (currentUid) safeStorageSet('spirit_current_uid', currentUid);
+        if (savedHeroName) safeStorageSet('spirit_hero_name', savedHeroName);
+
         if (cloudData.mastery) {
             Object.keys(cloudData.mastery).forEach(mapKey => {
                 safeStorageSet(`spirit_mastery_${mapKey}`, cloudData.mastery[mapKey]);

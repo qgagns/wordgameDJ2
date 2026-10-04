@@ -1433,8 +1433,13 @@
             width:100%;
             padding-top: 25px">
 
-            <div id="fbArtBox" class="art-box" style="margin-bottom:10px; margin-top:10px; height:160px;"></div>
-            
+            <div id="fbArtBox" class="art-box" style="margin-bottom:10px; margin-top:10px; height:160px; position:relative;">
+            <!-- 미리 로딩해두는 정답 이미지 -->
+            <img id="fbImgCorrect" src="images/fb_correct.png" style="width:100%; height:100%; object-fit:cover; display:none;" alt="정답">
+            <!-- 미리 로딩해두는 오답 이미지 -->
+            <img id="fbImgWrong" src="images/fb_wrong.png" style="width:100%; height:100%; object-fit:cover; display:none;" alt="오답">
+            </div>
+
             <!-- ⚡ 찰나의 공명 달성 시 터지는 번개 배너 -->
             <div id="fbResonanceNotice" class="resonance-banner" style="margin-top:10px;">
                 ⚡ [찰나의 공명!] 본능적 교감으로 숙련도 +2 급상승!
@@ -3171,7 +3176,7 @@
         const src = isCorrect ? GAME_ASSETS.fbCorrect : GAME_ASSETS.fbWrong;
         return renderImage(src, 'cover');
     }
-
+    // 정답 피드백 화면
     function selectAnswer(selectedAnswer, q) {
         const isCorrect = (selectedAnswer === q.correct);
         const elapsedSec = parseFloat(((Date.now() - questionStartTime) / 1000).toFixed(1));
@@ -3185,7 +3190,12 @@
         const fbContractNotice = document.getElementById("fbContractNotice");
         const fbResonanceNotice = document.getElementById("fbResonanceNotice");
 
-        fbArtBox.innerHTML = getFeedbackArtSVG(isCorrect);
+        const imgCorrect = document.getElementById("fbImgCorrect");
+        const imgWrong = document.getElementById("fbImgWrong");
+        if (imgCorrect && imgWrong) {
+            imgCorrect.style.display = isCorrect ? "block" : "none";
+            imgWrong.style.display = isCorrect ? "none" : "block";
+        }
         fbWord.innerText = q.engWord;
         fbMeaning.innerText = q.korMeaning;
 

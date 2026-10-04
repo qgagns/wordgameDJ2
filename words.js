@@ -229,7 +229,7 @@ in case (that)	[접] ~할 경우에 대비하여
 as long as	[접] ~하는 한
 because, since, as	[접] ~ 때문에, ~이므로
 because of, due to, owing to	[전] ~ 때문에
-therefore, thus, hence, as a result, consequently, as a consequence	[접부] 결과적으로, 따라서, 그러므로
+therefore, thus, hence, as a result	[접부] 따라서, 그러므로
 accordingly	[접부] 그에 따라서, 그에 맞춰서
 for this reason	[접부] 이러한 이유 때문에
 so ~ that ..., such ~ that ...	[구] 너무 ~해서 ...하다
@@ -241,9 +241,9 @@ in other words, that is (to say), namely	[접부] 즉, 다시 말해
 to put it another way	[접부] 다른 말로 하자면
 in a word, in short, in brief, to be brief, to put it simply	[접부] 간단히 말하자면, 짧게 말하자면
 in summary, to sum up, to summarize, in a nutshell	[접부] 요약하자면, 정리하자면
-in conclusion, to conclude	[접부] 결론적으로, 결론 짓자면
+consequently, as a consequence, in conclusion, to conclude	[접부] 결론적으로, 결론 짓자면
 all in all, largerly, on the whole, overall	[접부] 대체로, 전반적으로
-ultimately, in the end	[접부] 결국, 최종적으로
+ultimately, in the end	[접부] 결국, 최종적으로, 궁극적으로
 to start (begin) with, firstly, first of all	[접부] 첫째로, 무엇보다 먼저
 subsequently	[접부] 그 후에, 이어서
 

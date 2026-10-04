@@ -113,7 +113,7 @@
         /* ============================
            📜 0. 프롤로그 화면
            ============================ */
-        #introScreen { display: flex; }
+        #introScreen { display: none; }
         
         .intro-top-group {
             display: flex;
@@ -991,6 +991,39 @@
             text-shadow: 0 1px 2px rgba(0,0,0,0.2);
             cursor: default;
         }
+
+        /* 🌟 프롤로그 영화 연출: 부드러운 페이드 인 */
+        .scene-fade-in {
+            animation: sceneFadeIn 0.8s ease-out forwards;
+        }
+        @keyframes sceneFadeIn {
+            0% { opacity: 0; filter: brightness(0.2); }
+            100% { opacity: 1; filter: brightness(1); }
+        }
+
+        /* 🌟 기절했다가 눈을 깜빡이며 뜨는 연출 (Eye Blink) */
+        .scene-eye-blink {
+            animation: eyeBlink 1.4s ease-out forwards;
+        }
+        @keyframes eyeBlink {
+            0% { opacity: 0; filter: blur(8px) brightness(0); }
+            35% { opacity: 0.6; filter: blur(4px) brightness(0.5); }
+            50% { opacity: 0; filter: blur(8px) brightness(0); } /* 다시 스르륵 감김 */
+            70% { opacity: 0.8; filter: blur(2px) brightness(0.8); }
+            100% { opacity: 1; filter: blur(0px) brightness(1); } /* 완전히 번쩍 뜸 */
+        }
+
+        /* 🌟 블랙아웃 속 타이틀 로고 웅장한 페이드인 */
+        .cinematic-title-appear {
+            animation: titleAppearAnim 2.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+        @keyframes titleAppearAnim {
+            0% { opacity: 0; transform: scale(0.90); letter-spacing: -2px; filter: blur(10px) brightness(0.2); }
+            45% { opacity: 0.5; filter: blur(4px) brightness(0.6); }
+            80% { opacity: 1; filter: blur(0px) brightness(1.1); }
+            100% { opacity: 1; transform: scale(1.02); letter-spacing: 0px; filter: brightness(1); }
+        }
+
     </style>
 </head>
 <body>
@@ -1005,48 +1038,36 @@
         <!-- ==============================================
              📜 0. 프롤로그
              ============================================== -->
-        <div id="introScreen" class="screen-view">
-            <div class="intro-top-group">
-                <div class="intro-title-tag">⚠ CRISIS OF MY LIFE</div>
-                <h2 class="intro-heading">이세계에 떨어지다</h2>
+        <div id="introScreen" class="screen-view" onclick="advanceIntroDialogue()" style="display:none; justify-content:space-between; background:#000000; border-radius:18px; padding:12px; cursor:pointer; position:relative; overflow:hidden;">
+            
+            <!-- 상단 헤더 & 스킵 버튼 (어둠 속 은은한 골드) -->
+            <div id="introHeader" style="display:flex; justify-content:space-between; align-items:center; width:100%; border-bottom:1px solid #27141b; padding-bottom:6px; margin-bottom:8px; flex-shrink:0; z-index:10;">
+                <span style="font-size:11px; font-weight:900; color:#b45309; letter-spacing:2px;">✦ PROLOGUE ✦</span>
+                <button class="top-btn" style="background:#1c0e07; border-color:#8f603a; padding:4px 10px; font-size:11px; color:#f7edd4; font-weight:800;" onclick="enterTitleFromIntro()">스킵 ⏩</button>
             </div>
 
-            <div class="intro-art-box">
-                <img src="images/intro_boss.png" style="width:100%; height:100%; object-fit:cover; display:block;" alt="프롤로그 마왕">
+            <!-- 🌟 일러스트 영역: 네모 테두리 없이 어둠과 자연스럽게 녹아드는 시네마틱 뷰 -->
+            <div id="introSceneBox" style="flex:1; width:100%; display:flex; justify-content:center; align-items:center; position:relative; overflow:hidden; border-radius:14px; margin-bottom:12px;">
+                <img id="introArtImg" src="" style="width:100%; height:100%; object-fit:cover; display:none; border-radius:12px; box-shadow:0 0 25px rgba(0,0,0,0.9);" alt="시네마틱 씬">
             </div>
 
-            <div class="prologue-scroll-box">
-                <p class="prologue-p">
-                    편하고 그럭저럭 좋은 인생이었다.</p>
-                <p class="prologue-p">
-                    그저 물 흘러가는대로, 내키는대로 살았으니까.</p>
-                    <p class="prologue-p"> 
-                        그런데 문득 정신을 차려보니... 주변은 어느새 내가 알던 세상이 아니었다. </p>
-                        <p class="prologue-p"> 
-                            얼이 빠진 채 드넓은 들판을 헤매기를 며칠. 이내 내 눈앞에 무시무시하게 생긴 자가 나타났다.</p>
-                <p class="prologue-p">
-                    그 자는 스스로를... <span class="prologue-highlight">EXAM</span>이라 칭했다.</p>
-                <p class="prologue-p">
-                    "겁쟁이로군. 내가 그대의 모든 자유와 오락을 빼앗았음에도, 그리 바닥에 철썩 달라붙어 두려워 하는 꼴이라니."</p>
-                <p class="prologue-p">
-                    그 말대로, 나는 그의 위압적인 모습 앞에 그저 엎드린 채 벌벌 떨 뿐이었다.</p>
-                <p class="prologue-p">
-                    자신이 할 말은 다 했다는 듯, 그는 무심한 손길을 내저었다. 그러자, 나는 칠흑같은 어둠에 잠겼다.</p>
-                <p class="prologue-p">"으아악!! 이 ㄱ..!!"</p>
-                <p class="prologue-p"> 바닥에 머리를 세게 부딪힌 나는 가까스로 정신을 차리고 바닥을 밀어내며 몸을 일으켰다. 그리고... 나를 무시무시한 눈으로 노려보는 <span class="prologue-stone">괴상한 존재</span>들을 마주했다. </p>
-                <p class="prologue-p">"...뭐야, 이 액괴 슬라임 왁뿌 같은 것들은?"</p>
-                <p class="prologue-p">그때, 놀라운 일이 벌어졌다. 내 머릿속에 정체를 알 수 없는 <span class="prologue-stone">영단어</span>가 떠오르더니, 무의식적으로 그 뜻을 읊자 갑자기 엄청난 기운이 나에게 스며드는 것이었다!</p>
-                <p class="prologue-p"><span class="prologue-stone">정령</span>들도 놀란 눈치였다. 그들은 내가 정령들의 이름을 알아내 그 깊은 의미를 깨닫고 이를 마력으로 바꿀 수 있는 자, 그들의 오랜 전설 속에서 마침내 마왕을 물리칠 자, <span class="prologue-stone">정령술사</span>라 말했다.</p>
-                <p class="prologue-p">"...그래... 이거야!"</p>
-                <p class="prologue-p"> 나는 깨달아 버렸다. 기분 나쁜 이름을 가진 가증스러운 신에게 한 방 먹여줄 좋은 방법을. 
-                  <p class="prologue-p">나는 영단어로 정령들을 부리며, 이 낯선 이세계에서 살아남을 것이다. <span class="prologue-stone">최강의 정령술사</span>가 되어, 반드시 행복한 일상으로 돌아갈 것이다.
-                </p>
-                <p class="prologue-p">...반드시.</p>
+            <!-- 📜 양피지 대화창 (화면 하단에 단정하게 안착) -->
+            <div id="introDialogueBox" style="background:#ede3cc; border:2.5px solid #8f603a; border-radius:14px; padding:14px 16px; height:150px; flex-shrink:0; display:flex; flex-direction:column; justify-content:space-between; cursor:pointer; text-align:left; box-shadow:0 4px 15px rgba(0,0,0,0.6); box-sizing:border-box; z-index:10;">
+                <div>
+                    <!-- 화자 이름 -->
+                    <div id="introSpeaker" style="font-size:15px; font-weight:900; color:#059669; margin-bottom:6px;">
+                        나
+                    </div>
+                    <!-- 대사 내용 -->
+                    <div id="introText" style="font-size:15.5px; color:#2c1a0e; line-height:1.6; word-break:keep-all; font-weight:700;">
+                        편하고 그럭저럭 좋은 인생이었다.
+                    </div>
+                </div>
+                <!-- 하단 터치 안내 -->
+                <div style="text-align:right; font-size:11px; color:#8f603a; font-weight:900; animation: bounceIn 0.8s infinite alternate;">
+                    화면을 터치하여 계속 ➔
+                </div>
             </div>
-
-            <button class="btn-wood" style="background:#b45309; border-color:#92400e; padding:12px; font-size:14px;" onclick="enterTitleFromIntro()">
-                ⚔️ 복수를 맹세하며 출발 ➔
-            </button>
         </div>
 
         <!-- ==============================================
@@ -1221,10 +1242,69 @@
         </div>
     </div>
 
+<!-- 💬 마왕 결전 전/후 시네마틱 대화 모달 (프롤로그와 완벽 일치하는 양피지 컷씬형) -->
+    <div id="bossDialogueModal" class="modal" style="display:none; position:absolute; top:0; left:0; right:0; bottom:0; z-index:100; background:#000000; border-radius:18px; padding:12px; flex-direction:column; justify-content:space-between; overflow:hidden;">
+        
+        <!-- 1. 상단 헤더 & 스킵 버튼 (어둠 속 은은한 골드) -->
+        <div style="display:flex; justify-content:space-between; align-items:center; width:100%; border-bottom:1px solid #27141b; padding-bottom:6px; margin-bottom:8px; flex-shrink:0; z-index:10;">
+            <span id="dialoguePhaseTag" style="font-size:10.5px; font-weight:900; color:#b45309; letter-spacing:2px;">✦ THE FINAL CLASH ✦</span>
+            <button class="top-btn" style="background:#1c0e07; border-color:#8f603a; padding:4px 10px; font-size:11px; color:#f7edd4; font-weight:800;" onclick="skipBossDialogue()">스킵 ⏩</button>
+        </div>
+
+        <!-- 2. 🌟 마왕 일러스트: 답답한 네모 테두리를 깨고 어둠과 자연스럽게 녹아드는 시네마틱 뷰 -->
+        <div style="flex:1; width:100%; display:flex; justify-content:center; align-items:center; position:relative; overflow:hidden; border-radius:14px; margin-bottom:12px;">
+            <img src="images/demon_exam.png" style="width:100%; height:100%; max-height:220px; object-fit:cover; display:block; border-radius:12px; box-shadow:0 0 25px rgba(0,0,0,0.9);" alt="마왕 EXAM">
+        </div>
+
+        <!-- 3. 📜 양피지 대화창 본체 (프롤로그와 100% 동일한 따뜻한 양피지 감성) -->
+        <div onclick="advanceBossDialogue()" style="background:#ede3cc; border:2.5px solid #8f603a; border-radius:14px; padding:14px 16px; height:150px; flex-shrink:0; display:flex; flex-direction:column; justify-content:space-between; cursor:pointer; text-align:left; box-shadow:0 4px 15px rgba(0,0,0,0.6); box-sizing:border-box; z-index:10;">
+            <div>
+                <!-- 화자 이름 -->
+                <div id="dialogueSpeaker" style="font-size:15px; font-weight:900; color:#b45309; margin-bottom:6px; display:flex; align-items:center; gap:6px;">
+                    👑 마왕 『EXAM』
+                </div>
+                <!-- 대사 내용 (진한 고동색으로 선명하게) -->
+                <div id="dialogueText" style="font-size:15.5px; color:#2c1a0e; line-height:1.6; word-break:keep-all; font-weight:700;">
+                    대사 내용이 들어가는 자리입니다.
+                </div>
+            </div>
+            <!-- 하단 터치 안내 -->
+            <div style="text-align:right; font-size:11px; color:#8f603a; font-weight:900; animation: bounceIn 0.8s infinite alternate;">
+                화면을 터치하여 계속 ➔
+            </div>
+        </div>
+    </div>
+    
     <!-- 🌟 대형 카운트다운 오버레이 -->
     <div id="battleCountdownOverlay" class="countdown-overlay">
         <div id="countdownNumDisplay" class="countdown-num">3</div>
     </div>
+
+    <!-- 🌟 [1단계] 칠흑의 블랙아웃 속 거대한 타이틀 로고 레이어 -->
+    <div id="introCinematicTitle" style="display:none; opacity:0; position:absolute; top:0; left:0; right:0; bottom:0; z-index:998; background:#000000; justify-content:center; align-items:center; flex-direction:column; padding:20px; text-align:center; border-radius:18px;">
+        <div id="cinematicTitleContent" class="cinematic-title-appear" style="display:none; flex-direction:column; justify-content:center; align-items:center; width:92%; height:70%; text-align:center; box-sizing:border-box;">
+            
+            <!-- 1. 🌟 초특대형 메인 타이틀 (46px, 화면을 찢고 나올 듯한 압도적 볼륨감) -->
+            <h1 style="font-size:80px; font-weight:900; color:#ffffff; margin:0 0 24px 0; letter-spacing:-1.5px; line-height:1.12; word-break:keep-all; text-shadow:0 0 45px rgba(255,255,255,0.85), 0 0 20px rgba(255,255,255,0.4), 0 6px 30px rgba(0,0,0,0.95);">
+                The Crisis<br>of<br>Word Spirits
+            </h1>
+
+            <!-- 2. 🌟 시원하게 확장된 2줄 서브 문구 (중심 균형을 완벽히 받쳐줌) -->
+            <div style="display:flex; flex-direction:column; align-items:center; gap:8px;">
+                <span style="font-size:17.5px; font-weight:900; color:#fde047; letter-spacing:3px; text-shadow:0 0 18px rgba(253,224,71,0.7), 0 2px 8px rgba(0,0,0,0.9);">
+                    The Trial of EXAM
+                </span>
+                <span style="font-size:14px; font-weight:800; color:#fcd34d; letter-spacing:5px; opacity:0.9; text-transform:uppercase; text-shadow:0 0 10px rgba(252,211,77,0.5);">
+                    · Deokjeong2 ver ·
+                </span>
+            </div>
+
+        </div>
+    </div>
+
+
+    <!-- 🌟 [2단계] 타이틀 이후 터져 나오는 순백의 화이트아웃 섬광 레이어 -->
+    <div id="introGrandFinale" style="display:none; opacity:0; position:absolute; top:0; left:0; right:0; bottom:0; z-index:999; background:#ffffff; pointer-events:none !important;"></div>
 
     <!-- 👇 여기에 로그인 창 -->
     <div id="authModal" class="modal" style="display:flex; z-index:100; background:#fbf6ea; border:3px solid #8f603a;">
@@ -1900,6 +1980,9 @@
             const userRef = db.collection(USER_COLLECTION).doc(id);
             const doc = await userRef.get();
 
+            // 🌟 1. '신규 유저인가요?' 깃발을 일단 거짓(false)으로 준비
+            let isNewUser = false; 
+
             if (doc.exists) {
                 // 기존 계정 로그인 검증
                 const data = doc.data();
@@ -1908,10 +1991,13 @@
                     msg.innerText = "❌ 비밀번호가 일치하지 않습니다!";
                     return;
                 }
-                // 클라우드 데이터를 로컬로 복원
                 restoreDataFromCloud(data);
                 msg.style.color = "#15803d";
                 msg.innerText = `✨ [${name}] 술사님, 모험 기록을 복원했습니다!`;
+                
+                // 🌟 이미 등록된 학생이므로 신규 아님!
+                isNewUser = false; 
+
             } else {
                 // 신규 학생 계정 생성
                 await userRef.set({
@@ -1924,17 +2010,28 @@
                 safeStorageSet('spirit_hero_name', `${id} ${name}`);
                 msg.style.color = "#15803d";
                 msg.innerText = `🎉 [${name}] 술사님, 신규 등록 완료! 모험을 시작합니다.`;
+
+                // 🌟 [핵심] 처음 등록하는 신규 학생이므로 깃발을 참(true)으로 올림!
+                isNewUser = true; 
             }
 
             currentUserDocId = id;
-                safeStorageSet('spirit_current_uid', id);
-                safeStorageSet('spirit_user_name', `${id} ${name}`);
+            safeStorageSet('spirit_current_uid', id);
+            safeStorageSet('spirit_user_name', `${id} ${name}`);
 
-            // 로그인 성공 시 0.5초 뒤 모달 닫기
+            // 🌟 2. 0.6초 뒤 화면 전환할 때 깃발을 확인!
             setTimeout(() => {
                 document.getElementById("authModal").style.display = "none";
-                document.getElementById("introScreen").style.display = "flex";
-                document.getElementById("titleScreen").style.display = "none";
+
+                if (isNewUser) {
+                    // 👉 신규 학생인 경우: 프롤로그를 상영한다!
+                    openIntroScreen();
+                } else {
+                    // 👉 기존 학생인 경우: 프롤로그는 끄고, 타이틀 화면으로 바로 직행!
+                    document.getElementById("introScreen").style.display = "none";
+                    document.getElementById("titleScreen").style.display = "flex";
+                    renderTitleScreen();
+                }
             }, 600);
 
         } catch (e) {
@@ -2729,17 +2826,206 @@
         return { stage: 3, text: "🌟 완료", bg: "#fef08a", color: "#854d0e" };
     }
 
-    function enterTitleFromIntro() {
-        Sound.click();
-        document.getElementById("introScreen").style.display = "none";
-        document.getElementById("titleScreen").style.display = "flex";
+    // 🌟 프롤로그를 끄고 타이틀 화면을 100% 정상 가동시키는 핵심 스위치 함수!
+    function enterTitleFromIntro(isSilent = false) {
+        if (!isSilent) {
+            try { Sound.click(); } catch(e) {}
+        }
+
+        safeStorageSet('spirit_has_seen_intro', true);
+        currentIntroIdx = 0;
+
+        const intro = document.getElementById("introScreen");
+        if (intro) intro.style.display = "none";
+
+        const title = document.getElementById("titleScreen");
+        if (title) title.style.display = "flex";
+
         renderTitleScreen();
     }
 
+    /* ========================================================
+       📜 프롤로그 비주얼 노벨 대화 엔진
+       ======================================================== */
+    const INTRO_SCRIPTS = [
+        // 1. [완전 암흑 단계] (배경 전체가 까맣고 글자만 나옴)
+        { speaker: "나", color: "#059669", text: "편하고 그럭저럭 좋은 인생이었다.", img: null },
+        { speaker: "나", color: "#059669", text: "그저 물 흘러가는 대로, 내키는 대로 살았으니까.", img: null },
+        { speaker: "나", color: "#059669", text: "그런데 문득 정신을 차려보니... 주변은 어느새 내가 알던 세상이 아니었다.", img: null },
+        { speaker: "나", color: "#059669", text: "얼이 빠진 채 드넓은 들판을 헤매기를 며칠. 이내 내 눈앞에 무시무시하게 생긴 자가 나타났다.", img: null },
+        
+        // 2. [마왕 등장] 🌟 어둠 속에서 스르륵 페이드 인!
+        { speaker: "나", color: "#059669", text: "그 자는 스스로를... <b style='color:#dc2626; font-size:17px;'>EXAM</b>이라 칭했다.", img: "images/intro_boss.png", fx: "fade" },
+        { speaker: "마왕 『EXAM』", color: "#dc2626", text: "\"겁쟁이로군. 내가 그대의 모든 자유와 오락을 빼앗았음에도, 그리 바닥에 철썩 달라붙어 두려워하는 꼴이라니.\"", img: "images/intro_boss.png" },
+        { speaker: "나", color: "#059669", text: "그 말대로, 나는 그의 위압적인 모습 앞에 그저 엎드린 채 벌벌 떨 뿐이었다.", img: "images/intro_boss.png" },
+        { speaker: "마왕 『EXAM』", color: "#dc2626", text: "\"실망스럽도다. 하찮은 미물이여, 내 눈 앞에서 썩 사라져라.\"", img: "images/intro_boss.png" },
+        
+        // 3. [추락 / 암전] 전체 암흑 속 비명
+        { speaker: "나", color: "#059669", text: "자신이 할 말은 다 했다는 듯, 그는 무심한 손길을 내저었다. 그러자, 나는 칠흑 같은 어둠에 잠겼다.", img: null },
+        { speaker: "나", color: "#059669", text: "\"으아악!! 이 ㄱ..!!\"", img: null },
+        
+        // 4. [정령 조우] 🌟 눈을 끔뻑끔뻑 감았다 번쩍 뜸!
+        { speaker: "나", color: "#059669", text: "바닥에 머리를 세게 부딪힌 나는 가까스로 정신을 차리고 바닥을 밀어내며 몸을 일으켰다. 그리고...", img: "images/intro_spirits.png", fx: "blink" },
+        { speaker: "나", color: "#059669", text: "나를 무시무시한 눈으로 노려보는 <b style='color:#059669;'>괴상한 존재</b>들을 마주했다.", img: "images/intro_spirits.png"},
+        { speaker: "나", color: "#059669", text: "\"...뭐야, 이 액괴 슬라임 왁뿌 같은 것들은?\"", img: "images/intro_spirits.png" },
+        { speaker: "나", color: "#059669", text: "그때, 놀라운 일이 벌어졌다.", img: "images/intro_spirits.png" },
+        { speaker: "나", color: "#059669", text: "내 머릿속에 정체를 알 수 없는 <b style='color:#b45309;'>영단어</b>가 떠오르더니, 무의식적으로 그 뜻을 읊자 갑자기 엄청난 기운이 나에게 스며드는 것이었다!", img: "images/intro_spirits.png" },
+        { speaker: "나", color: "#059669", text: "정령들도 놀란 눈치였다. 그들은 내가 정령들의 이름을 알아내 마력으로 바꿀 수 있는 자, 전설 속의 <b style='color:#059669;'>『정령술사』</b>라 말했다.", img: "images/intro_spirits.png" },
+        { speaker: "나", color: "#059669", text: "\"정령술사...?\"", img: "images/intro_spirits.png" },
+        { speaker: "나", color: "#059669", text: "\"...그래... 이거라면...!\"", img: "images/intro_spirits.png" },
+        { speaker: "나", color: "#059669", text: "나는 깨달아 버렸다. 기분 나쁜 이름을 가진 가증스러운 신에게 한 방 먹여줄 좋은 방법을.", img: "images/intro_spirits.png" },
+        { speaker: "나", color: "#059669", text: "나는 영단어로 정령들을 부리며, 이 낯선 이세계에서 살아남을 것이다. <b style='color:#b45309;'>최강의 정령술사</b>가 되어, 반드시 행복한 일상으로 돌아갈 것이다.", img: "images/intro_spirits.png" },
+        // 🌟 최종 대사: 여기서 터치하면 웅장한 월드 컷씬 발동!
+        { speaker: "나", color: "#059669", text: "\"무슨 일이 있어도, 반드시.\"", img: "images/intro_spirits.png" }
+    ];
+
+    let currentIntroIdx = 0;
+
+    function renderIntroStep() {
+        if (currentIntroIdx >= INTRO_SCRIPTS.length) {
+            enterTitleFromIntro();
+            return;
+        }
+
+        const d = INTRO_SCRIPTS[currentIntroIdx];
+        const speakerEl = document.getElementById("introSpeaker");
+        const textEl = document.getElementById("introText");
+        const imgEl = document.getElementById("introArtImg");
+
+        if (speakerEl) {
+            speakerEl.innerText = d.speaker;
+            speakerEl.style.color = d.color;
+        }
+        if (textEl) {
+            textEl.innerHTML = d.text;
+        }
+
+        // 🌟 연출 제어: 완전 암흑 / 페이드 인 / 눈 깜빡임
+        if (imgEl) {
+            imgEl.className = ""; // 이전 애니메이션 초기화
+            void imgEl.offsetWidth; // 렌더러 리셋 강제
+
+            if (d.img) {
+                imgEl.src = d.img;
+                imgEl.style.display = "block";
+                
+                if (d.fx === "fade") {
+                    imgEl.classList.add("scene-fade-in");
+                } else if (d.fx === "blink") {
+                    imgEl.classList.add("scene-eye-blink");
+                }
+            } else {
+                imgEl.style.display = "none"; // 순수 새까만 배경
+            }
+        }
+
+        Sound.click();
+    }
+
+    let isFinaleRunning = false; // 🌟 중복 터치 방어 깃발
+
+    // 🌟 1. 대화 넘기기 함수 (단 하나만 존재!)
+    function advanceIntroDialogue() {
+        if (isFinaleRunning) return; // 이미 피날레 중이면 터치 무시
+
+        currentIntroIdx++;
+        
+        // 마지막 대사("반드시") 이후 터치했을 때 ➔ 즉시 시네마틱 피날레 발동!
+        if (currentIntroIdx >= INTRO_SCRIPTS.length) {
+            triggerIntroWorldFinale();
+            return;
+        }
+
+        renderIntroStep();
+    }
+
+    // 🌟 2. 프롤로그 다시보기 열기
     function openIntroScreen() {
         Sound.click();
+        currentIntroIdx = 0;
+        isFinaleRunning = false;
+        renderIntroStep();
         document.getElementById("titleScreen").style.display = "none";
         document.getElementById("introScreen").style.display = "flex";
+        document.getElementById("introScreen").style.opacity = "1";
+    }
+
+    // 🌟 3. [느린 암전 ➔ 완전한 칠흑 정적 ➔ 로고 서서히 등장 ➔ 화이트아웃 ➔ 월드]
+    function triggerIntroWorldFinale() {
+        if (isFinaleRunning) return;
+        isFinaleRunning = true;
+
+        const introScreen = document.getElementById("introScreen");
+        const titleLayer = document.getElementById("introCinematicTitle");
+        const titleContent = document.getElementById("cinematicTitleContent");
+        const flashLayer = document.getElementById("introGrandFinale");
+
+        // 🛑 화이트아웃 레이어 완전 소등
+        if (flashLayer) {
+            flashLayer.style.display = "none";
+            flashLayer.style.opacity = "0";
+            flashLayer.style.transition = "none";
+        }
+
+        // 🎬 1단계: 검은 암막 커튼(titleLayer)을 화면 전체에 올리고 1.0초간 천천히 어둡게 덮음!
+        if (titleLayer) {
+            titleLayer.style.display = "flex";
+            titleLayer.style.opacity = "0";
+            titleLayer.style.transition = "opacity 1.0s ease-out";
+            if (titleContent) titleContent.style.display = "none"; // 글자는 아직 안 보임
+
+            requestAnimationFrame(() => {
+                titleLayer.style.opacity = "1"; // 화면이 칠흑의 어둠으로 완벽히 암전!
+            });
+        }
+
+        // 🎬 2단계: 화면이 100% 새까맣게 덮인 시점 (1.0초 뒤)
+        setTimeout(() => {
+            // 이제 프롤로그 화면은 뒤에서 조용히 꺼버림
+            if (introScreen) introScreen.style.display = "none";
+
+            // 🌟 3단계: 완전한 칠흑과 정적을 0.5초간 유지한 뒤, 비로소 순백의 로고가 서서히 떠오름!
+            setTimeout(() => {
+                if (titleContent) {
+                    titleContent.style.display = "flex"; // 👈 여기서 웅장한 로고 등장!
+                }
+
+                // 🌟 4단계: 로고가 웅장하게 3.0초 동안 머묾
+                setTimeout(() => {
+                    
+                    // 🌟 5단계: [눈이 편안한 슬로우 화이트아웃] 
+                    // 번쩍이지 않고 1.4초 동안 은은하고 부드럽게 차오름!
+                    if (flashLayer) {
+                        flashLayer.style.display = "block";
+                        flashLayer.style.transition = "opacity 1.4s ease-in-out"; // 👈 1.4초로 대폭 연장!
+
+                        requestAnimationFrame(() => {
+                            flashLayer.style.opacity = "1";
+                        });
+
+                        // 빛이 화면을 100% 포근하게 감싼 시점 (1.45초 뒤)
+                        setTimeout(() => {
+                            if (titleLayer) titleLayer.style.display = "none";
+                            enterTitleFromIntro(true); // 무음으로 월드 세팅
+
+                            // 🌟 6단계: 하얀 빛을 1.2초 동안 아주 몽환적이고 부드럽게 걷어냄 (Fade-out)
+                            flashLayer.style.transition = "opacity 1.2s ease-out"; // 👈 1.2초로 부드럽게!
+                            flashLayer.style.opacity = "0";
+
+                            setTimeout(() => {
+                                flashLayer.style.display = "none";
+                                flashLayer.style.transition = "";
+                                isFinaleRunning = false;
+                            }, 1200);
+
+                        }, 1450); // 👈 빛이 100% 찰 때까지의 대기 시간
+                    }
+                    
+                }, 3000); // 👈 80px 초대형 로고 감상 시간 (3.0초)
+
+            }, 500); // 👈 🌟 완전한 칠흑 정적 시간 (0.5초)
+
+        }, 1000); // 👈 🌟 화면이 완전히 까매지는 시간 (1.0초)
     }
 
     function renderTitleScreen() {
@@ -3567,8 +3853,17 @@ function startMidBossRaid() {
         document.getElementById("bossScreen").style.display = "flex";
 
         updateBossUI();
-        runBattleCountdown(() => {
-            loadNextBossQuestion();
+        
+        // 🌟 1회차/2회차 판별하여 대화 먼저 시작!
+        const isRepeated = isFinalExamDefeated();
+        const scriptKey = isRepeated ? "intro_repeat" : "intro_first";
+        const tagTitle = isRepeated ? "✦ RESURRECTION OF EXAM ✦" : "✦ THE FINAL CLASH ✦";
+
+        startBossDialogue(scriptKey, tagTitle, () => {
+            // 대화가 끝나면(또는 스킵하면) 곧바로 3, 2, 1 카운트다운 돌입!
+            runBattleCountdown(() => {
+                loadNextBossQuestion();
+            });
         });
     }
 
@@ -3594,7 +3889,7 @@ function startMidBossRaid() {
         document.getElementById("playerShieldsText").innerText = heartsStr;
     }
 
-function loadNextBossQuestion() {
+    function loadNextBossQuestion() {
         // 1. [승리 조건]
         if (bossHp <= 0) {
             clearInterval(bossTimerInterval);
@@ -3624,7 +3919,17 @@ function loadNextBossQuestion() {
                 hadBossDefeatBefore = false;
                 saveRecords();
 
-                openCinematicModal(elapsedSec);
+                const isRepeated = isFinalExamDefeated(); // 토벌 기록 전 상태 확인
+                safeStorageSet('spirit_exam_cleared', true);
+                saveRecords();
+
+                // 🌟 승리 대사 먼저 재생 ➔ 대화 끝나면 여명 시네마틱으로 전환!
+                const scriptKey = isRepeated ? "outro_repeat" : "outro_first";
+                const tagTitle = isRepeated ? "✦ EXAM DISMANTLED ✦" : "✦ THE FALL OF THE LORD ✦";
+
+                startBossDialogue(scriptKey, tagTitle, () => {
+                    openCinematicModal(elapsedSec);
+                });
             }
             return;
         }
@@ -3771,7 +4076,7 @@ function loadNextBossQuestion() {
         }, 100);
     }
 
-function triggerLastStandChance() {
+    function triggerLastStandChance() {
         hasUsedLastStand = true;
         isLastStandMode = true;
         isBossChecking = false;
@@ -3927,6 +4232,87 @@ function triggerLastStandChance() {
         document.getElementById("greatAwakeningModal").style.display = "none";
         renderTitleScreen();
     }
+
+    /* ========================================================
+       💬 마왕전 전/후 시네마틱 대화 시스템 (1회차 & 다회차 완벽 분기)
+       ======================================================== */
+    let currentDialogueList = [];
+    let currentDialogueIdx = 0;
+    let onDialogueEndCallback = null;
+
+    // 📜 4가지 상황별 대사 데이터베이스
+    const BOSS_SCRIPTS = {
+        // 1. [전투 전] 1회차: 첫 결전
+        intro_first: [
+            { speaker: "👑 마왕 『EXAM』", color: "#dc2626", text: "설마 네놈이 사방의 수호령을 모조리 깨뜨리고 이곳까지 올 줄이야. ...하지만 착각 마라. 나의 시험은 네놈의 얕은 지식 따위로 넘을 수 있는 벽이 아니다!" },
+            { speaker: "🧙‍♂️ 정령술사 (나)", color: "#059669", text: "가증스러운 놈. 온 대륙의 정령들과 맺은 영원의 계약의 힘으로... 오늘 널 완전히 박살 내주마!" },
+            { speaker: "👑 마왕 『EXAM』", color: "#dc2626", text: "크하하하! 좋다, 5초의 절망 속에 네놈의 영혼을 갈아 넣어주마. 덤벼라!!" }
+        ],
+        // 2. [전투 전] 2회차 이상: 패퇴 후 부활한 마왕
+        intro_repeat: [
+            { speaker: "👑 마왕 『EXAM』", color: "#dc2626", text: "네가 산산조각 냈던 내 마력이 다시 회복되었다! 네가 안겨준 굴욕을 씹어 삼키며... 망각의 나락 밑바닥에서 기어코 다시 기어올라왔도다!" },
+            { speaker: "🧙‍♂️ 정령술사 (나)", color: "#059669", text: "참 끈질기네. 몇 번을 기어 올라오든 결과는 똑같아. 네 시련은 이미 내게 아무런 고통도 주지 못하거든." },
+            { speaker: "👑 마왕 『EXAM』", color: "#dc2626", text: "닥쳐라!! 이번엔 단 한 문제의 실수도 용납지 않는다. 네놈의 오만한 기억을 뿌리째 뽑아 없애주마... 재시험을 선언한다!!" }
+        ],
+        // 3. [전투 후] 1회차: 첫 몰락
+        outro_first: [
+            { speaker: "👑 마왕 『EXAM』", color: "#dc2626", text: "크헉... 말도 안 돼... 나의 가혹한 시험이... 고작 이 애송이의 뇌세포에 깨졌단 말인가...!" },
+            { speaker: "🧙‍♂️ 정령술사 (나)", color: "#059669", text: "네가 빼앗았던 자유와 오락, 그리고 정령들의 이름을 전부 되찾았다. 이제 무릎 꿇고 사라져라, EXAM!" },
+            { speaker: "👑 마왕 『EXAM』", color: "#dc2626", text: "크윽... 기억해라... 시험이 존재하는 한... 나는 언제든... 다시... 크아아악!!" }
+        ],
+        // 4. [전투 후] 2회차 이상: 반복되는 굴욕
+        outro_repeat: [
+            { speaker: "👑 마왕 『EXAM』", color: "#dc2626", text: "또... 또다시 짓밟히다니...! 심연을 뚫고 기어올라왔건만... 어째서 네놈과의 격차는 더 벌어진 것이냐...!!" },
+            { speaker: "🧙‍♂️ 정령술사 (나)", color: "#059669", text: "말했잖아. 복습과 반복으로 단련된 머리는 그 어떤 재시험도 두렵지 않다고. 넌 영원히 내 상대가 안 돼." },
+            { speaker: "👑 마왕 『EXAM』", color: "#dc2626", text: "네 이놈...!! 다음... 다음엔 반드시... 크아아아악!!" }
+        ]
+    };
+
+    function startBossDialogue(scriptKey, tagText, onComplete) {
+        currentDialogueList = BOSS_SCRIPTS[scriptKey] || [];
+        currentDialogueIdx = 0;
+        onDialogueEndCallback = onComplete;
+
+        document.getElementById("dialoguePhaseTag").innerText = tagText;
+        renderDialogueStep();
+        document.getElementById("bossDialogueModal").style.display = "flex";
+    }
+
+    function renderDialogueStep() {
+        if (currentDialogueIdx >= currentDialogueList.length) {
+            closeBossDialogue();
+            return;
+        }
+
+        const d = currentDialogueList[currentDialogueIdx];
+        const speakerEl = document.getElementById("dialogueSpeaker");
+        const textEl = document.getElementById("dialogueText");
+
+        speakerEl.innerText = d.speaker;
+        speakerEl.style.color = d.color;
+        textEl.innerText = d.text;
+        Sound.click();
+    }
+
+    function advanceBossDialogue() {
+        currentDialogueIdx++;
+        renderDialogueStep();
+    }
+
+    function skipBossDialogue() {
+        Sound.click();
+        closeBossDialogue();
+    }
+
+    function closeBossDialogue() {
+        document.getElementById("bossDialogueModal").style.display = "none";
+        if (typeof onDialogueEndCallback === 'function') {
+            const cb = onDialogueEndCallback;
+            onDialogueEndCallback = null;
+            cb();
+        }
+    }
+
 
 
 // ========================================================
@@ -4279,17 +4665,15 @@ function triggerLastStandChance() {
         }
     });
 
-// 🌟 앱 실행 시 자동 로그인 처리
+    // 🌟 앱 실행 시 자동 로그인 처리
     window.onload = async function() {
         const savedUid = safeStorageGet('spirit_current_uid', null);
 
         if (savedUid) {
-            // 1. 이미 로그인 기록이 있는 경우: 로그인창 숨기고 자동 데이터 복원
             document.getElementById("authModal").style.display = "none";
             currentUserDocId = savedUid;
 
             try {
-                // 클라우드에서 최신 진도 땡겨오기 (기기 변경/백업 동기화)
                 const doc = await db.collection("users").doc(savedUid).get();
                 if (doc.exists) {
                     restoreDataFromCloud(doc.data());
@@ -4298,16 +4682,19 @@ function triggerLastStandChance() {
                 console.log("오프라인 상태이거나 로컬 데이터를 사용합니다.");
             }
 
-            // 프롤로그 화면으로 바로 진입
-            document.getElementById("introScreen").style.display = "flex";
-            document.getElementById("titleScreen").style.display = "none";
+            // 🌟 [기본값] 무조건 프롤로그는 끄고, 메인 타이틀 화면으로 직행!
+            document.getElementById("introScreen").style.display = "none";
+            document.getElementById("titleScreen").style.display = "flex";
+            renderTitleScreen();
+
+            // 나머지 화면들 끄기
             document.getElementById("mapLobbyScreen").style.display = "none";
             document.getElementById("gameScreen").style.display = "none";
             document.getElementById("bossScreen").style.display = "none";
             updateEquippedBadgeDisplay();
 
         } else {
-            // 2. 최초 접속이거나 로그아웃한 상태: 로그인 모달 띄우기
+            // 미로그인 상태면 로그인 창 띄우기
             document.getElementById("authModal").style.display = "flex";
             document.getElementById("introScreen").style.display = "none";
             document.getElementById("titleScreen").style.display = "none";
@@ -4318,14 +4705,14 @@ function triggerLastStandChance() {
         pushNavState();
     };
     
-// 🌟 브라우저 창을 닫거나 다른 앱으로 전환할 때 자동 긴급 백업
+    // 🌟 브라우저 창을 닫거나 다른 앱으로 전환할 때 자동 긴급 백업
     window.addEventListener("visibilitychange", () => {
     if (document.visibilityState === "hidden") {
         syncToCloud(true);
     }}
     );
     
-// 🌟 파이어베이스 실시간 랭킹 로드 함수
+    // 🌟 파이어베이스 실시간 랭킹 로드 함수
     async function loadLiveLeaderboard() {
         const container = document.getElementById("leaderboardListContainer");
         if (!container) return;
@@ -4522,7 +4909,8 @@ function triggerLastStandChance() {
             { id: "endingModal", close: backToLobbyFromEnding },
             { id: "greatAwakeningModal", close: closeAwakeningToTitle },
             { id: "bossCinematicModal", close: proceedToCertificate },
-            { id: "bossVictoryModal", close: backToTitleFromBossVictory }
+            { id: "bossVictoryModal", close: backToTitleFromBossVictory },
+            { id: "bossDialogueModal", close: skipBossDialogue },
         ];
 
         for (const m of openModals) {

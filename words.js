@@ -220,10 +220,9 @@ equally, by the same token	[접부] 같은 이유로, 마찬가지로
 in the same way, in like manner	[접부] 같은 방식으로, 마찬가지 방식으로
 as ~ as ...	[구] ...만큼 ~한
 as ~, so ...	[구] ~인 것처럼, ...도 그렇다
-for example, e.g., for instance, as an example	[접부] 예를 들어, 한 예로
-to illustrate, as an illustration	[접부] 예를 들어 설명하자면, 한 예로써
-(let us) say	[접부] 예를 들어 ~라고 해보자
-a case in point is	[구] ~가 좋은 예이다
+for example, e.g., for instance, as an example, to illustrate, as an illustration	[접부] 예를 들어, 설명하자면, 한 예로써
+(let us) say	[접부] 예를 들어 ~라고 말해보자
+a case in point is ~	[구] ~가 좋은 예이다
 if, providing, provided, suppose, supposing	[접] 만약 ~라면
 even if	[접] 심지어 ~라도
 unless	[접] ~하지 않는 한

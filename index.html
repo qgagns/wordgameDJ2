@@ -3985,19 +3985,55 @@
                 // 🌟 [추가] 긴급 수호전 완료 시 전용 종료 처리
         if (isEmergencyDefenseMode) {
             isEmergencyDefenseMode = false;
-            Sound.fanfare();
-            syncToCloud(true); // 🌟 즉시 클라우드 반영!
+            syncToCloud(true); // 결과 즉시 클라우드 동기화
 
-            showGameAlert(
-                "성역 수호 완료!",
-                `긴급 수호전이 종료되었습니다!\n(성공: ${roundCorrectCount} / ${roundQuestions.length})\n기억 결계가 갱신되어 마스터 상태가 유지됩니다!`,
-                "대륙 지도로 복귀 ➔",
-                "🛡️ DEFENSE COMPLETE",
-                () => {
-                    document.getElementById("gameScreen").style.display = "none";
-                    renderTitleScreen();
-                }
-            );
+            const remainingDecayed = getDecayedWords();
+            const remainCount = remainingDecayed.length;
+            const wrongCount = roundQuestions.length - roundCorrectCount;
+
+            // 1. 단 1개라도 틀렸을 때 (일부 손상)
+            if (wrongCount > 0) {
+                Sound.damage();
+                showGameAlert(
+                    "💥 긴급 수호전 종료 (결계 손상)",
+                    `구출 성공: ${roundCorrectCount}마리 (결계 연장)\n탈주 강등: ${wrongCount}마리 (2단계로 추락)\n\n⚠️ 아직 ${remainCount}마리의 정령이 침식 위험에 처해 있습니다!`,
+                    "대륙 지도로 복귀 ➔",
+                    "🚨 DEFENSE BREACHED",
+                    () => {
+                        document.getElementById("gameScreen").style.display = "none";
+                        renderTitleScreen();
+                    }
+                );
+            }
+            // 2. 5문제 다 맞혔지만 아직 위험 단어가 더 남아있을 때
+            else if (remainCount > 0) {
+                Sound.fanfare();
+                showGameAlert(
+                    "🛡️ 정령 5마리 완벽 구출!",
+                    `마주한 정령 5마리를 완벽히 지켜냈습니다!\n(기억 유효기간이 안전하게 연장됨)\n\n📍 아직 구출 대기 중인 정령: ${remainCount}마리`,
+                    "대륙 지도로 복귀",
+                    "✨ BATCH SECURED",
+                    () => {
+                        document.getElementById("gameScreen").style.display = "none";
+                        renderTitleScreen();
+                    },
+                    "⚔️ 남은 정령 계속 구출하기 ➔" // 바로 다음 5문제 연속 진행
+                );
+            }
+            // 3. 밀린 위험 단어를 0마리로 싹 정리했을 때! (진행도 무관하게 자연스러움)
+            else {
+                Sound.fanfare();
+                showGameAlert(
+                    "✨ 긴급 성역 수호 완료!",
+                    `침식 위험에 처했던 정령들을 모두 구출했습니다!\n성역의 균열이 닫혀 결계가 다시 안정되었습니다.\n(현재까지의 계약 진도가 안전하게 유지됩니다)`,
+                    "대륙 지도로 복귀 ➔",
+                    "🛡️ ALL THREATS CLEARED",
+                    () => {
+                        document.getElementById("gameScreen").style.display = "none";
+                        renderTitleScreen();
+                    }
+                );
+            }
             return;
         }
 

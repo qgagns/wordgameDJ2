@@ -17,7 +17,9 @@ emergence, rise	[명]	출현, 부상
 proliferation	[명]	급증, 확산
 generate, create	[동]	창출하다, 생성하다, 만들다
 prompt, trigger	[동]	촉발하다, 유발하다, 자극하다
-accelerate, facilitate, promote, foster	[동]	가속하다, 촉진하다, 육성하다
+promote, foster	[동] 촉진하다, 육성하다
+facilitate  [동]    용이하게 하다, 쉬워지게 하다
+accelerate  [동]    가속하다[시키다]
 evolve, develop	[동]	진화하다, 발전시키다, 개발하다
 evolution, development	[명]	진화, 발전
 evolutionary	[형]	진화의, 진화론적인
@@ -203,7 +205,8 @@ not only A but (also) B, B as well as A	[접] A뿐만 아니라 B도
 either A or B	[접] A나 B 둘 중 하나
 neither A nor B	[접] A도 B도 둘다 아닌
 in essence, essentially	[접부] 본질적으로
-however, yet, nevertheless, nonetheless, still	[접부] 그럼에도 불구하고
+however, yet, still [접부] 하지만, 그런데
+nevertheless, nonetheless   [접부] 그럼에도 불구하고   
 while, whereas	[접] ~인 반면에
 on the other hand	[접부] 반면에
 instead, rather	[접부] 대신에, 오히려
@@ -220,10 +223,11 @@ equally, by the same token	[접부] 같은 이유로, 마찬가지로
 in the same way, in like manner	[접부] 같은 방식으로, 마찬가지 방식으로
 as ~ as ...	[구] ...만큼 ~한
 as ~, so ...	[구] ~인 것처럼, ...도 그렇다
-for example, e.g., for instance, as an example, to illustrate, as an illustration	[접부] 예를 들어, 설명하자면, 한 예로써
+for example, for instance, e.g. [접부] 예를 들어
+as an example, to illustrate, as an illustration    [접부] 설명하자면, 한 예로써
 (let us) say	[접부] 예를 들어 ~라고 말해보자
 a case in point is ~	[구] ~가 좋은 예이다
-if, providing, provided, suppose, supposing	[접] 만약 ~라면
+providing, provided	[접] 만약 ~라면
 unless	[접] ~하지 않는 한, ~ 하지 않으면
 in case (that)	[접] ~할 경우에 대비하여
 as long as	[접] ~하는 한
@@ -233,18 +237,19 @@ therefore, thus, hence, as a result	[접부] 따라서, 그러므로
 accordingly	[접부] 그에 따라서, 그에 맞춰서
 for this reason	[접부] 이러한 이유 때문에
 so ~ that ..., such ~ that ...	[구] 너무 ~해서 ...하다
-surely, certainly, undoubtedly, unquestionably	[접부] 확실히, 틀림없이
+surely, certainly   [접부] 확실히
+undoubtedly, unquestionably [접부] 의심할 여지 없이
 above all	[접부] 무엇보다도
 in particular, particularly, especially	[접부] 특히, 특별히
 in fact, as a matter of fact, actually, indeed	[접부] 사실은, 실제로
 in other words, that is (to say), namely	[접부] 즉, 다시 말해
 to put it another way	[접부] 다른 말로 하자면
-in a word, in short, in brief, to be brief, to put it simply	[접부] 간단히 말하자면, 짧게 말하자면
+in short, in brief, to be brief, to put it simply	[접부] 간단히 말하자면, 짧게 말하자면
 in summary, to sum up, to summarize, in a nutshell	[접부] 요약하자면, 정리하자면
 consequently, as a consequence, in conclusion, to conclude	[접부] 결론적으로, 결론 짓자면
 all in all, largerly, on the whole, overall	[접부] 대체로, 전반적으로
 ultimately, in the end	[접부] 결국, 최종적으로, 궁극적으로
-to start (begin) with, firstly, first of all	[접부] 첫째로, 무엇보다 먼저
+to start (begin) with, first of all	[접부] 첫째로, 무엇보다 먼저
 subsequently	[접부] 그 후에, 이어서
 
 `;

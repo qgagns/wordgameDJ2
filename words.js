@@ -9,7 +9,7 @@ const WORLD_MAPS_TEXT = `
 
 [실모의 숲]
 # 
-clear the way towards	[숙]	~로 가는 길을 열어주다
+clear the way towards:[숙]	~로 가는 길을 열어주다
 originate from, stem from	[동]	비롯되다, 유래하다
 occurrence	[명]	발생, 사건
 rare occurrence	[숙]	드물게 일어나는 일

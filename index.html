@@ -1924,7 +1924,7 @@
                     </div>
                     <div class="timeline-item" style="border: 1px solid #f59e0b; background:#fffbeb;">
                         <span style="color:#b45309; font-weight:800;">영원의 계약 🌟</span>
-                        <span style="color:#b45309; font-weight:900;">3회 완료</span>
+                        <span style="color:#b45309; font-weight:900;">3회 달성</span>
                     </div>
                 </div>
             </div>
@@ -4906,9 +4906,17 @@ function startMidBossRaid() {
             const isCurrent = (t.name === currentTier.name);
             const item = document.createElement("div");
             item.className = `timeline-item ${isCurrent ? 'current-tier' : ''}`;
-            let reqText = (idx === tiers.length - 1) ? `마왕 『EXAM』 격파`;
-            if (idx === 0) reqText = "시작 (0마리)";
-
+            let reqText = `${t.req}마리 계약 달성`;
+            if (idx === 0) {
+                reqText = "시작 (0마리)";
+            } else if (idx === tiers.length - 2) {
+                // 11단계: 마왕의 대적자 (단어 100% 완료)
+                reqText = `전체 ${totalWords}마리 (100%) 계약`;
+            } else if (idx === tiers.length - 1) {
+                // 12단계: 정령의 구원자 (마왕 토벌 필수!)
+                reqText = `마왕 토벌👑`;
+            }
+            
             item.innerHTML = `
                 <span style="font-weight:bold; color:${isCurrent ? '#b45309' : '#334155'};">${t.name}</span>
                 <span style="font-size:11px; color:${isCurrent ? '#b45309' : '#64748b'}; font-weight:700;">

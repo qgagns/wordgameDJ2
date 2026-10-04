@@ -3246,20 +3246,34 @@
         } else {
             streakCount = 0;
             Sound.wrong();
-            triggerPlayerDamageEffect();
 
-            gameRecords.totalWrong++;
-            saveRecords();
-            if (gameRecords.totalWrong >= 20) unlockTitle("wrong_20");
-            if (gameRecords.totalWrong >= 50) unlockTitle("wrong_50");
+            // 🌟 1. 피격 효과 에러 방패막 (에러가 나도 게임 안 멈춤)
+            try {
+                if (typeof triggerPlayerDamageEffect === 'function') {
+                    triggerPlayerDamageEffect();
+                }
+            } catch(e) {
+                console.warn("피격 이펙트 건너뜀:", e);
+            }
+
+            // 🌟 2. 오답 기록 저장 에러 방패막
+            try {
+                gameRecords.totalWrong = (gameRecords.totalWrong || 0) + 1;
+                saveRecords();
+                if (gameRecords.totalWrong >= 20) unlockTitle("wrong_20");
+                if (gameRecords.totalWrong >= 50) unlockTitle("wrong_50");
+            } catch(e) {}
             
-            fbResonanceNotice.style.display = "none";
-            fbContractNotice.style.display = "none";
-            fbTitle.innerText = "교감 실패 (정령이 숨었습니다) 🍂";
-            fbTitle.style.color = "#b91c1c";
-            fbTitle.style.margin = "10px 0 20px 0"; 
+            if (fbResonanceNotice) fbResonanceNotice.style.display = "none";
+            if (fbContractNotice) fbContractNotice.style.display = "none";
+            
+            if (fbTitle) {
+                fbTitle.innerText = "교감 실패 (정령이 숨었습니다) 🍂";
+                fbTitle.style.color = "#b91c1c";
+                fbTitle.style.margin = "10px 0 20px 0"; 
+            }
 
-            fbMeaning.className = "fb-meaning wrong-case";
+            if (fbMeaning) fbMeaning.className = "fb-meaning wrong-case";
 
             if (!wrongPool.some(item => item.id === q.id)) {
                 wrongPool.push(q);
@@ -3268,7 +3282,9 @@
         }
 
         updateInGameTiers();
-        fbModal.style.display = "flex";
+        
+        // 🌟 3. 피드백 창 확실하게 띄우기
+        if (fbModal) fbModal.style.display = "flex";
     }
 
     function nextQuestion() {

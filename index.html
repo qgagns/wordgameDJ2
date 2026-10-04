@@ -2546,13 +2546,23 @@
         updateEquippedBadgeDisplay();
     }
 
+    // 🌟 피드백 창 위에 안전하게 칭호 알림창을 띄우는 함수
     function unlockTitle(titleId) {
         if (!gameRecords.unlocked.includes(titleId)) {
             gameRecords.unlocked.push(titleId);
             saveRecords();
             const t = ALL_TITLES.find(item => item.id === titleId);
             if (t) {
-                setTimeout(() => showGameAlert("새로운 칭호 획득!", `[${t.name}]\n${t.desc}`, "칭호 확인", "🎖️ TITLE UNLOCKED"), 500);
+                // 피드백 창이 뜬 직후(0.35초 뒤) 그 위에 알림창을 띄움!
+                setTimeout(() => {
+                    Sound.fanfare(); // 팡파르 울리기!
+                    showGameAlert(
+                        "새로운 칭호 획득!",
+                        `[${t.name}]\n${t.desc}`,
+                        "칭호 확인 ➔",
+                        "🎖️ TITLE UNLOCKED"
+                    );
+                }, 350);
             }
         }
     }

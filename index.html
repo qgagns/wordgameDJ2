@@ -1327,27 +1327,27 @@
     </div>
 
 <!-- 💬 마왕 결전 전/후 시네마틱 대화 모달 (프롤로그와 완벽 일치하는 양피지 컷씬형) -->
-    <div id="bossDialogueModal" class="modal" style="display:none; position:absolute; top:0; left:0; right:0; bottom:0; z-index:100; background:#000000; border-radius:18px; padding:12px; flex-direction:column; justify-content:space-between; overflow:hidden;">
+    <div id="bossDialogueModal" class="modal" onclick="advanceBossDialogue()" style="display:none; position:absolute; top:0; left:0; right:0; bottom:0; z-index:100; background:#000000; border-radius:18px; padding:12px; flex-direction:column; justify-content:space-between; overflow:hidden; cursor:pointer;">
         
-        <!-- 1. 상단 헤더 & 스킵 버튼 (어둠 속 은은한 골드) -->
+        <!-- 1. 상단 헤더 & 스킵 버튼 (스킵 버튼 클릭 시 화면 전체 터치 간섭 방지 적용) -->
         <div style="display:flex; justify-content:space-between; align-items:center; width:100%; border-bottom:1px solid #27141b; padding-bottom:6px; margin-bottom:8px; flex-shrink:0; z-index:10;">
             <span id="dialoguePhaseTag" style="font-size:10.5px; font-weight:900; color:#b45309; letter-spacing:2px;">✦ THE FINAL CLASH ✦</span>
-            <button class="top-btn" style="background:#1c0e07; border-color:#8f603a; padding:4px 10px; font-size:11px; color:#f7edd4; font-weight:800;" onclick="skipBossDialogue()">스킵 ⏩</button>
+            <button class="top-btn" style="background:#1c0e07; border-color:#8f603a; padding:4px 10px; font-size:11px; color:#f7edd4; font-weight:800;" onclick="event.stopPropagation(); skipBossDialogue();">스킵 ⏩</button>
         </div>
 
-        <!-- 2. 🌟 마왕 일러스트: 답답한 네모 테두리를 깨고 어둠과 자연스럽게 녹아드는 시네마틱 뷰 -->
+        <!-- 2. 🌟 마왕 일러스트: 시네마틱 뷰 -->
         <div style="flex:1; width:100%; display:flex; justify-content:center; align-items:center; position:relative; overflow:hidden; border-radius:14px; margin-bottom:12px;">
             <img src="images/demon_exam.png" style="width:100%; height:100%; max-height:220px; object-fit:cover; display:block; border-radius:12px; box-shadow:0 0 25px rgba(0,0,0,0.9);" alt="마왕 EXAM">
         </div>
 
-        <!-- 3. 📜 양피지 대화창 본체 (프롤로그와 100% 동일한 따뜻한 양피지 감성) -->
-        <div onclick="advanceBossDialogue()" style="background:#ede3cc; border:2.5px solid #8f603a; border-radius:14px; padding:14px 16px; height:150px; flex-shrink:0; display:flex; flex-direction:column; justify-content:space-between; cursor:pointer; text-align:left; box-shadow:0 4px 15px rgba(0,0,0,0.6); box-sizing:border-box; z-index:10;">
+        <!-- 3. 📜 양피지 대화창 본체 (onclick 제거하여 깔끔하게 분리) -->
+        <div id="bossDialogueInnerBox" style="background:#ede3cc; border:2.5px solid #8f603a; border-radius:14px; padding:14px 16px; height:150px; flex-shrink:0; display:flex; flex-direction:column; justify-content:space-between; text-align:left; box-shadow:0 4px 15px rgba(0,0,0,0.6); box-sizing:border-box; z-index:10;">
             <div>
                 <!-- 화자 이름 -->
                 <div id="dialogueSpeaker" style="font-size:15px; font-weight:900; color:#b45309; margin-bottom:6px; display:flex; align-items:center; gap:6px;">
                     👑 마왕 『EXAM』
                 </div>
-                <!-- 대사 내용 (진한 고동색으로 선명하게) -->
+                <!-- 대사 내용 -->
                 <div id="dialogueText" style="font-size:15.5px; color:#2c1a0e; line-height:1.6; word-break:keep-all; font-weight:700;">
                     대사 내용이 들어가는 자리입니다.
                 </div>
@@ -2039,7 +2039,10 @@
         // 🌟 [추가] 쓰로틀링(Throttling) 제어 변수들
     let lastCloudSyncTime = 0;
     let pendingSyncTimer = null;
-    const SYNC_COOLDOWN_MS = 60 * 1000; // ⏱️ 최소 전송 간격 60초 (필요시 30~90초로 조절 가능)
+    let isDataDirty = false; // 👈 이 줄 추가!
+    const SYNC_COOLDOWN_MS = 15 * 1000; // ⏱️ 최소 전송 간격
+    const MIN_FORCE_COOLDOWN_MS = 5 * 1000;   // 🛡️ [핵심] 긴급 전송 최소 버퍼: 5초
+
     
     // 🌟 아이디/이름/비번으로 간편 로그인 및 계정 자동 생성
     async function handleCloudLogin() {
@@ -2084,6 +2087,7 @@
 
             } else {
                 // 신규 학생 계정 생성
+                localStorage.clear(); // 👈 신규 가입 시에도 이전 찌꺼기 1줄 삭제!
                 await userRef.set({
                     id: id,
                     name: name,
@@ -2127,6 +2131,7 @@
 
     // 🌟 클라우드 ➔ 브라우저(localStorage)로 진도 덮어쓰기
     function restoreDataFromCloud(cloudData) {
+        localStorage.clear(); // 👈 맨 윗줄에 이 1줄 추가!
         if (cloudData.mastery) {
             Object.keys(cloudData.mastery).forEach(mapKey => {
                 safeStorageSet(`spirit_mastery_${mapKey}`, cloudData.mastery[mapKey]);
@@ -2142,16 +2147,29 @@
         if (cloudData.heroName) safeStorageSet('spirit_hero_name', cloudData.heroName);
     }
 
-// 🌟 브라우저 ➔ 클라우드 동기화 (마왕 토벌 횟수 포함)
-    function syncToCloud(force = false) {
+    // 🌟 브라우저 ➔ 클라우드 동기화 (마왕 토벌 횟수 포함)
+    function syncToCloud(force = false, bypassLock = false) {
         if (!currentUserDocId) return;
 
         const now = Date.now();
         const timeSinceLastSync = now - lastCloudSyncTime;
 
-        // 1. 강제 전송이 아니고, 아직 60초가 지나지 않았다면?
+        // 🌟 5초 락: 평소 플레이 중(연타 방지)에만 적용되며, 로그아웃(bypassLock=true) 시에는 무시하고 통과!
+        if (force && !bypassLock && timeSinceLastSync < MIN_FORCE_COOLDOWN_MS) {
+            isDataDirty = true;
+            if (!pendingSyncTimer) {
+                const waitTime = MIN_FORCE_COOLDOWN_MS - timeSinceLastSync;
+                pendingSyncTimer = setTimeout(() => {
+                    pendingSyncTimer = null;
+                    syncToCloud(true);
+                }, waitTime);
+            }
+            return;
+        }
+
+        // 평상시 일반 전송 (15초 쿨다운)
         if (!force && timeSinceLastSync < SYNC_COOLDOWN_MS) {
-            // 이미 전송 대기 타이머가 걸려있지 않다면, 쿨다운 끝나는 시점에 1회 자동 전송 예약
+            isDataDirty = true;
             if (!pendingSyncTimer) {
                 const waitTime = SYNC_COOLDOWN_MS - timeSinceLastSync;
                 pendingSyncTimer = setTimeout(() => {
@@ -2159,18 +2177,18 @@
                     syncToCloud(false);
                 }, waitTime);
             }
-            return; // 🛑 서버 쓰기(Write) 차단! 로컬에는 저장되어 있으므로 안전함
+            return;
         }
 
-        // 2. 지금 전송을 진행하므로 예약된 지연 타이머가 있다면 취소
         if (pendingSyncTimer) {
             clearTimeout(pendingSyncTimer);
             pendingSyncTimer = null;
         }
 
-        if (isCloudSyncing) return;
+        if (isCloudSyncing && !force) return;
         isCloudSyncing = true;
         lastCloudSyncTime = now;
+        isDataDirty = false;
 
         const allMastery = {};
         const clearedBosses = [];
@@ -2193,7 +2211,7 @@
         const finalHeroName = currentHeroName || savedUserName;
 
         const payload = {
-            lastUpdated: new Date(),
+            lastUpdated: firebase.firestore.FieldValue.serverTimestamp(),
             heroName: finalHeroName,
             masteryCount: totalMasteredCount,
             fastestBossTime: fastestTime,
@@ -2207,8 +2225,13 @@
 
         db.collection(USER_COLLECTION).doc(currentUserDocId).set(payload, { merge: true })
           .then(() => { isCloudSyncing = false; })
-          .catch((e) => { isCloudSyncing = false; console.error("Cloud sync error:", e); });
+          .catch((e) => { 
+              isCloudSyncing = false; 
+              isDataDirty = true;
+              console.error("Cloud sync error:", e); 
+          });
     }
+
 
     const WORDS_PER_SECTOR = 20;
 
@@ -2374,6 +2397,69 @@
         const btn = document.getElementById("soundToggleBtn");
         if (btn) btn.innerText = isMuted ? "🔇 음소거" : "🔊 소리";
     }
+
+
+// ========================================================
+    // 🗣️ 프리징 및 iOS 차단 방어형 원어민 TTS 엔진
+    // ========================================================
+    let englishVoice = null;
+
+    // 브라우저의 원어민 영어 음성 팩 찾기
+    function initTTSVoices() {
+        if (!('speechSynthesis' in window)) return;
+        const voices = window.speechSynthesis.getVoices();
+        // 1순위: 미국식 구글/애플 원어민 음성, 2순위: 일반 en-US 음성
+        englishVoice = voices.find(v => v.lang === 'en-US' && (v.name.includes('Google') || v.name.includes('Samantha') || v.name.includes('Natural'))) 
+                    || voices.find(v => v.lang.startsWith('en')) 
+                    || null;
+    }
+
+    if ('speechSynthesis' in window) {
+        window.speechSynthesis.onvoiceschanged = initTTSVoices;
+        initTTSVoices();
+    }
+
+    // 🌟 iOS 오디오 잠금 해제 함수 (최초 터치 시 1회 몰래 실행)
+    let isTTSUnlocked = false;
+    function unlockTTSAudio() {
+        if (isTTSUnlocked || !('speechSynthesis' in window)) return;
+        try {
+            const silentUttr = new SpeechSynthesisUtterance('');
+            window.speechSynthesis.speak(silentUttr);
+            isTTSUnlocked = true;
+        } catch(e) {}
+    }
+
+    function speakWord(text) {
+        if (Sound.muted || !('speechSynthesis' in window) || !text) return;
+
+        try {
+            // 🛑 [크롬 프리징 방어] 크롬이 백그라운드에서 멈추는 현상 강제 해제
+            if (window.speechSynthesis.paused) {
+                window.speechSynthesis.resume();
+            }
+            window.speechSynthesis.cancel(); // 이전 음성 컷
+
+            // 약간의 딜레이를 주어 오디오 큐 엉킴 방지
+            setTimeout(() => {
+                const uttr = new SpeechSynthesisUtterance(text);
+                uttr.lang = 'en-US';
+                uttr.rate = 0.88;
+                uttr.pitch = 1.0;
+                if (englishVoice) uttr.voice = englishVoice;
+
+                // 크롬이 긴 텍스트 재생 중 먹통되는 버그 방어용 빈 핸들러
+                uttr.onend = () => {};
+                uttr.onerror = (e) => { console.warn("TTS Error:", e); };
+
+                window.speechSynthesis.speak(uttr);
+            }, 15);
+
+        } catch(e) {
+            console.warn("TTS Failed:", e);
+        }
+    }
+
 
     /* ========================================================
        🗺️ 4대 테마 및 수호령 엔진 (괄호 설명 삭제 적용)
@@ -3246,10 +3332,6 @@
 
         // 7. 최종 화면 전환
         document.getElementById("titleScreen").style.display = "flex";
-
-
-        // 7. 최종 화면 전환
-        document.getElementById("titleScreen").style.display = "flex";
         document.getElementById("mapLobbyScreen").style.display = "none";
         document.getElementById("gameScreen").style.display = "none";
         document.getElementById("bossScreen").style.display = "none";
@@ -3538,6 +3620,12 @@
 
         const q = roundQuestions[currentQuestionIdx];
         document.getElementById("wordDisplay").innerText = q.prompt;
+
+        // 🌟 [수정] 영어가 문제로 나왔을 때(E2K)만 발음해 줌! (한글 문제일 때 답 스포일러 방지)
+        if (q.type === "E2K") {
+            speakWord(q.engWord);
+        }
+
         document.getElementById("reviewTag").style.display = q.isReview ? "inline-block" : "none";
 
         const count = wordMastery[q.wordKey] || 0;
@@ -3597,6 +3685,12 @@
         }
         fbWord.innerText = q.engWord;
         fbMeaning.innerText = q.korMeaning;
+
+        if (q.type === "K2E") {
+            setTimeout(() => {
+                speakWord(q.engWord);
+            }, 200);
+        }
 
         const beforeTierIdx = getGlobalTier().tierIndex;
         const currentCountBefore = wordMastery[q.wordKey] || 0;
@@ -3920,7 +4014,10 @@ function startMidBossRaid() {
         document.getElementById("bossQuestionTag").style.background = "#065f46";
         document.getElementById("bossQuestionTag").style.color = "#a7f3d0";
         document.getElementById("bossWordDisplay").style.color = "#065f46";
-
+        
+        document.getElementById("bossWordDisplay").innerText = "READY";
+        document.getElementById("bossChoicesGrid").style.opacity = "0";
+        
         document.getElementById("bossArtBox").innerHTML = getThemeGuardianBattleSVG(theme.type);
 
         document.getElementById("titleScreen").style.display = "none";
@@ -3957,6 +4054,9 @@ function startMidBossRaid() {
         document.getElementById("bossQuestionTag").style.background = "#831843";
         document.getElementById("bossQuestionTag").style.color = "#fbcfe8";
         document.getElementById("bossWordDisplay").style.color = "#831843";
+
+        document.getElementById("bossWordDisplay").innerText = "READY";
+        document.getElementById("bossChoicesGrid").style.opacity = "0";
 
         document.getElementById("bossArtBox").innerHTML = getDemonLordArtSVG();
 
@@ -4035,6 +4135,8 @@ function startMidBossRaid() {
                 const isRepeated = isFinalExamDefeated(); // 토벌 기록 전 상태 확인
                 safeStorageSet('spirit_exam_cleared', true);
                 saveRecords();
+                syncToCloud(true);
+
 
                 // 🌟 승리 대사 먼저 재생 ➔ 대화 끝나면 여명 시네마틱으로 전환!
                 const scriptKey = isRepeated ? "outro_repeat" : "outro_first";
@@ -4086,12 +4188,17 @@ function startMidBossRaid() {
         const isE2K = Math.random() < 0.5;
 
         currentBossQuestion = {
+            type: isE2K ? "E2K" : "K2E",
             prompt: isE2K ? targetWord.eng : targetWord.kor,
             correct: isE2K ? targetWord.kor : targetWord.eng,
-            pool: isE2K ? bossWordPool.map(w => w.kor) : bossWordPool.map(w => w.eng)
+            pool: isE2K ? bossWordPool.map(w => w.kor) : bossWordPool.map(w => w.eng),
+            engWord: targetWord.eng
         };
 
         document.getElementById("bossWordDisplay").innerText = currentBossQuestion.prompt;
+        if (currentBossQuestion.type === "E2K") {
+            speakWord(currentBossQuestion.engWord);
+        }
 
         const wrongChoices = currentBossQuestion.pool.filter(item => item !== currentBossQuestion.correct).sort(() => Math.random() - 0.5).slice(0, 3);
         const choices = [...wrongChoices, currentBossQuestion.correct].sort(() => Math.random() - 0.5);
@@ -4105,6 +4212,9 @@ function startMidBossRaid() {
             btn.onclick = () => selectBossAnswer(btn, choice);
             choicesGrid.appendChild(btn);
         });
+
+        choicesGrid.style.opacity = "1";
+
 
         // 4. [광폭화 각성 체크] 팝업이 닫힐 때까지 타이머 대기
         if (bossMode === "final" && bossHp <= 5 && !isPhase2Enraged) {
@@ -4206,14 +4316,20 @@ function startMidBossRaid() {
         const isE2K = Math.random() < 0.5;
 
         currentBossQuestion = {
+            type: isE2K ? "E2K" : "K2E",
             prompt: isE2K ? targetWord.eng : targetWord.kor,
             correct: isE2K ? targetWord.kor : targetWord.eng,
-            pool: isE2K ? bossWordPool.map(w => w.kor) : bossWordPool.map(w => w.eng)
+            pool: isE2K ? bossWordPool.map(w => w.kor) : bossWordPool.map(w => w.eng),
+            engWord: targetWord.eng
         };
 
         document.getElementById("bossQuestionTag").innerText = "🚨 최후의 카운터 (2.0초!)";
         document.getElementById("bossQuestionTag").style.background = "#e11d48";
         document.getElementById("bossWordDisplay").innerText = currentBossQuestion.prompt;
+
+        if (currentBossQuestion.type === "E2K") {
+            speakWord(currentBossQuestion.engWord);
+        }
 
         const wrongChoices = currentBossQuestion.pool.filter(item => item !== currentBossQuestion.correct).sort(() => Math.random() - 0.5).slice(0, 3);
         const choices = [...wrongChoices, currentBossQuestion.correct].sort(() => Math.random() - 0.5);
@@ -4276,7 +4392,13 @@ function startMidBossRaid() {
             Sound.damage();
             btn.classList.add("wrong");
             playerShields--;
-            triggerPlayerDamageEffect();
+            
+            try {
+                if (typeof triggerPlayerDamageEffect === 'function') {
+                    triggerPlayerDamageEffect();
+                }
+            } catch(e) {}
+
             document.querySelectorAll("#bossChoicesGrid .choice-btn").forEach(b => {
                 if (b.innerText === currentBossQuestion.correct) b.classList.add("correct");
             });
@@ -4284,7 +4406,6 @@ function startMidBossRaid() {
 
         updateBossUI();
 
-        // 0.8초 후 다음 문제 로드 (락 안전 해제)
         setTimeout(() => {
             isBossChecking = false;
             loadNextBossQuestion();
@@ -4308,7 +4429,10 @@ function startMidBossRaid() {
             if (b.innerText === currentBossQuestion.correct) b.classList.add("correct");
         });
 
-        setTimeout(loadNextBossQuestion, 1000);
+        setTimeout(() => {
+            isBossChecking = false;
+            loadNextBossQuestion();
+        }, 1000);
     }
 
     function handleMidBossVictory() {
@@ -4722,15 +4846,61 @@ function startMidBossRaid() {
         }
     }
 
-    function handleLogout() {
-        if (confirm("정말 로그아웃하시겠습니까? (현재 기기에서만 접속 해제됩니다)")) {
-            safeStorageSet('spirit_current_uid', null);
-            location.reload(); // 새로고침하면 다시 로그인창이 뜸!
+    // 🌟 100% 안전한 로그아웃: 클라우드 강제 백업 ➔ 브라우저 로컬 청소 ➔ 새로고침
+    async function handleLogout() {
+        if (!confirm("정말 로그아웃하시겠습니까? (현재 기기에서 접속이 해제됩니다)")) {
+            return;
+        }
+
+        try {
+            // 1. 혹시 서버에 안 올라간 진도가 있다면 5초 락까지 뚫고 즉시 강제 전송!
+            if (currentUserDocId) {
+                await syncToCloudPromise(); // 👈 전송 완료까지 대기
+            }
+        } catch (e) {
+            console.error("로그아웃 전 클라우드 저장 실패:", e);
+        } finally {
+            // 2. 서버 저장이 끝났으므로 브라우저 로컬 저장소 완전 소독!
+            localStorage.clear();
+            location.reload(); // 새로고침하여 로그인 창으로 깨끗하게 이동
         }
     }
 
+    // 🌟 syncToCloud를 대기 가능(Promise)하게 감싸주는 헬퍼
+    function syncToCloudPromise() {
+        return new Promise((resolve) => {
+            // 15초 쿨다운 무시(true) + 5초 강제 락 무시(true)
+            syncToCloud(true, true);
+            // Firestore 네트워크 통신이 날아갈 수 있도록 0.5초 대기
+            setTimeout(() => {
+                resolve();
+            }, 500);
+        });
+    }
+
+
     /* ⌨️ PC/노트북용 키보드 단축키 시스템 (1~4번 & Space/Enter) */
     window.addEventListener("keydown", (e) => {
+        // 🌟 [추가] 1. 프롤로그 대화창 열려있을 때 Space/Enter로 대화 넘기기!
+        const introScreen = document.getElementById("introScreen");
+        if (introScreen && introScreen.style.display === "flex") {
+            if (e.code === "Space" || e.code === "Enter") {
+                e.preventDefault();
+                advanceIntroDialogue();
+                return;
+            }
+        }
+
+        // 🌟 [추가] 2. 마왕전 대화창 열려있을 때 Space/Enter로 대화 넘기기!
+        const bossDlg = document.getElementById("bossDialogueModal");
+        if (bossDlg && bossDlg.style.display === "flex") {
+            if (e.code === "Space" || e.code === "Enter") {
+                e.preventDefault();
+                advanceBossDialogue();
+                return;
+            }
+        }
+
         const fbModal = document.getElementById("feedbackModal");
         if (fbModal && fbModal.style.display === "flex") {
             if (e.code === "Space" || e.code === "Enter") {
@@ -4787,7 +4957,7 @@ function startMidBossRaid() {
             currentUserDocId = savedUid;
 
             try {
-                const doc = await db.collection("users").doc(savedUid).get();
+                const doc = await db.collection(USER_COLLECTION).doc(savedUid).get();
                 if (doc.exists) {
                     restoreDataFromCloud(doc.data());
                 }
@@ -4825,10 +4995,26 @@ function startMidBossRaid() {
     }}
     );
     
-    // 🌟 파이어베이스 실시간 랭킹 로드 함수
-    async function loadLiveLeaderboard() {
+// ========================================================
+    // 👑 랭킹보드 스마트 캐싱 엔진 (Firestore Read 폭탄 방어 패치)
+    // ========================================================
+    let cachedLeaderboardData = null; // 메모리에 저장해둘 랭킹 데이터
+    let lastLeaderboardFetchTime = 0; // 마지막으로 서버에서 가져온 시각
+    const LEADERBOARD_CACHE_MS = 60 * 1000; // ⏱️ 60초 캐싱 (1분간 재호출 차단)
+
+    async function loadLiveLeaderboard(forceRefresh = false) {
         const container = document.getElementById("leaderboardListContainer");
         if (!container) return;
+
+        const now = Date.now();
+
+        // 1. 🌟 [방어막] 최근 60초 안에 불러온 기록이 있고 강제 새로고침이 아니라면?
+        // ➔ Firestore 서버를 치지 않고(Read 0회!), 메모리에 있던 데이터를 0.001초 만에 즉시 렌더링!
+        if (!forceRefresh && cachedLeaderboardData && (now - lastLeaderboardFetchTime < LEADERBOARD_CACHE_MS)) {
+            renderLeaderboardUI(cachedLeaderboardData);
+            return;
+        }
+
         container.innerHTML = "<div style='text-align:center; padding:15px; font-size:11px; color:#785a3e;'>☁️ 최신 랭킹 집계 중...</div>";
 
         try {
@@ -4844,61 +5030,75 @@ function startMidBossRaid() {
                 return;
             }
 
-            container.innerHTML = "";
-            let rank = 1;
-
+            // 2. 서버에서 가져온 데이터를 메모리 캐시에 저장
+            const list = [];
             snapshot.forEach(doc => {
-                const u = doc.data();
-                const isMe = (doc.id === currentUserDocId);
-                
-                // 메달 뱃지
-                let rankBadge = `<span style="font-size:12px; font-weight:900; color:#785a3e; width:24px; display:inline-block;">${rank}위</span>`;
-                if (rank === 1) rankBadge = `<span style="font-size:16px;">🥇</span>`;
-                else if (rank === 2) rankBadge = `<span style="font-size:16px;">🥈</span>`;
-                else if (rank === 3) rankBadge = `<span style="font-size:16px;">🥉</span>`;
-
-                const timeText = (u.fastestBossTime && u.fastestBossTime < 9999) ? `${u.fastestBossTime}초` : "미토벌";
-                const card = document.createElement("div");
-                card.style.cssText = `
-                    display:flex; justify-content:space-between; align-items:center;
-                    padding:8px 10px; border-radius:8px; border:1.5px solid ${isMe ? '#d946ef' : '#e9d5ff'};
-                    background:${isMe ? '#fdf4ff' : '#ffffff'};
-                    box-shadow:${isMe ? '0 0 8px rgba(217,70,239,0.3)' : 'none'};
-                `;
-
-                // 🌟 토벌 횟수 계산 및 텍스트 조합
-                const clearCount = u.bossClearCount || (u.records && u.records.bossClearCount) || 0;
-                let bossText = "마왕: 미토벌";
-
-                if (clearCount > 0) {
-                    const timeStr = (u.fastestBossTime && u.fastestBossTime < 9999) ? `${u.fastestBossTime}초` : "";
-                    bossText = `마왕: ${timeStr} (${clearCount}회 토벌 👑)`;
-                }
-
-                card.innerHTML = `
-                    <div style="display:flex; align-items:center; gap:8px;">
-                        ${rankBadge}
-                        <div style="text-align:left;">
-                            <div style="font-size:12.5px; font-weight:900; color:#2e1065;">
-                                ${u.name || '무명 술사'} <span style="font-size:10px; color:#7e22ce; font-weight:600;">(${doc.id})</span>
-                                ${isMe ? '<span style="font-size:9.5px; background:#d946ef; color:white; padding:1px 5px; border-radius:4px; margin-left:2px;">ME</span>' : ''}
-                            </div>
-                            <div style="font-size:10px; color:#6b21a8;">${u.tierName || '입문 술사'}</div>
-                        </div>
-                    </div>
-                    <div style="text-align:right;">
-                        <div style="font-size:12px; font-weight:900; color:#15803d;">${u.masteryCount || 0}마리 마스터</div>
-                        <div style="font-size:10px; color:#b91c1c; font-weight:800;">${bossText}</div>
-                    </div>
-                   `;
-                container.appendChild(card);
-                rank++;
+                list.push({ id: doc.id, ...doc.data() });
             });
+
+            cachedLeaderboardData = list;
+            lastLeaderboardFetchTime = now;
+
+            // 3. 화면에 예쁘게 그리기
+            renderLeaderboardUI(cachedLeaderboardData);
 
         } catch (e) {
             console.error(e);
             container.innerHTML = "<div style='text-align:center; padding:15px; font-size:11px; color:#dc2626;'>⚠️ 랭킹을 불러오지 못했습니다. (색인 생성 중일 수 있습니다)</div>";
         }
+    }
+
+    // 🎨 캐시된 데이터를 화면에 조립해주는 전용 렌더러 함수
+    function renderLeaderboardUI(userList) {
+        const container = document.getElementById("leaderboardListContainer");
+        if (!container) return;
+        container.innerHTML = "";
+
+        let rank = 1;
+        userList.forEach(u => {
+            const isMe = (u.id === currentUserDocId);
+            
+            // 메달 뱃지
+            let rankBadge = `<span style="font-size:12px; font-weight:900; color:#785a3e; width:24px; display:inline-block;">${rank}위</span>`;
+            if (rank === 1) rankBadge = `<span style="font-size:16px;">🥇</span>`;
+            else if (rank === 2) rankBadge = `<span style="font-size:16px;">🥈</span>`;
+            else if (rank === 3) rankBadge = `<span style="font-size:16px;">🥉</span>`;
+
+            const card = document.createElement("div");
+            card.style.cssText = `
+                display:flex; justify-content:space-between; align-items:center;
+                padding:8px 10px; border-radius:8px; border:1.5px solid ${isMe ? '#d946ef' : '#e9d5ff'};
+                background:${isMe ? '#fdf4ff' : '#ffffff'};
+                box-shadow:${isMe ? '0 0 8px rgba(217,70,239,0.3)' : 'none'};
+            `;
+
+            // 토벌 횟수 및 시간 포맷
+            const clearCount = u.bossClearCount || (u.records && u.records.bossClearCount) || 0;
+            let bossText = "마왕: 미토벌";
+            if (clearCount > 0) {
+                const timeStr = (u.fastestBossTime && u.fastestBossTime < 9999) ? `${u.fastestBossTime}초` : "";
+                bossText = `마왕: ${timeStr} (${clearCount}회 토벌 👑)`;
+            }
+
+            card.innerHTML = `
+                <div style="display:flex; align-items:center; gap:8px;">
+                    ${rankBadge}
+                    <div style="text-align:left;">
+                        <div style="font-size:12.5px; font-weight:900; color:#2e1065;">
+                            ${u.name || '무명 술사'} <span style="font-size:10px; color:#7e22ce; font-weight:600;">(${u.id})</span>
+                            ${isMe ? '<span style="font-size:9.5px; background:#d946ef; color:white; padding:1px 5px; border-radius:4px; margin-left:2px;">ME</span>' : ''}
+                        </div>
+                        <div style="font-size:10px; color:#6b21a8;">${u.tierName || '입문 술사'}</div>
+                    </div>
+                </div>
+                <div style="text-align:right;">
+                    <div style="font-size:12px; font-weight:900; color:#15803d;">${u.masteryCount || 0}마리 마스터</div>
+                    <div style="font-size:10px; color:#b91c1c; font-weight:800;">${bossText}</div>
+                </div>
+            `;
+            container.appendChild(card);
+            rank++;
+        });
     }
 
     let gameAlertCallback = null;
@@ -4993,7 +5193,7 @@ function startMidBossRaid() {
         wasBossTimerRunning = false;
     }
 
-/* ========================================================
+    /* ========================================================
        📱 모바일 뒤로가기(Back Key / Gesture) 가로채기 및 제어 시스템
        ======================================================== */
     
@@ -5091,6 +5291,10 @@ function startMidBossRaid() {
             return;
         }
     });
+
+    // 화면 첫 터치 시 모바일 사파리 오디오 락 해제 //
+    window.addEventListener('click', unlockTTSAudio, { once: true });
+    window.addEventListener('touchstart', unlockTTSAudio, { once: true });
 
 </script>
 </body>

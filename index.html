@@ -25,13 +25,13 @@
         }
         
         body {
-            background: #1c0e07; /* PC 배경: 차분하고 고급스러운 다크 브라운 */
+            background: #1c0e07; /* PC 모니터 바깥 배경 */
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
             margin: 0;
-            padding: 0; /* 🌟 바깥 여백 0으로 확장 */
+            padding: 0;
             color: #2c1a0e;
             overscroll-behavior-y: none;
             overscroll-behavior-x: none;
@@ -43,11 +43,13 @@
             border: none;
             padding: 0;
             width: 100%;
-            max-width: 450px;
-            /* 🌟 위아래 제한을 풀고, 모바일 브라우저 세로를 100% 빈틈없이 장악! */
+            max-width: 480px;    /* 가로폭도 폰에 꽉 차게 살짝 여유 */
+            
+            /* 🌟 [핵심] 모바일 브라우저 주소창 위아래 끝까지 100% 빈틈없이 밀착! */
             height: 100vh;
-            height: 100dvh; 
-            max-height: none; /* 🛑 800px 족쇄 삭제! 긴 폰은 긴 대로 꽉 참 */
+            height: 100dvh;
+            max-height: none;   /* 🛑 상한선 족쇄 완전 삭제! */
+            
             display: flex;
             flex-direction: column;
             position: relative;
@@ -70,20 +72,20 @@
             flex-direction: column;
             justify-content: space-between;
             align-items: stretch;
-            overflow: hidden; /* 스크롤바 절대 안 생김 */
+            overflow: hidden;
             position: relative;
         }
         .parchment-inner::-webkit-scrollbar { width: 4px; }
         .parchment-inner::-webkit-scrollbar-thumb { background: #c2a679; border-radius: 4px; }
 
         /* 🖥️ PC/태블릿 모니터로 볼 때만 보기 좋게 둥근 모서리 살짝 주기 */
-        @media (min-width: 500px) {
+        @media (min-width: 768px) {
             body {
-                padding: 12px;
+                padding: 16px;
             }
             .game-container {
                 height: 94vh;
-                max-height: 860px; /* PC에서만 과도하게 늘어나는 것 방지 */
+                max-height: 860px;
                 border-radius: 20px;
                 border: 2px solid #8f603a;
             }

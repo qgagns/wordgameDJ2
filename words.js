@@ -18,7 +18,7 @@ proliferation	[명]	급증, 확산
 generate, create	[동]	창출하다, 생성하다, 만들다
 prompt, trigger	[동]	촉발하다, 유발하다, 자극하다
 promote, foster	[동] 촉진하다, 육성하다, 조장하다
-facilitate/[동] 용이하게 하다, 쉬워지게 하다
+facilitate	[동] 용이하게 하다, 쉬워지게 하다
 accelerate [동] 가속하다[시키다]
 evolve, develop	[동]	진화하다, 발전시키다, 개발하다
 evolution, development	[명]	진화, 발전

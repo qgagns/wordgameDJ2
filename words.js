@@ -229,11 +229,9 @@ in case (that)	[접] ~할 경우에 대비하여
 as long as	[접] ~하는 한
 because, since, as	[접] ~ 때문에, ~이므로
 because of, due to, owing to	[전] ~ 때문에
-therefore, thus, hence	[접부] 그러므로, 따라서
+therefore, thus, hence, as a result, consequently, as a consequence	[접부] 결과적으로, 따라서, 그러므로
 accordingly	[접부] 그에 따라서, 그에 맞춰서
-as a result, consequently, as a consequence	[접부] 결과적으로, 따라서
 for this reason	[접부] 이러한 이유 때문에
-so	[접] 그래서, 따라서
 so ~ that ..., such ~ that ...	[구] 너무 ~해서 ...하다
 surely, certainly, undoubtedly, unquestionably	[접부] 확실히, 틀림없이
 above all	[접부] 무엇보다도

@@ -1148,6 +1148,11 @@
                     </button>
                 </div>
             </div>
+            <!-- 🌟 [추가] 내가 방금 수정한 최신 버전인지 한눈에 확인하는 빌드 태그! -->
+            <div id="gameBuildVersion" style="font-size: 9.5px; color: #a18366; text-align: center; margin-top: 4px; font-weight: 700; opacity: 0.75; letter-spacing: 0.5px;">
+                v1.0.0 (Loading...)
+            </div>
+
         </div>
 
         <!-- ==============================================
@@ -3161,6 +3166,21 @@
                 container.appendChild(card);
             });
         }
+
+        // 🌟 [추가] 파일 최종 수정 시각 자동 반영!
+        const buildEl = document.getElementById("gameBuildVersion");
+        if (buildEl) {
+            // 브라우저가 읽어온 파일의 최종 저장 일시 (예: 03/30 15:42)
+            const lastMod = new Date(document.lastModified);
+            const dateStr = `${lastMod.getMonth()+1}/${lastMod.getDate()} ${String(lastMod.getHours()).padStart(2,'0')}:${String(lastMod.getMinutes()).padStart(2,'0')}`;
+            
+            // 💡 "v1.2" 부분만 가끔 올려주셔도 되고, 뒤의 업데이트 시간만 보셔도 됩니다!
+            buildEl.innerText = `v1.2 · Update: ${dateStr}`;
+        }
+
+        // 7. 최종 화면 전환
+        document.getElementById("titleScreen").style.display = "flex";
+
 
         // 7. 최종 화면 전환
         document.getElementById("titleScreen").style.display = "flex";

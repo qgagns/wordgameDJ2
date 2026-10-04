@@ -1180,7 +1180,11 @@
             <button id="quickResumeBtn" class="quick-resume-btn" onclick="handleQuickResume()">
                 ⚡ [즉시 출격] 탐험 바로 이어하기 ➔
             </button>
-
+            
+            <!-- 🚨 [추가] 24시간 방치 단어 긴급 수호전 왕버튼 (평소엔 숨김) -->
+            <button id="emergencyRaidBtn" class="boss-raid-btn" style="display:none; background:linear-gradient(180deg, #701a75 0%, #4a044e 100%); border-color:#d946ef; box-shadow:0 0 18px rgba(217, 70, 239, 0.6); margin-bottom:8px;" onclick="startEmergencyDefenseRaid()">
+                🚨 [성역 결계 균열!] 기억 침식 단어 긴급 수호전 ➔
+            </button>
 
             <button id="titleBossRaidBtn" class="boss-raid-btn" onclick="startFinalBossRaid()">
                 👑 마왕 『EXAM』과의 결전 개막 (5초 타임어택)
@@ -2152,6 +2156,15 @@
         if (cloudData.isExamCleared) safeStorageSet('spirit_exam_cleared', true);
         if (cloudData.records) safeStorageSet('spirit_records_data', cloudData.records);
         if (cloudData.heroName) safeStorageSet('spirit_hero_name', cloudData.heroName);
+
+        if (cloudData.masteryTimestamps) {
+        wordMasteryTimestamps = cloudData.masteryTimestamps;
+        safeStorageSet('spirit_mastery_timestamps', wordMasteryTimestamps);
+        }
+        if (cloudData.defenseCounts) {
+        wordDefenseCounts = cloudData.defenseCounts;
+        safeStorageSet('spirit_defense_counts', wordDefenseCounts);
+        }
     }
 
     // 🌟 브라우저 ➔ 클라우드 동기화 (마왕 토벌 횟수 포함)
@@ -2227,7 +2240,9 @@
             tierName: getGlobalTier().tier.name,
             records: records,
             mastery: allMastery,
-            clearedBosses: clearedBosses
+            clearedBosses: clearedBosses,
+            masteryTimestamps: wordMasteryTimestamps, // 🌟 추가
+            defenseCounts: wordDefenseCounts          // 🌟 추가
         };
 
         db.collection(USER_COLLECTION).doc(currentUserDocId).set(payload, { merge: true })
@@ -2759,13 +2774,61 @@
             allMapsConquered 
         };
     }
+    
+    // ========================================================
+    // 🧠 라이트너 간격 반복: 점증 쿨타임 테이블 (20시간 ➔ 3일 ➔ 7일 ➔ 영구 면제)
+    // ========================================================
+    const FORGETTING_INTERVALS = [
+        20 * 60 * 60 * 1000,       // 0단계 (방금 마스터): 20시간 뒤 첫 균열
+        3 * 24 * 60 * 60 * 1000,   // 1단계 (1회 방어 성공): 3일 뒤
+        7 * 24 * 60 * 60 * 1000,   // 2단계 (2회 방어 성공): 7일 뒤
+        Infinity                   // 3단계 이상: 완벽 각인! (영구 봉인되어 더 이상 안 뜸)
+    ];
 
+    function getDecayedWords() {
+        const now = Date.now();
+        const decayed = [];
+
+        worldMaps.forEach(map => {
+            const mastery = (map.id === currentMapId && Object.keys(wordMastery).length > 0)
+                ? wordMastery
+                : safeStorageGet(`spirit_mastery_${map.id}`, {});
+
+            map.words.forEach(w => {
+                const count = mastery[w.eng] || 0;
+                const masteredAt = wordMasteryTimestamps[w.eng] || 0;
+                const defenseStage = wordDefenseCounts[w.eng] || 0;
+
+                // 3회 이상 방어 성공한 단어는 '영구 봉인'되어 균열이 절대 발생하지 않음!
+                if (defenseStage >= 3) return;
+
+                // 현재 단계에 맞는 쿨타임 가져오기 (20시간, 3일, 7일)
+                const currentInterval = FORGETTING_INTERVALS[defenseStage] || FORGETTING_INTERVALS[0];
+
+                const isTimeExpired = (masteredAt === 0) || (now - masteredAt >= currentInterval);
+
+                // 3회 마스터 달성 + 쿨타임 만료 시 긴급 수호전 풀에 추가
+                if (count >= 3 && isTimeExpired) {
+                    decayed.push({ 
+                        ...w, 
+                        mapId: map.id,
+                        defenseStage: defenseStage // 현재 몇 단계인지 기억
+                    });
+                }
+            });
+        });
+
+        return decayed;
+    }
 
     let currentMapId = safeStorageGet('spirit_current_map_id', worldMaps[0].id);
     let currentSectorIndex = 0;
     let currentRound = 1;
     let wrongPool = [];
     let wordMastery = {};
+    let wordMasteryTimestamps = safeStorageGet('spirit_mastery_timestamps', {});
+    let wordDefenseCounts = safeStorageGet('spirit_defense_counts', {});
+    let isEmergencyDefenseMode = false; // 현재 긴급 수호전 진행 중인지 여부
     let rawWords = [];
     let streakCount = 0;
     let recentRoundWords = []; // 🌟 직전 라운드 쿨다운 기억
@@ -3262,11 +3325,30 @@
             if (progBar) progBar.style.width = Math.min(percentage, 100) + "%";
         }
 
-        // 4. 즉시 출격 왕버튼 텍스트 갱신
+        // 🌟 [추가] 24시간 방치된 단어가 있는지 검사하여 긴급 수호전 버튼 노출!
+        const decayedWords = getDecayedWords();
+        const emergencyBtn = document.getElementById("emergencyRaidBtn");
         const resumeBtn = document.getElementById("quickResumeBtn");
-        if (resumeBtn) {
-            const activeMap = worldMaps.find(m => m.id === currentMapId) || worldMaps[0];
-            resumeBtn.innerHTML = `⚡ <b>[즉시 출격]</b> ${activeMap.name} 이어하기 ➔`;
+
+        if (decayedWords.length > 0) {
+            // 🚨 긴급 상황: 보라색 버튼 켜고, 일반 초록 출격 버튼은 숨김!
+            if (emergencyBtn) {
+                emergencyBtn.style.display = "flex";
+                emergencyBtn.innerHTML = `🚨 <b>[성역 균열 경보]</b> 기억 침식 단어 (${decayedWords.length}마리) 긴급 수호전 ➔`;
+            }
+            if (resumeBtn) {
+                resumeBtn.style.display = "none"; // 👈 초록 버튼 숨김!
+            }
+        } else {
+            // ✨ 평상시: 보라색 버튼 숨기고, 일반 초록 출격 버튼 켬!
+            if (emergencyBtn) {
+                emergencyBtn.style.display = "none";
+            }
+            if (resumeBtn) {
+                const activeMap = worldMaps.find(m => m.id === currentMapId) || worldMaps[0];
+                resumeBtn.style.display = "flex";
+                resumeBtn.innerHTML = `⚡ <b>[즉시 출격]</b> ${activeMap.name} 이어하기 ➔`;
+            }
         }
 
         // 5. 마왕 레이드 버튼 활성화 여부
@@ -3775,6 +3857,42 @@
                     newTier: afterTierObj.tier
                 };
             }
+
+            // 🌟 3회 마스터 달성 시 또는 균열 방어 성공 시 마스터 타임스탬프 갱신!
+            if (newCount === 3 || q.isDecayed) {
+                wordMasteryTimestamps[q.wordKey] = Date.now();
+                safeStorageSet('spirit_mastery_timestamps', wordMasteryTimestamps);
+            }
+
+            // 🌟 긴급 수호전 정답 맞혔을 때: 방어 단계 승급 (+1)
+            if (q.isDecayed) {
+                const prevStage = wordDefenseCounts[q.wordKey] || 0;
+                const nextStage = prevStage + 1;
+                wordDefenseCounts[q.wordKey] = nextStage;
+                safeStorageSet('spirit_defense_counts', wordDefenseCounts);
+
+                // 단계별 멋진 피드백 문구 안내
+                let safePeriodText = "3일간 안전합니다! 🛡️";
+                if (nextStage === 2) safePeriodText = "7일간 결계 유지! 🛡️";
+                if (nextStage >= 3) safePeriodText = "👑 영구 봉인 완료! (더 이상 균열 없음)";
+
+                fbTitle.innerText = `✨ 결계 강화 성공! [${nextStage}단계 달성]`;
+                fbTitle.style.color = "#701a75";
+                
+                // 안내 배너 연출
+                if (fbResonanceNotice) {
+                    fbResonanceNotice.style.display = "block";
+                    fbResonanceNotice.style.background = "linear-gradient(135deg, #701a75, #a21caf)";
+                    fbResonanceNotice.innerHTML = `
+                        <div><b>[기억 각인 심화]</b> 다음 균열까지 <b>${safePeriodText}</b></div>
+                    `;
+                }
+
+                const targetMapMastery = safeStorageGet(`spirit_mastery_${q.mapId}`, {});
+                targetMapMastery[q.wordKey] = 3;
+                safeStorageSet(`spirit_mastery_${q.mapId}`, targetMapMastery);
+            }
+
         } else {
             streakCount = 0;
             Sound.wrong();
@@ -3810,6 +3928,23 @@
             if (!wrongPool.some(item => item.id === q.id)) {
                 wrongPool.push(q);
             }
+
+            // 🌟 [추가] 긴급 수호전 틀렸을 때: 방어 단계 0으로 리셋 + 숙련도 2로 강등!
+            if (q.isDecayed) {
+                wordDefenseCounts[q.wordKey] = 0; // 단계 초기화
+                safeStorageSet('spirit_defense_counts', wordDefenseCounts);
+
+                const targetMapMastery = safeStorageGet(`spirit_mastery_${q.mapId}`, {});
+                targetMapMastery[q.wordKey] = 2; // 숙련도 강등
+                safeStorageSet(`spirit_mastery_${q.mapId}`, targetMapMastery);
+                if (currentMapId === q.mapId) {
+                    wordMastery[q.wordKey] = 2;
+                }
+
+                fbTitle.innerText = "💥 결계 파괴! 단어가 야생으로 탈주했습니다 (2단계 강등)";
+                fbTitle.style.color = "#b91c1c";
+            }
+
             saveCurrentMapState();
         }
 
@@ -3847,6 +3982,25 @@
     }
 
     function showRoundResult() {
+                // 🌟 [추가] 긴급 수호전 완료 시 전용 종료 처리
+        if (isEmergencyDefenseMode) {
+            isEmergencyDefenseMode = false;
+            Sound.fanfare();
+            syncToCloud(true); // 🌟 즉시 클라우드 반영!
+
+            showGameAlert(
+                "성역 수호 완료!",
+                `긴급 수호전이 종료되었습니다!\n(성공: ${roundCorrectCount} / ${roundQuestions.length})\n기억 결계가 갱신되어 마스터 상태가 유지됩니다!`,
+                "대륙 지도로 복귀 ➔",
+                "🛡️ DEFENSE COMPLETE",
+                () => {
+                    document.getElementById("gameScreen").style.display = "none";
+                    renderTitleScreen();
+                }
+            );
+            return;
+        }
+
         let secContracted = 0;
         rawWords.forEach(w => {
             if ((wordMastery[w.eng] || 0) >= 3) secContracted++;
@@ -5198,6 +5352,57 @@ function startMidBossRaid() {
             }
         }
         wasBossTimerRunning = false;
+    }
+
+    // ========================================================
+    // ⚔️ 긴급 성역 수호전 실행 엔진 (단 20~30초 컷)
+    // ========================================================
+    function startEmergencyDefenseRaid() {
+        Sound.click();
+        const decayedWords = getDecayedWords();
+        if (decayedWords.length === 0) {
+            showGameAlert("결계 안정", "현재 망각의 안개에 침식된 단어가 없습니다!\n모든 성역이 안전합니다.", "확인", "🛡️ ALL CLEAR");
+            return;
+        }
+
+        isEmergencyDefenseMode = true;
+        roundQuestions = [];
+        currentQuestionIdx = 0;
+        roundCorrectCount = 0;
+
+        // 최대 5문제 무작위 추출
+        const targetWords = [...decayedWords].sort(() => Math.random() - 0.5).slice(0, 5);
+
+        // 보기 풀 생성을 위한 전체 단어
+        const allPool = getAllUniverseWords();
+
+        targetWords.forEach(w => {
+            const type = Math.random() < 0.5 ? "E2K" : "K2E";
+            roundQuestions.push({
+                id: `emergency_${w.eng}_${Date.now()}`,
+                wordKey: w.eng,
+                engWord: w.eng,
+                korMeaning: w.kor,
+                type: type,
+                prompt: type === "E2K" ? w.eng : w.kor,
+                correct: type === "E2K" ? w.kor : w.eng,
+                pool: type === "E2K" ? allPool.map(item => item.kor) : allPool.map(item => item.eng),
+                mapId: w.mapId,
+                isDecayed: true,
+                defenseStage: w.defenseStage || 0 // 🌟 단계 정보 전달
+            });
+        });
+
+
+        // 퀴즈 화면 세팅
+        document.getElementById("inGameMapTitle").innerText = "⚠️ [성역의 균열] 긴급 수호전";
+        document.getElementById("gameSectorBadge").innerText = "망각의 안개 격퇴전";
+        document.getElementById("gameSectorBadge").style.backgroundColor = "#701a75";
+
+        document.getElementById("titleScreen").style.display = "none";
+        document.getElementById("gameScreen").style.display = "flex";
+
+        loadQuestion();
     }
 
     /* ========================================================

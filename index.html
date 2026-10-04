@@ -17,47 +17,62 @@
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
     <style>
-        * {
+* {
             box-sizing: border-box;
             font-family: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
             letter-spacing: -0.3px;
             -webkit-tap-highlight-color: transparent;
         }
-        
-        body {
-            background: #1c0e07; /* PC 모니터 바깥 배경 */
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
+
+        /* 🌟 [핵심 1] html 태그 자체를 모바일 화면에 100% 꽉 채움! */
+        html {
+            width: 100%;
+            height: 100%;
+            height: 100dvh;
             margin: 0;
             padding: 0;
+            background: #1c0e07; /* PC용 바깥 배경 */
+        }
+        
+        /* 🌟 [핵심 2] body도 위아래 빈틈없이 100% 채우고, 모바일에선 상단부터 시작! */
+        body {
+            background: #1c0e07;
+            width: 100%;
+            height: 100%;
+            height: 100dvh;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: stretch; /* 👈 위아래로 꽉 채우도록 스트레칭! */
             color: #2c1a0e;
             overscroll-behavior-y: none;
             overscroll-behavior-x: none;
         }
 
-        /* 📱 메인 프레임 */
+        /* 📱 메인 프레임: 모바일 화면을 1밀리미터의 오차도 없이 100% 빈틈없이 장악! */
         .game-container {
             background: #fbf6ea;
             border: none;
+            border-radius: 0;   /* 🛑 모바일에선 둥근 모서리도 없애고 완전 밀착! */
             padding: 0;
             width: 100%;
-            max-width: 480px;    /* 가로폭도 폰에 꽉 차게 살짝 여유 */
+            max-width: 480px;
             
-            /* 🌟 [핵심] 모바일 브라우저 주소창 위아래 끝까지 100% 빈틈없이 밀착! */
-            height: 100vh;
-            height: 100dvh;
-            max-height: none;   /* 🛑 상한선 족쇄 완전 삭제! */
+            /* 🌟 모바일 세로 100% 강제 고정 */
+            height: 100% !important;
+            height: 100dvh !important;
+            min-height: 100dvh;
+            max-height: none !important;
             
             display: flex;
             flex-direction: column;
             position: relative;
             overflow: hidden;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.6);
+            box-shadow: none;   /* 모바일에선 그림자도 필요 없음 */
         }
 
-      /* 📜 양피지 본체: 답답한 2중 테두리를 없애고 화면 끝까지 시원하게 밀착 */
+        /* 📜 양피지 본체: 내부 안전 패딩 */
         .parchment-inner {
             background: #fbf6ea;
             background-image: radial-gradient(#f4ecd8 15%, transparent 16%);
@@ -78,16 +93,19 @@
         .parchment-inner::-webkit-scrollbar { width: 4px; }
         .parchment-inner::-webkit-scrollbar-thumb { background: #c2a679; border-radius: 4px; }
 
-        /* 🖥️ PC/태블릿 모니터로 볼 때만 보기 좋게 둥근 모서리 살짝 주기 */
+        /* 🖥️ 오직 PC 모니터나 가로가 넓은 화면(태블릿)에서만 예쁜 창모드 적용 */
         @media (min-width: 768px) {
             body {
+                align-items: center; /* PC에서는 화면 중앙 정렬 */
                 padding: 16px;
             }
             .game-container {
-                height: 94vh;
-                max-height: 860px;
+                height: 94vh !important;
+                height: 94dvh !important;
+                max-height: 860px !important;
                 border-radius: 20px;
                 border: 2px solid #8f603a;
+                box-shadow: 0 10px 40px rgba(0,0,0,0.6);
             }
             .parchment-inner {
                 border-radius: 18px;

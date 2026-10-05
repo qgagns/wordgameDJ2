@@ -303,9 +303,10 @@
             flex-shrink: 0;
         }
         .hero-top { 
-            display: flex; justify-content: space-between; align-items: center; margin-bottom: 3px; }
+            display: flex; justify-content: space-between; align-items: center; margin-bottom: 3px; 
+        }
         .hero-tier-pill {
-            font-size: 11px;
+            font-size: 13px;
             font-weight: 800;
             padding: 3px 9px;
             border-radius: 10px;
@@ -315,7 +316,7 @@
             background: linear-gradient(90deg, #b45309, #d97706);
             color: #fffbeb;
             border: 1px solid #fef3c7;
-            font-size: 10.5px;
+            font-size: 13px;
             font-weight: 900;
             padding: 3px 8px;
             border-radius: 8px;
@@ -335,7 +336,7 @@
             padding: 13px 14px;
             border-radius: 12px;
             font-size: 15px;
-            font-weight: 900 !important;
+            font-weight: 800 !important;
             cursor: pointer;
             display: flex;
             justify-content: center;
@@ -470,10 +471,11 @@
         }
 
         .map-mini-bar { 
-            background: #d8c7a6; height: 5px; border-radius: 3px; overflow: hidden; margin-top: 3px; }
+            background: #d8c7a6; height: 5px; border-radius: 3px; overflow: hidden; margin-top: 3px; 
+        }
         .map-mini-bar-fill { 
-            height: 100%; background: linear-gradient(90deg, #10b981, #059669); width: 0%; }
-
+            height: 100%; background: linear-gradient(90deg, #10b981, #059669); width: 0%; 
+        }
         .title-bottom-links {
             display: flex;
             justify-content: center;
@@ -486,6 +488,7 @@
             cursor: pointer; text-decoration: underline; transition: color 0.2s;
         }
         .link-sub:hover { color: #dc2626; }
+
 
         /* ========================================================
            🎖️ 명예의 전당 & 칭호 도감 전용 스타일시트 (CSS 중앙 제어)
@@ -591,6 +594,7 @@
         .rank-user-tier  { font-size: 11.5px; font-weight: 700; color: #6b21a8; margin-top: 1px; } /* 계급 */
         .rank-mastery-val{ font-size: 13.5px; font-weight: 900; color: #15803d; } /* 마스터 단어수 */
         .rank-boss-val   { font-size: 11.5px; font-weight: 800; color: #b91c1c; margin-top: 1px; } /* 마왕 기록 */
+
 
         /* ============================
            🏕️ 1.5 탐험 전초기지
@@ -756,24 +760,25 @@
             box-shadow: inset 0 0 10px rgba(0,0,0,0.4);
             position: relative;
         }
-
+        /* 선지 좌상단 콤보 뱃지 */
         .combo-streak-badge {
             display: none;
-            position: absolute;
-            top: 6px;
-            left: 8px;
-            background: linear-gradient(90deg, #ef4444, #f97316);
-            color: white;
-            font-size: 10.5px;
+            font-size: 16px;
             font-weight: 900;
-            padding: 2px 8px;
+            color: #ffffff;
+            padding: 4px 12px;
             border-radius: 10px;
-            box-shadow: 0 0 8px rgba(239, 68, 68, 0.6);
-            animation: pulseCombo 0.8s infinite alternate;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+            letter-spacing: -0.2px;
+            white-space: nowrap;
+            animation: pulseComboLeft 0.7s infinite alternate ease-in-out;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+            transform-origin: left center;
         }
 
-        @keyframes pulseCombo {
-            0% { transform: scale(0.95); }
+        /* 좌측 정렬을 유지하며 커졌다 작아지는 키프레임 */
+        @keyframes pulseComboLeft {
+            0% { transform: scale(0.96); }
             100% { transform: scale(1.05); }
         }
 
@@ -848,7 +853,88 @@
         .choice-btn.correct { background: #dcfce7 !important; border-color: #10b981 !important; color: #047857 !important; }
         .choice-btn.wrong { background: #fee2e2 !important; border-color: #ef4444 !important; color: #b91c1c !important; }
 
+
+        /* ========================================================
+           🎰 [FEVER 모드] 화면 테두리 황금빛 불꽃 오라 (가림 현상 100% 해결)
+           ======================================================== */
+        .fever-vignette-overlay {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            border-radius: 0;
+            box-shadow: inset 0 0 35px rgba(234, 179, 8, 0.8), inset 0 0 15px rgba(249, 115, 22, 0.9);
+            border: 3px solid #f59e0b;
+            pointer-events: none; /* 터치 방해 금지 */
+            z-index: 38; /* 양피지 위, 팝업 아래에 완벽 안착! */
+            animation: feverPulseAnim 0.8s infinite alternate ease-in-out;
+        }
+
+        @keyframes feverPulseAnim {
+            0% {
+                box-shadow: inset 0 0 20px rgba(234, 179, 8, 0.5), inset 0 0 10px rgba(249, 115, 22, 0.6);
+                opacity: 0.7;
+            }
+            100% {
+                box-shadow: inset 0 0 45px rgba(234, 179, 8, 0.95), inset 0 0 25px rgba(239, 68, 68, 0.8);
+                opacity: 1;
+            }
+        }
+
+        /* 🌟 [추가] 모닥불 피버 출격 버튼 전용 강렬한 맥박 발광 애니메이션 */
+        .btn-fever-pulse {
+            background: linear-gradient(180deg, #ea580c 0%, #c2410c 100%) !important;
+            border-color: #fde047 !important;
+            box-shadow: 0 0 16px rgba(234, 88, 12, 0.7), 0 0 25px rgba(253, 224, 71, 0.5) !important;
+            animation: feverBtnPulseAnim 1.2s infinite alternate ease-in-out !important;
+        }
+
+        @keyframes feverBtnPulseAnim {
+            0% {
+                transform: scale(1);
+                box-shadow: 0 0 10px rgba(234, 88, 12, 0.5), 0 0 15px rgba(253, 224, 71, 0.3);
+            }
+            100% {
+                transform: scale(1.03);
+                box-shadow: 0 0 22px rgba(234, 88, 12, 0.9), 0 0 35px rgba(253, 224, 71, 0.8);
+            }
+        }
+
+        /* 🌟 팝업 플로팅 콤보 이펙트 */
+        .floating-combo-text {
+            position: absolute;
+            top: 48%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 26px;
+            font-weight: 900;
+            color: #ffffff;
+            text-shadow: 0 0 12px #ea580c, 0 3px 6px rgba(0,0,0,0.85);
+            pointer-events: none;
+            z-index: 45;
+            white-space: nowrap;
+            letter-spacing: -0.5px;
+            animation: floatPunchCombo 0.75s cubic-bezier(0.18, 0.89, 0.32, 1.28) forwards;
+        }
+
+        @keyframes floatPunchCombo {
+            0% {
+                opacity: 0;
+                transform: translate(-50%, 0) scale(0.3) rotate(-6deg);
+            }
+            30% {
+                opacity: 1;
+                transform: translate(-50%, -18px) scale(1.25) rotate(3deg);
+            }
+            70% {
+                opacity: 1;
+                transform: translate(-50%, -30px) scale(1.05) rotate(0deg);
+            }
+            100% {
+                opacity: 0;
+                transform: translate(-50%, -48px) scale(0.85) rotate(2deg);
+            }
+        }
         
+
         /* ============================
            ⚔️ 3. 보스전 공용 화면
            ============================ */
@@ -1217,13 +1303,13 @@
             flex-shrink: 0;
         }
         .ending-badge-top { 
-            font-size: 10px; font-weight: 800; color: #b45309; letter-spacing: 2px; margin-bottom: 2px; display: block; }
+            font-size: 12px; font-weight: 800; color: #b45309; letter-spacing: 2px; margin-bottom: 2px; display: block; }
         .ending-title { 
-            font-size: 18px; font-weight: 900; color: #78350f; margin: 0 0 6px 0; }
+            font-size: 20px; font-weight: 900; color: #78350f; margin: 0 0 6px 0; }
         .ending-divider { 
             color: #d97706; font-size: 9px; margin-bottom: 6px; opacity: 0.7; }
         .ending-desc { 
-            font-size: 11.5px; color: #5c3a21; line-height: 1.55; word-break: keep-all; margin: 0 0 8px 0; font-weight: 500; }
+            font-size: 13px; color: #5c3a21; line-height: 1.55; word-break: keep-all; margin: 0 0 8px 0; font-weight: 500; }
         .ending-stat-pill { 
             background: #fde68a; border: 1px solid #f59e0b; padding: 4px 10px; border-radius: 16px; font-size: 10px; font-weight: 900; color: #92400e; display: inline-block; }
         .tierup-box {
@@ -1268,6 +1354,19 @@
             z-index: 40;
             animation: vignetteFade 0.45s ease-out forwards;
         }
+
+        /* 🌟 컴팩트 피드백 팝업 줌인 애니메이션 */
+        @keyframes popInCard {
+            0% { transform: scale(0.8); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        /* 🌟 정답 시 0.6초 자동 타이머 게이지 줄어듦 애니메이션 */
+        @keyframes shrinkTimerBar {
+            0% { width: 100%; }
+            100% { width: 0%; }
+        }
+
         @keyframes vignetteFade {
             0% { opacity: 1; }
             100% { opacity: 0; }
@@ -1435,7 +1534,7 @@
             <div class="player-hero-card" style="background:#ede3cc; border:2px solid #b59f77; padding:10px 12px;">
                 <div class="hero-top" style="margin-bottom:4px;">
                     <div>
-                        <span id="titleGlobalTierBadge" class="hero-tier-pill" style="font-size:12px; padding:3px 10px;">입문 술사 🌱</span>
+                        <span id="titleGlobalTierBadge" class="hero-tier-pill">입문 술사 🌱</span>
                         <span id="titleEquippedBadge" class="title-equipped-tag">🌱 첫 걸음의 탐색자</span>
                     </div>
                     <span id="titleGlobalPercentBadge" style="font-size:13px; font-weight:900; color:#b45309;">0%</span>
@@ -1482,10 +1581,10 @@
             <div class="title-bottom-links">
                 <div style="display:flex; gap:8px; width:100%; margin-top:2px; flex-shrink:0;">
                     <!-- 🌟 padding 13px로 두툼하고 큼직하게 통일 -->
-                    <button class="top-btn" style="flex:1; padding:13px 10px; font-size:14px; font-weight:900; background:#5c3a21; border-color:#8f603a; border-radius:12px;" onclick="openWordBook(true)">
+                    <button class="top-btn" style="flex:1; padding:13px 10px; font-size:15px; font-weight:900; background:#5c3a21; border-color:#8f603a; border-radius:12px;" onclick="openWordBook(true)">
                         📖 모험 일지
                     </button>
-                    <button class="top-btn" style="flex:1; padding:13px 10px; font-size:14px; font-weight:900; background:#ede3cc; color:#5c3a21; border-color:#c9b48c; border-radius:12px;" onclick="openSettingsModal()">
+                    <button class="top-btn" style="flex:1; padding:13px 10px; font-size:15px; font-weight:900; background:#ede3cc; color:#5c3a21; border-color:#c9b48c; border-radius:12px;" onclick="openSettingsModal()">
                         ⚙️ 환경 설정
                     </button>
                 </div>
@@ -1565,7 +1664,6 @@
             </div>
 
             <div class="battle-arena-box">
-                <div id="comboStreakBadge" class="combo-streak-badge">🔥 2연속 교감!</div>
                 <img src="images/battle_field.png" style="width:100%; height:100%; object-fit:cover; display:block;" alt="전투 대치">
             </div>
 
@@ -1575,6 +1673,13 @@
                     <span id="masteryTag" class="tag">야생의 정령 🌿</span>
                 </div>
                 <div id="wordDisplay" class="word">불러오는 중...</div>
+            </div>
+
+            <!-- 🌟 콤보 뱃지: 선지 위쪽 좌측에 자연스러운 여백을 두고 배치 -->
+            <div style="width: 100%; display: flex; justify-content: flex-start; margin-bottom: 12px; padding-left: 4px;">
+                <div id="comboStreakBadge" class="combo-streak-badge">
+                    🔥2 COMBO!🔥
+                </div>
             </div>
 
             <div id="choicesGrid" class="choices-grid"></div>
@@ -1853,7 +1958,7 @@
             </div> 
 
             <!-- 🌟 1. 카드 목록 래퍼 닫기 -->
-            <div style="font-size:10px; color:#785a3e; text-align:center; font-weight:700; margin-top:4px;">
+            <div style="font-size:13px; color:#785a3e; text-align:center; font-weight:700; margin-top:4px;">
                 💡 준비되셨습니까? 정령들을 구원하러 출발합니다!
             </div>
         </div> <!-- 🌟 2. 상단 컨텐츠 래퍼 닫기 -->
@@ -1873,7 +1978,7 @@
 
             <div class="ending-card-box" style="border-color:#10b981; background:#ecfdf5;">
                 <span class="ending-badge-top" style="color:#047857;">SECTOR PURIFIED</span>
-                <h2 class="ending-title" id="sectorClearTitle" style="color:#065f46; font-size:18px;">제1구역 정복 완료!</h2>
+                <h2 class="ending-title" id="sectorClearTitle" style="color:#065f46; font-size:20px;">제1구역 정복 완료!</h2>
                 <div class="ending-divider" style="color:#10b981;">❖ ❖ ❖</div>
                 <div class="ending-desc" style="color:#064e3b;">
                     축하합니다! 이 구역의 모든 정령과 영원의 계약을 맺었습니다.<br>
@@ -1904,7 +2009,7 @@
         </div>
         <div>
             <button id="midBossNoticeStartBtn" class="btn-wood" style="background:#10b981; border-color:#059669; color:#ffffff; font-weight:900; font-size:14px; padding:12px; margin-bottom:6px;" onclick="confirmStartMidBoss()">
-                ⚔️ 수호령과의 시련 시작! (도전) ➔
+                ⚔️ 수호령과의 시련 시작! ➔
             </button>
             <button class="btn-sub-wood" style="background:#fffdf7; margin-bottom:6px;" onclick="openWordBook(false)">
                 📖 정령 도감 (단어장) 최종 복습하기
@@ -1915,44 +2020,43 @@
         </div>
     </div>
 
-    <!-- 🌟 대형 피드백 팝업 -->
-    <div id="feedbackModal" class="modal">
-        <div style="flex:1; 
-            display:flex; 
-            flex-direction:column; 
-            justify-content: flex-start; 
-            align-items:center; 
-            width:100%;
-            padding-top: 5px">
+    <!-- 🌟 컴팩트 플로팅 피드백 팝업 (정답 일러스트 & 콤보 일체형) -->
+    <div id="feedbackModal" style="display:none; position:absolute; top:0; left:0; right:0; bottom:0; background:rgba(18, 9, 5, 0.72); z-index:100; justify-content:center; align-items:center; padding:14px; backdrop-filter:blur(3px);">
+        <div id="fbCardBody" style="background:#fbf6ea; border:3.5px solid #8f603a; border-radius:20px; padding:16px 18px; width:100%; max-width:380px; box-shadow:0 14px 40px rgba(0,0,0,0.9); display:flex; flex-direction:column; align-items:center; text-align:center; position:relative; animation: popInCard 0.2s cubic-bezier(0.18, 0.89, 0.32, 1.28) forwards; box-sizing:border-box;">
+            
+            <!-- 1. 정답창 콤보 뱃지 -->
+            <div id="fbComboBadge" style="display:none; font-size:25px; font-weight:900; color:#ea580c; margin-bottom:6px; text-shadow:0 1px 3px rgba(0,0,0,0.2);"></div>
 
-            <div id="fbArtBox" class="art-box" style="margin-bottom:10px; margin-top:10px; height:240px; position:relative;">
-            <!-- 미리 로딩해두는 정답 이미지 -->
-            <img id="fbImgCorrect" src="images/fb_correct.png" style="width:100%; height:100%; object-fit:cover; display:none;" alt="정답">
-            <!-- 미리 로딩해두는 오답 이미지 -->
-            <img id="fbImgWrong" src="images/fb_wrong.png" style="width:100%; height:100%; object-fit:cover; display:none;" alt="오답">
+            <!-- 2. 시원하게 확장된 일러스트 액자 (180px) -->
+            <div id="fbArtBox" class="art-box" style="width:100%; height:180px; margin-bottom:10px; border:2.5px solid #c9b48c; border-radius:14px; overflow:hidden; position:relative; box-shadow:0 4px 10px rgba(0,0,0,0.15);">
+                <img id="fbImgCorrect" src="images/fb_correct.png" style="width:100%; height:100%; object-fit:cover; display:none;" alt="정답">
+                <img id="fbImgWrong" src="images/fb_wrong.png" style="width:100%; height:100%; object-fit:cover; display:none;" alt="오답">
             </div>
 
-            <!-- ⚡ 찰나의 공명 달성 시 터지는 번개 배너 -->
-            <div id="fbResonanceNotice" class="resonance-banner" style="margin-top:10px;">
-                ⚡ [찰나의 공명!] 본능적 교감으로 숙련도 +2 급상승!
+            <!-- 3. 찰나의 공명 & 영원의 계약 배너 -->
+            <div id="fbResonanceNotice" class="resonance-banner" style="width:100%; margin:0 0 8px 0; padding:8px 10px; font-size:14px; display:none;"></div>
+
+            <h3 id="fbTitle" style="font-size:19px; font-weight:900; color:#15803d; margin:2px 0 8px 0;">교감 성공!</h3>
+
+            <!-- 4. 단어 & 한글 뜻 박스 (위아래 2줄 분리형) -->
+            <div class="feedback-card" style="margin-bottom:10px; padding:8px 12px; width:100%; box-sizing:border-box; background:#ede3cc; border-radius:12px; border:1.5px solid #c9b48c; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:3px;">
+                <!-- 1행: 영단어 (크고 또렷하게) -->
+                <span id="fbWord" style="font-size:25px; font-weight:900; color:#2c1a0e; letter-spacing:-0.3px; margin-bottom: 10px;">apple</span>
+                
+                <!-- 2행: 한글 뜻 (작고 부드럽고 연한 톤) -->
+                <span id="fbMeaning" class="fb-meaning" style="font-size:16px; font-weight:700; color:#785a3e; word-break:keep-all;">사과</span>
             </div>
 
-            <!-- 🌟 영원의 계약 성립 배너 -->
-            <div id="fbContractNotice" class="contract-master-banner" style="margin-bottom:10px; margin-top:10px;">
-                🌟 이 정령의 진명을 완벽히 깨우쳤습니다!
+            <!-- 5. 자동 타이머 게이지바 (6px로 선명화) -->
+            <div id="fbTimerWrap" style="width:100%; height:6px; background:#d8c7a6; border-radius:3px; overflow:hidden; margin-bottom:8px; display:none;">
+                <div id="fbTimerBar" style="height:100%; width:100%; background:linear-gradient(90deg, #10b981, #f59e0b);"></div>
             </div>
 
-            <h3 id="fbTitle" class="feedback-title" style="margin:10px 0;">교감 성공!</h3>
-
-            <div class="feedback-card">
-                <span class="fb-label">단어</span>
-                <span id="fbWord" class="fb-word">apple</span>
-                <span class="fb-label">뜻</span>
-                <span id="fbMeaning" class="fb-meaning">사과</span>
-            </div>
+            <!-- 6. 다음 버튼 -->
+            <button id="fbNextBtn" class="btn-wood" style="padding:11px; font-size:13.5px; width:100%;" onclick="nextQuestion()">다음 정령 찾기 ➔</button>
         </div>
-        <button class="btn-wood" onclick="nextQuestion()">다음 정령 찾기 ➔</button>
     </div>
+
 
     <!-- 계급 승급 모달 -->
     <div id="tierUpModal" class="modal">
@@ -1961,13 +2065,13 @@
                 <img src="images/tier_up.png" style="width:100%; height:100%; object-fit:cover; display:block;" alt="승급 축하">
             </div>
             <div class="tierup-box">
-                <span style="font-size:10px; font-weight:800; color:#047857; letter-spacing:2px; display:block; margin-bottom:3px;">TIER ELEVATION</span>
+                <span style="font-size:12px; font-weight:800; color:#047857; letter-spacing:2px; display:block; margin-bottom:3px;">TIER ELEVATION</span>
                 <h2 style="font-size:19px; font-weight:900; color:#065f46; margin:0 0 6px 0;">정령술사 계급 승급!</h2>
                 <div style="font-size:13px; font-weight:800; color:#047857;" id="tierUpFlowText">
                     [숲의 견습생 🌱] ➔ [방랑 탐색자 🐾]
                 </div>
-                <div style="font-size:11px; color:#065f46; margin-top:5px; line-height:1.4;">
-                    전 대륙 정령들과의 유대가 깊어져 더 높은 경지에 도달했습니다!
+                <div style="font-size:13px; color:#065f46; margin-top:5px; line-height:1.4;">
+                    전 대륙 정령들과의 유대가 깊어져<br>더 높은 경지에 도달했습니다!
                 </div>
             </div>
         </div>
@@ -1979,22 +2083,29 @@
     <!-- 🌟 모닥불 휴식 모달 -->
     <div id="roundModal" class="modal">
         <div style="flex:1; display:flex; flex-direction:column; justify-content:center; align-items:center; width:100%;">
-            <div class="art-box" style="margin-bottom:6px; height:140px;">
+            <h2 id="modalTitle" style="margin-bottom: 20px; font-size: 25px; font-weight: 800; color: #3b2211;">🌿 모닥불 가의 휴식 🌿</h2>
+            <div class="art-box" style="margin-bottom:6px; height:250px;">
                 <img src="images/rest_fire.png" style="width:100%; height:100%; object-fit:cover; display:block;" alt="모닥불 휴식">
             </div>
-            <h2 id="modalTitle" style="margin: 0 0 2px; font-size: 17px; color: #3b2211;">🌿 모닥불 가의 휴식</h2>
-            <div style="font-size: 12.5px; color: #5a3d24; margin: 1px 0;" id="modalScore">교감 성공: 5 / 5</div>
+            <div style="font-size: 13px; font-weight: 800; color: #5a3d24; margin: 5px 0;" id="modalScore">교감 성공: 5 / 5</div>
             
-            <div style="font-size: 11px; font-weight: bold; margin: 2px 0;" id="modalReviewRemaining"></div>
+            <!-- 모든 정령과 온전히 교감했습니다 문구 부분 -->
+            <div style="font-size: 14px; font-weight: 800; margin: 5px 0;" id="modalReviewRemaining"></div> 
+
+            <div id="modalStreakBox" style="display:none; padding:6px 14px; border-radius:14px; font-size:13.5px; font-weight:900; line-height:1; display:inline-flex; align-items:center; justify-content:center; gap:3px;
+            margin: 5px 0">
+                🔥 현재 5연속 교감 유지 중! 🔥
+            </div>
 
             <div id="modalScarcityBox" class="scarcity-box">
-                🔥 [완전 정복 직전!] 구역 정복까지 단 2마리 남았습니다!
+                🔥 완전 정복 직전! 구역 정복까지 단 2마리 남았습니다!
             </div>
 
         </div>
         <div>
-            <button class="btn-wood" style="background:#16a34a; border-color:#15803d; color:#ffffff; font-weight:900; margin-bottom:6px;" onclick="startNextRound()">
+            <button id="modalContinueBtn" class="btn-wood" style="background:#16a34a; border-color:#15803d; color:#ffffff; font-weight:900; margin-bottom:6px;" onclick="startNextRound()">
                 계속 정령들을 구하기 (단 15초 소요 ⚡) ➔
+
             </button>
             <button class="btn-sub-wood" style="background:#fffdf7; margin-bottom:5px;" onclick="openWordBook(false)">
                 📖 모닥불 앞에서 정령 도감(단어장) 복습하기
@@ -2005,25 +2116,29 @@
         </div>
     </div>
 
-    <!-- 🌟 [추가] 성역 수호전/방어전 전용 모닥불 휴식 모달 -->
+<!-- 🌟 [추가] 성역 수호전/방어전 전용 모닥불 휴식 모달 -->
     <div id="emergencyRoundModal" class="modal" style="background:#fbf6ea; border:3px solid #701a75;">
         <div style="flex:1; display:flex; flex-direction:column; justify-content:center; align-items:center; width:100%;">
-            <div class="art-box" style="margin-bottom:6px; height:130px; border-color:#d946ef;">
+            
+            <!-- 1. 타이틀 (일반 모닥불과 동일하게 맨 위로 이동 & 25px 확대) -->
+            <span style="font-size:11px; font-weight:900; color:#a21caf; letter-spacing:2px; margin-bottom:4px;">✦ SANCTUARY REST CAMP ✦</span>
+            <h2 id="emergencyModalTitle" style="margin-bottom: 20px; font-size: 25px; font-weight: 800; color: #4a044e;">✦ 성역 모닥불의 휴식 ✦</h2>
+
+            <!-- 2. 시원하게 확장된 일러스트 액자 (250px) -->
+            <div class="art-box" style="margin-bottom:6px; height:250px; border-color:#d946ef;">
                 <img src="images/rest_fire.png" style="width:100%; height:100%; object-fit:cover; display:block;" alt="성역 모닥불">
             </div>
             
-            <span style="font-size:10px; font-weight:900; color:#a21caf; letter-spacing:2px; margin-bottom:2px;">✦ SANCTUARY REST CAMP ✦</span>
-            <h2 id="emergencyModalTitle" style="margin: 0 0 2px; font-size: 18px; color: #4a044e; font-weight:900;">모닥불 가의 휴식</h2>
+            <!-- 3. 구출 성공 스코어 (여백 및 폰트 통일) -->
+            <div style="font-size: 13px; font-weight: 800; color: #5a3d24; margin: 5px 0;" id="emergencyModalScore">구출 성공: 5 / 5</div>
             
-            <div style="font-size: 13px; color: #5a3d24; margin: 3px 0; font-weight:800;" id="emergencyModalScore">구출 성공: 5 / 5</div>
-            
-            <!-- 침식 잔여 현황 박스 -->
-            <div id="emergencyScarcityBox" class="scarcity-box" style="background:linear-gradient(180deg, #fdf4ff 0%, #fae8ff 100%); border-color:#d946ef; color:#701a75; margin:6px 0 8px 0; width:100%;">
+            <!-- 4. 침식 잔여 현황 박스 -->
+            <div id="emergencyScarcityBox" class="scarcity-box" style="background:linear-gradient(180deg, #fdf4ff 0%, #fae8ff 100%); border-color:#d946ef; color:#701a75; margin: 5px 0; width:100%;">
                 📍 아직 구출을 기다리는 정령: <b>15마리</b>
             </div>
         </div>
 
-        <!-- 하단 3대 액션 버튼 -->
+        <!-- 하단 3대 액션 버튼 (기존 유지) -->
         <div style="width:100%; display:flex; flex-direction:column; gap:6px;">
             <button id="emergencyContinueBtn" class="btn-wood" style="background:#16a34a; border-color:#15803d; color:#ffffff; font-weight:900;" onclick="continueEmergencyRaid()">
                 ⚔️ 남은 침식 정령 계속 구출하기 ➔
@@ -2172,7 +2287,7 @@
                 </div>
 
                 <!-- 헌사 문구 -->
-                <div style="font-size:13px; font-weight:800; color:#451a03; line-height:1.55; margin:20px 0 10px 0; word-break:keep-all;">
+                <div style="font-size:13px; font-weight:800; color:#451a03; line-height:1.55; margin:20px 0 20px 0; word-break:keep-all;">
                     위 술사는 세계를 절망으로 빠뜨렸던 마왕 
                     <br><b>『EXAM』</b>의 가혹한 시련을 완벽히 격파하고 
                     <br>대륙의 모든 단어 정령을 구원하였기에 
@@ -2193,7 +2308,7 @@
                 <div style="display:flex; justify-content:space-between; align-items:center; padding:0 8px;">
                     <span style="font-size:12px; color:#a18366;" id="certDateDisplay">2026. 00. 00</span>
                     <div style="border:2px solid #dc2626; color:#dc2626; font-size:20px; font-weight:900; padding:2px 6px; border-radius:4px; transform:rotate(-5deg);">
-                        정령협회 공인
+                        현수영 공인
                     </div>
                 </div>
             </div>
@@ -2583,12 +2698,12 @@
         const clearedBosses = [];
         let totalMasteredCount = 0;
 
+        const { totalContracted } = getGlobalTotalStats();
+        totalMasteredCount = totalContracted;
+
         worldMaps.forEach(map => {
             const m = safeStorageGet(`spirit_mastery_${map.id}`, {});
             allMastery[map.id] = m;
-            Object.values(m).forEach(cnt => {
-                if (cnt >= 3) totalMasteredCount++;
-            });
             if (isMapBossDefeated(map.id)) clearedBosses.push(map.id);
         });
 
@@ -3217,6 +3332,7 @@
     let streakCount = 0;
     let recentRoundWords = []; // 🌟 직전 라운드 쿨다운 기억
     let questionStartTime = 0; // 🌟 찰나의 공명 반응속도 측정
+    let feedbackAutoTimer = null; // 🌟 자동 스킵 타이머 변수
 
     const QUESTIONS_PER_ROUND = 5;
     let roundQuestions = [];
@@ -3368,7 +3484,9 @@
         });
     }
 
-    /* 💥 전투 타격 이펙트 제어기 */
+    //===================================================
+    // 💥 전투 타격 이펙트 제어기 
+    //===================================================
     function triggerBossHitEffect(isCrit = false) {
         const bossBox = document.getElementById("bossArtBox");
         if (!bossBox) return;
@@ -3669,6 +3787,9 @@
     }
 
     function renderTitleScreen() {
+        const feverOverlay = document.getElementById("feverVignette");
+        if (feverOverlay) feverOverlay.remove();
+
         loadMapData(currentMapId);
 
         const { tier, tierIndex, next, totalWords, totalContracted, allMapsConquered } = getGlobalTier();
@@ -3740,6 +3861,9 @@
                 resumeBtn.style.display = "none"; // 초록 버튼 숨김
             }
         } else {
+            if (emergencyBtn) {
+                emergencyBtn.style.display = "none";
+            }
             if (resumeBtn) {
                 // 마왕전이 안 열렸을 때만 초록색 버튼을 보여준다!
                 if (!isBossReady) {
@@ -4160,7 +4284,7 @@
         const q = roundQuestions[currentQuestionIdx];
         document.getElementById("wordDisplay").innerText = q.prompt;
 
-        // 🌟 [수정] 영어가 문제로 나왔을 때(E2K)만 발음해 줌! (한글 문제일 때 답 스포일러 방지)
+        // 영어가 문제로 나왔을 때(E2K)만 발음해 줌! (한글 문제일 때 답 스포일러 방지)
         if (q.type === "E2K") {
             speakWord(q.engWord);
         }
@@ -4175,13 +4299,34 @@
         mTag.style.color = mInfo.color;
         mTag.style.border = `1px solid ${mInfo.stage === 3 ? '#eab308' : '#cbd5e1'}`;
 
+        // 🌟 콤보 뱃지 및 FEVER 모드 화면 연출 제어
         const streakBadge = document.getElementById("comboStreakBadge");
+        const parchmentInner = document.querySelector(".parchment-inner");
+        let feverOverlay = document.getElementById("feverVignette");
+
         if (streakCount >= 2) {
             streakBadge.style.display = "block";
-            if (streakCount >= 5) streakBadge.innerText = `⚡ ${streakCount}연속 FEVER!`;
-            else streakBadge.innerText = `🔥 ${streakCount}연속 교감!`;
+            if (streakCount >= 5) {
+                // 5콤보 이상: FEVER 가동!
+                streakBadge.innerText = `⚡${streakCount} COMBO!⚡`;
+                streakBadge.style.background = "linear-gradient(90deg, #eab308, #ea580c)";
+                streakBadge.style.boxShadow = "0 0 14px rgba(234, 179, 8, 0.9)";
+                
+                // 🌟 황금빛 오라 레이어가 없으면 생성해서 양피지 위에 얹음!
+                if (!feverOverlay && parchmentInner) {
+                    feverOverlay = document.createElement("div");
+                    feverOverlay.id = "feverVignette";
+                    feverOverlay.className = "fever-vignette-overlay";
+                    parchmentInner.appendChild(feverOverlay);
+                }
+            } else {
+                streakBadge.innerText = `🔥${streakCount} COMBO!🔥`;
+                streakBadge.style.background = "linear-gradient(90deg, #ef4444, #f97316)";
+                if (feverOverlay) feverOverlay.remove();
+            }
         } else {
             streakBadge.style.display = "none";
+            if (feverOverlay) feverOverlay.remove(); // 콤보 끊기면 오라 즉시 소멸!
         }
 
         const wrongChoices = q.pool.filter(item => item !== q.correct).sort(() => Math.random() - 0.5).slice(0, 3);
@@ -4203,7 +4348,8 @@
         return renderImage(src, 'cover');
     }
 
-    // 정답 피드백 화면
+    // 정답 피드백 화면 
+    // 🌟 [완전체] 정답 & 오답 판정 및 피드백 처리 함수
     function selectAnswer(selectedAnswer, q) {
         const isCorrect = (selectedAnswer === q.correct);
         const elapsedSec = parseFloat(((Date.now() - questionStartTime) / 1000).toFixed(2));
@@ -4211,10 +4357,8 @@
         const isInstantResonance = isCorrect && (elapsedSec <= 1.5); // 찰나의 공명
         const isQuickTuning = isCorrect && (!isInstantResonance && elapsedSec <= 2.5); // 기민한 조율
 
-        // 단어 식별 키 안전 추출
         const key = (q && (q.wordKey || q.engWord)) ? (q.wordKey || q.engWord) : "unknown";
 
-        // 이력 객체 검증 및 단일 선언
         if (typeof wordStudyHistory !== 'object' || !wordStudyHistory) {
             wordStudyHistory = {};
         }
@@ -4227,30 +4371,43 @@
         const fbTitle = document.getElementById("fbTitle");
         const fbWord = document.getElementById("fbWord");
         const fbMeaning = document.getElementById("fbMeaning");
-        const fbArtBox = document.getElementById("fbArtBox");
-        const fbContractNotice = document.getElementById("fbContractNotice");
         const fbResonanceNotice = document.getElementById("fbResonanceNotice");
+        const fbComboBadge = document.getElementById("fbComboBadge");
+        const fbTimerWrap = document.getElementById("fbTimerWrap");
+        const fbTimerBar = document.getElementById("fbTimerBar");
+        const fbNextBtn = document.getElementById("fbNextBtn");
 
+        // 1. 정답/오답 일러스트 분기
         const imgCorrect = document.getElementById("fbImgCorrect");
         const imgWrong = document.getElementById("fbImgWrong");
         if (imgCorrect && imgWrong) {
             imgCorrect.style.display = isCorrect ? "block" : "none";
             imgWrong.style.display = isCorrect ? "none" : "block";
         }
+
         fbWord.innerText = q.engWord;
         fbMeaning.innerText = q.korMeaning;
 
-        // 한글 문제일 때 정답 발음 재생
-        if (q.type === "K2E") {
+        // 한글 ➔ 영어 문제일 때 발음 재생
+        if (q.type === "K2E" && isCorrect) {
             setTimeout(() => { speakWord(q.engWord); }, 200);
         }
 
         const beforeTierIdx = getGlobalTier().tierIndex;
         const currentCountBefore = wordMastery[key] || 0;
 
+        // 이전 예약 타이머 정리
+        if (feedbackAutoTimer) {
+            clearTimeout(feedbackAutoTimer);
+            feedbackAutoTimer = null;
+        }
+
+        // ==========================================
+        // ⭕ [A. 정답을 맞혔을 때]
+        // ==========================================
         if (isCorrect) {
             streakCount++;
-            triggerSpiritTameEffect();
+            roundCorrectCount++;
 
             if (streakCount > gameRecords.maxStreak) {
                 gameRecords.maxStreak = streakCount;
@@ -4259,110 +4416,135 @@
             if (streakCount >= 7) unlockTitle("combo_7");
             if (streakCount >= 15) unlockTitle("combo_15");
 
-            roundCorrectCount++;
-
-            // 1. 점수 및 판정 계산
-            let gain = 1;
+            // 점수 계산
             let newCount = currentCountBefore;
-
             if (isInstantResonance) {
-                // [1티어: 찰나의 공명] 즉시 3점 직행
-                gain = 3;
                 newCount = 3;
                 hist.hadInstant = true;
             } else if (isQuickTuning) {
-                // [2티어: 기민한 조율] 숙련도 +2
-                gain = 2;
                 newCount = Math.min(3, currentCountBefore + 2);
                 hist.hadQuick = true;
             } else {
-                // [3티어: 일반 교감] 숙련도 +1
-                gain = 1;
                 newCount = Math.min(3, currentCountBefore + 1);
             }
-
             wordMastery[key] = newCount;
             safeStorageSet('spirit_study_history', wordStudyHistory);
 
-            // 🌟 2. 사운드 및 피드백 배너 연출 (성역 방어전 vs 일반 퀴즈 완벽 분기!)
-            // 🛡️ [A. 성역 방어전 문제일 때: 숙련도 점수 이야기 싹 빼고 결계 연장만 안내!]
-            if (q.isDecayed) {
+            // 정답창 콤보 뱃지 세팅
+            if (streakCount >= 2 && fbComboBadge) {
+                fbComboBadge.style.display = "block";
+                fbComboBadge.innerHTML = (streakCount >= 5) 
+                    ? `⚡<span style="font-size:30px; font-weight:900; color:#dc2626;">${streakCount}</span> COMBO FEVER!⚡` 
+                    : `🔥<span style="font-size:30px; font-weight:900; color:#ea580c;">${streakCount}</span> COMBO!🔥`;
+                fbComboBadge.style.color = (streakCount >= 5) ? "#ea580c" : "#b45309";
+            } else if (fbComboBadge) {
+                fbComboBadge.style.display = "none";
+            }
+
+            // 단일 배너 및 제목 통합 분기
+            fbResonanceNotice.style.display = "none";
+            fbMeaning.className = "fb-meaning";
+
+            // -------------------------------------------------------------
+            // 🛋️ [경우 0: 정령 집중 상담실 문제일 때 (복구 완료!)]
+            // -------------------------------------------------------------
+            if (q.isCounsel) {
+                const cData = wordCounselingData[key] || { wrongAccum: 2, step: 0, lastTime: 0 };
+                cData.lastTime = Date.now();
+
+                if (q.counselStep === 0) {
+                    // 1차 면담(영➔한) 통과
+                    cData.step = 1;
+                    Sound.resonance();
+                    fbTitle.innerText = "🍃 1차 면담 통과! (마음이 풀림)";
+                    fbTitle.style.color = "#c2410c";
+
+                    fbResonanceNotice.style.display = "block";
+                    fbResonanceNotice.style.background = "linear-gradient(135deg, #c2410c, #ea580c)";
+                    fbResonanceNotice.innerHTML = `<div>정령이 마음을 정리 중입니다. <b>3시간 뒤 2차 최종 면담</b> 진행!</div>`;
+
+                } else if (q.counselStep === 1) {
+                    // 2차 면담(한➔영) 최종 통과 ➔ 완치 및 졸업!
+                    cData.step = 2;
+                    cData.wrongAccum = 0; // 🌟 누적 오답 0으로 초기화 ➔ 상담실 영구 졸업!
+                    Sound.fanfare();
+                    fbTitle.innerText = "✨ 서운함 완전 해소! (상담실 퇴소) ✨";
+                    fbTitle.style.color = "#15803d";
+
+                    fbResonanceNotice.style.display = "block";
+                    fbResonanceNotice.style.background = "linear-gradient(135deg, #15803d, #16a34a)";
+                    fbResonanceNotice.innerHTML = `<div>상처가 완벽히 치유되어 <b>오답 목록에서 완전히 졸업</b>합니다!</div>`;
+                }
+
+                safeStorageSet('spirit_counseling_data', wordCounselingData);
+
+            // [경우 1: 성역 긴급 수호전]
+            } else if (q.isDecayed) {
                 const prevStage = wordDefenseCounts[key] || 0;
                 const nextStage = prevStage + 1;
                 wordDefenseCounts[key] = nextStage;
                 safeStorageSet('spirit_defense_counts', wordDefenseCounts);
 
-                let safePeriodText = "다음 균열까지 3일간 안전합니다! 🛡️";
-                if (nextStage === 2) safePeriodText = "다음 균열까지 7일간 결계 유지! 🛡️";
-                if (nextStage >= 3) safePeriodText = "👑 영구 봉인 완료! (더 이상 균열 없음)";
-
+                let safePeriod = (nextStage >= 3) ? "영구 봉인 완료! 👑" : (nextStage === 2 ? "7일간 결계 유지 🛡️" : "3일간 결계 유지 🛡️");
                 Sound.resonance();
+                fbTitle.innerText = `🛡️ 결계 방어 성공! [${nextStage}단계]`;
+                fbTitle.style.color = "#701a75";
                 fbResonanceNotice.style.display = "block";
-                fbResonanceNotice.style.background = "linear-gradient(135deg, #701a75 0%, #a21caf 100%)";
-                fbResonanceNotice.innerHTML = `
-                    <div style="font-size:11px; color:#fef08a; letter-spacing:1px; margin-bottom:1px;">🛡️ DEFENSE SUCCESS (${elapsedSec}초) 🛡️</div>
-                    <div><b>[기억 각인 심화]</b> <b>${safePeriodText}</b></div>
-                `;
+                fbResonanceNotice.style.background = "linear-gradient(135deg, #701a75, #a21caf)";
+                fbResonanceNotice.innerHTML = `<div>기억 각인 심화: <b>${safePeriod}</b></div>`;
 
-                if (fbTitle) {
-                    fbTitle.innerText = `✨ 결계 강화 성공! [${nextStage}단계 달성]`;
-                    fbTitle.style.color = "#701a75";
-                }
-
-                // 방어 성공 시 숙련도 3 유지 및 시각 갱신
                 wordMastery[key] = 3;
                 wordMasteryTimestamps[key] = Date.now();
                 safeStorageSet('spirit_mastery_timestamps', wordMasteryTimestamps);
 
-                const targetMapMastery = safeStorageGet(`spirit_mastery_${q.mapId}`, {});
-                targetMapMastery[key] = 3;
-                safeStorageSet(`spirit_mastery_${q.mapId}`, targetMapMastery);
-            } 
-            // 🌿 [B. 평상시 일반 구역 퀴즈일 때: 기존 숙련도 점수 안내]
-            else {
-                if (isInstantResonance) {
-                    Sound.resonance();
-                    fbResonanceNotice.style.display = "block";
-                    fbResonanceNotice.style.background = "linear-gradient(135deg, #701a75 0%, #d946ef 50%, #f59e0b 100%)";
-                    fbResonanceNotice.innerHTML = `
-                        <div style="font-size:11px; color:#fef08a; letter-spacing:1px; margin-bottom:1px;">⚡ INSTANT RESONANCE (${elapsedSec}초) ⚡</div>
-                        <div><b>[찰나의 공명!]</b> 즉시 영원의 계약 체결 & 3일 면제!</div>
-                    `;
-                } else if (isQuickTuning) {
-                    Sound.correct(streakCount);
-                    fbResonanceNotice.style.display = "block";
-                    fbResonanceNotice.style.background = "linear-gradient(135deg, #0284c7 0%, #10b981 100%)";
-                    fbResonanceNotice.innerHTML = `
-                        <div style="font-size:11px; color:#e0f2fe; letter-spacing:1px; margin-bottom:1px;">✨ SWIFT TUNING (${elapsedSec}초) ✨</div>
-                        <div><b>[기민한 조율!]</b> 신속한 교감으로 숙련도 <span style="font-size:15px; color:#fef08a; font-weight:900;">+2</span> 급상승!</div>
-                    `;
-                } else {
-                    Sound.correct(streakCount);
-                    fbResonanceNotice.style.display = "none";
-                }
-            }
-
-            // 3. 영원의 계약(3점) 달성 시 유예 기간 판정 및 저장
-            if (currentCountBefore < 3 && newCount === 3) {
-                wrongPool = wrongPool.filter(item => (item.wordKey || item.engWord) !== key);
-                Sound.fanfare();
-
-                if (fbContractNotice) fbContractNotice.style.display = "block";
-                if (fbTitle) {
-                    fbTitle.innerText = "🌟 영원의 계약 성립! 🌟";
-                    fbTitle.style.color = "#d97706";
-                    fbTitle.style.margin = "0 0 13px";
-                }
-
-                // S/A/B 판정: 찰나 또는 기민 경험이 있고 오답이 없으면 1단계(3일), 그 외는 0단계(20시간)
-                const isHighQuality = (hist.hadInstant || hist.hadQuick) && !hist.hadWrong;
-
+            // [경우 2: 찰나의 공명 (1.5초 컷)]
+            } else if (currentCountBefore >= 3) {
+                Sound.correct(streakCount);
+                fbTitle.innerText = `🛡️ 흔들림 없는 유대 (${elapsedSec}초)`;
+                fbTitle.style.color = "#b45309";
+                fbResonanceNotice.style.display = "none"; // 불필요한 배너 제거
                 wordMasteryTimestamps[key] = Date.now();
                 safeStorageSet('spirit_mastery_timestamps', wordMasteryTimestamps);
 
+            // 🌟 2. 아직 계약 전인 단어들만 아래 보너스 판정 적용
+            } else if (isInstantResonance) {
+                Sound.resonance();
+                fbTitle.innerText = `⚡ 찰나의 공명! (${elapsedSec}초)`;
+                fbTitle.style.color = "#ea580c";
+                fbResonanceNotice.style.display = "block";
+                fbResonanceNotice.style.background = "linear-gradient(135deg, #701a75 0%, #ea580c 100%)";
+                fbResonanceNotice.innerHTML = `<div>본능적 직관으로 즉시 영원의 계약(3점) 달성! ⚡</div>`;
+
+            } else if (currentCountBefore < 3 && newCount === 3) {
+                Sound.fanfare();
+                fbTitle.innerText = `🌟 영원의 계약 체결! (완료)`;
+                fbTitle.style.color = "#d97706";
+                fbResonanceNotice.style.display = "block";
+                fbResonanceNotice.style.background = "linear-gradient(135deg, #b45309, #f59e0b)";
+                fbResonanceNotice.innerHTML = `<div>정령의 진명을 깨우쳐 성역에 완벽히 각인되었습니다.</div>`;
+
+            } else if (isQuickTuning) {
+                Sound.correct(streakCount);
+                fbTitle.innerText = `✨ 기민한 조율! (${elapsedSec}초)`;
+                fbTitle.style.color = "#0284c7";
+                fbResonanceNotice.style.display = "block";
+                fbResonanceNotice.style.background = "linear-gradient(135deg, #0284c7, #10b981)";
+                fbResonanceNotice.innerHTML = `<div>신속한 교감으로 숙련도 <b style="color:#fef08a;">+2</b> 급상승!</div>`;
+
+            } else {
+                Sound.correct(streakCount);
+                fbTitle.innerText = `✨ 교감 성공! (${elapsedSec}초)`;
+                fbTitle.style.color = "#15803d";
+            }
+
+            // 3회 계약 체결 시 칭호 및 유예 기간 등록
+            if (currentCountBefore < 3 && newCount === 3 && !q.isCounsel) {
+                wrongPool = wrongPool.filter(item => (item.wordKey || item.engWord) !== key);
+                const isHighQuality = (hist.hadInstant || hist.hadQuick) && !hist.hadWrong;
+                wordMasteryTimestamps[key] = Date.now();
+                safeStorageSet('spirit_mastery_timestamps', wordMasteryTimestamps);
                 wordDefenseCounts[key] = isHighQuality ? 1 : 0;
                 safeStorageSet('spirit_defense_counts', wordDefenseCounts);
-
                 syncToCloud(true);
 
                 try {
@@ -4371,70 +4553,33 @@
                     if (totalContracted >= 10) unlockTitle("ten_bonds");
                     if (totalContracted >= totalWords) unlockTitle("all_master");
                 } catch(e){}
-
-            } 
-              // 🌟 [추가] 이미 영원의 계약(3점)을 완료한 단어를 다시 맞혔을 때! (흔들림 없는 유대)
-            else if (currentCountBefore >= 3 && !q.isDecayed) {
-                if (fbContractNotice) fbContractNotice.style.display = "none";
-                
-                if (fbTitle) {
-                    fbTitle.innerText = `🛡️ 흔들림 없는 유대! (${elapsedSec}초) ✨`;
-                    fbTitle.style.color = "#b45309";
-                }
-
-                if (fbResonanceNotice) {
-                    fbResonanceNotice.style.display = "block";
-                    fbResonanceNotice.style.background = "linear-gradient(135deg, #b45309 0%, #d97706 100%)";
-                    fbResonanceNotice.innerHTML = `
-                        <div style="font-size:11px; color:#fef3c7; letter-spacing:1px; margin-bottom:1px;">🛡️ ETERNAL BOND SECURED 🛡️</div>
-                        <div>[확고한 각인] 완벽한 공감으로 계약의 유효기간이 <br>오늘 시각으로 연장되었습니다!</div>
-                    `;
-                }
-
-                wordMasteryTimestamps[key] = Date.now();
-                safeStorageSet('spirit_mastery_timestamps', wordMasteryTimestamps);
-
-            } else {
-                if (fbContractNotice) fbContractNotice.style.display = "none";
-                if (fbTitle) {
-                    fbTitle.innerText = streakCount >= 2 ? `교감 성공! (${streakCount}연속) ✨` : "교감 성공! ✨";
-                    fbTitle.style.color = "#15803d";
-                }
             }
 
-            // 상담실 문제 정답 처리
-            if (q.isCounsel) {
-                const cData = wordCounselingData[key] || { wrongAccum: 2, step: 0, lastTime: 0 };
-                cData.lastTime = Date.now();
-
-                if (q.counselStep === 0) {
-                    cData.step = 1;
-                    fbTitle.innerText = "🍃 1차 면담 통과! (마음이 조금 풀림)";
-                    fbTitle.style.color = "#c2410c";
-                    if (fbResonanceNotice) {
-                        fbResonanceNotice.style.display = "block";
-                        fbResonanceNotice.style.background = "linear-gradient(135deg, #c2410c, #ea580c)";
-                        fbResonanceNotice.innerHTML = `<div>정령이 마음을 정리하는 중입니다. <b>3시간 뒤 2차 최종 면담</b>이 진행됩니다.</div>`;
-                    }
-                } else if (q.counselStep === 1) {
-                    cData.step = 2;
-                    cData.wrongAccum = 0;
-                    fbTitle.innerText = "✨ 서운함 완전 해소! (상담실 퇴소) ✨";
-                    fbTitle.style.color = "#15803d";
-                    if (fbResonanceNotice) {
-                        fbResonanceNotice.style.display = "block";
-                        fbResonanceNotice.style.background = "linear-gradient(135deg, #15803d, #16a34a)";
-                        fbResonanceNotice.innerHTML = `<div>정령의 상처가 완벽히 치유되었습니다!<br>오답 목록에서 완전히 졸업합니다!</div>`;
-                    }
-                }
-                safeStorageSet('spirit_counseling_data', wordCounselingData);
-            }
-
-            fbMeaning.className = "fb-meaning";
             if (q.isReview) {
                 wrongPool = wrongPool.filter(item => item.id !== q.id);
             }
-            saveCurrentMapState();
+
+            // 자동 타이머 진행 (상담/특수 알림 시 1.8초, 일반 정답 1.2초)
+            if (fbTimerWrap && fbTimerBar) {
+                fbTimerWrap.style.display = "block";
+                fbTimerBar.style.animation = "none";
+                void fbTimerBar.offsetWidth;
+                const duration = (q.isCounsel || isInstantResonance || (currentCountBefore < 3 && newCount === 3)) ? 1.8 : 1.2;
+                fbTimerBar.style.animation = `shrinkTimerBar ${duration}s linear forwards`;
+
+                feedbackAutoTimer = setTimeout(() => {
+                    nextQuestion();
+                }, duration * 1000);
+            }
+
+            if (fbNextBtn) {
+                fbNextBtn.innerText = "화면 탭하여 즉시 스킵 ⏩";
+                fbNextBtn.style.padding = "8px";
+                fbNextBtn.style.fontSize = "12px";
+                fbNextBtn.style.background = "#ede3cc";
+                fbNextBtn.style.color = "#785a3e";
+                fbNextBtn.style.borderColor = "#c9b48c";
+            }
 
             const afterTierObj = getGlobalTier();
             if (afterTierObj.tierIndex > beforeTierIdx) {
@@ -4444,24 +4589,50 @@
                 };
             }
 
+        // ==========================================
+        // ❌ [B. 오답을 틀렸을 때]
+        // ==========================================
         } else {
-            // 오답 처리
             streakCount = 0;
             Sound.wrong();
+
+            const feverOverlay = document.getElementById("feverVignette");
+            if (feverOverlay) feverOverlay.remove();
 
             hist.hadWrong = true;
             safeStorageSet('spirit_study_history', wordStudyHistory);
 
-            // 🌟 단어별 누적 오답 횟수 카운트 & 상담실 입소 등록
+            if (fbTitle) {
+                fbTitle.innerText = "교감 실패 (정령이 숨었습니다) 🍂";
+                fbTitle.style.color = "#b91c1c";
+            }
+            if (fbMeaning) {
+                fbMeaning.className = "fb-meaning wrong-case";
+            }
+
+            if (fbComboBadge) fbComboBadge.style.display = "none";
+            if (fbResonanceNotice) fbResonanceNotice.style.display = "none";
+            if (fbTimerWrap) fbTimerWrap.style.display = "none";
+
+            if (fbNextBtn) {
+                fbNextBtn.innerText = "오답 확인 후 다음으로 ➔";
+                fbNextBtn.style.padding = "11px";
+                fbNextBtn.style.fontSize = "13.5px";
+                fbNextBtn.style.background = "#5c3a21";
+                fbNextBtn.style.color = "#f7edd4";
+                fbNextBtn.style.borderColor = "#3d2314";
+            }
+
+            if (!wrongPool.some(item => item.id === q.id)) {
+                wrongPool.push(q);
+            }
+
+            // 상담실 오답 처리 (틀리면 다시 0단계로 초기화)
             if (!wordCounselingData[key]) {
                 wordCounselingData[key] = { wrongAccum: 0, step: 0, lastTime: 0 };
             }
             wordCounselingData[key].wrongAccum = (wordCounselingData[key].wrongAccum || 0) + 1;
-            
-            // 상담실 퀴즈 중에 틀렸다면 즉시 0단계로 서운함 롤백
-            if (isCounselingMode) {
-                wordCounselingData[key].step = 0;
-            }
+            if (isCounselingMode) wordCounselingData[key].step = 0;
             safeStorageSet('spirit_counseling_data', wordCounselingData);
 
             try {
@@ -4471,45 +4642,19 @@
                 if (gameRecords.totalWrong >= 20) unlockTitle("wrong_20");
                 if (gameRecords.totalWrong >= 50) unlockTitle("wrong_50");
             } catch(e) {}
-
-            if (fbResonanceNotice) fbResonanceNotice.style.display = "none";
-            if (fbContractNotice) fbContractNotice.style.display = "none";
-
-            if (fbTitle) {
-                fbTitle.innerText = "교감 실패 (정령이 숨었습니다) 🍂";
-                fbTitle.style.color = "#b91c1c";
-                fbTitle.style.margin = "10px 0 20px 0";
-            }
-            if (fbMeaning) fbMeaning.className = "fb-meaning wrong-case";
-
-            if (!wrongPool.some(item => item.id === q.id)) {
-                wrongPool.push(q);
-            }
-
-            // 긴급 수호전 오답 시 페널티
-            if (q.isDecayed) {
-                wordDefenseCounts[key] = 0;
-                safeStorageSet('spirit_defense_counts', wordDefenseCounts);
-
-                const targetMapMastery = safeStorageGet(`spirit_mastery_${q.mapId}`, {});
-                targetMapMastery[key] = 2;
-                safeStorageSet(`spirit_mastery_${q.mapId}`, targetMapMastery);
-                if (currentMapId === q.mapId) {
-                    wordMastery[key] = 2;
-                }
-
-                fbTitle.innerText = "💥 결계 파괴! 단어가 야생으로 탈주했습니다 (2단계 강등)";
-                fbTitle.style.color = "#b91c1c";
-            }
-
-            saveCurrentMapState();
         }
 
+        saveCurrentMapState();
         updateInGameTiers();
         if (fbModal) fbModal.style.display = "flex";
     }
 
     function nextQuestion() {
+        // 🌟 사용자가 수동으로 스킵/클릭했을 때 예약된 타이머 중복 실행 방지
+        if (feedbackAutoTimer) {
+            clearTimeout(feedbackAutoTimer);
+            feedbackAutoTimer = null;
+        }
         Sound.click();
         document.getElementById("feedbackModal").style.display = "none";
         if (pendingTierUp) {
@@ -4537,14 +4682,21 @@
     }
 
     function showRoundResult() {
+    
+        const choicesGrid = document.getElementById("choicesGrid");
+        if (choicesGrid) choicesGrid.innerHTML = "";
+        
+        const feverOverlay = document.getElementById("feverVignette");
+        if (feverOverlay) feverOverlay.remove();
+
         // 🌟 상담실 세션 종료 정산
         if (isCounselingMode) {
             isCounselingMode = false;
             syncToCloud(true);
 
             showGameAlert(
-                "상담실 세션 종료",
-                `서운해하는 정령들과의 심층 면담이 끝났습니다.\n(정답: ${roundCorrectCount} / ${roundQuestions.length})\n\n1차 통과한 정령은 3시간 뒤에 2차 면담을 신청할 수 있습니다.`,
+                "상담 종료",
+                `서운해하는 정령들과의 면담이 끝났습니다.\n(정답: ${roundCorrectCount} / ${roundQuestions.length})\n\n1차 통과한 정령은 3시간 뒤에 2차 면담을 신청할 수 있습니다.`,
                 "대륙 지도로 복귀 ➔",
                 "🛋️ COUNSELING END",
                 () => {
@@ -4568,6 +4720,7 @@
             const scoreEl = document.getElementById("emergencyModalScore");
             const scarcityBox = document.getElementById("emergencyScarcityBox");
             const continueBtn = document.getElementById("emergencyContinueBtn");
+            const subBtns = modal ? modal.querySelectorAll(".btn-sub-wood") : [];
 
             // 점수 세팅
             scoreEl.innerText = `이번 구출: ${roundCorrectCount} / ${roundQuestions.length}마리 (실패 강등: ${wrongCount}마리)`;
@@ -4581,6 +4734,7 @@
                 scarcityBox.innerHTML = `✨ <b>[임무 완료!]</b> 오늘의 결계 방어가 끝났습니다!<br>이제 안심하고 새로운 영지를 정복하러 떠나세요!`;
                 scarcityBox.style.borderColor = "#10b981";
                 scarcityBox.style.color = "#065f46";
+
                 continueBtn.innerText = "🗺️ 대륙 지도로 나가기 ➔";
                 continueBtn.style.background = "#16a34a";
                 continueBtn.onclick = backToTitleFromEmergency;
@@ -4591,16 +4745,19 @@
                     scarcityBox.innerHTML = `⚠️ 아직 대륙에 <b>${remainCount}마리</b>의 정령이 침식 위험에 처해 있습니다!`;
                     scarcityBox.style.borderColor = "#d946ef";
                     scarcityBox.style.color = "#701a75";
+                    
                     continueBtn.innerText = `⚔️ 남은 정령 계속 구출하기 (${remainCount}마리 대기) ➔`;
                     continueBtn.style.background = "#16a34a";
                     continueBtn.onclick = continueEmergencyRaid;
                 } else {
-                    scarcityBox.innerHTML = `👑 <b>[모든 침식 정령 구출!]</b> 모든 정령이 따스한 빛을 되찾았습니다!`;
-                    scarcityBox.style.borderColor = "#10b981";
+                    scarcityBox.innerHTML = `👑 모든 침식 정령 구출! 모든 정령이 따스한 빛을 되찾았습니다.`;
                     scarcityBox.style.color = "#065f46";
                     continueBtn.innerText = "✨ 영광의 대륙 지도로 복귀 ➔";
-                    continueBtn.style.background = "#b45309";
+                    continueBtn.style.background = "#5c3a21";     // 예: 갈색 배경
+                    continueBtn.style.borderColor = "#8f603a";    // 예: 갈색 테두리
                     continueBtn.onclick = backToTitleFromEmergency;
+                    subBtns.forEach(btn => btn.style.display = "none");
+
                 }
             }
 
@@ -4638,6 +4795,46 @@
         }
 
         // 🌟 [핵심] 5문제 풀고 쉴 때 모아서 한 번에 전송!
+        // 🌟 [수정] 모닥불 콤보 뱃지(글자만 감싸기) & 출격 버튼 황금빛 피버 펄스 적용!
+        const streakBox = document.getElementById("modalStreakBox");
+        const continueBtn = document.getElementById("modalContinueBtn");
+
+        if (streakCount >= 2) {
+            streakBox.style.display = "inline-flex";
+            streakBox.style.alignItems = "center";
+            streakBox.style.justifyContent = "center";
+            streakBox.style.lineHeight = "1";
+            if (streakCount >= 5) {
+                // 5콤보 이상: FEVER 발광 배너 & 출격 버튼 번쩍임 가동!
+                streakBox.style.background = "linear-gradient(135deg, #fef08a 0%, #fed7aa 100%)";
+                streakBox.style.border = "1.5px solid #ea580c";
+                streakBox.style.color = "#9a3412";
+                streakBox.innerHTML = `⚡ FEVER 마력 폭주! <span style="font-size:25px; color:#ea580c;">${streakCount}연속</span> 유지 중! ⚡`;
+                
+                if (continueBtn) {
+                    continueBtn.innerHTML = `🔥 FEVER 폭풍 질주! 콤보 이어가기 (15초 컷) ➔`;
+                    continueBtn.classList.add("btn-fever-pulse"); // 🌟 번쩍이는 애니메이션 가동!
+                }
+            } else {
+                // 2~4콤보: 초록빛 뱃지
+                streakBox.style.background = "linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%)";
+                streakBox.style.border = "1.5px solid #10b981";
+                streakBox.style.color = "#065f46";
+                streakBox.innerHTML = `🔥 기세 상승! <span style="font-size:20px; color:#15803d;">${streakCount}연속</span> 공감 유지 중!`;
+                
+                if (continueBtn) {
+                    continueBtn.innerHTML = `⚔️ ${streakCount} COMBO 유지! 계속 정령 구하기 (단 15초) ➔`;
+                    continueBtn.classList.remove("btn-fever-pulse");
+                }
+            }
+        } else {
+            streakBox.style.display = "none";
+            if (continueBtn) {
+                continueBtn.innerHTML = `계속 정령들을 구하기 (단 15초 소요 ⚡) ➔`;
+                continueBtn.classList.remove("btn-fever-pulse");
+            }
+        }
+
         syncToCloud();
 
         const remainCount = rawWords.length - secContracted;
@@ -4651,7 +4848,7 @@
             scarcityBox.innerHTML = `
                 <div style="font-size:11px; color:#e11d48; letter-spacing:1px; margin-bottom:2px;">⚡ CONQUEST IMMINENT ⚡</div>
                 <div style="font-size:15px; color:#9f1239;">
-                    🔥 완전 정복까지 단 <span style="font-size:18px; color:#e11d48; text-decoration:underline;">${remainCount}마리</span> 남았습니다!
+                    🔥 완전 정복까지 단 <span style="font-size:25px; color:#e11d48; text-decoration:underline;">${remainCount}마리</span> 남았습니다!
                 </div>
             `;
         } else {
@@ -4660,9 +4857,9 @@
             scarcityBox.style.borderColor = "#f59e0b";
             scarcityBox.style.boxShadow = "0 3px 10px rgba(245, 158, 11, 0.2)";
             scarcityBox.innerHTML = `
-                <div style="font-size:11px; color:#b45309; margin-bottom:2px;">📍 구역 탐사 진척도</div>
+                <div style="font-size:12px; color:#b45309; margin-bottom:2px;">📍 구역 탐사 진척도</div>
                 <div style="font-size:14px; color:#78350f;">
-                    완전 정복까지 <span style="font-size:16px; color:#b45309;">${remainCount}마리</span>의 정령이 남았습니다.
+                    완전 정복까지 <span style="font-size:25px; color:#b45309;">${remainCount}마리</span>의 정령이 남았습니다.
                 </div>
             `;
         }
@@ -5340,7 +5537,7 @@ function handleMidBossVictory() {
 
 
 
-// ========================================================
+    // ========================================================
     // 🏆 [마왕전 진엔딩] 공인 수료증 제어 함수군
     // ========================================================
 
@@ -5752,8 +5949,9 @@ function handleMidBossVictory() {
         });
     }
 
-
-    /* ⌨️ PC/노트북용 키보드 단축키 시스템 (1~4번 & Space/Enter) */
+    //=========================================================
+    // ⌨️ PC/노트북용 키보드 단축키 시스템 (1~4번 & Space/Enter)
+    //=========================================================
     window.addEventListener("keydown", (e) => {
         // 🌟 [추가] 1. 프롤로그 대화창 열려있을 때 Space/Enter로 대화 넘기기!
         const introScreen = document.getElementById("introScreen");
@@ -5879,7 +6077,7 @@ function handleMidBossVictory() {
     }}
     );
     
-// ========================================================
+    // ========================================================
     // 👑 랭킹보드 스마트 캐싱 엔진 (Firestore Read 폭탄 방어 패치)
     // ========================================================
     let cachedLeaderboardData = null; // 메모리에 저장해둘 랭킹 데이터
@@ -6118,7 +6316,6 @@ function handleMidBossVictory() {
             });
         });
 
-
         // 퀴즈 화면 세팅
         document.getElementById("inGameMapTitle").innerText = "⚠️ [성역의 균열] 긴급 수호전";
         document.getElementById("gameSectorBadge").innerText = "망각의 안개 격퇴전";
@@ -6133,9 +6330,9 @@ function handleMidBossVictory() {
         loadQuestion();
     }
 
-    /* ========================================================
-       📱 모바일 뒤로가기(Back Key / Gesture) 가로채기 및 제어 시스템
-       ======================================================== */
+    // ==========================================================
+    // 📱 모바일 뒤로가기(Back Key / Gesture) 가로채기 및 제어 시스템
+    // ==========================================================
     
     // 🌟 브라우저 히스토리에 가짜 상태를 하나 쌓아서 뒤로가기 이벤트(popstate)를 유도
     function pushNavState() {
@@ -6236,7 +6433,7 @@ function handleMidBossVictory() {
     window.addEventListener('click', unlockTTSAudio, { once: true });
     window.addEventListener('touchstart', unlockTTSAudio, { once: true });
 
-        // ========================================================
+    // ========================================================
     // 🛋️ 정령 집중 상담실 엔진 (2단계 양방향 면담 & 3시간 텀)
     // ========================================================
     const COUNSEL_COOL_MS = 3 * 60 * 60 * 1000; // ⏱️ 1단계 ➔ 2단계 사이 마음 정리 시간: 3시간

@@ -2355,18 +2355,92 @@
                     <div id="wordListContainer"></div>
                 </div>
 
+                <!-- 🌟 [개편] 전 대륙 모험 종합 브리핑 대시보드 -->
                 <div id="titleBookView" style="display:none;">
-                    <div class="stamp-box-wrapper" style="margin-bottom:8px;">
-                        <div class="stamp-title-row">
-                            <span>👑 전 대륙 통합 성취도</span>
-                            <span id="titleOverallPercentText" style="font-weight:900; color:#b45309;">0%</span>
+
+                    <!-- 1. 전 대륙 통합 성취도 카드 (큼직하게 확대) -->
+                    <div class="stamp-box-wrapper" style="margin-bottom:12px; padding:12px 14px;">
+                        <div class="stamp-title-row" style="font-size:15px; margin-bottom:8px;">
+                            <span style="font-weight:900; color:#3b2211;">👑 계약 달성률</span>
+                            <span id="titleOverallPercentText" style="font-size:17px; font-weight:900; color:#b45309;">0%</span>
                         </div>
-                        <div class="overall-gauge-container">
+                        <div class="overall-gauge-container" style="height:11px; margin-bottom:7px; border-radius:6px;">
                             <div class="overall-gauge-bar" id="titleOverallGaugeBar"></div>
                         </div>
-                        <div style="font-size:10px; color:#785a3e; text-align:right; font-weight:700; margin-top:3px;" id="titleTotalWordsSummary">계약: 0 / 0마리</div>
+                        <div style="display:flex; justify-content:space-between; align-items:center; font-size:13px; font-weight:800; color:#785a3e;">
+                            <span id="titleTotalWordsSummary">0 / 0마리</span>
+                            <span id="titleReportNextGoal" style="color:#15803d; font-weight:900;">다음 승급까지 0마리</span>
+                        </div>
                     </div>
-                    <div id="titleWorldMapOverviewList"></div>
+
+                    <!-- 2. 정령 결속 분포도 (숫자 중앙 정렬 & 확대) -->
+                    <div class="record-dashboard-card" style="margin-bottom:12px; padding:12px 14px;">
+                        <div class="record-header-title" style="font-size:14px; padding-bottom:6px; margin-bottom:8px;">
+                            💖 정령 결속 분포도 (단어 암기 현황)
+                        </div>
+                        <div class="record-grid" style="gap:8px;">
+                            <!-- 영원의 계약 -->
+                            <div class="record-item-box" style="display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:10px 8px; border-left:4px solid #eab308; background:#fffbeb; border-radius:10px;">
+                                <span class="record-item-label" style="font-size:13px; font-weight:800; color:#854d0e; margin-bottom:3px;">🌟 영원의 계약 (완료)</span>
+                                <span class="record-item-val" style="font-size:18px; font-weight:900; color:#b45309;" id="repStage3">0마리</span>
+                            </div>
+
+                            <!-- 따스한 유대 -->
+                            <div class="record-item-box" style="display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:10px 8px; border-left:4px solid #10b981; background:#f0fdf4; border-radius:10px;">
+                                <span class="record-item-label" style="font-size:13px; font-weight:800; color:#065f46; margin-bottom:3px;">🍃 따스한 유대 (2회)</span>
+                                <span class="record-item-val" style="font-size:18px; font-weight:900; color:#15803d;" id="repStage2">0마리</span>
+                            </div>
+
+                            <!-- 서먹한 대면 -->
+                            <div class="record-item-box" style="display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:10px 8px; border-left:4px solid #f59e0b; background:#fffdf7; border-radius:10px;">
+                                <span class="record-item-label" style="font-size:13px; font-weight:800; color:#92400e; margin-bottom:3px;">🐾 서먹한 대면 (1회)</span>
+                                <span class="record-item-val" style="font-size:18px; font-weight:900; color:#d97706;" id="repStage1">0마리</span>
+                            </div>
+
+                            <!-- 야생의 정령 -->
+                            <div class="record-item-box" style="display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:10px 8px; border-left:4px solid #94a3b8; background:#f8fafc; border-radius:10px;">
+                                <span class="record-item-label" style="font-size:13px; font-weight:800; color:#475569; margin-bottom:3px;">🌿 야생의 정령 (미탐색)</span>
+                                <span class="record-item-val" style="font-size:18px; font-weight:900; color:#64748b;" id="repStage0">0마리</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 3. 실시간 대륙 안보 & 케어 현황 브리핑 -->
+                    <div class="record-dashboard-card" style="margin-bottom:8px; padding:12px 14px;">
+                        <div class="record-header-title" style="font-size:14px; padding-bottom:6px; margin-bottom:8px;">
+                            🛡️ 실시간 대륙 안보 브리핑
+                        </div>
+                        <div style="display:flex; flex-direction:column; gap:6px;">
+                            <!-- 1. 수호령 제패 현황 -->
+                            <div style="display:flex; justify-content:space-between; align-items:center; background:#fdfaf2; padding:9px 12px; border-radius:9px; border:1px solid #d8c7a6; font-size:13px;">
+                                <span style="font-weight:800; color:#4b301c;">⚔️ 성역 수호령 제패</span>
+                                <span id="repGuardianPurified" style="font-weight:900; color:#047857;">0 / 4영지 완료</span>
+                            </div>
+                            <!-- 2. 침식 위험 현황 -->
+                            <div style="display:flex; justify-content:space-between; align-items:center; background:#fdfaf2; padding:9px 12px; border-radius:9px; border:1px solid #d8c7a6; font-size:13px;">
+                                <span style="font-weight:800; color:#4b301c;">🚨 망각의 안개 침식 위험</span>
+                                <span id="repDecayedDanger" style="font-weight:900; color:#15803d;">0마리 (안전 🟢)</span>
+                            </div>
+                            <!-- 3. 상담실 대기 현황 -->
+                            <div style="display:flex; justify-content:space-between; align-items:center; background:#fdfaf2; padding:9px 12px; border-radius:9px; border:1px solid #d8c7a6; font-size:13px;">
+                                <span style="font-weight:800; color:#4b301c;">🛋️ 서운해하는 정령 상담</span>
+                                <span id="repCounselPending" style="font-weight:900; color:#15803d;">0마리 (평화 🟢)</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 4. 붉은 채점펜 시험지 성취도 점수 연출 -->
+                    <div style="display:flex; flex-direction:column; align-items:center; justify-content:center; margin:16px 0 8px 0; text-align:center;">
+                        <span style="font-size:11px; font-weight:800; color:#991b1b; opacity:0.85; margin-bottom:15px; letter-spacing:1.5px;">
+                            ✦ 종합 환산 점수 ✦
+                        </span>
+                        <div style="display:inline-block; transform:rotate(-5deg); filter:drop-shadow(0 2px 5px rgba(220,38,38,0.25)); margin-top:2px;">
+                            <span id="repExamScore" style="font-size:50px; font-weight:900; color:#dc2626; border-bottom:4px solid #dc2626; padding:0 12px 2px 12px; display:inline-block; letter-spacing:-1px;">
+                                0점
+                            </span>
+                        </div>
+                    </div>
+
                 </div>
             </div>
 
@@ -5614,41 +5688,71 @@ function handleMidBossVictory() {
             inGameView.style.display = "none";
             titleView.style.display = "block";
 
-            const { totalWords, totalContracted } = getGlobalTotalStats();
+            // 1. 전체 성취도 및 다음 승급 계산
+            const { tier, tierIndex, next, totalWords, totalContracted } = getGlobalTier();
             const totalPercent = totalWords > 0 ? Math.round((totalContracted / totalWords) * 100) : 0;
 
             document.getElementById("titleOverallPercentText").innerText = `${totalPercent}%`;
             document.getElementById("titleOverallGaugeBar").style.width = `${totalPercent}%`;
-            document.getElementById("titleTotalWordsSummary").innerText = `계약: ${totalContracted} / ${totalWords}마리`;
+            document.getElementById("titleTotalWordsSummary").innerText = `${totalContracted} / ${totalWords}마리`;
 
-            const overviewList = document.getElementById("titleWorldMapOverviewList");
-            overviewList.innerHTML = "";
+            const goalEl = document.getElementById("titleReportNextGoal");
+            if (next) {
+                const remain = next.req - totalContracted;
+                goalEl.innerHTML = `[${next.name}]까지 <b>${remain}마리</b>`;
+            } else {
+                goalEl.innerText = "👑 최고 등급 도달!";
+            }
+
+            // 2. 전 대륙 단어 4단계 분포 집계 (0회 / 1회 / 2회 / 3회)
+            let s0 = 0, s1 = 0, s2 = 0, s3 = 0;
+            let purifiedCount = 0;
 
             worldMaps.forEach(map => {
                 const savedMastery = safeStorageGet(`spirit_mastery_${map.id}`, {});
-                let mapContracted = 0;
                 map.words.forEach(w => {
-                    if ((savedMastery[w.eng] || 0) >= 3) mapContracted++;
+                    const cnt = savedMastery[w.eng] || 0;
+                    if (cnt >= 3) s3++;
+                    else if (cnt === 2) s2++;
+                    else if (cnt === 1) s1++;
+                    else s0++;
                 });
-                const { tier: mTier, percent } = getMapCalculatedTier(map.id, map.words.length, mapContracted);
-
-                const card = document.createElement("div");
-                card.className = "world-summary-card";
-                card.innerHTML = `
-                    <div class="world-summary-top">
-                        <span>${map.name}</span>
-                        <span class="tag" style="background:${mTier.bg}; color:${mTier.color}; padding:2px 7px; font-size:11px;">${mTier.name}</span>
-                    </div>
-                    <div style="font-size:12px; color:#8c6d46; margin-bottom:6px;">${map.desc}</div>
-                    <div class="overall-gauge-container" style="height:6px; margin:4px 0 2px 0;">
-                        <div class="overall-gauge-bar" style="width:${percent}%;"></div>
-                    </div>
-                    <div style="font-size:12px; color:#785a3e; text-align:right; font-weight:700;">
-                        ${mapContracted} / ${map.words.length}마리 (${percent}%)
-                    </div>
-                `;
-                overviewList.appendChild(card);
+                if (isMapBossDefeated(map.id)) purifiedCount++;
             });
+
+            document.getElementById("repStage3").innerHTML = `${s3} <span style="font-size:13.5px; font-weight:700; opacity:0.85;">마리</span>`;
+            document.getElementById("repStage2").innerHTML = `${s2} <span style="font-size:13.5px; font-weight:700; opacity:0.85;">마리</span>`;
+            document.getElementById("repStage1").innerHTML = `${s1} <span style="font-size:13.5px; font-weight:700; opacity:0.85;">마리</span>`;
+            document.getElementById("repStage0").innerHTML = `${s0} <span style="font-size:13.5px; font-weight:700; opacity:0.85;">마리</span>`;
+
+            const maxScore = totalWords * 3;
+            const earnedScore = (s3 * 3) + (s2 * 2) + (s1 * 1);
+            const weightedScore = maxScore > 0 ? Math.round((earnedScore / maxScore) * 100) : 0;
+
+            const examScoreEl = document.getElementById("repExamScore");
+            if (examScoreEl) {
+                examScoreEl.innerText = `${weightedScore}점`;
+            }
+
+            // 3. 실시간 안보 현황 (수호령 / 침식 위험 / 상담실 대기)
+            document.getElementById("repGuardianPurified").innerText = `${purifiedCount} / ${worldMaps.length} 영지 완료`;
+
+            const decayedCount = getDecayedWords().length;
+            const decayedEl = document.getElementById("repDecayedDanger");
+            if (decayedCount > 0) {
+                decayedEl.innerHTML = `<span style="color:#dc2626;">${decayedCount}마리 침식 위험 🔴</span>`;
+            } else {
+                decayedEl.innerHTML = `<span style="color:#15803d;">0마리 (결계 안전 🟢)</span>`;
+            }
+
+            const counselCount = getCounselingTargets().length;
+            const counselEl = document.getElementById("repCounselPending");
+            if (counselCount > 0) {
+                counselEl.innerHTML = `<span style="color:#ea580c;">${counselCount}마리 면담 대기 🟠</span>`;
+            } else {
+                counselEl.innerHTML = `<span style="color:#15803d;">0마리 (평화 🟢)</span>`;
+            }
+
         } else {
             inGameView.style.display = "block";
             titleView.style.display = "none";

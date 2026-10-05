@@ -205,8 +205,8 @@ not only A but (also) B, B as well as A	[접] A뿐만 아니라 B도
 either A or B	[접] A나 B 둘 중 하나
 neither A nor B	[접] A도 B도 둘다 아닌
 in essence, essentially	[접부] 본질적으로
-however, yet, still [접부] 하지만, 그런데
-nevertheless, nonetheless   [접부] 그럼에도 불구하고   
+however, yet, still:[접부] 하지만, 그런데
+nevertheless, nonetheless: [접부] 그럼에도 불구하고   
 while, whereas	[접] ~인 반면에
 on the other hand	[접부] 반면에
 instead, rather	[접부] 대신에, 오히려
@@ -223,8 +223,8 @@ equally, by the same token	[접부] 같은 이유로, 마찬가지로
 in the same way, in like manner	[접부] 같은 방식으로, 마찬가지 방식으로
 as ~ as ...	[구] ...만큼 ~한
 as ~, so ...	[구] ~인 것처럼, ...도 그렇다
-for example, for instance, e.g. [접부] 예를 들어
-as an example, to illustrate, as an illustration    [접부] 설명하자면, 한 예로써
+for example, for instance, e.g.: [접부] 예를 들어
+as an example, to illustrate, as an illustration: [접부] 설명하자면, 한 예로써
 (let us) say	[접부] 예를 들어 ~라고 말해보자
 a case in point is ~	[구] ~가 좋은 예이다
 providing, provided	[접] 만약 ~라면
@@ -237,8 +237,8 @@ therefore, thus, hence, as a result	[접부] 따라서, 그러므로
 accordingly	[접부] 그에 따라서, 그에 맞춰서
 for this reason	[접부] 이러한 이유 때문에
 so ~ that ..., such ~ that ...	[구] 너무 ~해서 ...하다
-surely, certainly   [접부] 확실히
-undoubtedly, unquestionably [접부] 의심할 여지 없이
+surely, certainly: [접부] 확실히
+undoubtedly, unquestionably:[접부] 의심할 여지 없이
 above all	[접부] 무엇보다도
 in particular, particularly, especially	[접부] 특히, 특별히
 in fact, as a matter of fact, actually, indeed	[접부] 사실은, 실제로

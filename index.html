@@ -2,7 +2,7 @@
 <html lang="ko">
 <head>
 <script>
-    // 🌟 카카오톡 인앱 브라우저로 접속 시 정식 브라우저(크롬/사파리)로 자동 강제 전환!
+    // 카카오톡 인앱 브라우저로 접속 시 정식 브라우저(크롬/사파리)로 자동 강제 전환!
     if (/KAKAOTALK/i.test(navigator.userAgent)) {
         location.href = 'kakaotalk://web/openExternal?url=' + encodeURIComponent(location.href);
     }

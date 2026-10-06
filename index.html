@@ -1792,9 +1792,9 @@
             <button class="top-btn" style="background:#1c0e07; border-color:#8f603a; padding:4px 10px; font-size:11px; color:#f7edd4; font-weight:800;" onclick="event.stopPropagation(); skipBossDialogue();">스킵 ⏩</button>
         </div>
 
-        <!-- 2. 🌟 마왕 일러스트: 시네마틱 뷰 -->
+        <!-- 2. 시네마틱 캐릭터 일러스트 (모듈화 완료: 어떤 이미지도 교체 가능) -->
         <div style="flex:1; width:100%; display:flex; justify-content:center; align-items:center; position:relative; overflow:hidden; border-radius:14px; margin-bottom:12px;">
-            <img src="images/demon_exam.png" style="width:100%; height:100%; max-height:220px; object-fit:cover; display:block; border-radius:12px; box-shadow:0 0 25px rgba(0,0,0,0.9);" alt="마왕 EXAM">
+            <img id="dialogueSceneImg" src="images/demon_exam.png" style="width:100%; height:100%; max-height:220px; object-fit:cover; display:block; border-radius:12px; box-shadow:0 0 25px rgba(0,0,0,0.9);" alt="시네마틱 캐릭터">
         </div>
 
         <!-- 3. 📜 양피지 대화창 본체 (onclick 제거하여 깔끔하게 분리) -->
@@ -2499,7 +2499,7 @@
 
                     <!-- 4. 붉은 채점펜 시험지 성취도 점수 연출 -->
                     <div style="display:flex; flex-direction:column; align-items:center; justify-content:center; margin:8px 0 4px 0; text-align:center;">
-                        <span style="font-size:11px; font-weight:800; color:#991b1b; opacity:0.85; margin-bottom:2px; letter-spacing:1.5px;">
+                        <span style="font-size:11px; font-weight:800; color:#991b1b; opacity:0.85; margin-bottom:10px; letter-spacing:1.5px;">
                             ✦ 종합 환산 점수 ✦
                         </span>
                         <div style="display:inline-block; transform:rotate(-5deg); filter:drop-shadow(0 2px 4px rgba(220,38,38,0.25));">
@@ -2755,10 +2755,23 @@
         const currentUid = currentUserDocId || safeStorageGet('spirit_current_uid', null);
         const savedHeroName = safeStorageGet('spirit_hero_name', null);
 
-        localStorage.clear(); // 👈 맨 윗줄에 이 1줄 추가!
+        const savedEmergencyDate = safeStorageGet('spirit_emergency_cleared_date', "");
+        const savedAutoSkip = safeStorageGet('spirit_auto_skip_enabled', true);
+        const savedTts = safeStorageGet('spirit_tts_enabled', true);
+        const savedMuted = safeStorageGet('spirit_muted', false);
+
+        localStorage.clear(); 
 
         if (currentUid) safeStorageSet('spirit_current_uid', currentUid);
         if (savedHeroName) safeStorageSet('spirit_hero_name', savedHeroName);
+
+        if (savedEmergencyDate) {
+            lastEmergencyClearedDate = savedEmergencyDate;
+            safeStorageSet('spirit_emergency_cleared_date', savedEmergencyDate);
+        }
+        safeStorageSet('spirit_auto_skip_enabled', savedAutoSkip);
+        safeStorageSet('spirit_tts_enabled', savedTts);
+        safeStorageSet('spirit_muted', savedMuted);
 
         if (cloudData.mastery) {
             Object.keys(cloudData.mastery).forEach(mapKey => {
@@ -2877,6 +2890,7 @@
             fastestBossTime: fastestTime,
             bossClearCount: bossClearCount,
             isExamCleared: isFinalExamDefeated(),
+            emergencyClearedDate: lastEmergencyClearedDate || safeStorageGet('spirit_emergency_cleared_date', ""),
             tierName: getGlobalTier().tier.name,
             records: records,
             mastery: allMastery,
@@ -3769,6 +3783,8 @@
         { speaker: "나", color: "#059669", text: "그 자는 스스로를... <b style='color:#dc2626; font-size:17px;'>EXAM</b>이라 칭했다.", img: "images/intro_boss.png", fx: "fade" },
         { speaker: "마왕 『EXAM』", color: "#dc2626", text: "\"겁쟁이로군. 내가 그대의 모든 자유와 오락을 빼앗았음에도, 그리 바닥에 철썩 달라붙어 두려워하는 꼴이라니.\"", img: "images/intro_boss.png" },
         { speaker: "나", color: "#059669", text: "그 말대로, 나는 그의 위압적인 모습 앞에 그저 엎드린 채 벌벌 떨 뿐이었다.", img: "images/intro_boss.png" },
+        { speaker: "나", color: "#059669", text: "다만, 동시에 묘한 기시감이 느껴졌다.", img: "images/intro_boss.png" },
+        { speaker: "나", color: "#059669", text: "이런 상황이... 처음이던가?", img: "images/intro_boss.png" },
         { speaker: "마왕 『EXAM』", color: "#dc2626", text: "\"실망스럽도다. 하찮은 미물이여, 내 눈 앞에서 썩 사라져라.\"", img: "images/intro_boss.png" },
         
         // 3. [추락 / 암전] 전체 암흑 속 비명
@@ -3779,15 +3795,17 @@
         { speaker: "나", color: "#059669", text: "바닥에 머리를 세게 부딪힌 나는 가까스로 정신을 차리고 바닥을 밀어내며 몸을 일으켰다. 그리고...", img: "images/intro_spirits.png", fx: "blink" },
         { speaker: "나", color: "#059669", text: "나를 무시무시한 눈으로 노려보는 <b style='color:#059669;'>괴상한 존재</b>들을 마주했다.", img: "images/intro_spirits.png"},
         { speaker: "나", color: "#059669", text: "\"...뭐야, 이 액괴 슬라임 왁뿌 같은 것들은?\"", img: "images/intro_spirits.png" },
+        { speaker: "나", color: "#059669", text: "\"...좀 귀여운데?\"", img: "images/intro_spirits.png" },
         { speaker: "나", color: "#059669", text: "그때, 놀라운 일이 벌어졌다.", img: "images/intro_spirits.png" },
         { speaker: "나", color: "#059669", text: "내 머릿속에 정체를 알 수 없는 <b style='color:#b45309;'>영단어</b>가 떠오르더니, 무의식적으로 그 뜻을 읊자 갑자기 엄청난 기운이 나에게 스며드는 것이었다!", img: "images/intro_spirits.png" },
         { speaker: "나", color: "#059669", text: "정령들도 놀란 눈치였다. 그들은 내가 정령들의 이름을 알아내 마력으로 바꿀 수 있는 자, 전설 속의 <b style='color:#059669;'>『정령술사』</b>라 말했다.", img: "images/intro_spirits.png" },
         { speaker: "나", color: "#059669", text: "\"정령술사...?\"", img: "images/intro_spirits.png" },
         { speaker: "나", color: "#059669", text: "\"...그래... 이거라면...!\"", img: "images/intro_spirits.png" },
-        { speaker: "나", color: "#059669", text: "나는 깨달아 버렸다. 기분 나쁜 이름을 가진 가증스러운 신에게 한 방 먹여줄 좋은 방법을.", img: "images/intro_spirits.png" },
-        { speaker: "나", color: "#059669", text: "나는 영단어로 정령들을 부리며, 이 낯선 이세계에서 살아남을 것이다. <b style='color:#b45309;'>최강의 정령술사</b>가 되어, 반드시 행복한 일상으로 돌아갈 것이다.", img: "images/intro_spirits.png" },
+        { speaker: "나", color: "#059669", text: "나는 깨달아 버렸다. EXAM이라는 기분 나쁜 이름을 가진 가증스러운 신에게 한 방 먹여줄 좋은 방법을.", img: "images/intro_spirits.png" },
+        { speaker: "나", color: "#059669", text: "나는 영단어로 정령들을 부리며, 이 낯선 이세계에서 살아남을 것이다.", img: "images/intro_spirits.png" },
+        { speaker: "나", color: "#059669", text: "그리고 <b style='color:#b45309;'>최강의 정령술사</b>가 되어, 반드시 행복한 일상으로 돌아갈 것이다.", img: "images/intro_spirits.png" },
         // 🌟 최종 대사: 여기서 터치하면 웅장한 월드 컷씬 발동!
-        { speaker: "나", color: "#059669", text: "\"무슨 일이 있어도, 반드시.\"", img: "images/intro_spirits.png" }
+        { speaker: "나", color: "#059669", text: "무슨 일이 있어도, 반드시.", img: "images/intro_spirits.png" }
     ];
 
     let currentIntroIdx = 0;
@@ -4005,16 +4023,18 @@
         if (decayedWords.length > 0 && !hasDoneTodayForProgression) {
             if (emergencyBtn) {
                 emergencyBtn.style.display = "flex";
+                const dailyCount = safeStorageGet(`spirit_defense_today_count_${todayStr}`, 0);
+
                 if (isBossDefeated) {
-                    // 마왕 토벌자: 전량 소탕 모드
-                    emergencyBtn.innerHTML = `🚨 [성역 방어전] 침식 정령 ${decayedWords.length}마리를 모두 구출하세요! ➔`;
+                    // 마왕 토벌 완료 학생: 20개 목표 진행도 표시
+                    emergencyBtn.innerHTML = `🚨 [성역 방어전] 침식 정령을 구출하세요! (${dailyCount}/20마리) ➔`;
                 } else {
-                    // 마왕 미토벌자: 일일 1판 의무 방어 (5문제)
-                    emergencyBtn.innerHTML = `🚨 [일일 결계 수호전] 침식 정령들을 구출하세요! ➔`;
+                    // 마왕 미토벌 학생: 하루 5개 가벼운 일일 퀘스트
+                    emergencyBtn.innerHTML = `🚨 [일일 결계 수호전] 침식 정령을 구출하세요! (5마리) ➔`;
                 }
             }
             if (resumeBtn) {
-                resumeBtn.style.display = "none"; // 초록 버튼 숨김
+                resumeBtn.style.display = "none";
             }
         } else {
             if (emergencyBtn) {
@@ -4114,7 +4134,7 @@
             const minutes = String(lastMod.getMinutes()).padStart(2, '0');
             
             // 💡 게임 버전, 빌드 버전, 최신 버전
-            buildEl.innerText = `v1.3 · Update: ${year}.${month}.${day} ${hours}:${minutes}`;
+            buildEl.innerText = `v1.3.1 · Update: ${year}.${month}.${day} ${hours}:${minutes}`;
         }
 
         // 7. 최종 화면 전환
@@ -4342,14 +4362,52 @@
     function updateInGameTiers() {
         const { tier } = getGlobalTier();
         const gBadge = document.getElementById("gameGlobalTierBadge");
-        gBadge.innerText = tier.name;
-        gBadge.style.backgroundColor = tier.color;
+        if (gBadge) {
+            gBadge.innerText = tier.name;
+            gBadge.style.backgroundColor = tier.color;
+        }
 
-        let secContracted = 0;
-        rawWords.forEach(w => {
-            if ((wordMastery[w.eng] || 0) >= 3) secContracted++;
-        });
-        document.getElementById("expText").innerText = `${secContracted} / ${rawWords.length}마리`;
+        const secBadge = document.getElementById("gameSectorBadge");
+        const expText = document.getElementById("expText");
+        if (!expText || !expText.parentElement) return;
+
+        // 🌟 [수호전/상담실/일반탐험 모드별 왼쪽 뱃지 & 오른쪽 목표 완벽 일치]
+        if (isEmergencyDefenseMode) {
+            // 1. 왼쪽 뱃지: '제1구역' ➔ '🛡️ 결계 수호전' (보라색)
+            if (secBadge) {
+                secBadge.innerText = "🛡️ 결계 수호전";
+                secBadge.style.backgroundColor = "#701a75";
+            }
+
+            // 2. 오른쪽 텍스트: '계약 0/20마리' ➔ '방어 목표: N/5마리'
+            const todayStr = new Date().toISOString().slice(0, 10);
+            const isBossDefeated = isFinalExamDefeated();
+            const dailyQuota = isBossDefeated ? 20 : 5;
+            const dailyCount = safeStorageGet(`spirit_defense_today_count_${todayStr}`, 0);
+            expText.parentElement.innerHTML = `방어 목표: <span id="expText" style="color:#701a75; font-weight:900;">${dailyCount} / ${dailyQuota}마리</span>`;
+
+        } else if (isCounselingMode) {
+            if (secBadge) {
+                secBadge.innerText = "🛋️ 심층 면담";
+                secBadge.style.backgroundColor = "#c2410c";
+            }
+            expText.parentElement.innerHTML = `심층 케어: <span id="expText" style="color:#c2410c; font-weight:900;">${roundCorrectCount} / ${roundQuestions.length}마리</span>`;
+
+        } else {
+            // 일반 영지 탐험 모드
+            if (secBadge) {
+                const activeMap = worldMaps.find(m => m.id === currentMapId) || worldMaps[0];
+                const sec = getMapSectors(activeMap)[currentSectorIndex] || { name: "제1구역" };
+                secBadge.innerText = sec.name;
+                secBadge.style.backgroundColor = "#0284c7";
+            }
+
+            let secContracted = 0;
+            rawWords.forEach(w => {
+                if ((wordMastery[w.eng] || 0) >= 3) secContracted++;
+            });
+            expText.parentElement.innerHTML = `계약: <span id="expText" style="color:#15803d; font-weight:900;">${secContracted} / ${rawWords.length}마리</span>`;
+        }
     }
 
     /* 🧠 스마트 단어 출제 엔진 (마스터 단어 봉인 & 집중 돌파 가변 라운드) */
@@ -4435,8 +4493,16 @@
 
         questionStartTime = Date.now(); // 🌟 반응 속도 측정 시작
 
-        document.getElementById("groveInfoDisplay").innerText = `🌿 탐사 ${currentQuestionIdx + 1} / ${roundQuestions.length}`;
-
+        const groveEl = document.getElementById("groveInfoDisplay");
+        if (groveEl) {
+            if (isEmergencyDefenseMode) {
+                groveEl.innerText = `🛡️ 수호 ${currentQuestionIdx + 1} / ${roundQuestions.length}`;
+            } else if (isCounselingMode) {
+                groveEl.innerText = `🛋️ 면담 ${currentQuestionIdx + 1} / ${roundQuestions.length}`;
+            } else {
+                groveEl.innerText = `🌿 탐사 ${currentQuestionIdx + 1} / ${roundQuestions.length}`;
+            }
+        }
         const q = roundQuestions[currentQuestionIdx];
         document.getElementById("wordDisplay").innerText = q.prompt;
 
@@ -4947,6 +5013,14 @@
             syncToCloud(true);
 
             const isBossDefeated = isFinalExamDefeated();
+            const dailyQuota = isBossDefeated ? 20 : 5; // 미토벌 5마리, 토벌자 20마리
+            const todayStr = new Date().toISOString().slice(0, 10);
+
+            // 오늘 누적 방어 문제 수 카운트
+            let todayCount = safeStorageGet(`spirit_defense_today_count_${todayStr}`, 0);
+            todayCount += roundQuestions.length;
+            safeStorageSet(`spirit_defense_today_count_${todayStr}`, todayCount);
+
             const remainingDecayed = getDecayedWords();
             const remainCount = remainingDecayed.length;
             const wrongCount = roundQuestions.length - roundCorrectCount;
@@ -4960,42 +5034,74 @@
             // 점수 세팅
             scoreEl.innerText = `이번 구출: ${roundCorrectCount} / ${roundQuestions.length}마리 (실패 강등: ${wrongCount}마리)`;
 
-            // 🐣 마왕 미토벌 학생이 5문제 다 맞춘 경우 ➔ 오늘치 완료!
-            if (!isBossDefeated) {
-                const todayStr = new Date().toISOString().slice(0, 10);
+            // 🎯 [판정] 오늘치 목표치(5개 or 20개)를 달성했거나 대륙에 침식 단어가 0개일 때!
+            if (todayCount >= dailyQuota || remainCount === 0) {
                 lastEmergencyClearedDate = todayStr;
                 safeStorageSet('spirit_emergency_cleared_date', todayStr);
 
-                scarcityBox.innerHTML = `✨ <b>일일 방어 완료! <br>오늘의 결계 방어가 끝났습니다.`;
-                scarcityBox.style.borderColor = "#10b981";
-                scarcityBox.style.color = "#065f46";
-                
-                continueBtn.innerText = "대륙 지도로 돌아가기 ➔";
-                continueBtn.style.background = "#b45309";
-                continueBtn.onclick = backToTitleFromEmergency;
-                subBtns.forEach(btn => btn.style.display = "none");
-            }
-            // 👑 마왕 토벌 학생 (또는 미토벌 학생이 틀려서 재도전해야 하는 경우)
-            else {
                 if (remainCount > 0) {
-                    scarcityBox.innerHTML = `⚠️ 아직 대륙에 <b>${remainCount}마리</b>의 정령이 침식 위험에 처해 있습니다!`;
-                    scarcityBox.style.borderColor = "#d946ef";
-                    scarcityBox.style.color = "#701a75";
-                    
-                    continueBtn.innerText = `⚔️ 남은 정령 계속 구출하기 (${remainCount}마리 대기) ➔`;
-                    continueBtn.style.background = "#16a34a";
-                    continueBtn.onclick = continueEmergencyRaid;
-                } else {
-                    scarcityBox.innerHTML = `
-                    <div style="font-size:13.5px; font-weight:900; margin-bottom:2px;">👑 모든 침식 정령 구출! 모든 정령이 따스한 빛을 되찾았습니다.</div>`;
-                    scarcityBox.style.color = "#065f46";
-                    continueBtn.innerText = "✨ 영광의 대륙 지도로 복귀 ➔";
-                    continueBtn.style.background = "#5c3a21";     // 예: 갈색 배경
-                    continueBtn.style.borderColor = "#8f603a";    // 예: 갈색 테두리
+                    // 🌟 [오답 유무에 따른 정확한 결과 리포트 분기]
+                    if (wrongCount === 0) {
+                        // 1. 전원 수호 성공 시
+                        scarcityBox.innerHTML = `✨ <b>일일 수호 작전 대성공!</b><br>모든 정령의 결계를 온전히 지켜냈습니다.`;
+                        scarcityBox.style.background = "linear-gradient(180deg, #fdf4ff 0%, #fae8ff 100%)";
+                        scarcityBox.style.borderColor = "#d946ef";
+                        scarcityBox.style.color = "#701a75";
+                    } else {
+                        // 2. 오답(강등) 발생 시 ➔ 경고 리포트 출력!
+                        scarcityBox.innerHTML = `⚠️ <b>일일 수호 작전 종료<br>정령 <b style="color:#dc2626;">${wrongCount} 마리</b> 탈주!<br>탈주한 정령은 해당 영지 일반 탐험에서<br>다시 찾아 계약해야 합니다.</span>`;
+                        scarcityBox.style.background = "linear-gradient(180deg, #fff1f2 0%, #ffe4e6 100%)";
+                        scarcityBox.style.borderColor = "#f43f5e";
+                        scarcityBox.style.color = "#9f1239";
+                    }
+
+                    // 메인 왕버튼 ➔ 대륙 지도로 복귀
+                    continueBtn.innerText = "🗺️ 대륙 지도로 돌아가기 ➔";
+                    continueBtn.style.background = "linear-gradient(180deg, #6b21a8 0%, #4a044e 100%)";
+                    continueBtn.style.borderColor = "#c084fc";
                     continueBtn.onclick = backToTitleFromEmergency;
                     subBtns.forEach(btn => btn.style.display = "none");
 
+                    // 보조 버튼 (자율 구출)
+                    if (subBtns[0]) {
+                        subBtns[0].style.display = "flex";
+                        subBtns[0].innerText = `⚔️ [자율 구출] 남은 정령 더 구출하기 (${remainCount}마리 대기) ➔`;
+                        subBtns[0].style.borderColor = "#d946ef";
+                        subBtns[0].style.color = "#701a75";
+                        subBtns[0].onclick = continueEmergencyRaid;
+                    }
+                    if (subBtns[1]) subBtns[1].style.display = "none";
+
+                } else {
+                    // 대륙의 모든 침식 단어 0개 완전 소탕!
+                    scarcityBox.innerHTML = `👑 모든 침식 정령이 빛을 되찾았습니다!`;
+                    scarcityBox.style.borderColor = "#c084fc";
+                    scarcityBox.style.color = "#065f46";
+
+                    continueBtn.innerText = "✨ 대륙 지도로 돌아가기 ➔";
+                    continueBtn.style.background = "linear-gradient(180deg, #6b21a8 0%, #4a044e 100%)";
+                    continueBtn.style.borderColor = "#c084fc";
+                    continueBtn.onclick = backToTitleFromEmergency;
+                    subBtns.forEach(btn => btn.style.display = "none");
                 }
+
+            } else {
+                // ⏳ [진행 중] 아직 오늘치 목표(예: 토벌자 20개 중 5개 완료 등)를 채우는 중일 때
+                scarcityBox.innerHTML = `📍 ${todayCount} / ${dailyQuota} 마리 진행 중 (남은 침식: ${remainCount}마리)`;
+                scarcityBox.style.borderColor = "#d946ef";
+                scarcityBox.style.color = "#701a75";
+
+                continueBtn.innerText = `⚔️ 다음 침식 정령 계속 구출하기 ➔`;
+                continueBtn.style.background = "#16a34a";
+                continueBtn.onclick = continueEmergencyRaid;
+
+                // 중간 퇴장 버튼 허용
+                if (subBtns[0]) {
+                    subBtns[0].style.display = "flex";
+                    subBtns[0].innerText = "🗺️ 대륙 지도로 돌아가기 (나중에 이어서 하기)";
+                    subBtns[0].onclick = backToTitleFromEmergency;
+                }
+                if (subBtns[1]) subBtns[1].style.display = "none";
             }
 
             Sound.fanfare();
@@ -5771,73 +5877,110 @@ function handleMidBossVictory() {
     const BOSS_SCRIPTS = {
         // 1. [전투 전] 1회차: 첫 결전
         intro_first: [
-            { speaker: "👑 마왕 『EXAM』", color: "#dc2626", text: "설마 네놈이 사방의 수호령을 모조리 깨뜨리고 이곳까지 올 줄이야. ...하지만 착각 마라. 나의 시험은 네놈의 얕은 지식 따위로 넘을 수 있는 벽이 아니다!" },
-            { speaker: "🧙‍♂️ 정령술사 (나)", color: "#059669", text: "가증스러운 놈. 온 대륙의 정령들과 맺은 영원의 계약의 힘으로... 오늘 널 완전히 박살 내주마!" },
-            { speaker: "👑 마왕 『EXAM』", color: "#dc2626", text: "크하하하! 좋다, 5초의 절망 속에 네놈의 영혼을 갈아 넣어주마. 덤벼라!!" }
+            { speaker: "👑 마왕 『EXAM』", color: "#dc2626", text: "설마 네놈이 사방의 수호령을 모조리 깨뜨리고 이곳까지 올 줄이야." }, 
+            { speaker: "👑 마왕 『EXAM』", color: "#dc2626", text: "...하지만 착각 마라. 나의 시험은 네놈의 얕은 지식 따위로 넘을 수 있는 벽이 아니다!" },
+            { speaker: "🧙‍♂️ 정령술사 (나)", color: "#059669", text: "가증스러운 놈. 온 대륙의 정령들과 맺은 유대의 힘으로... 오늘 널 완전히 박살 내주마!" },
+            { speaker: "👑 마왕 『EXAM』", color: "#dc2626", text: "크하하하! 좋다, 찰나의 절망 속에 네놈의 영혼을 갈아 넣어주마. 덤벼라!!" }
         ],
         // 2. [전투 전] 2회차 이상: 패퇴 후 부활한 마왕
         intro_repeat: [
-            { speaker: "👑 마왕 『EXAM』", color: "#dc2626", text: "네가 산산조각 냈던 내 마력이 다시 회복되었다! 네가 안겨준 굴욕을 씹어 삼키며... 망각의 나락 밑바닥에서 기어코 다시 기어올라왔도다!" },
+            { speaker: "👑 마왕 『EXAM』", color: "#dc2626", text: "네가 산산조각 냈던 내 마력이 다시 회복되었다. 네가 안겨준 굴욕을 씹어 삼키며... 망각의 심연 밑바닥에서 기어코 다시 기어올라왔도다!" },
             { speaker: "🧙‍♂️ 정령술사 (나)", color: "#059669", text: "참 끈질기네. 몇 번을 기어 올라오든 결과는 똑같아. 네 시련은 이미 내게 아무런 고통도 주지 못하거든." },
-            { speaker: "👑 마왕 『EXAM』", color: "#dc2626", text: "닥쳐라!! 이번엔 단 한 문제의 실수도 용납지 않는다. 네놈의 오만한 기억을 뿌리째 뽑아 없애주마... 재시험을 선언한다!!" }
+            { speaker: "👑 마왕 『EXAM』", color: "#dc2626", text: "이번엔 단 한 문제의 실수도 용납지 않는다. 네놈의 오만한 기억을 뿌리째 뽑아 없애주마... 재시험을 선언한다!!" }
         ],
         // 3. [전투 후] 1회차: 첫 몰락
         outro_first: [
-            { speaker: "👑 마왕 『EXAM』", color: "#dc2626", text: "크헉... 말도 안 돼... 나의 가혹한 시험이... 고작 이 애송이의 뇌세포에 깨졌단 말인가...!" },
-            { speaker: "🧙‍♂️ 정령술사 (나)", color: "#059669", text: "네가 빼앗았던 자유와 오락, 그리고 정령들의 이름을 전부 되찾았다. 이제 무릎 꿇고 사라져라, EXAM!" },
-            { speaker: "👑 마왕 『EXAM』", color: "#dc2626", text: "크윽... 기억해라... 시험이 존재하는 한... 나는 언제든... 다시... 크아아악!!" }
+            { speaker: "👑 마왕 『EXAM』", color: "#dc2626", text: "...말도 안 돼... 나의 가혹한 시험이... 고작 이 애송이의 뇌세포 따위에 깨졌단 말인가...!" },
+            { speaker: "🧙‍♂️ 정령술사 (나)", color: "#059669", text: "네가 빼앗았던 정령들의 이름을 전부 되찾았다. 이제 사라져라, EXAM!" },
+            { speaker: "👑 마왕 『EXAM』", color: "#dc2626", text: "...후후... 지금은 물러가지만... 기억해라. 시험이 존재하는 한... 나는 언제든... 다시...." }
         ],
         // 4. [전투 후] 2회차 이상: 반복되는 굴욕
         outro_repeat: [
-            { speaker: "👑 마왕 『EXAM』", color: "#dc2626", text: "또... 또다시 짓밟히다니...! 심연을 뚫고 기어올라왔건만... 어째서 네놈과의 격차는 더 벌어진 것이냐...!!" },
-            { speaker: "🧙‍♂️ 정령술사 (나)", color: "#059669", text: "말했잖아. 복습과 반복으로 단련된 머리는 그 어떤 재시험도 두렵지 않다고. 넌 영원히 내 상대가 안 돼." },
-            { speaker: "👑 마왕 『EXAM』", color: "#dc2626", text: "네 이놈...!! 다음... 다음엔 반드시... 크아아아악!!" }
+            { speaker: "👑 마왕 『EXAM』", color: "#dc2626", text: "또... 또다시 짓밟히다니...! 심연을 뚫고, 더 강해져서 기어올라왔건만... 어째서... 어째서!!" },
+            { speaker: "🧙‍♂️ 정령술사 (나)", color: "#059669", text: "말했잖아. 복습과 반복으로 단련된 머리는 그 어떤 재시험도 두렵지 않다고. 내 곁에 『현수영』이 있는 한, 넌 영원히 내 상대가 안 돼." },
+            { speaker: "👑 마왕 『EXAM』", color: "#dc2626", text: "네 이놈...! 크윽, 심연이 다시 나를... 끌어당기고 있는가...!" },
+            { speaker: "👑 마왕 『EXAM』", color: "#dc2626", text: "기필코 다시 돌아오겠다...! 그때야말로 네놈을... 크아악!!" }
         ]
     };
 
-    function startBossDialogue(scriptKey, tagText, onComplete) {
-        currentDialogueList = BOSS_SCRIPTS[scriptKey] || [];
-        currentDialogueIdx = 0;
-        onDialogueEndCallback = onComplete;
+    /* ========================================================
+       🎬 [만능 대화창 엔진] 어디서든 1줄로 대화 컷씬을 호출하는 모듈
+       ======================================================== */
+    let universalDialogueList = [];
+    let universalDialogueIdx = 0;
+    let onUniversalDialogueEnd = null;
+    let universalDefaultImg = "images/demon_exam.png";
 
-        document.getElementById("dialoguePhaseTag").innerText = tagText;
-        renderDialogueStep();
-        document.getElementById("bossDialogueModal").style.display = "flex";
+    // 🌟 [핵심 함수] 게임 어디서든 이 함수 1줄만 호출하면 대화창이 상영됩니다!
+    function runDialogueScene(scriptList, tagTitle = "✦ DIALOGUE ✦", onComplete = null, sceneImg = null) {
+        universalDialogueList = scriptList || [];
+        universalDialogueIdx = 0;
+        onUniversalDialogueEnd = onComplete;
+        universalDefaultImg = sceneImg || "images/demon_exam.png";
+
+        const tagEl = document.getElementById("dialoguePhaseTag");
+        if (tagEl) tagEl.innerText = tagTitle;
+
+        renderUniversalDialogueStep();
+        const modal = document.getElementById("bossDialogueModal");
+        if (modal) modal.style.display = "flex";
     }
 
-    function renderDialogueStep() {
-        if (currentDialogueIdx >= currentDialogueList.length) {
-            closeBossDialogue();
+    function renderUniversalDialogueStep() {
+        if (universalDialogueIdx >= universalDialogueList.length) {
+            closeUniversalDialogue();
             return;
         }
 
-        const d = currentDialogueList[currentDialogueIdx];
+        const d = universalDialogueList[universalDialogueIdx];
         const speakerEl = document.getElementById("dialogueSpeaker");
         const textEl = document.getElementById("dialogueText");
+        const imgEl = document.getElementById("dialogueSceneImg");
 
-        speakerEl.innerText = d.speaker;
-        speakerEl.style.color = d.color;
-        textEl.innerText = d.text;
+        if (speakerEl) {
+            speakerEl.innerText = d.speaker;
+            speakerEl.style.color = d.color || "#b45309";
+        }
+        if (textEl) {
+            textEl.innerHTML = d.text;
+        }
+        if (imgEl) {
+            const targetSrc = d.img || universalDefaultImg;
+            if (targetSrc) {
+                imgEl.src = targetSrc;
+                imgEl.style.display = "block";
+            } else {
+                imgEl.style.display = "none";
+            }
+        }
         Sound.click();
     }
 
     function advanceBossDialogue() {
-        currentDialogueIdx++;
-        renderDialogueStep();
+        universalDialogueIdx++;
+        renderUniversalDialogueStep();
     }
 
     function skipBossDialogue() {
         Sound.click();
-        closeBossDialogue();
+        closeUniversalDialogue();
     }
 
-    function closeBossDialogue() {
-        document.getElementById("bossDialogueModal").style.display = "none";
-        if (typeof onDialogueEndCallback === 'function') {
-            const cb = onDialogueEndCallback;
-            onDialogueEndCallback = null;
+    function closeUniversalDialogue() {
+        const modal = document.getElementById("bossDialogueModal");
+        if (modal) modal.style.display = "none";
+        
+        if (typeof onUniversalDialogueEnd === 'function') {
+            const cb = onUniversalDialogueEnd;
+            onUniversalDialogueEnd = null;
             cb();
         }
+    }
+
+    // 🌟 기존 마왕전 대화 호환성 100% 보장 래퍼
+    function startBossDialogue(scriptKey, tagText, onComplete) {
+        const scripts = BOSS_SCRIPTS[scriptKey] || [];
+        runDialogueScene(scripts, tagText, onComplete, "images/demon_exam.png");
     }
 
 
@@ -6399,7 +6542,7 @@ function handleMidBossVictory() {
 
         if (choiceIndex !== -1) {
             // 팝업창이 떠 있을 때는 1~4번 입력 차단
-            const isAnyModalOpen = Array.from(document.querySelectorAll('.modal, #gameAlertModal, #settingsModal'))
+            const isAnyModalOpen = Array.from(document.querySelectorAll('.modal, #feedbackModal, #gameAlertModal, #settingsModal'))
                 .some(m => m.style.display === 'flex' || m.style.display === 'block');
 
             if (isAnyModalOpen) return;
@@ -6715,8 +6858,7 @@ function handleMidBossVictory() {
         });
 
         // 퀴즈 화면 세팅
-        document.getElementById("inGameMapTitle").innerText = "⚠️ [성역의 균열] 긴급 수호전";
-        document.getElementById("gameSectorBadge").innerText = "망각의 안개 격퇴전";
+        document.getElementById("inGameMapTitle").innerText = "⚠️ 긴급 수호전 ⚠️";
         document.getElementById("gameSectorBadge").style.backgroundColor = "#701a75";
 
         const exitBtn = document.getElementById("inGameExitBtn");
@@ -6724,6 +6866,8 @@ function handleMidBossVictory() {
 
         document.getElementById("titleScreen").style.display = "none";
         document.getElementById("gameScreen").style.display = "flex";
+
+        updateInGameTiers();
 
         loadQuestion();
     }

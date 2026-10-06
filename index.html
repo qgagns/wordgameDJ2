@@ -325,14 +325,14 @@
         }
 
         /* ========================================================
-           👑 타이틀 화면 거대 버튼 4종 통합 스타일 (UI Kit)
+           👑 타이틀 화면 거대 버튼 4종 통합 스타일 (개성 펄스 시스템)
            ======================================================== */
         
-        /* 🌟 공통 규격: 높이, 글자크기, 둥글기 100% 통일 */
+        /* 🌟 공통 골든 규격 */
         .title-action-btn {
             width: 100%;
-            padding: 13px 14px;
-            border-radius: 12px;
+            padding: 14px 16px;
+            border-radius: 14px;
             font-size: 15px;
             font-weight: 800 !important;
             cursor: pointer;
@@ -350,55 +350,74 @@
             transform: scale(0.98);
         }
 
-        /* 1. ⚡ [초록] 평상시 즉시 출격 */
+        /* 1. ⚡ [초록] 평상시 즉시 출격 - 부드러운 생명력 펄스 (2.2초) */
         .btn-resume {
             background: linear-gradient(180deg, #15803d 0%, #166534 100%);
-            border: 1.5px solid #4ade80;
+            border: 2px solid #4ade80;
             color: #ffffff !important;
             text-shadow: 0 1px 2px rgba(0,0,0,0.4);
-            box-shadow: 0 3px 8px rgba(21, 128, 61, 0.3);
-            animation: resumePulse 2s infinite;
+            box-shadow: 0 4px 10px rgba(21, 128, 61, 0.35);
+            animation: resumePulse 2.2s infinite ease-in-out;
         }
 
-        /* 2. 🚨 [보라] 긴급 성역 수호전 */
+        /* 2. 🚨 [보라] 긴급 성역 수호전 - 긴박한 비상 사이렌 펄스 (1.4초) */
         .btn-emergency {
             display: none;
             background: linear-gradient(180deg, #6b21a8 0%, #4a044e 100%);
             border: 2px solid #c084fc;
             color: #ffffff !important;
             text-shadow: 0 1px 3px rgba(0,0,0,0.5);
-            box-shadow: 0 0 14px rgba(192, 132, 252, 0.45);
+            box-shadow: 0 4px 12px rgba(107, 33, 168, 0.4);
+            animation: emergencyAlertPulse 1.4s infinite ease-in-out;
         }
 
-        /* 3. 🛋️ [주황] 정령 집중 상담실 */
+        /* 3. 🛋️ [주황] 정령 집중 상담실 - 아늑한 모닥불 온기 펄스 (2.5초) */
         .btn-counsel {
             display: none;
-            background: linear-gradient(180deg, #c2410c 0%, #9a3412 100%);
-            border: 1.5px solid #fb923c;
+            background: linear-gradient(180deg, #ea580c 0%, #c2410c 100%);
+            border: 2px solid #fb923c;
             color: #ffffff !important;
             text-shadow: 0 1px 2px rgba(0,0,0,0.4);
-            box-shadow: 0 3px 8px rgba(194, 65, 12, 0.3);
+            box-shadow: 0 4px 10px rgba(234, 88, 12, 0.35);
+            animation: counselWarmGlow 2.5s infinite ease-in-out;
         }
 
-        /* 4. 👑 [빨강] 최종 마왕 EXAM 결전 */
+        /* 4. 👑 [빨강] 최종 마왕 EXAM 결전 - 강렬한 마력 폭주 펄스 (1.6초) */
         .btn-boss {
             display: none;
             background: linear-gradient(180deg, #991b1b 0%, #450a0a 100%);
             border: 2px solid #f87171;
             color: #ffffff !important;
             text-shadow: 0 2px 4px rgba(0,0,0,0.7);
-            box-shadow: 0 0 14px rgba(248, 113, 113, 0.5);
-            animation: bossBtnPulse 1.8s infinite;
+            box-shadow: 0 4px 14px rgba(153, 27, 27, 0.5);
+            animation: bossBtnPulse 1.6s infinite ease-in-out;
         }
 
-        /* 애니메이션 키프레임 2개 */
+        /* ========================================================
+           ✨ 4대 버튼 고유 애니메이션 키프레임
+           ======================================================== */
+        /* 초록: 은은하고 자연스러운 숨쉬기 */
         @keyframes resumePulse {
-            0%, 100% { transform: scale(1); box-shadow: 0 3px 8px rgba(21, 128, 61, 0.3); }
-            50% { transform: scale(1.02); box-shadow: 0 4px 15px rgba(34, 197, 94, 0.6); }
+            0%, 100% { transform: scale(1); box-shadow: 0 4px 10px rgba(21, 128, 61, 0.35); }
+            50% { transform: scale(1.018); box-shadow: 0 5px 16px rgba(34, 197, 94, 0.6); }
         }
+
+        /* 보라: 빠른 사이렌 경보 발광 */
+        @keyframes emergencyAlertPulse {
+            0%, 100% { transform: scale(1); box-shadow: 0 4px 12px rgba(107, 33, 168, 0.4); border-color: #c084fc; }
+            50% { transform: scale(1.022); box-shadow: 0 0 20px rgba(192, 132, 252, 0.85); border-color: #f0abfc; }
+        }
+
+        /* 주황: 아늑하고 차분한 모닥불 온기 */
+        @keyframes counselWarmGlow {
+            0%, 100% { transform: scale(1); box-shadow: 0 4px 10px rgba(234, 88, 12, 0.35); }
+            50% { transform: scale(1.015); box-shadow: 0 4px 18px rgba(251, 146, 60, 0.65); }
+        }
+
+        /* 빨강: 묵직하고 압도적인 마력 발광 */
         @keyframes bossBtnPulse { 
-            0%, 100% { transform: scale(1); box-shadow: 0 0 12px rgba(239, 68, 68, 0.4); } 
-            50% { transform: scale(1.02); box-shadow: 0 0 20px rgba(239, 68, 68, 0.85); } 
+            0%, 100% { transform: scale(1); box-shadow: 0 4px 14px rgba(153, 27, 27, 0.5); border-color: #f87171; } 
+            50% { transform: scale(1.025); box-shadow: 0 0 24px rgba(239, 68, 68, 0.95); border-color: #fca5a5; } 
         }
 
         .map-select-header {
@@ -671,18 +690,19 @@
             background: linear-gradient(180deg, #10b981 0%, #059669 100%);
             border: 2px solid #047857;
             color: #ffffff !important;
-            padding: 16px 14px;      /* 🌟 16px 메인 규격 통일 */
+            padding: 14px 16px;      /* 👈 16px 14px ➔ 14px 16px 골든 규격으로 통일! */
             border-radius: 14px;
-            font-size: 15px;         /* 🌟 글자 확대 */
-            font-weight: 900 !important;
+            font-size: 15px;         
+            font-weight: 800 !important;
             text-shadow: 0 1px 2px rgba(0,0,0,0.3);
             cursor: pointer;
             width: 100%;
             margin-bottom: 6px;
             flex-shrink: 0;
-            box-shadow: 0 3px 8px rgba(16, 185, 129, 0.35);
+            box-shadow: 0 4px 10px rgba(16, 185, 129, 0.35);
             transition: all 0.2s;
             box-sizing: border-box;
+            letter-spacing: -0.3px;
         }
         .guardian-trial-btn.locked {
             background: #78716c;
@@ -723,7 +743,16 @@
             padding: 5px 11px; border-radius: 12px; font-size: 11px; font-weight: 800;
             cursor: pointer; box-shadow: 0 2px 4px rgba(0,0,0,0.2); transition: all 0.2s;
         }
-        .top-btn:hover { background: #73492a; }
+        /* 🌟 버튼에 마우스를 올렸을 때: 살짝 떠오르며 밝아짐 */
+        .top-btn:hover { 
+            background: #73492a; 
+            transform: translateY(-1.5px);
+            filter: brightness(1.06);
+        }
+        /* 🌟 버튼을 클릭/터치했을 때: 쫀득하게 딸깍 눌리는 손맛 */
+        .top-btn:active {
+            transform: scale(0.97);
+        }
 
         .in-game-map-title { font-size: 12.5px; font-weight: 900; color: #784c25; margin-bottom: 1px; }
         .grove-info { font-size: 11px; font-weight: 800; color: #a18366; margin-bottom: 3px; }
@@ -1019,9 +1048,9 @@
             background: #5c3a21; 
             color: #f7edd4; 
             border: 2px solid #3d2314;
-            padding: 16px 14px;      /* 🌟 16px로 두툼하게 표준화 */
+            padding: 14px 16px;
             border-radius: 14px; 
-            font-size: 15.5px;       /* 🌟 큼직한 글씨 */
+            font-size: 15px;
             font-weight: 900;
             cursor: pointer; 
             box-shadow: 0 4px 10px rgba(0,0,0,0.25); 
@@ -1033,6 +1062,7 @@
             justify-content: center;
             align-items: center;
             touch-action: manipulation;
+            letter-spacing: -0.3px;
         }
         .btn-wood:hover { background: #73492a; transform: translateY(-1px); }
         .btn-wood:active { transform: scale(0.98); }
@@ -1603,13 +1633,13 @@
             <!-- 하단 버튼들-->
             <div class="title-bottom-links">
                 <div style="display:flex; gap:8px; width:100%; margin-top:2px; flex-shrink:0;">
-                    <!-- 🌟 padding 13px로 두툼하고 큼직하게 통일 -->
-                    <button class="top-btn" style="flex:1; padding:13px 10px; font-size:15px; font-weight:900; background:#5c3a21; border-color:#8f603a; border-radius:12px;" onclick="openWordBook(true)">
-                        📖 모험 일지
-                    </button>
-                    <button class="top-btn" style="flex:1; padding:13px 10px; font-size:15px; font-weight:900; background:#ede3cc; color:#5c3a21; border-color:#c9b48c; border-radius:12px;" onclick="openSettingsModal()">
-                        ⚙️ 환경 설정
-                    </button>
+                <button class="top-btn" style="flex:1; padding:13px 10px; font-size:14px; font-weight:900; background:#5c3a21; border-color:#8f603a; border-radius:14px;" onclick="openWordBook(true)">
+                    📖 모험 일지
+                </button>
+                <button class="top-btn" style="flex:1; padding:13px 10px; font-size:14px; font-weight:900; background:#ede3cc; color:#5c3a21; border-color:#c9b48c; border-radius:14px;" onclick="openSettingsModal()">
+                    ⚙️ 환경 설정
+                </button>
+
                 </div>
             </div>
             <!-- 🌟 [추가] 내가 방금 수정한 최신 버전인지 한눈에 확인하는 빌드 태그! -->
@@ -1993,8 +2023,8 @@
         </div> <!-- 🌟 2. 상단 컨텐츠 래퍼 닫기 -->
 
         <!-- 3. 하단 액션 버튼 (독립된 2단계 flex 자식으로 정상 복귀) -->
-        <button class="btn-wood" style="background:#16a34a; border-color:#15803d; padding:13px; font-size:14px; margin-top:6px;" onclick="closeRuleGuideAndStart()">
-            ⚔️ 지침을 숙지하고 실전 출격! ➔
+        <button class="btn-wood" style="background:#16a34a; border-color:#15803d; margin-top:6px;" onclick="closeRuleGuideAndStart()">
+        ⚔️ 지침을 숙지하고 실전 출격! ➔
         </button>
     </div> <!-- 🌟 3. 최상위 모달 닫기 -->
 
@@ -2037,8 +2067,8 @@
             </div>
         </div>
         <div>
-            <button id="midBossNoticeStartBtn" class="btn-wood" style="background:#10b981; border-color:#059669; color:#ffffff; font-weight:900; font-size:14px; padding:12px; margin-bottom:6px;" onclick="confirmStartMidBoss()">
-                ⚔️ 수호령과의 시련 시작! ➔
+            <button id="midBossNoticeStartBtn" class="btn-wood" style="background:#10b981; border-color:#059669; color:#ffffff; margin-bottom:6px;" onclick="confirmStartMidBoss()">
+            ⚔️ 수호령과의 시련 시작! (도전) ➔
             </button>
             <button class="btn-sub-wood" style="background:#fffdf7; margin-bottom:6px;" onclick="openWordBook(false)">
                 📖 정령 도감 (단어장) 최종 복습하기
@@ -2260,8 +2290,8 @@
             </div>
         </div>
         <div>
-            <button class="btn-wood" style="background:linear-gradient(180deg, #dc2626 0%, #991b1b 100%); border-color:#ef4444; font-size:14px; padding:12px; margin-bottom:6px;" onclick="goToBossFromAwakening()">
-                ⚔️ 마왕 『EXAM』 즉시 토벌하러 가기! ➔
+            <button class="btn-wood" style="background:linear-gradient(180deg, #dc2626 0%, #991b1b 100%); border-color:#ef4444; color:#ffffff; margin-bottom:6px;" onclick="goToBossFromAwakening()">
+            ⚔️ 마왕 『EXAM』 즉시 토벌하러 가기! ➔
             </button>
             <button class="btn-sub-wood" style="background:#27141b; color:#fca5a5; border-color:#831843;" onclick="closeAwakeningToTitle()">
                 🗺️ 대륙 지도로 이동해 준비하기
@@ -2300,8 +2330,8 @@
         </div>
 
         <!-- 다음 단계(수료증 발급)로 넘어가는 왕버튼 -->
-        <button class="btn-wood" style="background:linear-gradient(180deg, #d97706 0%, #b45309 100%); border-color:#f59e0b; padding:14px; font-size:14px;" onclick="proceedToCertificate()">
-            📜 [공인 감사패] 발급받으러 가기 ➔
+        <button class="btn-wood" style="background:linear-gradient(180deg, #d97706 0%, #b45309 100%); border-color:#f59e0b;" onclick="proceedToCertificate()">
+        📜 [공인 감사패] 발급받으러 가기 ➔
         </button>
     </div>
 
@@ -2362,7 +2392,7 @@
         <!-- 하단 액션 버튼 -->
         <div style="margin-top:8px;">
             <button class="btn-wood" style="padding:12px; font-size:14px; background:#b45309;" onclick="backToTitleFromBossVictory()">
-                🏆 영광의 타이틀로 복귀
+                🏆 당당히 대륙 지도로 복귀
             </button>
         </div>
     </div>
@@ -2572,7 +2602,7 @@
                 📜 정령술사 실전 지침서 (전투 규칙) 다시보기
             </button>
 
-            <button class="btn-wood" style="margin-top: 6px; padding: 11px;" onclick="closeWordBook()">모험 일지 덮기</button>
+            <button class="btn-wood" style="margin-top: 6px;" onclick="closeWordBook()">모험 일지 덮기</button>
         </div>
     </div>
 </div>
@@ -2741,7 +2771,22 @@
             });
         }
         if (cloudData.isExamCleared) safeStorageSet('spirit_exam_cleared', true);
-        if (cloudData.records) safeStorageSet('spirit_records_data', cloudData.records);
+
+        if (cloudData.records) {
+            safeStorageSet('spirit_records_data', cloudData.records);
+        }
+        gameRecords = safeStorageGet('spirit_records_data', gameRecords);
+
+        // 클라우드 최상위에 저장된 마왕 토벌수와 최고기록도 완벽 병합!
+        if (cloudData.bossClearCount && cloudData.bossClearCount > (gameRecords.bossClearCount || 0)) {
+            gameRecords.bossClearCount = cloudData.bossClearCount;
+            safeStorageSet('spirit_records_data', gameRecords);
+        }
+        if (cloudData.fastestBossTime && (!gameRecords.fastestBossTime || cloudData.fastestBossTime < gameRecords.fastestBossTime)) {
+            gameRecords.fastestBossTime = cloudData.fastestBossTime;
+            safeStorageSet('spirit_records_data', gameRecords);
+        }
+
         if (cloudData.heroName) safeStorageSet('spirit_hero_name', cloudData.heroName);
 
         if (cloudData.masteryTimestamps) {
@@ -3962,7 +4007,7 @@
                 emergencyBtn.style.display = "flex";
                 if (isBossDefeated) {
                     // 마왕 토벌자: 전량 소탕 모드
-                    emergencyBtn.innerHTML = `🚨 <b>[성역 방어전]</b> 침식 정령 ${decayedWords.length}마리를 모두 구출하세요! ➔`;
+                    emergencyBtn.innerHTML = `🚨 [성역 방어전] 침식 정령 ${decayedWords.length}마리를 모두 구출하세요! ➔`;
                 } else {
                     // 마왕 미토벌자: 일일 1판 의무 방어 (5문제)
                     emergencyBtn.innerHTML = `🚨 [일일 결계 수호전] 침식 정령들을 구출하세요! ➔`;
@@ -3980,7 +4025,7 @@
                 if (!isBossReady) {
                     const activeMap = worldMaps.find(m => m.id === currentMapId) || worldMaps[0];
                     resumeBtn.style.display = "flex";
-                    resumeBtn.innerHTML = `⚡ <b>[즉시 출격]</b> ${activeMap.name} 이어하기 ➔`;
+                    resumeBtn.innerHTML = `⚡ [즉시 출격] ${activeMap.name} 이어하기 ➔`;
                 } else {
                     // 🛑 마왕 결전이 열렸을 때는 초록색 버튼을 숨겨라!
                     resumeBtn.style.display = "none";
@@ -4852,8 +4897,30 @@
         loadQuestion();
     }
 
+    function showGameToast(msg) {
+        let toast = document.getElementById("gameFloatingToast");
+        if (!toast) {
+            toast = document.createElement("div");
+            toast.id = "gameFloatingToast";
+            toast.style.cssText = "position:absolute; top:12px; left:50%; transform:translateX(-50%) translateY(-10px); background:#2c1a0e; color:#fef3c7; border:1.5px solid #f59e0b; padding:8px 16px; border-radius:20px; font-size:12.5px; font-weight:800; z-index:200; box-shadow:0 4px 15px rgba(0,0,0,0.5); pointer-events:none; transition:all 0.35s ease; text-align:center; white-space:nowrap; opacity:0;";
+            const inner = document.querySelector(".parchment-inner") || document.body;
+            inner.appendChild(toast);
+        }
+        
+        toast.innerHTML = msg;
+        toast.style.display = "block";
+        void toast.offsetWidth; // 렌더 리셋
+        toast.style.opacity = "1";
+        toast.style.transform = "translateX(-50%) translateY(0)";
+
+        setTimeout(() => {
+            toast.style.opacity = "0";
+            toast.style.transform = "translateX(-50%) translateY(-10px)";
+            setTimeout(() => { toast.style.display = "none"; }, 350);
+        }, 2200);
+    }
+
     function showRoundResult() {
-    
         const choicesGrid = document.getElementById("choicesGrid");
         if (choicesGrid) choicesGrid.innerHTML = "";
         
@@ -4865,16 +4932,13 @@
             isCounselingMode = false;
             syncToCloud(true);
 
-            showGameAlert(
-                "상담 종료",
-                `서운해하는 정령들과의 면담이 끝났습니다.\n(정답: ${roundCorrectCount} / ${roundQuestions.length})\n\n1차 통과한 정령은 3시간 뒤에 2차 면담을 신청할 수 있습니다.`,
-                "대륙 지도로 복귀 ➔",
-                "🛋️ COUNSELING END",
-                () => {
-                    document.getElementById("gameScreen").style.display = "none";
-                    renderTitleScreen();
-                }
-            );
+            // 1. 팝업창 없이 즉시 타이틀로 쾌속 복귀!
+            document.getElementById("gameScreen").style.display = "none";
+            renderTitleScreen();
+            Sound.fanfare();
+
+            // 2. 상단에 2초 자동 소멸 토스트 띄우기
+            showGameToast(`🍃 <b>정령 상담 완료!</b> (${roundCorrectCount}/${roundQuestions.length}마리 교감) ➔ 3시간 뒤 면담 가능`);
             return;
         }
 
@@ -4906,7 +4970,7 @@
                 scarcityBox.style.borderColor = "#10b981";
                 scarcityBox.style.color = "#065f46";
                 
-                continueBtn.innerText = "👑 마왕 결전 준비하러 가기 ➔";
+                continueBtn.innerText = "대륙 지도로 돌아가기 ➔";
                 continueBtn.style.background = "#b45309";
                 continueBtn.onclick = backToTitleFromEmergency;
                 subBtns.forEach(btn => btn.style.display = "none");
@@ -6242,44 +6306,91 @@ function handleMidBossVictory() {
     // ⌨️ PC/노트북용 키보드 단축키 시스템 (1~4번 & Space/Enter)
     //=========================================================
     window.addEventListener("keydown", (e) => {
-        // 🌟 [추가] 1. 프롤로그 대화창 열려있을 때 Space/Enter로 대화 넘기기!
-        const introScreen = document.getElementById("introScreen");
-        if (introScreen && introScreen.style.display === "flex") {
-            if (e.code === "Space" || e.code === "Enter") {
+        // ==========================================
+        // 1. [Space / Enter] 만능 진행 & 속행 키
+        // ==========================================
+        if (e.code === "Space" || e.code === "Enter") {
+            // (1) 프롤로그 대화 넘기기
+            const intro = document.getElementById("introScreen");
+            if (intro && intro.style.display === "flex") { e.preventDefault(); advanceIntroDialogue(); return; }
+
+            // (2) 마왕전 시네마틱 대화 넘기기
+            const bossDlg = document.getElementById("bossDialogueModal");
+            if (bossDlg && bossDlg.style.display === "flex") { e.preventDefault(); advanceBossDialogue(); return; }
+
+            // (3) 정답/오답 피드백창 (다음 문제로)
+            const fbModal = document.getElementById("feedbackModal");
+            if (fbModal && fbModal.style.display === "flex") { e.preventDefault(); nextQuestion(); return; }
+
+            // (4) 일반 모닥불 휴식창 (다음 라운드 출격)
+            const roundModal = document.getElementById("roundModal");
+            if (roundModal && roundModal.style.display === "flex") { e.preventDefault(); startNextRound(); return; }
+
+            // (5) 성역 수호전 모닥불 (남은 정령 구출 또는 대륙 복귀 버튼 실행)
+            const emModal = document.getElementById("emergencyRoundModal");
+            if (emModal && emModal.style.display === "flex") {
                 e.preventDefault();
-                advanceIntroDialogue();
+                const emBtn = document.getElementById("emergencyContinueBtn");
+                if (emBtn) emBtn.click();
                 return;
+            }
+
+            // (6) 구역 정복 완료창 (전초기지로 이동)
+            const secClear = document.getElementById("sectorClearModal");
+            if (secClear && secClear.style.display === "flex") { e.preventDefault(); backToLobbyFromSectorClear(); return; }
+
+            // (7) 계급 승급 축하창 (닫고 모험 속행)
+            const tierModal = document.getElementById("tierUpModal");
+            if (tierModal && tierModal.style.display === "flex") { e.preventDefault(); closeTierUpModal(); return; }
+
+            // (8) 수호령 시련 대면창 (시련 시작)
+            const midNotice = document.getElementById("midBossNoticeModal");
+            if (midNotice && midNotice.style.display === "flex") { e.preventDefault(); confirmStartMidBoss(); return; }
+
+            // (9) 영지 정복 엔딩창 (대륙 지도로 복귀)
+            const endingModal = document.getElementById("endingModal");
+            if (endingModal && endingModal.style.display === "flex") { e.preventDefault(); backToTitleScreen(); return; }
+
+            // (10) 마왕 격파 시네마틱 컷씬 (수료증 발급으로 이동)
+            const bossCine = document.getElementById("bossCinematicModal");
+            if (bossCine && bossCine.style.display === "flex") { e.preventDefault(); proceedToCertificate(); return; }
+
+            // (11) 일반 시스템 알림창 (확인 누르고 닫기)
+            const alertModal = document.getElementById("gameAlertModal");
+            if (alertModal && alertModal.style.display === "flex") { e.preventDefault(); closeGameAlert(); return; }
+        }
+
+        // ==========================================
+        // 2. [ESC] 취소 및 모달 닫기 키
+        // ==========================================
+        if (e.code === "Escape") {
+            // (1) 모험 일지 닫기
+            const bookModal = document.getElementById("bookModal");
+            if (bookModal && bookModal.style.display === "flex") { e.preventDefault(); closeWordBook(); return; }
+
+            // (2) 환경 설정창 닫기
+            const settingsModal = document.getElementById("settingsModal");
+            if (settingsModal && settingsModal.style.display === "flex") { e.preventDefault(); closeSettingsModal(); return; }
+
+            // (3) 실전 지침서 닫기
+            const ruleModal = document.getElementById("ruleGuideModal");
+            if (ruleModal && ruleModal.style.display === "flex") { e.preventDefault(); closeRuleGuideAndStart(); return; }
+
+            // (4) 퀴즈 도중 ESC 누르면 복귀 확인 팝업
+            const gameScreen = document.getElementById("gameScreen");
+            if (gameScreen && gameScreen.style.display === "flex") {
+                const fbModal = document.getElementById("feedbackModal");
+                if (!fbModal || fbModal.style.display !== "flex") {
+                    e.preventDefault();
+                    backToLobbyFromQuiz();
+                    return;
+                }
             }
         }
 
-        // 🌟 [추가] 2. 마왕전 대화창 열려있을 때 Space/Enter로 대화 넘기기!
-        const bossDlg = document.getElementById("bossDialogueModal");
-        if (bossDlg && bossDlg.style.display === "flex") {
-            if (e.code === "Space" || e.code === "Enter") {
-                e.preventDefault();
-                advanceBossDialogue();
-                return;
-            }
-        }
-
-        const fbModal = document.getElementById("feedbackModal");
-        if (fbModal && fbModal.style.display === "flex") {
-            if (e.code === "Space" || e.code === "Enter") {
-                e.preventDefault();
-                nextQuestion();
-                return;
-            }
-        }
-
-        const roundModal = document.getElementById("roundModal");
-        if (roundModal && roundModal.style.display === "flex") {
-            if (e.code === "Space" || e.code === "Enter") {
-                e.preventDefault();
-                startNextRound();
-                return;
-            }
-        }
-
+        // ==========================================
+        // 3. [1 ~ 4번] 4지선다 정답 선택 키
+        // ==========================================
         let choiceIndex = -1;
         if (["Digit1", "Numpad1", "1"].includes(e.key) || e.code === "Digit1") choiceIndex = 0;
         else if (["Digit2", "Numpad2", "2"].includes(e.key) || e.code === "Digit2") choiceIndex = 1;
@@ -6287,32 +6398,30 @@ function handleMidBossVictory() {
         else if (["Digit4", "Numpad4", "4"].includes(e.key) || e.code === "Digit4") choiceIndex = 3;
 
         if (choiceIndex !== -1) {
-            // 🛑 팝업창이 떠 있을 때는 숫자키 무시
-            const alertModal = document.getElementById("gameAlertModal");
-            const fbModal = document.getElementById("feedbackModal");
-            if ((alertModal && alertModal.style.display === "flex") || 
-                (fbModal && fbModal.style.display === "flex")) {
-                return;
-            }
+            // 팝업창이 떠 있을 때는 1~4번 입력 차단
+            const isAnyModalOpen = Array.from(document.querySelectorAll('.modal, #gameAlertModal, #settingsModal'))
+                .some(m => m.style.display === 'flex' || m.style.display === 'block');
 
-            // 1. 일반/수호전 퀴즈 화면일 때 ➔ 하단 4지선다 버튼 클릭!
+            if (isAnyModalOpen) return;
+
+            // 일반/수호전 퀴즈 선지 클릭
             const gameScreen = document.getElementById("gameScreen");
             if (gameScreen && gameScreen.style.display === "flex") {
                 const buttons = document.querySelectorAll("#choicesGrid .choice-btn");
                 if (buttons && buttons[choiceIndex]) {
                     e.preventDefault();
-                    buttons[choiceIndex].click(); // 진짜 1~4번 정답 보기 클릭!
+                    buttons[choiceIndex].click();
                     return;
                 }
             }
 
-            // 2. 보스전 화면일 때 ➔ 보스전 4지선다 버튼 클릭!
+            // 보스전 퀴즈 선지 클릭
             const bossScreen = document.getElementById("bossScreen");
             if (bossScreen && bossScreen.style.display === "flex") {
                 const bossButtons = document.querySelectorAll("#bossChoicesGrid .choice-btn");
                 if (bossButtons && bossButtons[choiceIndex]) {
                     e.preventDefault();
-                    bossButtons[choiceIndex].click(); // 보스전 보기 클릭!
+                    bossButtons[choiceIndex].click();
                     return;
                 }
             }

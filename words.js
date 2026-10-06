@@ -211,7 +211,7 @@ while, whereas	[접] ~인 반면에
 on the other hand	[접부] 반면에
 instead, rather	[접부] 대신에, 오히려
 despite, in spite of	[전] ~에도 불구하고
-instead of, rather than	[전/접] ~대신에, ~보다는
+instead of, rather than	[전] ~대신에, ~보다는
 though, although, even though	[접] (사실일 때) 비록 ~일지라도
 even if	[접] (가정일 때) 비록 ~하더라도, 설령 ~일지라도
 on the contrary, in contrast, by contrast	[접부] 대조적으로

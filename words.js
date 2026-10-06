@@ -47,7 +47,7 @@ refuse, reject	[동]	거부하다, 거절하다
 resist	[동]	저항하다, 반대하다
 doubt	[동]	의심하다; [명] 의심
 abandon	[동]	버리다, 포기하다
-battle, conflict	[명]	전투, 싸움, 갈등, 충돌
+battle, conflict	[명]	싸움, 갈등, 충돌
 aggressive	[형]	공격적인
 rival	[명]	경쟁자, 라이벌; [형] 경쟁하는
 allied	[형]	연합한, 동맹의
@@ -75,8 +75,8 @@ status, standing	[명]	지위, 신분, 평판
 dominance	[명]	지배, 우세
 govern, rule	[동]	지배하다, 통치하다
 liberation	[명]	해방, 석방
-block party	[명]	블록 파티, 동네 축제
-ghetto	[명]	빈민가, 게토
+block party	[명]	동네 축제, 동네 잔치
+ghetto	[명]	빈민가
 domestic	[형]	가정의; 국내의
 relocate	[동]	이주하다, 이전하다
 cognitive, perceptive	[형]	인지의, 인식의
@@ -94,7 +94,7 @@ immersion	[명]	몰입, 몰두
 capability, capacity	[명]	능력, 역량
 incapable of	[숙]	~을 할 수 없는
 empower	[동]	권한을 주다, 힘을 북돋우다
-enable O toR	[동]	O가 R할수 있게 하다
+enable O toR	[동]	O가 R할 수 있게 하다
 strive, take pains	[동/숙]	노력하다, 분투하다, 공을 들이다, 애를 쓰다
 pursue, seek	[동]	추구하다
 motive, motivation	[명]	동기, 유인
@@ -203,7 +203,7 @@ besides, moreover, furthermore	[접부] 게다가, 더욱이
 on top of that, what's more	[접부] 거기에 더, 게다가, 더한 것은
 not only A but (also) B, B as well as A	[접] A뿐만 아니라 B도
 either A or B	[접] A나 B 둘 중 하나
-neither A nor B	[접] A도 B도 둘다 아닌
+neither A nor B	[접] A도 B도 둘 다 아닌
 in essence, essentially	[접부] 본질적으로
 however, yet, still:[접부] 하지만, 그런데
 nevertheless, nonetheless: [접부] 그럼에도 불구하고   

@@ -1,0 +1,22 @@
+- 시즌이 바뀌면 index의 아래의 항목을 바꾼다.
+const CURRENT_SEASON = "2026_mid";   <= 연도, 시즌 바꾸기
+
+-이미지 파일 경로
+   intro: "images/intro_boss.png",         // 1. 프롤로그 마왕
+        titleBg: "images/title_bg.png",         // 2. 타이틀 메인 배경
+        battleField: "images/battle_field.png", // 3. 퀴즈 대치 화면
+        fbCorrect: "images/fb_correct.png",     // 4. 정답 피드백
+        fbWrong: "images/fb_wrong.png",         // 5. 오답 피드백
+        restFire: "images/rest_fire.png",       // 6. 모닥불 휴식
+        tierUp: "images/tier_up.png",           // 7. 계급 승급 축하
+        sectorClear: "images/clear_sector.png", // 8. 구역 정복 완료
+        demonLord: "images/demon_exam.png",     // 9. 최종 마왕 EXAM
+        endingDawn: "images/ending_dawn.png",   // 10. 진엔딩 여명 컷씬
+
+        // [4대 영지 테마 배경 4장 & 수호령 4장 = 총 8장]
+        themes: {
+            forest: { bg: "images/bg_forest.png", boss: "images/boss_forest.png" },
+            water:  { bg: "images/bg_water.png",  boss: "images/boss_water.png" },
+            sky:    { bg: "images/bg_sky.png",    boss: "images/boss_sky.png" },
+            ruins:  { bg: "images/bg_ruins.png",  boss: "images/boss_ruins.png" }
+ 

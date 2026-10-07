@@ -3618,17 +3618,22 @@
         const recTime = document.getElementById("recFastestTime");
         if (!recTime) return;
 
-        recTime.innerText = gameRecords.fastestBossTime ? `${gameRecords.fastestBossTime}초 ⚡` : "기록 없음";
-        document.getElementById("recMaxStreak").innerText = `${gameRecords.maxStreak}연속`;
+        // 🛡️ 빈 데이터(undefined) 및 초기값 9999초 완벽 방어막
+        if (!gameRecords || typeof gameRecords !== 'object') gameRecords = {};
+        if (gameRecords.fastestBossTime === 9999) gameRecords.fastestBossTime = null;
+        if (!Array.isArray(gameRecords.unlocked)) gameRecords.unlocked = ["first_bond"];
+
+        const fTime = gameRecords.fastestBossTime;
+        recTime.innerText = (fTime && fTime < 9999) ? `${fTime}초 ⚡` : "기록 없음";
+        document.getElementById("recMaxStreak").innerText = `${gameRecords.maxStreak || 0}연속`;
         document.getElementById("recNoDamage").innerText = gameRecords.bossNoDamage ? "👑 달성 완료!" : "미달성";
-        document.getElementById("recBossClearCount").innerText = `${gameRecords.bossClearCount}회`;
-        document.getElementById("recTotalWrong").innerText = `${gameRecords.totalWrong}회`;
-        document.getElementById("recTimeOutCount").innerText = `${gameRecords.timeOutCount}회`;
+        document.getElementById("recBossClearCount").innerText = `${gameRecords.bossClearCount || 0}회`;
+        document.getElementById("recTotalWrong").innerText = `${gameRecords.totalWrong || 0}회`;
+        document.getElementById("recTimeOutCount").innerText = `${gameRecords.timeOutCount || 0}회`;
 
         const container = document.getElementById("achieveListContainer");
         if (!container) return;
         container.innerHTML = "";
-
 
         // CSS 클래스 바인딩 칭호 렌더러
         ALL_TITLES.forEach(t => {

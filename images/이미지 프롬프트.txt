@@ -1,33 +1,5 @@
-masterpiece, high quality detailed 8-bit pixel art, modern retro game aesthetic, vibrant nostalgic color palette, crisp pixel edges, charming indie game sprite art,
+스타일 묘사
+high-quality detailed pixel art, 16-bit fantasy RPG illustration style, modern indie game cutscene quality, cinematic composition, 16:9 widescreen, rich dithering and hand-placed pixel clusters, clean 1-pixel selective outlining with darker hue-shifted outlines (no pure black), crisp pixel edges, no anti-aliasing, no blur, no gradients smoothing, limited but rich color palette,
 
----
-
-#### [1. 메인 스토리 & 시스템 10장]
-
-
-
-4. **`fb_correct.png` (정답 교감 성공)**
-   * **프롬프트:** `A joyful scene of a young anime sorcerer happily high-fiving a glowing cute glowing nature spirit, sparkles, golden light aura, cheerful and warm atmosphere, cute victory pose, transparent or white background --ar 16:4`
-   * **용도:** 밝고 행복한 칭찬 분위기
-
-
-7. **`tier_up.png` (계급 승급 팝업)**
-   * **프롬프트:** `A magnificent glowing golden fantasy rank emblem crest, decorated with emerald laurels, sparkling magical runes, burst of divine light beams, victorious celebratory RPG rank up trophy icon --ar 1:1`
-   * **용도:** 정사각형(또는 투명) / 번쩍이는 1위 트로피/문장
-
-
----
-
-#### [2. 4대 영지 배경 풍경 4장 (와이드 가로형)]
-
-15. **`boss_forest.png` (숲의 성록 - 사슴)**
-    * **프롬프트:** `Full body mystical giant white forest stag with majestic antlers blooming with glowing green leaves and golden flowers, divine nature spirit beast --ar 1:1`
-
-16. **`boss_water.png` (심해의 해수 - 고래)**
-    * **프롬프트:** `Full body celestial fantasy water whale swimming through air, translucent crystal blue body with glowing wave patterns, fins made of flowing water --ar 1:1`
-
-17. **`boss_sky.png` (천공의 환조 - 새)**
-    * **프롬프트:** `Full body magnificent thunder phoenix bird with glowing violet and gold feathers, wings made of gentle wind storms and lightning sparkles, isolated on white background --ar 1:1`
-
-18. **`boss_ruins.png` (영겁의 신수 - 사자/해태)**
-    * **프롬프트:** `Full body sacred golden guardian lion beast with ancient stone armor plates and a glowing sun core in chest, wise and majestic mythological statue come to life --ar 1:1`
+캐릭터 묘사
+young adult female elf adventurer, long straight golden-blonde hair with a thick side braid over her left shoulder, pointed ears, gentle smiling expression, light skin, wearing dark forest-green hooded cloak with gold clasp, dark green leather-and-steel armor with silver plated shoulder pauldrons and knee guards, brown leather gloves with gold trim, brown leather belt with pouch, brown leather boots, carrying a small brown leather satchel and a wooden staff

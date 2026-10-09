@@ -9,7 +9,7 @@
 </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>단어 정령의 위기: EXAM의 시련 - 테스트용 ver</title>
+    <title>단어 정령의 위기: EXAM의 시련</title>
     <!-- 세련된 프리텐다드 웹폰트 -->
     <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" />
     <script src="words.js"></script>
@@ -1761,7 +1761,7 @@
                 <img src="images/title_bg.png" style="width:100%; height:100%; object-fit:cover; display:block;" alt="타이틀 배경">
                 <div class="title-art-overlay">
                     <h1 class="title-main-text">The Crisis<br>of Word Spirits</h1>
-                    <div id="titleSubText" class="title-sub-text">The Trial of EXAM · 덕정고2 ver</div>
+                    <div id="titleSubText" class="title-sub-text">The Trial of EXAM · 덕정고1 X 현수영</div>
                 </div>
             </div>
 
@@ -2062,7 +2062,7 @@
                     The Trial of EXAM
                 </span>
                 <span id="introCinematicSubTag" style="font-size:14px; font-weight:800; color:#fcd34d; letter-spacing:5px; opacity:0.9; text-transform:uppercase; text-shadow:0 0 10px rgba(252,211,77,0.5);">
-                    · 테스트용 ver ·
+                    · 덕정고1 ver ·
                 </span>
             </div>
 
@@ -2498,19 +2498,22 @@
     </div>
 
     <!-- 맵 정복 완료 모달 -->
-    <div id="endingModal" class="modal">
+    <div id="endingModal" class="modal" style="border:3px solid #10b981; background:#fbf6ea;">
         <div style="flex:1; display:flex; flex-direction:column; justify-content:center; align-items:center; width:100%;">
+            <!-- 승리 액자: 수호령 정화 일러스트 -->
             <div class="art-box" style="margin-bottom:8px; border-color:#10b981; height:240px; box-shadow:0 0 20px rgba(16, 185, 129, 0.45); border-radius:14px; overflow:hidden;">
                 <img src="images/clear_guardian.png" style="width:100%; height:100%; object-fit:cover; display:block;" alt="수호령 정화 완료">
             </div>
-            <div class="ending-card-box">
+            <!-- 에메랄드 정화 카드 본체 -->
+            <div class="ending-card-box" style="border-color:#10b981; background:linear-gradient(180deg, #f0fdf4 0%, #ecfdf5 100%); box-shadow:0 4px 15px rgba(16, 185, 129, 0.2);">
                 <span class="ending-badge-top" id="endingSubBadge">GUARDIAN PURIFIED</span>
                 <h2 class="ending-title" id="endingTitle">축복받은 영원의 낙원</h2>
                 <div class="ending-divider">❖ ❖ ❖</div>
                 <div class="ending-desc" id="endingDesc">
                     수호령의 시련을 이겨내고 이 영지의 모든 정령과 영원의 계약을 맺었습니다!
                 </div>
-                <div class="ending-stat-pill" id="endingContractStats">
+                <!-- 에메랄드 알약 배지 -->
+                <div class="ending-stat-pill" id="endingContractStats" style="background:#d1fae5; border:1.5px solid #10b981; color:#065f46; font-weight:900;">
                     정령 계약 완료: 10 / 10마리 (100%)
                 </div>
             </div>
@@ -4561,7 +4564,7 @@ const recTime = document.getElementById("recFastestTime");
             const minutes = String(lastMod.getMinutes()).padStart(2, '0');
             
             // 💡 게임 버전, 빌드 버전, 최신 버전
-            buildEl.innerText = `v1.3.2 · Update: ${year}.${month}.${day} ${hours}:${minutes}`;
+            buildEl.innerText = `v1.3.2 · Update: ${year}.${month}.${day} ${hours}:${minutes} · All rights reserved · 현수영`
         }
 
         // 7. 최종 화면 전환
@@ -7274,7 +7277,7 @@ function handleMidBossVictory() {
         // 🏫 words.js의 학교 설정으로 웹 브라우저 탭과 타이틀 부제 자동 변경
         document.title = `단어 정령의 위기: EXAM의 시련 - ${SCHOOL_TAG} 편`;
         const titleSub = document.getElementById("titleSubText");
-        if (titleSub) titleSub.innerText = `The Trial of EXAM · ${SCHOOL_TAG} ver`;
+        if (titleSub) titleSub.innerText = `The Trial of EXAM · ${SCHOOL_TAG} X 현수영`;
         const introSub = document.getElementById("introCinematicSubTag");
         if (introSub) introSub.innerText = `· ${SCHOOL_TAG} ver ·`;
 

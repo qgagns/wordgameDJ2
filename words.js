@@ -3,7 +3,33 @@
 // ========================================================
 const GAME_CONFIG = {
     schoolTag: "덕정고2",      // 부제 옆에 붙을 학교/버전명 (예: The Trial of EXAM · 덕정고2 ver)
-    dbKey: "2026_mid"      // 학교별 독립 DB 분리 키 (다른 학교와 랭킹/계정이 안 섞임)
+    dbKey: "2026_mid",      // 학교별 독립 DB 분리 키 (다른 학교와 랭킹/계정이 안 섞임)
+    
+    // ⚔️ [수호령전 체력 & 시간 & 플레이어 목숨]
+    guardianHp1: 5,            // 1회차 수호령 체력 (기본: 5)
+    guardianTime1: 7.0,        // 1회차 수호령 시간 (기본: 7.0초)
+
+    guardianHpRepeat: 7,       // 2회차 수호령 체력 (기본: 7)
+    guardianTimeRepeat: 5.0,   // 2회차 수호령 시간 (기본: 5.0초)
+    guardianPlayerHpRepeat: 3, // 👈 2회차 수호령전 플레이어 하트 수 (기본: 3개)
+
+    // 👑 [마왕전 체력 & 시간 & 플레이어 목숨]
+    bossHp1: 10,               // 1회차 마왕 체력 (기본: 10)
+    bossTime1: 5.0,            // 1회차 마왕 시간 (기본: 5.0초)
+
+    bossHpRepeat: 12,          // 2회차 마왕 체력 (기본: 12)
+    bossTimeRepeat: 4.0,       // 2회차 마왕 시간 (기본: 4.0초)
+    bossPlayerHpRepeat: 3,     // 👈 2회차 마왕전 플레이어 하트 수 (기본: 3개)
+
+    // 🔥 [시험 직전 파이널] 하드코어 마왕전 설정
+    hardcoreMode: {
+        enabled: true,                       // 켜기(true) / 끄기(false)
+        title: "책 선생의 하드코어 점검",            // 시험 명칭
+        targetMaps: "all",                   // "all" 또는 ["ch1", "ch2"]
+        hp: 15,                              // 출제 문제 수 (마왕 체력)
+        playerHp: 3,                         // 👈 하드코어 플레이어 하트 수 (기본: 3개, 1개로 하면 원코인 데스!)
+        timeLimit: 3                       // 문제당 제한 시간 (초)
+    }
 };
 
 // 🌿 [정령의 세계 지도]
@@ -204,7 +230,7 @@ scarce, rare	[형]	부족한, 드문
 situational	[형]	상황에 따른, 상황적인
 
 
-[이어짐의 신전]
+[connecting: 이어짐의 신전]
 # 서로를 이어주는 정령들이 노니는 곳
 also, in addition, additionally	[접부] 또한, 추가적으로, 게다가
 besides, moreover, furthermore	[접부] 게다가, 더욱이

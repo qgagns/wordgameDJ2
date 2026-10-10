@@ -2467,6 +2467,7 @@
             <div id="fbArtBox" class="art-box" style="width:100%; height:130px; margin-bottom:10px; border:2.5px solid #c9b48c; border-radius:14px; overflow:hidden; position:relative; box-shadow:0 4px 10px rgba(0,0,0,0.15);">
                 <img id="fbImgCorrect" src="images/fb_correct.webp" style="width:100%; height:100%; object-fit:cover; display:none;" alt="정답">
                 <img id="fbImgWrong" src="images/fb_wrong.webp" style="width:100%; height:100%; object-fit:cover; display:none;" alt="오답">
+                <img id="fbImgContract" src="images/fb_contract.webp" style="width:100%; height:100%; object-fit:cover; display:none;" alt="영원의 계약">
             </div>
 
             <!-- 1. 메인 타이틀 뱃지 (CSS 클래스로만 구동) -->
@@ -4733,8 +4734,7 @@ const recTime = document.getElementById("recFastestTime");
             const minutes = String(lastMod.getMinutes()).padStart(2, '0');
             
             // 💡 게임 버전, 빌드 버전, 최신 버전
-            buildEl.innerText = `v1.3.2 · Update: ${year}.${month}.${day} ${hours}:${minutes}<br>
-            © 2025-${new Date().getFullYear()} Jayden. All Rights Reserved`
+            buildEl.innerText = `v1.3.2 · Update: ${year}.${month}.${day} ${hours}:${minutes}\n© 2025-${new Date().getFullYear()} Jayden. All Rights Reserved`
         }
 
         // 7. 최종 화면 전환
@@ -5375,10 +5375,11 @@ const recTime = document.getElementById("recFastestTime");
         // 1. 정답/오답 일러스트 분기
         const imgCorrect = document.getElementById("fbImgCorrect");
         const imgWrong = document.getElementById("fbImgWrong");
-        if (imgCorrect && imgWrong) {
-            imgCorrect.style.display = isCorrect ? "block" : "none";
-            imgWrong.style.display = isCorrect ? "none" : "block";
-        }
+        const imgContract = document.getElementById("fbImgContract");
+
+        if (imgCorrect) imgCorrect.style.display = "none";
+        if (imgWrong) imgWrong.style.display = "none";
+        if (imgContract) imgContract.style.display = "none";
 
         fbWord.innerText = q.engWord;
         fbMeaning.innerText = q.korMeaning;
@@ -5418,6 +5419,15 @@ const recTime = document.getElementById("recFastestTime");
                 newCount = Math.min(3, currentCountBefore + 1);
             }
             wordMastery[key] = newCount;
+
+            // 🌟 [영원의 계약 순간 판별] 공명이든 조율이든 이번 문제로 3점(계약) 도달 시 계약 일러스트 가동!
+            const isContractAchieved = (currentCountBefore < 3 && newCount === 3);
+            if (isContractAchieved && imgContract) {
+                imgContract.style.display = "block";
+            } else if (imgCorrect) {
+                imgCorrect.style.display = "block";
+            }
+
             safeStorageSet('spirit_study_history', wordStudyHistory);
 
             // 정답창 콤보 뱃지 세팅
@@ -5643,6 +5653,7 @@ const recTime = document.getElementById("recFastestTime");
         // ❌ [B. 오답일 때]
         // ==========================================
         } else {
+            if (imgWrong) imgWrong.style.display = "block"; // 👈 오답 일러스트 켜기
             streakCount = 0;
             Sound.wrong();
 
@@ -7718,19 +7729,42 @@ function handleMidBossVictory() {
     // 🚀 [초고속 최적화] 핵심 게임 이미지 백그라운드 사전 캐싱
     function preloadGameAssets() {
         const criticalImages = [
-            "images/title_bg.webp",
-            "images/scroll_green.webp",
-            "images/scroll_purple.webp",
-            "images/scroll_red.webp",
-            "images/seal_btn.webp",
-            "images/battle_field.webp",
-            "images/rest_fire.webp",
-            "images/fb_correct.webp",
-            "images/fb_wrong.webp"
+            "title_bg.webp",
+            "scroll_green.webp",
+            "scroll_purple.webp",
+            "scroll_red.webp",
+            "seal_btn.webp",
+            "battle_field.webp",
+            "rest_fire.webp",
+            "fb_correct.webp",
+            "fb_wrong.webp",
+            "fb_contract.webp",
+            "demon_exam.webp",
+            "bg_forest.webp",
+            "bg_ruins.webp",
+            "bg_sky.webp",
+            "bg_water.webp",
+            "book_ghost.webp",
+            "boss_forest.webp",
+            "boss_forest_battle.webp",
+            "boss_ruins.webp",
+            "boss_ruins_battle.webp",
+            "boss_sky.webp",
+            "boss_sky_battle.webp",
+            "boss_water.webp",
+            "boss_water_battle.webp",
+            "clear_guardian.webp",
+            "clear_sector.webp",
+            "ending_dawn.webp",
+            "intro_book.webp",
+            "intro_boss.webp",
+            "intro_mr.book.webp",
+            "intro_spirits.webp",
+            "tier_up.webp"
         ];
-        criticalImages.forEach(src => {
+        criticalImages.forEach(filename => {
             const img = new Image();
-            img.src = src; // 접속 즉시 브라우저 RAM 메모리에 조용히 다운로드
+            img.src = `images/${filename}`; // 접속 즉시 브라우저 RAM 메모리에 조용히 다운로드
         });
     }
 

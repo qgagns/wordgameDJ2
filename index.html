@@ -376,19 +376,19 @@
 
         /* 1. 평상시: 얇고 진한 에메랄드 레이저 오라 */
         .tint-resume .scroll-9slice-layer {
-            background-image: url('images/scroll_green.png');
+            background-image: url('images/scroll_green.webp');
             filter: drop-shadow(0 5px 6px rgba(20, 10, 5, 0.4)) drop-shadow(0 0 2px #86efac) drop-shadow(0 0 5px #22c55e) drop-shadow(0 0 9px rgba(34, 197, 94, 0.85));
             animation: auraBreathResume 2.2s infinite alternate ease-in-out;
         }
         /* 2. 긴급수호: 테두리에 바짝 밀착된 짙은 자수정 네온 불꽃 */
         .tint-emergency .scroll-9slice-layer {
-            background-image: url('images/scroll_purple.png');
+            background-image: url('images/scroll_purple.webp');
             filter: drop-shadow(0 5px 6px rgba(20, 10, 5, 0.4)) drop-shadow(0 0 2px #f0abfc) drop-shadow(0 0 6px #c084fc) drop-shadow(0 0 10px rgba(168, 85, 247, 0.95));
             animation: auraBreathEmergency 1.4s infinite alternate ease-in-out;
         }
         /* 3. 마왕결전: 테두리에 얇게 달라붙어 타오르는 진홍빛 지옥불 */
         .tint-boss .scroll-9slice-layer {
-            background-image: url('images/scroll_red.png');
+            background-image: url('images/scroll_red.webp');
             filter: drop-shadow(0 5px 7px rgba(30, 15, 5, 0.45)) drop-shadow(0 0 2px #fca5a5) drop-shadow(0 0 6px #ef4444) drop-shadow(0 0 11px rgba(249, 115, 22, 0.95));
             animation: auraBreathBoss 1.2s infinite alternate ease-in-out;
         }
@@ -1647,7 +1647,7 @@
         .fb-theme-bond      { background: linear-gradient(135deg, #b45309, #d97706); } /* 흔들림없는 유대: 호박 */
         .fb-theme-tuning    { background: linear-gradient(135deg, #0284c7, #10b981); } /* 기민한 조율: 에메랄드 */
         .fb-theme-defense   { background: linear-gradient(135deg, #701a75, #a21caf); } /* 성역 방어전: 보라 */
-        .fb-theme-counsel   { background: linear-gradient(135deg, #c2410c, #ea580c); } /* 상담실: 주황 */
+        .fb-theme-counsel   { background: linear-gradient(135deg, #c2410c, #ea580c); } /* 정령 성소: 주황 */
         .fb-theme-wrong     { background: #991b1b; }                                   /* 오답 실패: 붉은색 */
 
         /* 📄 단정한 1줄 서브 설명텍스트 공통 규격 */
@@ -1758,7 +1758,7 @@
              ============================================== -->
         <div id="titleScreen" class="screen-view">
             <div class="title-art-wrapper">
-                <img src="images/title_bg.png" style="width:100%; height:100%; object-fit:cover; display:block;" alt="타이틀 배경">
+                <img src="images/title_bg.webp" style="width:100%; height:100%; object-fit:cover; display:block;" alt="타이틀 배경">
                 <div class="title-art-overlay">
                     <h1 class="title-main-text">The Crisis<br>of Word Spirits</h1>
                     <div id="titleSubText" class="title-sub-text">The Trial of EXAM · 덕정고1 X 현수영</div>
@@ -1768,11 +1768,12 @@
             <!-- 🧙‍♂️ 정령술사 스테이터스 면허증 대시보드 -->
             <div class="player-hero-card" style="background:#ede3cc; border:2px solid #b59f77; padding:10px 12px; margin-bottom:6px;">
                 <!-- 1행: 현재 계급 & 장착 칭호 -->
-                <div class="hero-top" style="margin-bottom:6px; display:flex; justify-content:space-between; align-items:center;">
-                    <div>
-                        <span id="titleGlobalTierBadge" class="hero-tier-pill" style="padding:3px 10px;">입문 술사 🌱</span>
-                        <span id="titleEquippedBadge" class="title-equipped-tag">🌱 첫 걸음의 탐색자</span>
-                    </div>
+                <div class="hero-top" style="margin-bottom:6px; display:flex; justify-content:space-between; align-items:center; gap:5px;">
+                    <span id="titleGlobalTierBadge" class="hero-tier-pill" style="padding:3px 8px; font-size:12px; flex-shrink:0;">입문 술사 🌱</span>
+                    <span id="titlePlayerNameText" style="font-size:20px; font-weight:900; color:#451a03; text-shadow:0 1px 0 rgba(255,255,255,0.85); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; text-align:center; flex:1;">
+                        <span style="color:#b45309; font-size:11px;">✦</span> 1234 이름 <span style="color:#b45309; font-size:11px;">✦</span>
+                    </span>
+                    <span id="titleEquippedBadge" class="title-equipped-tag" style="padding:3px 8px; font-size:11.5px; flex-shrink:0;">🌱 첫 걸음의 탐색자</span>
                 </div>
 
                 <!-- 2행: 현재 등급 경험치 게이지바 -->
@@ -1808,7 +1809,7 @@
 
                 <!-- [우측 25%] 성역 버튼 -->
                 <button id="specialOpsBtn" class="seal-ribbon-btn" onclick="toggleOpsPopover(event)">
-                    <img src="images/seal_btn.png" class="seal-img-bg" alt="성역 인장">
+                    <img src="images/seal_btn.webp" class="seal-img-bg" alt="성역 인장">
                     <div class="seal-content">
                         <span class="seal-text">【성역】</span>
                     </div>
@@ -1830,9 +1831,9 @@
                         <span id="popEmergencyBadge" style="font-size:11px; color:#7e22ce; font-weight:900;">침식 0 (안전)</span>
                     </div>
 
-                    <!-- 2. 정령 집중 상담실 (오답 케어) -->
+                    <!-- 2. 정령 성소 (오답 케어) -->
                     <div class="pop-item" onclick="handleOpsSelect('counsel')">
-                        <span>🛋️ 정령 상담실</span>
+                        <span>🛋️ 정령 성소</span>
                         <span id="popCounselBadge" style="font-size:11px; color:#ea580c; font-weight:900;">면담 0</span>
                     </div>
 
@@ -1910,7 +1911,7 @@
 
             <div>
                 <button class="btn-sub-wood" style="background:#fffdf7;" onclick="openWordBook(false)">
-                    📖 이 영지의 정령 도감 (단어장) 확인
+                    📖 이 영지의 정령도감(단어장) 확인
                 </button>
             </div>
         </div>
@@ -1943,7 +1944,7 @@
             </div>
 
             <div class="battle-arena-box">
-                <img src="images/battle_field.png" style="width:100%; height:100%; object-fit:cover; display:block;" alt="전투 대치">
+                <img src="images/battle_field.webp" style="width:100%; height:100%; object-fit:cover; display:block;" alt="전투 대치">
             </div>
 
             <div class="question-box">
@@ -2020,7 +2021,7 @@
 
         <!-- 2. 시네마틱 캐릭터 일러스트 (모듈화 완료: 어떤 이미지도 교체 가능) -->
         <div style="flex:1; width:100%; display:flex; justify-content:center; align-items:center; position:relative; overflow:hidden; border-radius:14px; margin-bottom:12px;">
-            <img id="dialogueSceneImg" src="images/demon_exam.png" style="width:100%; height:100%; max-height:220px; object-fit:cover; display:block; border-radius:12px; box-shadow:0 0 25px rgba(0,0,0,0.9);" alt="시네마틱 캐릭터">
+            <img id="dialogueSceneImg" src="images/demon_exam.webp" style="width:100%; height:100%; max-height:220px; object-fit:cover; display:block; border-radius:12px; box-shadow:0 0 25px rgba(0,0,0,0.9);" alt="시네마틱 캐릭터">
         </div>
 
         <!-- 3. 📜 양피지 대화창 본체 (onclick 제거하여 깔끔하게 분리) -->
@@ -2110,7 +2111,7 @@
             <div style="margin-bottom:12px;">
                 <span style="font-size:10px; font-weight:900; color:#b45309; letter-spacing:2px;">✦ SYSTEM SETTINGS ✦</span>
                 <h3 style="font-size:18px; font-weight:900; color:#451a03; margin:2px 0 3px 0;">환경 설정</h3>
-                <div style="font-size:10.5px; color:#785a3e;">게임 환경 및 계정을 관리합니다.</div>
+                <div style="font-size:10.5px; color:#785a3e;">게임 환경 및 계정을 관리하는 곳이야.</div>
             </div>
 
             <!-- 단정하게 모인 설정 버튼 4개 -->
@@ -2214,19 +2215,19 @@
 
                 <!-- 3. 망각의 안개 & 긴급 수호전 (반복 학습) -->
                 <div style="background:#ffffff; border:1.5px solid #d8c7a6; border-left:4px solid #dc2626; border-radius:8px; padding:10px 9px;">
-                    <div style="font-size:13px; font-weight:900; color:#dc2626;">🛡️ 3. 망각의 안개와 수호전</div>
+                    <div style="font-size:13px; font-weight:900; color:#dc2626;">🛡️ 3. 망각의 안개와 정령 구출</div>
                     <div style="font-size:12px; color:#451a03; line-height:1.4; margin-top:6px; font-weight:600;">
-                        이미 계약된 든든한 아군 정령도 일정 시간 방치되면 망각의 안개에 침식돼.<br>
-                        타이틀의 <b>[🚨 수호전/방어전]</b>으로 방어하면 계약 유효기간이 <b>3일 ➔ 7일 ➔ 영구 봉인</b>으로 연장돼.<br>
+                        이미 계약한 든든한 아군 정령도 일정 시간 방치되면 망각의 안개에 침식돼.<br>
+                        <b>[🚨 안개 속 구출]</b> 작전으로 구출해내면 침식 방어일이 <b>3일 ➔ 7일 ➔ 영구 봉인</b>으로 연장된다.<br>
                         (마왕 토벌 전에는 하루 5문제, 토벌 이후에는 개수 제한 없이 등장!)
                     </div>
                 </div>
 
                 <!-- 4. 서운해하는 정령 집중 상담 (오답 정리) -->
                 <div style="background:#ffffff; border:1.5px solid #d8c7a6; border-left:4px solid #c2410c; border-radius:8px; padding:10px 9px;">
-                    <div style="font-size:13px; font-weight:900; color:#c2410c;">🛋️ 4. 서운해하는 정령 집중 상담실</div>
+                    <div style="font-size:13px; font-weight:900; color:#c2410c;">🛋️ 4. 서운해하는 정령</div>
                     <div style="font-size:12px; color:#451a03; line-height:1.4; margin-top:6px; font-weight:600;">
-                        누적 2회 이상 틀린 정령은 서운함을 품고 상담실로 들어가서 널 기다려.<br>
+                        누적 2회 이상 틀린 정령은 서운함을 품고 성소로 들어가서 널 기다려.<br>
                         시간제한 없는 <b>1차(영➔한) 통과 ➔ 3시간 뒤 2차(한➔영) 최종 통과</b>를 모두 완수해야 오해가 완전히 풀릴 거야.
                     </div>
                 </div>
@@ -2244,7 +2245,7 @@
 
             <!-- 🌟 1. 카드 목록 래퍼 닫기 -->
             <div style="font-size:13px; color:#785a3e; text-align:center; font-weight:700; margin-top:4px;">
-                💡 준비되셨습니까? 정령들을 구원하러 출발합니다!
+                💡 다 기억했지? 그럼, 출발하자!
             </div>
         </div> <!-- 🌟 2. 상단 컨텐츠 래퍼 닫기 -->
 
@@ -2258,7 +2259,7 @@
     <div id="sectorClearModal" class="modal">
         <div style="flex:1; display:flex; flex-direction:column; justify-content:center; align-items:center; width:100%;">
             <div class="art-box" style="margin-bottom:8px; border-color:#10b981; height:300px;">
-                <img src="images/clear_sector.png" style="width:100%; height:100%; object-fit:cover; display:block;" alt="구역 정복">
+                <img src="images/clear_sector.webp" style="width:100%; height:100%; object-fit:cover; display:block;" alt="구역 정복">
             </div>
 
             <div class="ending-card-box" style="border-color:#10b981; background:#ecfdf5;">
@@ -2266,8 +2267,10 @@
                 <h2 class="ending-title" id="sectorClearTitle" style="color:#065f46; font-size:20px;">제1구역 정복 완료!</h2>
                 <div class="ending-divider" style="color:#10b981;">❖ ❖ ❖</div>
                 <div class="ending-desc" style="color:#064e3b;">
-                    축하합니다! 이 구역의 모든 정령과 영원의 계약을 맺었습니다.<br>
-                    영지의 모든 구역을 정복하여 성역의 수호령을 깨우십시오!
+                    이 구역의 모든 정령과 영원의 계약을 맺었다!<br><br>
+                    하지만 이 정도로는 아직이지.<br>
+                    영지의 남은 구역을 모두 탐험해<br>
+                    잠들어 있는 성역의 수호령을 깨워야 한다!
                 </div>
             </div>
         </div>
@@ -2287,8 +2290,11 @@
                 <h2 class="ending-title" id="midBossNoticeTitle" style="color:#065f46; font-size:18px;">수호령의 시련 대면</h2>
                 <div class="ending-divider" style="color:#059669;">✦ ✦ ✦</div>
                 <div class="ending-desc" style="color:#064e3b;" id="midBossNoticeDesc">
-                    이 영지의 모든 하위 구역을 완벽히 정복했습니다!<br>
-                    영지를 완전히 정화하기 위해선 수호령과의 시련(체력 5 / 7초 타임어택)을 통과해야 합니다.
+                    이 영지의 모든 구역을 완벽히 정복했다!<br>
+                    이곳을 완전히 정화하고 그 힘을 얻기 위해선<br>
+                    수호령과의 시련(체력 5 / 7초 타임어택)을 통과해야해.<br><br>
+                    정신 바짝 차리고... 가자!
+
                 </div>
             </div>
         </div>
@@ -2297,7 +2303,7 @@
             ⚔️ 수호령과의 시련 시작! (도전) ➔
             </button>
             <button class="btn-sub-wood" style="background:#fffdf7; margin-bottom:6px;" onclick="openWordBook(false)">
-                📖 정령 도감 (단어장) 최종 복습하기
+                📖 정령도감(단어장) 최종 복습하기
             </button>
             <button class="btn-sub-wood" onclick="backToLobbyFromMidBossNotice()">
                 🏕️ 전초기지로 돌아가기
@@ -2316,17 +2322,15 @@
                 
                 <!-- 마왕의 음모 서사 -->
                 <div class="ending-desc" style="color:#4a044e; font-size:13px; line-height:1.6; margin-bottom:10px;">
-                    마왕이 너의 각성을 방해하기 위해<br>
-                    성역에 사악한 <b>망각의 안개</b>를 뿌리고 있어.<br>
+                    마왕이 성역에 사악한 <b>망각의 안개</b>를 뿌리고 있어.<br>
                     <br>
-                    안개에 휩싸여 너와의 기억이 흐려진 정령들이<br>
-                    어둠 속에 갇혀버리면... 너는 다시 힘을 잃고 말 거야.<br>
-                    그 전에, 반드시 정령들을 구출해야만 해!<br><br>
-                    아, 제일 중요한 거!<br>
-                    성공적으로 구출해낸 정령은 다시 한번<br>너와의 단단한 유대를 확인하고<br>
-                    마침내 너의 영혼에 자신의 진짜 이름을 새겨줄 거야!<br><br>
-                    <b>진명의 각인</b>이 이루어진 그들만이...<br>
-                    너의 세계로 되돌아가는 여정에서 힘이 되어줄 수 있어!
+                    정령들이 안개에 휩싸이게 되면, 너는 힘을 잃고 말겠지.<br>
+                    그 전에, 반드시 정령들을 구출해야만 한다!<br><br>
+                    네가 구출해낸 정령들은 너와의 유대가 더욱 깊어져,<br> 
+                    너의 영혼에 자신의 진짜 이름을 새겨줄 거다!<br><br>
+                    그리고 <b>진명의 각인</b>이 이루어진 그들만이...<br>
+                    본래의 세계로 되돌아가는 네 여정에 힘이 되어줄 수 있다!<br><br>
+                    자, 이제 정신줄 단단히 붙잡고... 뛰어들어!
                 </div>
 
                   <!-- 구출 수칙 안내 -->
@@ -2334,7 +2338,7 @@
                     • 1차 구출 성공 ➔ 3일간 망각의 안개 🛡️차단 <br>
                     • 2차 구출 성공 ➔ 7일간 망각의 안개 🛡️차단 <br>
                     • 3차 최종 구출 ➔ <b>⚜️ 진명의 각인</b> 달성! (망각의 안개 완전 면역!)<br>
-                    ★ 구출 실패 ➔ 구출할 때까지 전투가 이어지며, 해당 정령은 상담실로 입소.
+                    ★ 구출 실패 ➔ 구출할 때까지 진행, 해당 정령은 「정령 성소」로 입소.
                 </div>
 
                 <!-- 현재 침식 현황 박스 -->
@@ -2363,25 +2367,25 @@
             <!-- 정답창 콤보 뱃지 -->
             <div id="fbComboBadge" style="display:none; padding:5px 16px; border-radius:20px; border:2px solid #f59e0b; background:linear-gradient(180deg, #fffbeb 0%, #fef3c7 100%); box-shadow:0 3px 10px rgba(245,158,11,0.3); margin-bottom:8px; font-size:20px; font-weight:900; line-height:1; display:inline-flex; align-items:center; justify-content:center;"></div>
 
-            <!-- 정답창 일러스트 액자 -->
-            <div id="fbArtBox" class="art-box" style="width:100%; height:180px; margin-bottom:10px; border:2.5px solid #c9b48c; border-radius:14px; overflow:hidden; position:relative; box-shadow:0 4px 10px rgba(0,0,0,0.15);">
-                <img id="fbImgCorrect" src="images/fb_correct.png" style="width:100%; height:100%; object-fit:cover; display:none;" alt="정답">
-                <img id="fbImgWrong" src="images/fb_wrong.png" style="width:100%; height:100%; object-fit:cover; display:none;" alt="오답">
+            <!-- 정답창/오답창 일러스트 액자 -->
+            <div id="fbArtBox" class="art-box" style="width:100%; height:130px; margin-bottom:10px; border:2.5px solid #c9b48c; border-radius:14px; overflow:hidden; position:relative; box-shadow:0 4px 10px rgba(0,0,0,0.15);">
+                <img id="fbImgCorrect" src="images/fb_correct.webp" style="width:100%; height:100%; object-fit:cover; display:none;" alt="정답">
+                <img id="fbImgWrong" src="images/fb_wrong.webp" style="width:100%; height:100%; object-fit:cover; display:none;" alt="오답">
             </div>
 
-            <!-- 1. 주인공: 메인 타이틀 뱃지 (CSS 클래스로만 구동) -->
+            <!-- 1. 메인 타이틀 뱃지 (CSS 클래스로만 구동) -->
             <div id="fbTitle" class="fb-hero-badge fb-theme-success">✨ 교감 성공!</div>
 
-            <!-- 2. 조연: 단정한 서브 설명 텍스트 (CSS 클래스로만 구동) -->
+            <!-- 2. 단정한 서브 설명 텍스트 (CSS 클래스로만 구동) -->
             <div id="fbResonanceNotice" class="fb-sub-notice"></div>
 
             <!-- 단어 & 한글 뜻 박스 (위아래 2줄 분리형) -->
             <div class="feedback-card" style="margin-bottom:10px; padding:8px 12px; width:100%; box-sizing:border-box; background:#ede3cc; border-radius:12px; border:1.5px solid #c9b48c; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:3px;">
                 <!-- 1행: 영단어 (크고 또렷하게) -->
-                <span id="fbWord" style="font-size:25px; font-weight:900; color:#2c1a0e; letter-spacing:-0.3px; margin-bottom: 10px;">apple</span>
+                <span id="fbWord" style="font-size:30px; font-weight:900; color:#2c1a0e; letter-spacing:-0.3px; margin-bottom: 10px;">apple</span>
                 
                 <!-- 2행: 한글 뜻 (작고 부드럽고 연한 톤) -->
-                <span id="fbMeaning" class="fb-meaning" style="font-size:16px; font-weight:700; color:#785a3e; word-break:keep-all;">사과</span>
+                <span id="fbMeaning" class="fb-meaning" style="font-size:20px; font-weight:700; color:#785a3e; word-break:keep-all;">사과</span>
             </div>
 
             <!-- 5. 자동 타이머 게이지바 (6px로 선명화) -->
@@ -2399,21 +2403,21 @@
     <div id="tierUpModal" class="modal">
         <div style="flex:1; display:flex; flex-direction:column; justify-content:center; align-items:center; width:100%;">
             <div class="art-box" style="margin-bottom:8px; height:300px;">
-                <img src="images/tier_up.png" style="width:100%; height:100%; object-fit:cover; display:block;" alt="승급 축하">
+                <img src="images/tier_up.webp" style="width:100%; height:100%; object-fit:cover; display:block;" alt="승급 축하">
             </div>
             <div class="tierup-box">
                 <span style="font-size:12px; font-weight:800; color:#047857; letter-spacing:2px; display:block; margin-bottom:3px;">TIER ELEVATION</span>
-                <h2 style="font-size:19px; font-weight:900; color:#065f46; margin:0 0 6px 0;">정령술사 계급 승급!</h2>
+                <h2 style="font-size:19px; font-weight:900; color:#065f46; margin:0 0 6px 0;">정령술사 계급 상승!</h2>
                 <div style="font-size:13px; font-weight:800; color:#047857;" id="tierUpFlowText">
                     [숲의 견습생 🌱] ➔ [방랑 탐색자 🐾]
                 </div>
                 <div style="font-size:13px; color:#065f46; margin-top:5px; line-height:1.4;">
-                    전 대륙 정령들과의 유대가 깊어져<br>더 높은 경지에 도달했습니다!
+                    정령들과의 유대가 깊어져<br>더 높은 경지에 도달했다! 잘했어, 제자!
                 </div>
             </div>
         </div>
         <button class="btn-wood" style="background:#10b981; border-color:#059669;" onclick="closeTierUpModal()">
-            영광을 안고 모험 계속하기 ➔
+            모험 계속하기 ➔
         </button>
     </div>
 
@@ -2431,7 +2435,7 @@
 
             <!-- 일반 모닥불 일러스트 -->
             <div class="art-box" style="margin-bottom:6px; height:200px;">
-                <img src="images/rest_fire.png" style="width:100%; height:100%; object-fit:cover; display:block;" alt="모닥불 휴식">
+                <img src="images/rest_fire.webp" style="width:100%; height:100%; object-fit:cover; display:block;" alt="모닥불 휴식">
             </div>
             
             <!-- 모든 정령과 온전히 교감했습니다 문구 부분 -->
@@ -2443,7 +2447,7 @@
             </div>
 
             <div id="modalScarcityBox" class="scarcity-box">
-                🔥 완전 정복 직전! 구역 정복까지 단 2마리 남았습니다!
+                🔥 완전 정복 직전! 구역 정복까지 딱 2마리 남았다!
             </div>
 
         </div>
@@ -2453,7 +2457,7 @@
 
             </button>
             <button class="btn-sub-wood" style="background:#fffdf7; margin-bottom:5px;" onclick="openWordBook(false)">
-                📖 모닥불 앞에서 정령 도감(단어장) 복습하기
+                📖 모닥불 앞에서 정령도감(단어장) 복습하기
             </button>
             <button class="btn-sub-wood" onclick="backToLobbyFromRound()">
                 🏕️ 전초기지로 복귀
@@ -2471,7 +2475,7 @@
 
             <!-- 수호전/방어전 모닥불 일러스트 액자 -->
             <div class="art-box" style="margin-bottom:6px; height:200px; border-color:#d946ef;">
-                <img src="images/rest_fire.png" style="width:100%; height:100%; object-fit:cover; display:block;" alt="성역 모닥불">
+                <img src="images/rest_fire.webp" style="width:100%; height:100%; object-fit:cover; display:block;" alt="성역 모닥불">
             </div>
             
             <!-- 3. 구출 성공 스코어 (여백 및 폰트 통일) -->
@@ -2489,7 +2493,7 @@
                 ⚔️ 남은 침식 정령 계속 구출하기 ➔
             </button>
             <button class="btn-sub-wood" style="background:#fffdf7; border:1.5px solid #d946ef; color:#701a75; font-weight:900;" onclick="openEmergencyWordList()">
-                📖 이번 수호전 대상 정령 명단 (위험 단어장)
+                📖 구출이 필요한 정령 명단 (위험 단어장)
             </button>
             <button class="btn-sub-wood" onclick="backToTitleFromEmergency()">
                 🗺️ 대륙 지도로 복귀
@@ -2502,7 +2506,7 @@
         <div style="flex:1; display:flex; flex-direction:column; justify-content:center; align-items:center; width:100%;">
             <!-- 승리 액자: 수호령 정화 일러스트 -->
             <div class="art-box" style="margin-bottom:8px; border-color:#10b981; height:240px; box-shadow:0 0 20px rgba(16, 185, 129, 0.45); border-radius:14px; overflow:hidden;">
-                <img src="images/clear_guardian.png" style="width:100%; height:100%; object-fit:cover; display:block;" alt="수호령 정화 완료">
+                <img src="images/clear_guardian.webp" style="width:100%; height:100%; object-fit:cover; display:block;" alt="수호령 정화 완료">
             </div>
             <!-- 에메랄드 정화 카드 본체 -->
             <div class="ending-card-box" style="border-color:#10b981; background:linear-gradient(180deg, #f0fdf4 0%, #ecfdf5 100%); box-shadow:0 4px 15px rgba(16, 185, 129, 0.2);">
@@ -2510,7 +2514,9 @@
                 <h2 class="ending-title" id="endingTitle">축복받은 영원의 낙원</h2>
                 <div class="ending-divider">❖ ❖ ❖</div>
                 <div class="ending-desc" id="endingDesc">
-                    수호령의 시련을 이겨내고 이 영지의 모든 정령과 영원의 계약을 맺었습니다!
+                    수호령의 시련을 이겨냈다!<br>
+                    이제, 이곳의 수호령이 너의 힘이 되어줄 거다.<br><br>
+                    자자, 꾸물거리지 말고 다음 진도 나가자고!
                 </div>
                 <!-- 에메랄드 알약 배지 -->
                 <div class="ending-stat-pill" id="endingContractStats" style="background:#d1fae5; border:1.5px solid #10b981; color:#065f46; font-weight:900;">
@@ -2529,15 +2535,19 @@
     <div id="greatAwakeningModal" class="modal" style="background:#1f0910; border-color:#ef4444; color:#fff;">
         <div style="flex:1; display:flex; flex-direction:column; justify-content:center; align-items:center; width:100%;">
             <div class="art-box" style="margin-bottom:8px; border-color:#10b981; height:240px; box-shadow:0 0 20px rgba(16, 185, 129, 0.45); border-radius:14px; overflow:hidden;">
-                <img src="images/clear_guardian.png" style="width:100%; height:100%; object-fit:cover; display:block;" alt="수호령 정화 완료">
+                <img src="images/clear_guardian.webp" style="width:100%; height:100%; object-fit:cover; display:block;" alt="수호령 정화 완료">
             </div>
             <div class="ending-card-box" style="background:#3b0717; border-color:#ef4444;">
                 <span class="ending-badge-top" style="color:#f87171;">THE FINAL SEAL SHATTERED</span>
                 <h2 class="ending-title" style="color:#fee2e2; font-size:20px;">대륙의 모든 정령 해방!</h2>
                 <div class="ending-divider" style="color:#ef4444;">✦ ✦ ✦</div>
                 <div class="ending-desc" style="color:#fecdd3;">
-                    전 대륙 모든 영지의 수호령들이 정화되었습니다!<br>
-                    정령들의 결속에 분노한 <b>마왕 『EXAM』</b>이<br>최후의 결전을 위해 강림했습니다!
+                    전 대륙 모든 영지의 수호령들이 마침내 정화되었다!<br>
+                    여기까지 해내다니... 널 다시 봐야겠는데?<br><br>
+                    하지만, 이 정도로는 집으로 돌아갈 수 없어.<br><br>
+                    정령들의 결속과 네 강해진 힘에 분노한 <b>마왕 『EXAM』</b>이<br>
+                    최후의 결전을 위해 강림할테니까!<br><br>
+                    이제... 진짜 결전이다!
                 </div>
                 <div class="ending-stat-pill" style="background:#7f1d1d; border-color:#ef4444; color:#fee2e2;">
                     👑 전설의 계급: [정령왕의 벗] 각성 완료
@@ -2562,29 +2572,28 @@
             
             <!-- 🌟 황금빛 여명 & 4대 수호령 알현 일러스트 -->
             <div class="art-box" style="border-color:#f59e0b; height:150px; margin-bottom:8px; box-shadow:0 0 20px rgba(245, 158, 11, 0.4);">
-                <img src="images/ending_dawn.png" style="width:100%; height:100%; object-fit:cover; display:block;" alt="여명 시네마틱">
+                <img src="images/ending_dawn.webp" style="width:100%; height:100%; object-fit:cover; display:block;" alt="여명 시네마틱">
             </div>
 
             <!-- 시네마틱 서사 카드 -->
             <div class="ending-card-box" style="background:#2a1205; border-color:#f59e0b; padding:12px 10px; margin-bottom:6px;">
                 <span class="ending-badge-top" style="color:#fbbf24; letter-spacing:2.5px;">✦ THE DAWN OF VICTORY ✦</span>
                 <h2 class="ending-title" style="color:#fef08a; font-size:20px; margin:7px 0 10px 0;">마왕 『EXAM』 패퇴!<br>
-                    <span style="font-size:14px; color:#f97316; margin: 10px 0 0 0;">대륙에 찬란한 지혜의 여명이 밝아옵니다</span>
+                    <span style="font-size:14px; color:#f97316; margin: 10px 0 0 0;">대륙에 찬란한 지혜의 여명이 밝아온다.</span>
                 </h2>
                 <div class="ending-divider" style="color:#f59e0b; margin: 0 0 10px 0;">❖ ❖ ❖</div>
                 <div class="ending-desc" style="color:#fde68a; font-size:13px; line-height:1.6; margin-bottom:6px;">
-                    세상을 망각에 빠뜨렸던 마왕<br>
-                    『EXAM』의 가혹한 시련이 산산조각 났습니다.<br>
-                    본래의 이름을 되찾은 수많은 정령들이 환희의 노래를 부르고,<br>
-                    성역의 수호령들이 무릎을 꿇어 그대를 경배합니다.<br><br>
-                    <b>최고의 영웅이여!</b><br>
-                    그대는 망각을 이겨내고<br>
-                    진정한 <b>『정령의 구원자 👑』</b>로 우뚝 섰습니다!
+                    세상을 망각에 빠뜨리고 널 이렇게까지 고생시켰던 마왕<br>
+                    『EXAM』의 가혹한 시련이 산산조각 났어.<br><br>
+                    본래의 이름을 되찾은 수많은 정령들이... 널 영웅이라고 칭송하는군.<br>
+                    그래, 솔직히 이 정도면 인정해 줘야지.<br><br>
+                    널... <b>입시 히어로</b>, <b>『정령의 구원자 👑』</b>라고 말이야!<br><br>
+                    그럼, 성역의 사람들이 준비한 훈장을 받으러 가볼까?
                 </div>
             </div>
         </div>
 
-        <!-- 다음 단계(수료증 발급)로 넘어가는 왕버튼 -->
+        <!-- 다음 단계로 넘어가는 왕버튼 -->
         <button class="btn-wood" style="background:linear-gradient(180deg, #d97706 0%, #b45309 100%); border-color:#f59e0b;" onclick="proceedToCertificate()">
         📜 [공인 감사패] 발급받으러 가기 ➔
         </button>
@@ -2640,7 +2649,7 @@
             <div style="margin-top:8px; width:100%; display:flex; gap:6px;">
                 <input id="userNameInput" type="text" placeholder="본인 이름/닉네임 입력" maxlength="8" 
                        style="flex:1; padding:8px 10px; border-radius:8px; border:1px solid #d97706; font-size:15px; font-weight:800; text-align:center;">
-                <button class="top-btn" style="background:#b45309; padding:8px 12px; font-size:12px;" onclick="applyCertName()">이름<br>새기기</button>
+                <button class="top-btn" style="background:#b45309; padding:8px 14px; font-size:13px; font-weight:800; white-space:nowrap; flex-shrink:0;" onclick="applyCertName()">이름 새기기</button>
             </div>
         </div>
 
@@ -2745,7 +2754,7 @@
                                 <span style="font-weight:800; color:#4b301c;">🚨 망각의 안개 침식 위험</span>
                                 <span id="repDecayedDanger" style="font-weight:900; color:#15803d;">0마리 (안전 🟢)</span>
                             </div>
-                            <!-- 3. 상담실 대기 현황 -->
+                            <!-- 3. 정령 성소 대기 현황 -->
                             <div style="display:flex; justify-content:space-between; align-items:center; background:#fdfaf2; padding:6px 10px; border-radius:8px; border:1px solid #d8c7a6; font-size:13px;">
                                 <span style="font-weight:800; color:#4b301c;">🛋️ 서운해하는 정령 상담</span>
                                 <span id="repCounselPending" style="font-weight:900; color:#15803d;">0마리 (평화 🟢)</span>
@@ -2907,23 +2916,23 @@
        ======================================================== */
     const GAME_ASSETS = {
         // [공통 & 시스템 10장]
-        intro: "images/intro_boss.png",         // 1. 프롤로그 마왕
-        titleBg: "images/title_bg.png",         // 2. 타이틀 메인 배경
-        battleField: "images/battle_field.png", // 3. 퀴즈 대치 화면
-        fbCorrect: "images/fb_correct.png",     // 4. 정답 피드백
-        fbWrong: "images/fb_wrong.png",         // 5. 오답 피드백
-        restFire: "images/rest_fire.png",       // 6. 모닥불 휴식
-        tierUp: "images/tier_up.png",           // 7. 계급 승급 축하
-        sectorClear: "images/clear_sector.png", // 8. 구역 정복 완료
-        demonLord: "images/demon_exam.png",     // 9. 최종 마왕 EXAM
-        endingDawn: "images/ending_dawn.png",   // 10. 진엔딩 여명 컷씬
+        intro: "images/intro_boss.webp",         // 1. 프롤로그 마왕
+        titleBg: "images/title_bg.webp",         // 2. 타이틀 메인 배경
+        battleField: "images/battle_field.webp", // 3. 퀴즈 대치 화면
+        fbCorrect: "images/fb_correct.webp",     // 4. 정답 피드백
+        fbWrong: "images/fb_wrong.webp",         // 5. 오답 피드백
+        restFire: "images/rest_fire.webp",       // 6. 모닥불 휴식
+        tierUp: "images/tier_up.webp",           // 7. 계급 승급 축하
+        sectorClear: "images/clear_sector.webp", // 8. 구역 정복 완료
+        demonLord: "images/demon_exam.webp",     // 9. 최종 마왕 EXAM
+        endingDawn: "images/ending_dawn.webp",   // 10. 진엔딩 여명 컷씬
 
         // [4대 영지 테마 배경 4장 & 수호령 4장 = 총 8장]
         themes: {
-            forest: { bg: "images/bg_forest.png", boss: "images/boss_forest.png", bossBattle: "images/boss_forest_battle.png" },
-            water:  { bg: "images/bg_water.png",  boss: "images/boss_water.png",  bossBattle: "images/boss_water_battle.png" },
-            sky:    { bg: "images/bg_sky.png",    boss: "images/boss_sky.png",    bossBattle: "images/boss_sky_battle.png" },
-            ruins:  { bg: "images/bg_ruins.png",  boss: "images/boss_ruins.png",  bossBattle: "images/boss_ruins_battle.png" }
+            forest: { bg: "images/bg_forest.webp", boss: "images/boss_forest.webp", bossBattle: "images/boss_forest_battle.webp" },
+            water:  { bg: "images/bg_water.webp",  boss: "images/boss_water.webp",  bossBattle: "images/boss_water_battle.webp" },
+            sky:    { bg: "images/bg_sky.webp",    boss: "images/boss_sky.webp",    bossBattle: "images/boss_sky_battle.webp" },
+            ruins:  { bg: "images/bg_ruins.webp",  boss: "images/boss_ruins.webp",  bossBattle: "images/boss_ruins_battle.webp" }
         }
     };
 
@@ -3033,7 +3042,7 @@
                     });
                     safeStorageSet('spirit_hero_name', `${id} ${name}`);
                     msg.style.color = "#15803d";
-                    msg.innerText = `🎉 [${name}] 술사님, 신규 등록 완료! 모험을 시작합니다.`;
+                    msg.innerText = `🎉 [${name}] 술사님, 신규 등록 완료. 모험을 시작합니다.`;
                     isNewUser = true; // 순수 신규이므로 프롤로그 상영
                 }
             }
@@ -3114,7 +3123,13 @@
             safeStorageSet('spirit_records_data', gameRecords);
         }
 
-        if (cloudData.heroName) safeStorageSet('spirit_hero_name', cloudData.heroName);
+        if (cloudData.heroName) {
+            safeStorageSet('spirit_hero_name', cloudData.heroName);
+        } else if (cloudData.name) {
+            const fullName = cloudData.id ? `${cloudData.id} ${cloudData.name}` : cloudData.name;
+            safeStorageSet('spirit_hero_name', fullName);
+            safeStorageSet('spirit_user_name', fullName);
+        }
 
         if (cloudData.masteryTimestamps) {
         wordMasteryTimestamps = cloudData.masteryTimestamps;
@@ -3850,7 +3865,7 @@
     let wordDefenseCounts = safeStorageGet('spirit_defense_counts', {});
     let wordStudyHistory = safeStorageGet('spirit_study_history', {});
     let wordCounselingData = safeStorageGet('spirit_counseling_data', {});
-    let isCounselingMode = false; // 현재 상담실 진행 중 플래그
+    let isCounselingMode = false; // 현재 정령 성소 진행 중 플래그
     let isEmergencyDefenseMode = false; // 현재 긴급 수호전 진행 중인지 여부
     let lastEmergencyClearedDate = safeStorageGet('spirit_emergency_cleared_date', "");
     let rawWords = [];
@@ -3895,7 +3910,7 @@
         { id: "boss_3", name: "👑 마왕의 천적", desc: "마왕 『EXAM』을 3회 이상 토벌" },
         { id: "clutch_win", name: "🩸 피 1로 버틴 턱걸이", desc: "하트 1개 남은 빈사 상태로 마왕 격파" },
         { id: "legend_ok", name: "🌟 1등급의 전설", desc: "마왕전을 노데미지(하트 3개 온존)로 완전 토벌" },
-        { id: "wrong_20", name: "🍂 정령 기피 대상 1호", desc: "누적 오답 20회 달성 (정령들이 당신을 피합니다)" },
+        { id: "wrong_20", name: "🍂 정령 기피 대상 1호", desc: "누적 오답 20회 달성 (정령들이 널 피하는데?)" },
         { id: "wrong_50", name: "🌾 오답도 거름이 된다", desc: "누적 오답 50회 달성 (실패는 1등급의 어머니)" },
         { id: "time_out", name: "⏳ 시간을 달리는 멍때림", desc: "보스전에서 시간 초과(Time Over) 3회 겪음" },
         { id: "mental_break", name: "💔 깨진 유리 멘탈", desc: "보스전에서 하트 3개를 모두 잃고 패배" },
@@ -3920,6 +3935,12 @@
     function saveRecords() {
         safeStorageSet('spirit_records_data', gameRecords);
         updateEquippedBadgeDisplay();
+        // 🌟 중앙 플레이어 성명/학번 자동 출력
+        const playerNameEl = document.getElementById("titlePlayerNameText");
+        if (playerNameEl) {
+            const heroName = safeStorageGet('spirit_hero_name', safeStorageGet('spirit_user_name', '정령술사'));
+            playerNameEl.innerText = heroName;
+        }
     }
 
     // 🌟 피드백 창 위에 안전하게 칭호 알림창을 띄우는 함수
@@ -3967,6 +3988,13 @@
     function updateEquippedBadgeDisplay() {
         const badge = document.getElementById("titleEquippedBadge");
         if (badge) badge.innerText = gameRecords.equippedTitle || "🌱 칭호 없음";
+        
+        // 🌟 플레이어 성명/학번 B안 (✦ 이름 ✦) 동기화 출력
+        const nameEl = document.getElementById("titlePlayerNameText");
+        if (nameEl) {
+            const heroName = safeStorageGet('spirit_hero_name', safeStorageGet('spirit_user_name', '2521 술사'));
+            nameEl.innerHTML = `<span style="color:#b45309; font-size:11px;">✦</span> ${heroName} <span style="color:#b45309; font-size:11px;">✦</span>`;
+        }
     }
 
     function renderTitleAndRecordsTab() {
@@ -4167,25 +4195,25 @@ const recTime = document.getElementById("recFastestTime");
         { speaker: "나", color: "#059669", text: "얼이 빠진 채 드넓은 들판을 헤매기를 며칠. 이내 내 눈앞에 무시무시하게 생긴 자가 나타났다.", img: null },
         
         // 2. [마왕 등장] 🌟 어둠 속에서 스르륵 페이드 인!
-        { speaker: "나", color: "#059669", text: "그 자는 스스로를... <b style='color:#dc2626; font-size:17px;'>EXAM</b>이라 칭했다.", img: "images/intro_boss.png", fx: "fade" },
-        { speaker: "마왕 『EXAM』", color: "#dc2626", text: "\"겁쟁이로군. 내가 그대의 모든 자유와 오락을 빼앗았음에도, 그리 바닥에 철썩 달라붙어 두려워하는 꼴이라니.\"", img: "images/intro_boss.png" },
-        { speaker: "나", color: "#059669", text: "그 말대로, 나는 그의 위압적인 모습 앞에 그저 엎드린 채 벌벌 떨 뿐이었다.", img: "images/intro_boss.png" },
-        { speaker: "나", color: "#059669", text: "다만, 동시에 묘한 기시감이 느껴졌다.", img: "images/intro_boss.png" },
-        { speaker: "나", color: "#059669", text: "이런 상황이... 처음이던가?", img: "images/intro_boss.png" },
-        { speaker: "마왕 『EXAM』", color: "#dc2626", text: "\"실망스럽도다. 하찮은 미물이여, 내 눈 앞에서 썩 사라져라.\"", img: "images/intro_boss.png" },
+        { speaker: "나", color: "#059669", text: "그 자는 스스로를... <b style='color:#dc2626; font-size:17px;'>EXAM</b>이라 칭했다.", img: "images/intro_boss.webp", fx: "fade" },
+        { speaker: "마왕 『EXAM』", color: "#dc2626", text: "\"겁쟁이로군. 내가 그대의 모든 자유와 오락을 빼앗았음에도, 그리 바닥에 철썩 달라붙어 두려워하는 꼴이라니.\"", img: "images/intro_boss.webp" },
+        { speaker: "나", color: "#059669", text: "그 말대로, 나는 그의 위압적인 모습 앞에 그저 엎드린 채 벌벌 떨 뿐이었다.", img: "images/intro_boss.webp" },
+        { speaker: "나", color: "#059669", text: "다만, 동시에 묘한 기시감이 느껴졌다.", img: "images/intro_boss.webp" },
+        { speaker: "나", color: "#059669", text: "이런 상황이... 처음이던가?", img: "images/intro_boss.webp" },
+        { speaker: "마왕 『EXAM』", color: "#dc2626", text: "\"실망스럽도다. 하찮은 미물이여, 내 눈 앞에서 썩 사라져라.\"", img: "images/intro_boss.webp" },
         
         // 3. [추락 / 암전] 전체 암흑 속 비명
         { speaker: "나", color: "#059669", text: "자신이 할 말은 다 했다는 듯, 그는 무심한 손길을 내저었다. 그러자, 나는 칠흑 같은 어둠에 잠겼다.", img: null },
         { speaker: "나", color: "#059669", text: "\"으아악!! 이 ㄱ..!!\"", img: null },
         
         // 4. [정령 조우 & 책 선생 등장]
-        { speaker: "나", color: "#059669", text: "바닥에 머리를 세게 부딪힌 나는 가까스로 정신을 차리고 바닥을 밀어내며 몸을 일으켰다. 그리고...", img: "images/intro_spirits.png", fx: "blink" },
-        { speaker: "나", color: "#059669", text: "나를 무시무시한 눈으로 노려보는 <b style='color:#059669;'>괴상한 존재</b>들을 마주했다.", img: "images/intro_spirits.png" },
-        { speaker: "나", color: "#059669", text: "\"...뭐야, 이 액괴 슬라임 왁뿌 같은 것들은?\"", img: "images/intro_spirits.png" },
-        { speaker: "나", color: "#059669", text: "\"...좀 귀여운데?\"", img: "images/intro_spirits.png" },
-        { speaker: "나", color: "#059669", text: "어안이 벙벙해져 손으로 바닥을 짚으니, 무언가 툭, 하고 움직였다.", img: "images/intro_spirits.png" },
-        { speaker: "나", color: "#059669", text: "\"이건...\"", img: "images/intro_spirits.png" },
-        { speaker: "나", color: "#059669", text: "\"『현수영』 학원에서 준... 단어장이잖아? 뭔... 꼴도 보기 싫은 게 여기까지 따라왔어...\"", img: "images/intro_spirits.png" },
+        { speaker: "나", color: "#059669", text: "바닥에 머리를 세게 부딪힌 나는 가까스로 정신을 차리고 바닥을 밀어내며 몸을 일으켰다. 그리고...", img: "images/intro_spirits.webp", fx: "blink" },
+        { speaker: "나", color: "#059669", text: "나를 무시무시한 눈으로 노려보는 <b style='color:#059669;'>괴상한 존재</b>들을 마주했다.", img: "images/intro_spirits.webp" },
+        { speaker: "나", color: "#059669", text: "\"...뭐야, 이 액괴 슬라임 왁뿌 같은 것들은?\"", img: "images/intro_spirits.webp" },
+        { speaker: "나", color: "#059669", text: "\"...좀 귀여운데?\"", img: "images/intro_spirits.webp" },
+        { speaker: "나", color: "#059669", text: "어안이 벙벙해져 손으로 바닥을 짚으니, 무언가 툭, 하고 움직였다.", img: "images/intro_spirits.webp" },
+        { speaker: "나", color: "#059669", text: "\"이건...\"", img: "images/intro_spirits.webp" },
+        { speaker: "나", color: "#059669", text: "\"『현수영』 학원에서 준... 단어장이잖아? 뭔... 꼴도 보기 싫은 게 여기까지 따라왔어...\"", img: "images/intro_spirits.webp" },
         { speaker: "나", color: "#059669", text: "그때, 기이한 일이 벌어졌다.", img: null },
         { speaker: "나", color: "#059669", text: "그 지긋지긋한 단어장으로부터... 무언가 희뿌연 연기가 스멀스멀 새어나왔다!", img: null },
         { speaker: "나", color: "#059669", text: "\"귀... 귀신이다!! 살려줘!!\"", img: null },
@@ -4436,7 +4464,7 @@ const recTime = document.getElementById("recFastestTime");
                 miniEmBadge.style.display = "none";
             }
         }
-        // 좌상단: 정령 상담실 배지 (주황)
+        // 좌상단: 정령 성소 배지 (주황)
         if (miniCounselBadge) {
             if (counselTargets.length > 0) {
                 miniCounselBadge.style.display = "flex";
@@ -4585,7 +4613,7 @@ const recTime = document.getElementById("recFastestTime");
         closeOpsPopover();
         const decayedWords = getDecayedWords();
         if (decayedWords.length === 0) {
-            showGameAlert("보호의 결계 안정", "현재 망각의 안개에 침식된 정령이 없습니다!\n모두들 평화롭고 안전합니다.", "확인", "🛡️ ALL CLEAR");
+            showGameAlert("보호의 결계 안정", "현재 망각의 안개에 침식된 정령이 없어.\n모두들 평화롭고 안전해보이는군.", "확인", "🛡️ ALL CLEAR");
             return;
         }
 
@@ -4593,7 +4621,7 @@ const recTime = document.getElementById("recFastestTime");
         const countBadge = document.getElementById("mistRescueCountBadge");
         if (countBadge) {
             const thisCount = Math.min(5, decayedWords.length);
-            countBadge.innerHTML = `안개에 휩싸인 정령: 총 <span style="color:#dc2626; font-size:15px; font-weight:900;">${decayedWords.length}</span> 마리<br>이번 구출: <span style="color:#dc2626; font-size:15px; font-weight:900;">${thisCount}</span> 마리<br><br>원한다면, 계속 구출 가능해!`;
+            countBadge.innerHTML = `안개에 휩싸인 정령: 총 <span style="color:#dc2626; font-size:15px; font-weight:900;">${decayedWords.length}</span> 마리`;
         }
 
         const modal = document.getElementById("mistRescueNoticeModal");
@@ -4663,7 +4691,7 @@ const recTime = document.getElementById("recFastestTime");
             const targets = getCounselingTargets();
             if (targets.length === 0) {
                 // 🛑 상담 대상이 없을 때도 팝오버 창을 닫지 않고 알림만 띄움!
-                showGameAlert("정령 상담실 한산함", "현재 서운해하는 정령이 없습니다!\n모든 정령과 원만한 유대를 유지하고 있습니다.", "확인", "✨ ALL CONTENT");
+                showGameAlert("정령 성소 안정", "지금은 서운해하는 정령이 없어.\n정령들과 사이가 꽤 좋아보이는 걸?", "확인", "✨ ALL CONTENT");
                 return;
             }
             closeOpsPopover();
@@ -4683,12 +4711,12 @@ const recTime = document.getElementById("recFastestTime");
             } 
             else {
                 // 🛑 마왕이 아직 봉인되어 있을 때도 팝오버 창 유지!
-                showGameAlert("마왕의 봉인", "모든 영지를 정복하고, 침식된 정령을 모두 구출해야 결전이 개막됩니다!", "확인", "🔒 SEALED");
+                showGameAlert("마왕의 봉인", "모든 영지를 정복하고, 침식된 정령을 모두 구출해야 비로소 마왕을 마주할 수 있을 거야.", "확인", "🔒 SEALED");
             }
 
         } else if (mode === 'abyss') {
             // 🛑 준비 중 알림 시에도 팝오버 창 유지!
-            showGameAlert("심연의 문", "끝없는 심연의 균열은 추후 업데이트 예정입니다!\n현재 마력을 응축하고 있습니다.", "확인", "🌌 COMING SOON");
+            showGameAlert("심연의 문", "끝없는 심연의 균열은 아직 열리지 않았어.\n이곳을 통과하면... 아마 우리의 세계로 돌아갈 수 있겠지!", "확인", "🌌 COMING SOON");
         }
     }
 
@@ -4807,7 +4835,7 @@ const recTime = document.getElementById("recFastestTime");
             showMidBossNoticeModal();
         } else {
             Sound.wrong();
-            showGameAlert("성역의 봉인", "아직 정복하지 못한 하위 구역이 남아있습니다!\n영지의 모든 구역과 계약해야 수호령이 깨어납니다.", "구역 정복하러 가기", "🔒 ACCESS DENIED");
+            showGameAlert("성역의 봉인", "아직 정복하지 못한 구역이 남아있다.\n영지의 모든 구역과 계약해야 수호령이 깨어날 거야.", "구역 정복하러 가기", "🔒 ACCESS DENIED");
         }
     }
 
@@ -4873,11 +4901,11 @@ const recTime = document.getElementById("recFastestTime");
         Sound.click();
         showGameAlert(
             "탐사 중단", 
-            "현재 진행 중인 탐사를 중단하고\n복귀하시겠습니까?\n(지금까지 외운 단어는 안전하게 저장됩니다)", 
+            "지금 탐사를 중단하고\n복귀하겠다고?\n(지금까지 외운 단어는 안전하게 저장되겠지만...)", 
             "탐사 중단하고 복귀 ➔", 
             "🏕️ RETURN",
             () => {
-                // 1. 수호전이나 상담실이었으면 ➔ 대륙 지도(타이틀)로 복귀!
+                // 1. 구출전이나 성소였으면 ➔ 대륙 지도(타이틀)로 복귀!
                 if (isEmergencyDefenseMode || isCounselingMode) {
                     isEmergencyDefenseMode = false;
                     isCounselingMode = false;
@@ -4929,7 +4957,7 @@ const recTime = document.getElementById("recFastestTime");
         const expText = document.getElementById("expText");
         if (!expText || !expText.parentElement) return;
 
-        // 🌟 [수호전/상담실/일반탐험 모드별 왼쪽 뱃지 & 오른쪽 목표 완벽 일치]
+        // 🌟 [구출전/성소/일반탐험 모드별 왼쪽 뱃지 & 오른쪽 목표 완벽 일치]
         if (isEmergencyDefenseMode) {
             // 1. 왼쪽 뱃지: '제1구역' ➔ '🛡️ 결계 수호전' (보라색)
             if (secBadge) {
@@ -5072,12 +5100,21 @@ const recTime = document.getElementById("recFastestTime");
         document.getElementById("reviewTag").style.display = q.isReview ? "inline-block" : "none";
 
         const count = wordMastery[q.wordKey] || 0;
-        const mInfo = getMasteryInfo(count);
+        const mInfo = getMasteryInfo(count, q.wordKey);
         const mTag = document.getElementById("masteryTag");
-        mTag.innerText = mInfo.stage === 3 ? "영원의 계약 🌟" : (mInfo.stage === 2 ? "따스한 유대 🍃" : (mInfo.stage === 1 ? "서먹한 대면 🐾" : "야생의 정령 🌿"));
-        mTag.style.backgroundColor = mInfo.bg;
+
+        // 5대 교감 체계에 맞춘 텍스트 출력
+        if (mInfo.stage === 4) mTag.innerText = "진명의 각인 ⚜️";
+        else if (mInfo.stage === 3) mTag.innerText = "영원의 계약 🔗";
+        else if (mInfo.stage === 2) mTag.innerText = "따스한 유대 🍃";
+        else if (mInfo.stage === 1) mTag.innerText = "서먹한 대면 🐾";
+        else mTag.innerText = "야생의 정령 🌿";
+
+        // 그라데이션 및 선명한 입체 스타일 적용
+        mTag.style.background = mInfo.bg;
         mTag.style.color = mInfo.color;
-        mTag.style.border = `1px solid ${mInfo.stage === 3 ? '#eab308' : '#cbd5e1'}`;
+        mTag.style.border = `1px solid ${mInfo.border || '#cbd5e1'}`;
+        mTag.style.boxShadow = mInfo.shadow || 'none';
 
         // 🌟 콤보 뱃지 및 FEVER 모드 화면 연출 제어
         const streakBadge = document.getElementById("comboStreakBadge");
@@ -5248,7 +5285,7 @@ const recTime = document.getElementById("recFastestTime");
             fbMeaning.className = "fb-meaning";
 
             // -------------------------------------------------------------
-            // 🛋️ [경우 0: 정령 집중 상담실 문제일 때 (복구 완료!)]
+            // 🛋️ [경우 0: 정령 성소 문제일 때 (복구 완료!)]
             // -------------------------------------------------------------
             if (q.isCounsel) {
                 const cData = wordCounselingData[key] || { wrongAccum: 2, step: 0, lastTime: 0 };
@@ -5261,7 +5298,7 @@ const recTime = document.getElementById("recFastestTime");
                     fbTitle.innerText = "🍃 1차 면담 통과! (마음이 풀림)";
 
                     fbResonanceNotice.style.display = "block";
-                    fbResonanceNotice.innerHTML = "정령이 마음을 추스르는 중입니다<br>(3시간 뒤 2차 면담)";
+                    fbResonanceNotice.innerHTML = "정령이 마음을 추스르는 중이야.<br>(3시간 뒤 2차 면담)";
 
                 } else if (q.counselStep === 1) {
                     // 2차 면담(한➔영) 최종 통과 ➔ 완치 및 졸업!
@@ -5279,7 +5316,7 @@ const recTime = document.getElementById("recFastestTime");
                         fbTitle.className = "fb-hero-badge fb-theme-contract";
                         fbTitle.innerText = "⚜️ 진명의 각인 달성! ⚜️";
                         fbResonanceNotice.style.display = "block";
-                        fbResonanceNotice.innerHTML = "안개의 혼란을 딛고 진정한 유대를 증명했습니다!<br><b>⚜️ 진명의 각인</b>으로 당당히 승격되었습니다!";
+                        fbResonanceNotice.innerHTML = "안개의 혼란을 딛고, 너와의 진정한 유대를 증명했군.<br><b>⚜️ 진명의 각인</b>을 얻어냈다!";
                     } else {
                         // 1일차/3일차 구출전 출신 정령은 정상적으로 다음 방어 주기(3일 뒤, 7일 뒤)로 안착!
                         if (cData.isFromMistRescue) {
@@ -5292,7 +5329,7 @@ const recTime = document.getElementById("recFastestTime");
                         fbTitle.className = "fb-hero-badge fb-theme-success";
                         fbTitle.innerText = "✨ 안개 혼란 완전 해소! ✨";
                         fbResonanceNotice.style.display = "block";
-                        fbResonanceNotice.innerHTML = "정령이 기억을 완전히 되찾고 안정을 찾았습니다.<br>성역으로 기쁜 표정으로 복귀합니다!";
+                        fbResonanceNotice.innerHTML = "정령이 기억을 완전히 되찾고 안정을 찾았다.<br>기분 좋은 표정인걸?";
                     }
                 }
                 safeStorageSet('spirit_counseling_data', wordCounselingData);
@@ -5348,7 +5385,7 @@ const recTime = document.getElementById("recFastestTime");
                 fbTitle.className = "fb-hero-badge fb-theme-contract";
                 fbTitle.innerText = `🌟영원의 계약 체결! (${elapsedSec}초)`;
                 fbResonanceNotice.style.display = "block";
-                fbResonanceNotice.innerHTML = "정령의 진명을 깨우쳤습니다!";
+                fbResonanceNotice.innerHTML = "정령의 진명을 깨우쳤다!";
 
             // [경우 5: 기민한 조율 ➔ 에메랄드 뱃지]
             } else if (isQuickTuning) {
@@ -5451,7 +5488,7 @@ const recTime = document.getElementById("recFastestTime");
                 // 1) 맞힐 때까지 이번 구출전 안에서 다시 출제 (완전 구출 보장)
                 roundQuestions.push(q);
 
-                // 2) 안개의 혼란을 겪은 정령을 '정령 상담실'로 안전하게 후송
+                // 2) 안개의 혼란을 겪은 정령을 '정령 성소'로 안전하게 후송
                 if (!wordCounselingData[key]) {
                     wordCounselingData[key] = { wrongAccum: 2, step: 0, lastTime: 0 };
                 }
@@ -5464,7 +5501,7 @@ const recTime = document.getElementById("recFastestTime");
                 fbTitle.className = "fb-hero-badge fb-theme-wrong";
                 fbTitle.innerText = "🌫️ 안개 속 혼란 🌫️";
                 fbResonanceNotice.style.display = "block";
-                fbResonanceNotice.innerHTML = "정령이 망각의 안개에 휩싸여 혼란스러워합니다.<br>구출 작전을 계속 진행하며, 정령 상담실로 후송합니다.";
+                fbResonanceNotice.innerHTML = "정령이 망각의 안개에 휩싸여 혼란스러워하고 있어.<br>구출 작전을 계속 진행해. 더 늦기 전에 구해내서 정령 성소로 옮겨야 해!";
             } else {
                 // 일반 영지 탐험 오답
                 fbTitle.className = "fb-hero-badge fb-theme-wrong";
@@ -5492,7 +5529,7 @@ const recTime = document.getElementById("recFastestTime");
                 wrongPool.push(q);
             }
 
-            // 상담실 오답 처리 (틀리면 다시 0단계로 초기화)
+            // 성소 오답 처리 (틀리면 다시 0단계로 초기화)
             if (!wordCounselingData[key]) {
                 wordCounselingData[key] = { wrongAccum: 0, step: 0, lastTime: 0 };
             }
@@ -5576,7 +5613,7 @@ const recTime = document.getElementById("recFastestTime");
         const feverOverlay = document.getElementById("feverVignette");
         if (feverOverlay) feverOverlay.remove();
 
-        // 🌟 상담실 세션 종료 정산
+        // 🌟 성소 세션 종료 정산
         if (isCounselingMode) {
             isCounselingMode = false;
             syncToCloud(true);
@@ -5626,13 +5663,13 @@ const recTime = document.getElementById("recFastestTime");
                     // 🌟 [오답 유무에 따른 정확한 결과 리포트 분기]
                     if (wrongCount === 0) {
                         // 1. 전원 수호 성공 시
-                        scarcityBox.innerHTML = `✨ <b>일일 수호 작전 대성공!</b><br>모든 정령의 결계를 온전히 지켜냈습니다.`;
+                        scarcityBox.innerHTML = `✨ <b>일일 수호 작전 성공!</b><br>위급했던 정령들을 가까스로 지켜냈어.`;
                         scarcityBox.style.background = "linear-gradient(180deg, #fdf4ff 0%, #fae8ff 100%)";
                         scarcityBox.style.borderColor = "#d946ef";
                         scarcityBox.style.color = "#701a75";
                     } else {
                         // 2. 오답(강등) 발생 시 ➔ 경고 리포트 출력!
-                        scarcityBox.innerHTML = `⚠️ <b>일일 수호 작전 종료<br>정령 <b style="color:#dc2626;">${wrongCount} 마리</b> 탈주!<br>탈주한 정령은 해당 영지 일반 탐험에서<br>다시 찾아 계약해야 합니다.</span>`;
+                        scarcityBox.innerHTML = `⚠️ <b>일일 수호 작전 종료<br>정령 <b style="color:#dc2626;">${wrongCount} 마리</b> 탈주!<br>아쉽지만, 탈주한 정령은 해당 영지 일반 탐험에서<br>다시 찾아 계약해야해. 빨리 가서 싹싹 빌라고.</span>`;
                         scarcityBox.style.background = "linear-gradient(180deg, #fff1f2 0%, #ffe4e6 100%)";
                         scarcityBox.style.borderColor = "#f43f5e";
                         scarcityBox.style.color = "#9f1239";
@@ -5657,7 +5694,7 @@ const recTime = document.getElementById("recFastestTime");
 
                 } else {
                     // 대륙의 모든 침식 단어 0개 완전 소탕!
-                    scarcityBox.innerHTML = `👑 모든 침식 정령이 빛을 되찾았습니다!`;
+                    scarcityBox.innerHTML = `👑 모든 침식 정령이 빛을 되찾았군. 고생했다, 제자!`;
                     scarcityBox.style.borderColor = "#c084fc";
                     scarcityBox.style.color = "#065f46";
 
@@ -5784,7 +5821,7 @@ const recTime = document.getElementById("recFastestTime");
             reviewText.innerText = `🍂 경계하는 정령: ${wrongPool.length}마리 (다음 구역에서 재등장)`;
             reviewText.style.color = "#b91c1c";
         } else {
-            reviewText.innerText = `✨ 모든 정령과 온전히 교감했습니다!`;
+            reviewText.innerText = `✨ 모든 정령과 온전히 교감했네. 잘했어, 제자!`;
             reviewText.style.color = "#15803d";
         }
 
@@ -5842,7 +5879,7 @@ const recTime = document.getElementById("recFastestTime");
             scarcityBox.innerHTML = `
                 <div style="font-size:11px; color:#e11d48; letter-spacing:1px; margin-bottom:2px;">⚡ CONQUEST IMMINENT ⚡</div>
                 <div style="font-size:15px; color:#9f1239;">
-                    🔥 완전 정복까지 단 <span style="font-size:25px; color:#e11d48; text-decoration:underline;">${remainCount}마리</span> 남았습니다!
+                    🔥 완전 정복까지 딱 <span style="font-size:25px; color:#e11d48; text-decoration:underline;">${remainCount}마리</span> 남았다. 마무리해!
                 </div>
             `;
         } else {
@@ -5853,7 +5890,7 @@ const recTime = document.getElementById("recFastestTime");
             scarcityBox.innerHTML = `
                 <div style="font-size:12px; color:#b45309; margin-bottom:2px;">📍 구역 탐사 진척도</div>
                 <div style="font-size:14px; color:#78350f;">
-                    완전 정복까지 <span style="font-size:25px; color:#b45309;">${remainCount}마리</span>의 정령이 남았습니다.
+                    완전 정복까지 <span style="font-size:25px; color:#b45309;">${remainCount}마리</span>의 정령이 남았다. 멈추지마!
                 </div>
             `;
         }
@@ -5868,21 +5905,24 @@ const recTime = document.getElementById("recFastestTime");
         const bossDefeated = isMapBossDefeated(activeMap.id);
 
         if (bossDefeated) {
-            document.getElementById("midBossNoticeSubBadge").innerText = "GUARDIAN RE-MATCH";
-            document.getElementById("midBossNoticeTitle").innerText = `[${activeMap.name}] ${theme.guardianName} 재대결`;
+            document.getElementById("midBossNoticeSubBadge").innerText = "GUARDIAN RE-EXAM";
+            document.getElementById("midBossNoticeTitle").innerText = `[${activeMap.name}] ${theme.guardianName}의 재시험`;
             document.getElementById("midBossNoticeDesc").innerHTML = `
-                이미 정화된 성역이지만, 지혜의 감각을 날카롭게 유지하기 위해<br>
-                <b>${theme.guardianName}</b>과의 시련(체력 5 / 7초 타임어택)을 다시 치릅니다!
+                성역의 수호령이 다시 우리 앞에 나타났어.<br>
+                이번에는 우리에게 더 날카로운 각성을 요구하고 있군.<br><br>
+                <b>${theme.guardianName}</b>의 강화된 재시험(<b>체력 7 / 5초 타임어택</b>)을 통과해야한다!
             `;
-            document.getElementById("midBossNoticeStartBtn").innerText = `⚔️ ${theme.guardianName} 재대결 수련 시작! ➔`;
+            document.getElementById("midBossNoticeStartBtn").innerText = `⚔️ ${theme.guardianName}의 재시험 도전! ➔`;
         } else {
             document.getElementById("midBossNoticeSubBadge").innerText = "GUARDIAN'S TRIAL READY";
             document.getElementById("midBossNoticeTitle").innerText = `[${activeMap.name}] 수호령의 시련 대면`;
             document.getElementById("midBossNoticeDesc").innerHTML = `
-                이 영지의 모든 하위 구역을 완벽히 정복했습니다!<br>
-                영지를 완전히 정화하기 위해선 <b>${theme.guardianName}</b>과의 시련(체력 5 / 7초 타임어택)을 통과해야 합니다.
+                이 영지의 모든 하위 구역을 완벽히 정복했다!<br>
+                영지를 완전히 정화하기 위해선<br>
+                <b>${theme.guardianName}</b>의 시련을 통과해야해. 긴장하라고! <br>
+                (체력 5 / 7초 타임어택)
             `;
-            document.getElementById("midBossNoticeStartBtn").innerText = `⚔️ 수호령과의 시련 시작! (도전) ➔`;
+            document.getElementById("midBossNoticeStartBtn").innerText = `⚔️ 수호령과의 시련 시작! ➔`;
         }
 
         document.getElementById("midBossNoticeArtBox").innerHTML = getThemeGuardianBossSVG(theme.type);
@@ -5949,28 +5989,33 @@ const recTime = document.getElementById("recFastestTime");
         }, 900);
     }
 
-// 수호령전 함수
-function startMidBossRaid() {
+    // 수호령전 함수
+    function startMidBossRaid() {
+        const activeMap = worldMaps.find(m => m.id === currentMapId) || worldMaps[0];
+        const theme = getMapTheme(activeMap.name, activeMap.id);
+        const isReExam = isMapBossDefeated(activeMap.id); // 2회차 이상 여부 판별
+
         bossMode = "mid";
-        bossMaxHp = 5;
+        bossMaxHp = isReExam ? 7 : 5;     // 🌟 2회차는 피 7!
         bossHp = bossMaxHp;
-        playerShields = PLAYER_MAX_SHIELDS; // 하트 3개 완충
-        bossTimeLimit = 7.0;
+        playerShields = PLAYER_MAX_SHIELDS;
+        bossTimeLimit = isReExam ? 5.0 : 7.0; // 🌟 2회차는 5초 타임어택!
         isPhase2Enraged = false;
-        hasUsedLastStand = true;  // 🌟 수호령전에서는 부활 기믹 원천 봉쇄!
+        hasUsedLastStand = true;  // 수호령전은 부활 없음
         isLastStandMode = false;
         isBossChecking = false;
 
-        const activeMap = worldMaps.find(m => m.id === currentMapId) || worldMaps[0];
         bossWordPool = [...activeMap.words];
-        const theme = getMapTheme(activeMap.name, activeMap.id);
 
         document.getElementById("bossTopStatusBox").className = "boss-top-status midboss-mode";
         document.getElementById("bossHpRow").className = "boss-hp-row midboss-mode";
         document.getElementById("bossHpTrack").className = "boss-hp-track midboss-mode";
         document.getElementById("bossHpBar").className = "boss-hp-fill midboss-mode";
-        document.getElementById("bossNameDisplay").innerText = `🛡️ ${theme.guardianName}`;
-        document.getElementById("bossQuestionTag").innerText = "🌿 수호령의 영지 종합 시험 (7초)";
+        
+        // 2회차 전용 명칭 및 안내 태그
+        document.getElementById("bossNameDisplay").innerText = isReExam ? `🛡️ ${theme.guardianName}의 재시험` : `🛡️ ${theme.guardianName}`;
+        document.getElementById("bossQuestionTag").innerText = isReExam ? `⚡ ${theme.guardianName}의 재시험 (5초)` : `🌿 수호령의 영지 종합 시험 (7초)`;
+
         document.getElementById("bossQuestionTag").style.background = "#065f46";
         document.getElementById("bossQuestionTag").style.color = "#a7f3d0";
         document.getElementById("bossWordDisplay").style.color = "#065f46";
@@ -5991,26 +6036,33 @@ function startMidBossRaid() {
         });
     }
 
-// 마왕 레이드 함수
+    // 마왕 레이드 함수
     function startFinalBossRaid() {
         Sound.click();
         bossStartTime = Date.now();
         bossMode = "final";
-        bossMaxHp = 10; // 🌟 체력 10
+
+        const isRepeated = isFinalExamDefeated(); // 2회차 이상 클리어 유저 판별
+        bossMaxHp = isRepeated ? 12 : 10;         // 🌟 2회차는 피 12!
         bossHp = bossMaxHp;
         playerShields = PLAYER_MAX_SHIELDS;
-        bossTimeLimit = 5.0;
+        bossTimeLimit = isRepeated ? 4.0 : 5.0;   // 🌟 2회차 기본 4.0초 타임어택!
         bossWordPool = getAllUniverseWords().sort(() => Math.random() - 0.5);
         isPhase2Enraged = false;
-        hasUsedLastStand = false;
+        
+        // 🌟 [하드코어] 2회차는 플레이어 부활 특전 완전 봉쇄 (1회차만 부활 허용)
+        hasUsedLastStand = isRepeated ? true : false;
         isLastStandMode = false;
 
         document.getElementById("bossTopStatusBox").className = "boss-top-status";
         document.getElementById("bossHpRow").className = "boss-hp-row";
         document.getElementById("bossHpTrack").className = "boss-hp-track";
         document.getElementById("bossHpBar").className = "boss-hp-fill";
-        document.getElementById("bossNameDisplay").innerText = "👑 마왕 『EXAM』의 심판";
-        document.getElementById("bossQuestionTag").innerText = "⚡ 마왕의 시련 주문 (5초)";
+        
+        // 2회차 타이틀 & 태그 적용
+        document.getElementById("bossNameDisplay").innerText = isRepeated ? "🔥 마왕 『EXAM』과의 재결전" : "👑 마왕 『EXAM』의 심판";
+        document.getElementById("bossQuestionTag").innerText = isRepeated ? "부활한 마왕을 저지하라! (4초)" : "⚡ 마왕의 시련 주문 (5초)";
+
         document.getElementById("bossQuestionTag").style.background = "#831843";
         document.getElementById("bossQuestionTag").style.color = "#fbcfe8";
         document.getElementById("bossWordDisplay").style.color = "#831843";
@@ -6025,7 +6077,6 @@ function startMidBossRaid() {
         updateBossUI();
         
         // 🌟 1회차/2회차 판별하여 대화 먼저 시작!
-        const isRepeated = isFinalExamDefeated();
         const scriptKey = isRepeated ? "intro_repeat" : "intro_first";
         const tagTitle = isRepeated ? "✦ RESURRECTION OF EXAM ✦" : "✦ THE FINAL CLASH ✦";
 
@@ -6123,12 +6174,12 @@ function startMidBossRaid() {
             saveRecords();
 
             if (bossMode === "mid") {
-                showGameAlert("수호령의 시련 실패", "결계가 모두 소진되었습니다.\n영지의 정령들을 복습한 후 다시 도전하십시오!", "전초기지로 복귀", "🛡️ TRIAL FAILED", () => {
+                showGameAlert("수호령의 시련 실패", "결계가 모두 소진되었어...\n내가 제대로 예습 복습 하랬잖아! 빨리 와!!", "전초기지로 복귀", "🛡️ TRIAL FAILED", () => {
                     document.getElementById("bossScreen").style.display = "none";
                     openMapLobby(currentMapId);
                 });
             } else {
-                showGameAlert("마왕 토벌 실패", "마왕의 압도적인 마력에 결계가 무너졌습니다.\n재정비 후 다시 도전하십시오!", "대륙 지도로 복귀", "💥 DEFEATED", () => {
+                showGameAlert("마왕 토벌 실패", "마왕에게 결계가 무너졌어. 역시 아직인가....\n뭐해, 빨리 안 오고?! 죽기 싫으면 빨리 튀어!", "대륙 지도로 복귀", "💥 DEFEATED", () => {
                     document.getElementById("bossScreen").style.display = "none";
                     renderTitleScreen();
                 });
@@ -6179,17 +6230,22 @@ function startMidBossRaid() {
         choicesGrid.style.opacity = "1";
 
 
-        // 4. [광폭화 각성 체크] 팝업이 닫힐 때까지 타이머 대기
-        if (bossMode === "final" && bossHp <= 5 && !isPhase2Enraged) {
+        // 4. [광폭화 각성 체크] 2회차는 피 6 이하일 때 초광속 2.8초 발동!
+        const isRepeated = isFinalExamDefeated();
+        const enrageThreshold = isRepeated ? 6 : 5; // 체력 절반 기준
+
+        if (bossMode === "final" && bossHp <= enrageThreshold && !isPhase2Enraged) {
             isPhase2Enraged = true;
-            bossTimeLimit = 3.5;
+            bossTimeLimit = isRepeated ? 2.8 : 3.5; // 🌟 2회차는 2.8초!
+            const limitText = isRepeated ? "2.8초" : "3.5초";
+            
             Sound.wrong();
-            document.getElementById("bossQuestionTag").innerText = "🔥 [광폭화] 초광속 시련 (3.5초!)";
+            document.getElementById("bossQuestionTag").innerText = `🔥 [광폭화] 초광속 시련 (${limitText}!)`;
             document.getElementById("bossQuestionTag").style.background = "#dc2626";
 
             showGameAlert(
                 "마왕 EXAM 광폭화!", 
-                "마왕이 폭주하며 시험 종료 시간이 촉박해집니다!\n제한 시간이 3.5초로 급감합니다!", 
+                `마왕이 폭주한다!\n제한 시간이 ${limitText}로 급감!`, 
                 "결사 항전! ➔", 
                 "🔥 ENRAGED PHASE",
                 () => {
@@ -6269,7 +6325,7 @@ function startMidBossRaid() {
         clearInterval(bossTimerInterval);
         Sound.wrong();
         
-        showGameAlert("결계 파괴 직전!", "영혼의 카운터 어택!\n단 2초 안에 정답을 맞히면 결계(하트 1개)가 복구됩니다!", "카운터 발동! ➔", "🚨 LAST STAND", () => {
+        showGameAlert("결계 파괴 직전!", "영혼의 카운터 어택이다!\n내가 버티는 동안... 2초 안에 제대로 주문을 외워라! (맞히면 하트 1개가 복구)", "카운터 발동! ➔", "🚨 LAST STAND", () => {
             // 알림창 닫힌 뒤 타이머 스타트!
             startBossTimer();
         });
@@ -6318,7 +6374,7 @@ function startMidBossRaid() {
                     updateBossUI();
 
                     // 🌟 팝업의 [전투 계속하기 ➔] 버튼을 눌렀을 때 다음 문제로 부드럽게 전환!
-                    showGameAlert("카운터 적중!", "극적으로 결계가 복구되고\n마왕에게 강력한 반격을 가했습니다!", "전투 계속하기 ➔", "✨ REVIVAL SUCCESS", () => {
+                    showGameAlert("카운터 적중!", "와... 네 덕분에 죽을 뻔 했잖아!\n흥, 됐어. 크게 한방 먹였으니!", "전투 계속하기 ➔", "✨ REVIVAL SUCCESS", () => {
                         isBossChecking = false;
                         loadNextBossQuestion();
                     });
@@ -6421,14 +6477,16 @@ function handleMidBossVictory() {
             // 안내 멘트 보강
             if (allMapsConquered && decayedWords.length > 0) {
                 document.getElementById("endingDesc").innerHTML = `
-                    수호령의 시련을 통과했습니다!<br>
-                    하지만 대륙 곳곳에 <b>침식된 정령(${decayedWords.length}마리)</b>이 남아있어<br>마왕의 결계가 열리지 않습니다.<br>
-                    대륙으로 돌아가, 침식된 정령들을 먼저 구출하십시오!
+                    수호령의 시련을 이겨냈다!<br><br>
+                    하지만 대륙 곳곳에 <b>침식된 정령(${decayedWords.length}마리)</b>이 남아있어<br>아직은 마왕을 둘러싼 결계가 열리지 않았어.<br><br>
+                    대륙으로 돌아가, 침식된 정령들을 먼저 구출해야해!
                 `;
             } else {
                 document.getElementById("endingDesc").innerHTML = `
-                    수호령의 시련을 완벽하게 통과했습니다!<br>
-                    성역의 수호령이 당신의 권능을 인정하고<br>영원한 낙원의 축복이 내렸습니다!
+                    수호령의 시련을 완벽하게 통과했구나!<br>
+                    성역의 수호령이 네 능력을 인정하고<br>이곳에 낙원의 축복이 내렸어.<br><br>
+                    크흠... 잘 했다. 하지만, 이게 끝은 아니니까!<br>
+                    자, 어서 나아가자고.
                 `;
             }
 
@@ -6492,14 +6550,14 @@ function handleMidBossVictory() {
     let universalDialogueList = [];
     let universalDialogueIdx = 0;
     let onUniversalDialogueEnd = null;
-    let universalDefaultImg = "images/demon_exam.png";
+    let universalDefaultImg = "images/demon_exam.webp";
 
     // 🌟 [핵심 함수] 게임 어디서든 이 함수 1줄만 호출하면 대화창이 상영됩니다!
     function runDialogueScene(scriptList, tagTitle = "✦ DIALOGUE ✦", onComplete = null, sceneImg = null) {
         universalDialogueList = scriptList || [];
         universalDialogueIdx = 0;
         onUniversalDialogueEnd = onComplete;
-        universalDefaultImg = sceneImg || "images/demon_exam.png";
+        universalDefaultImg = sceneImg || "images/demon_exam.webp";
 
         const tagEl = document.getElementById("dialoguePhaseTag");
         if (tagEl) tagEl.innerText = tagTitle;
@@ -6563,7 +6621,7 @@ function handleMidBossVictory() {
     // 🌟 기존 마왕전 대화 호환성 100% 보장 래퍼
     function startBossDialogue(scriptKey, tagText, onComplete) {
         const scripts = BOSS_SCRIPTS[scriptKey] || [];
-        runDialogueScene(scripts, tagText, onComplete, "images/demon_exam.png");
+        runDialogueScene(scripts, tagText, onComplete, "images/demon_exam.webp");
     }
 
 
@@ -6614,7 +6672,7 @@ function handleMidBossVictory() {
         // 🌟 [핵심 해결책] 수료증에 새긴 이름을 구글 클라우드에 0.1초 만에 즉시 영구 저장!
         syncToCloud(true);
 
-        showGameAlert("성명 각인 완료", `[${name}] 술사님의 성명이\n클라우드에 각인되었습니다!`, "확인", "📜 CERTIFICATE SAVED");
+        showGameAlert("성명 각인 완료", `[${name}] 네 대단한 이름이\n제대로 각인되었어. 정말로... 수고했다, 내 제자!`, "확인", "📜 CERTIFICATE SAVED");
     }
 
     function backToTitleFromBossVictory() {
@@ -6690,7 +6748,7 @@ function handleMidBossVictory() {
                 // 아직 각인된 단어가 없는 영지 안내
                 const emptyMsg = document.createElement("div");
                 emptyMsg.style.cssText = "font-size:11.5px; color:#94a3b8; font-weight:700; text-align:center; padding:8px 0;";
-                emptyMsg.innerText = "아직 이 영지에서 진명의 각인에 도달한 정령이 없습니다.";
+                emptyMsg.innerText = "아직 이 영지에는 진명의 각인에 도달한 정령이 없어.";
                 section.appendChild(emptyMsg);
             }
 
@@ -7014,8 +7072,8 @@ function handleMidBossVictory() {
 // 🌟 로컬 + 클라우드 영구 완전 초기화 함수
     async function handleFullReset() {
         Sound.click();
-        if (confirm("⚠️ 정말로 모든 모험 기록을 초기화하시겠습니까?")) {
-            if (confirm("🚨 [최종 경고]\n클라우드에 저장된 모든 단어 계약, 티어, 랭킹 기록이 영구히 삭제됩니다.\n정말 초기화하시겠습니까?")) {
+        if (confirm("⚠️ 정말로 모든 모험 기록을 초기화할 거냐?")) {
+            if (confirm("🚨 [최종 경고]\n클라우드에 저장된 모든 단어 계약, 티어, 랭킹 기록이 영구히 삭제될 거야.\n진짜로 초기화할 거냐?!")) {
                 
                 // 1. 클라우드 DB 데이터 리셋 (비밀번호와 기본 정보는 안전하게 보존!)
                 if (currentUserDocId) {
@@ -7063,7 +7121,7 @@ function handleMidBossVictory() {
                 // 2. 브라우저 로컬 저장소 완전 삭제
                 localStorage.clear();
                 
-                showGameAlert("모험 기록 초기화", "모든 기록이 깨끗하게 초기화되었습니다.\n기존 비밀번호로 다시 로그인할 수 있습니다.", "새 모험 시작", "✨ RESET COMPLETE", () => {
+                showGameAlert("모험 기록 초기화", "모든 기록이 깨끗하게 초기화되었다...\n기존 비밀번호로 다시 로그인할 수 있으니, 꼭 다시 보자.", "새 모험 시작", "✨ RESET COMPLETE", () => {
                 location.reload();
                 });
             }
@@ -7072,7 +7130,7 @@ function handleMidBossVictory() {
 
     // 🌟 100% 안전한 로그아웃: 클라우드 강제 백업 ➔ 브라우저 로컬 청소 ➔ 새로고침
     async function handleLogout() {
-        if (!confirm("정말 로그아웃하시겠습니까? (현재 기기에서 접속이 해제됩니다)")) {
+        if (!confirm("정말 로그아웃할 거냐? 현재 기기에서 접속이 해제될 거야.")) {
             return;
         }
 
@@ -7232,15 +7290,15 @@ function handleMidBossVictory() {
     // 🚀 [초고속 최적화] 핵심 게임 이미지 백그라운드 사전 캐싱
     function preloadGameAssets() {
         const criticalImages = [
-            "images/title_bg.png",
-            "images/scroll_green.png",
-            "images/scroll_purple.png",
-            "images/scroll_red.png",
-            "images/seal_btn.png",
-            "images/battle_field.png",
-            "images/rest_fire.png",
-            "images/fb_correct.png",
-            "images/fb_wrong.png"
+            "images/title_bg.webp",
+            "images/scroll_green.webp",
+            "images/scroll_purple.webp",
+            "images/scroll_red.webp",
+            "images/seal_btn.webp",
+            "images/battle_field.webp",
+            "images/rest_fire.webp",
+            "images/fb_correct.webp",
+            "images/fb_wrong.webp"
         ];
         criticalImages.forEach(src => {
             const img = new Image();
@@ -7357,7 +7415,7 @@ function handleMidBossVictory() {
                 .get();
 
             if (snapshot.empty) {
-                container.innerHTML = "<div style='text-align:center; padding:15px; font-size:11px; color:#785a3e;'>아직 등록된 랭커가 없습니다. 첫 1위를 차지하세요!</div>";
+                container.innerHTML = "<div style='text-align:center; padding:15px; font-size:11px; color:#785a3e;'>아직 등록된 랭커가 없네. 첫 1위를 차지해봐!</div>";
                 return;
             }
 
@@ -7375,7 +7433,7 @@ function handleMidBossVictory() {
 
         } catch (e) {
             console.error(e);
-            container.innerHTML = "<div style='text-align:center; padding:15px; font-size:11px; color:#dc2626;'>⚠️ 랭킹을 불러오지 못했습니다. (색인 생성 중일 수 있습니다)</div>";
+            container.innerHTML = "<div style='text-align:center; padding:15px; font-size:11px; color:#dc2626;'>⚠️ 랭킹을 불러오지 못했어.</div>";
         }
     }
 
@@ -7543,7 +7601,7 @@ function handleMidBossVictory() {
         Sound.click();
         const decayedWords = getDecayedWords();
         if (decayedWords.length === 0) {
-            showGameAlert("결계 안정", "현재 망각의 안개에 침식된 단어가 없습니다!\n모든 성역이 안전합니다.", "확인", "🛡️ ALL CLEAR");
+            showGameAlert("결계 안정", "현재 망각의 안개에 침식된 정령은 없어.\n별 문제 없어 보이네.", "확인", "🛡️ ALL CLEAR");
             return;
         }
 
@@ -7681,7 +7739,7 @@ function handleMidBossVictory() {
         if (titleScreen && titleScreen.style.display === "flex") {
             showGameAlert(
                 "탐험 종료 안내",
-                "게임을 종료하시려면 브라우저 탭을 닫아주세요.\n(지금까지의 모든 기록은 안전하게 저장되어 있습니다)",
+                "뭐야, 벌써 가게?\n흥... 게임을 끌 생각이라면, 브라우저 탭을 닫아.\n모든 기록은 안전하게 저장될테니 걱정하지 말고.",
                 "계속 탐험하기",
                 "👋 SEE YOU AGAIN"
             );
@@ -7694,7 +7752,7 @@ function handleMidBossVictory() {
     window.addEventListener('touchstart', unlockTTSAudio, { once: true });
 
     // ========================================================
-    // 🛋️ 정령 집중 상담실 엔진 (2단계 양방향 면담 & 3시간 텀)
+    // 🛋️ 정령 성소 엔진 (2단계 양방향 면담 & 3시간 텀)
     // ========================================================
     const COUNSEL_COOL_MS = 3 * 60 * 60 * 1000; // ⏱️ 1단계 ➔ 2단계 사이 마음 정리 시간: 3시간
 
@@ -7725,13 +7783,13 @@ function handleMidBossVictory() {
     }
 
     // ========================================================
-    // 🛋️ 상담실 세션 시작 (시간제한 없는 차분한 면담)
+    // 🛋️ 졍령 성소 상담 세션 시작 (시간제한 없는 차분한 면담)
     // ========================================================
     function startCounselingSession() {
         Sound.click();
         const targets = getCounselingTargets();
         if (targets.length === 0) {
-            showGameAlert("상담실 안정", "현재 서운해하는 정령이 없습니다!\n모든 정령과 원만한 유대를 유지하고 있습니다.", "확인", "✨ ALL CONTENT");
+            showGameAlert("정령 성소 안정", "지금은 서운해하는 정령이 없어.\n정령들과 사이가 꽤 좋아보이는 걸?", "확인", "✨ ALL CONTENT");
             return;
         }
 
@@ -7761,12 +7819,12 @@ function handleMidBossVictory() {
         });
 
         // 퀴즈 화면 UI 세팅
-        document.getElementById("inGameMapTitle").innerText = "🛋️ [정령 집중 상담실] 심층 면담";
+        document.getElementById("inGameMapTitle").innerText = "🛋️ [정령 성소] 심층 면담";
         document.getElementById("gameSectorBadge").innerText = "1:1 집중 케어";
         document.getElementById("gameSectorBadge").style.backgroundColor = "#c2410c";
 
         const exitBtn = document.getElementById("inGameExitBtn");
-        if (exitBtn) exitBtn.innerText = "🗺️ 대륙 지도로";
+        if (exitBtn) exitBtn.innerText = "🗺️ 대륙 지도로 돌아가기";
 
         document.getElementById("titleScreen").style.display = "none";
         document.getElementById("mapLobbyScreen").style.display = "none";
@@ -7797,7 +7855,7 @@ function handleMidBossVictory() {
         Sound.click();
         const decayedWords = getDecayedWords();
         if (decayedWords.length === 0) {
-            alert("현재 침식된 위험 단어가 없습니다!");
+            alert("현재 침식된 정령은 없어. 정말 다행스러운 일이지.");
             return;
         }
 
@@ -7830,7 +7888,7 @@ function handleMidBossVictory() {
             listContainer.appendChild(row);
         });
 
-        document.getElementById("mapBookTitleText").innerText = `⚠️ 긴급 수호전 위험 단어장`;
+        document.getElementById("mapBookTitleText").innerText = `⚠️ 안개 속에 갇힌 정령 목록 (단어장)`;
         document.getElementById("overallPercentageText").innerText = `${decayedWords.length}마리 침식 중`;
         document.getElementById("overallGaugeBar").style.width = "100%";
         document.getElementById("overallGaugeBar").style.background = "linear-gradient(90deg, #d946ef, #701a75)";
@@ -7842,7 +7900,7 @@ function handleMidBossVictory() {
     // 🌟 알림창이 닫힌 뒤 현재 화면에 대기 중인 영어 문제를 읽어주는 함수
     function playCurrentQuestionTTS() {
         setTimeout(() => {
-            // 1. 일반 / 수호전 / 상담실 퀴즈 화면일 때
+            // 1. 일반 / 구출전 / 성소 퀴즈 화면일 때
             const gameScreen = document.getElementById("gameScreen");
             if (gameScreen && gameScreen.style.display === "flex") {
                 const q = roundQuestions[currentQuestionIdx];

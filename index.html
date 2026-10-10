@@ -2292,7 +2292,8 @@
                 <div class="ending-desc" style="color:#064e3b;" id="midBossNoticeDesc">
                     이 영지의 모든 구역을 완벽히 정복했다!<br>
                     이곳을 완전히 정화하고 그 힘을 얻기 위해선<br>
-                    수호령과의 시련(체력 5 / 7초 타임어택)을 통과해야해.<br><br>
+                    수호령과의 시련을 통과해야해.<br>
+                    (체력 5 / 7초 타임어택)<br><br>
                     정신 바짝 차리고... 가자!
 
                 </div>
@@ -4592,7 +4593,8 @@ const recTime = document.getElementById("recFastestTime");
             const minutes = String(lastMod.getMinutes()).padStart(2, '0');
             
             // 💡 게임 버전, 빌드 버전, 최신 버전
-            buildEl.innerText = `v1.3.2 · Update: ${year}.${month}.${day} ${hours}:${minutes} · All rights reserved · 현수영`
+            buildEl.innerText = `v1.3.2 · Update: ${year}.${month}.${day} ${hours}:${minutes}<br>
+            © 2025-${new Date().getFullYear()} Jayden. All Rights Reserved`
         }
 
         // 7. 최종 화면 전환
@@ -5910,17 +5912,19 @@ const recTime = document.getElementById("recFastestTime");
             document.getElementById("midBossNoticeDesc").innerHTML = `
                 성역의 수호령이 다시 우리 앞에 나타났어.<br>
                 이번에는 우리에게 더 날카로운 각성을 요구하고 있군.<br><br>
-                <b>${theme.guardianName}</b>의 강화된 재시험(<b>체력 7 / 5초 타임어택</b>)을 통과해야한다!
+                <b>${theme.guardianName}</b>의 강화된 재시험을 통과해야한다!<br>
+                (<b>체력 7 / 5초 타임어택</b>)
             `;
             document.getElementById("midBossNoticeStartBtn").innerText = `⚔️ ${theme.guardianName}의 재시험 도전! ➔`;
         } else {
             document.getElementById("midBossNoticeSubBadge").innerText = "GUARDIAN'S TRIAL READY";
             document.getElementById("midBossNoticeTitle").innerText = `[${activeMap.name}] 수호령의 시련 대면`;
             document.getElementById("midBossNoticeDesc").innerHTML = `
-                이 영지의 모든 하위 구역을 완벽히 정복했다!<br>
-                영지를 완전히 정화하기 위해선<br>
-                <b>${theme.guardianName}</b>의 시련을 통과해야해. 긴장하라고! <br>
-                (체력 5 / 7초 타임어택)
+                이 영지의 모든 구역을 완벽히 정복했다!<br>
+                이곳을 완전히 정화하고 그 힘을 얻기 위해선<br>
+                <b>${theme.guardianName}</b>의 시련을 통과해야해<br>
+                (체력 5 / 7초 타임어택)<br><br>
+                정신 바짝 차리고... 가자!
             `;
             document.getElementById("midBossNoticeStartBtn").innerText = `⚔️ 수호령과의 시련 시작! ➔`;
         }

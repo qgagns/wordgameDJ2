@@ -2382,7 +2382,9 @@
     <!-- 📖 [NEW] 1. 책선생의 파이널 특훈 진입 브리핑 모달 -->
     <div id="hardcoreNoticeModal" class="modal" style="background:#fbf6ea; border:3px solid #b45309;">
         <div style="flex:1; display:flex; flex-direction:column; justify-content:center; align-items:center; width:100%;">
-            
+            <div class="art-box" style="margin-bottom:8px; border-color:#b45309; height:200px; box-shadow:0 0 18px rgba(180, 83, 9, 0.35); border-radius:14px; overflow:hidden;">
+                <img src="images/drill_intro.webp" style="width:100%; height:100%; object-fit:cover; display:block;" alt="책선생 특훈 안내">
+            </div>
             <div class="ending-card-box" style="border-color:#b45309; background:#fffbeb; width:100%; padding:14px 12px; margin-bottom:10px;">
                 <span class="ending-badge-top" style="color:#b45309; letter-spacing:2px; font-size:11px;">✦ SPARTAN FINAL DRILL ✦</span>
                 <h2 class="ending-title" id="hardcoreNoticeTitle" style="color:#78350f; font-size:20px; margin:4px 0 8px 0;">📖 책 선생의 파이널 점검</h2>
@@ -6373,8 +6375,7 @@ const recTime = document.getElementById("recFastestTime");
         document.getElementById("bossWordDisplay").style.color = "#b45309";
         document.getElementById("bossWordDisplay").innerText = "READY";
         document.getElementById("bossChoicesGrid").style.opacity = "0";
-        document.getElementById("bossArtBox").innerHTML = getDemonLordArtSVG();
-
+        document.getElementById("bossArtBox").innerHTML = `<img src="images/drill_battle.webp" style="width:100%; height:100%; object-fit:cover; display:block;" alt="책선생 특훈 대치">`;
         document.getElementById("titleScreen").style.display = "none";
         document.getElementById("mapLobbyScreen").style.display = "none";
         document.getElementById("gameScreen").style.display = "none";
@@ -7760,7 +7761,9 @@ function handleMidBossVictory() {
             "intro_boss.webp",
             "intro_mr.book.webp",
             "intro_spirits.webp",
-            "tier_up.webp"
+            "tier_up.webp",
+            "drill_intro.webp",
+            "drill_battle.webp"
         ];
         criticalImages.forEach(filename => {
             const img = new Image();

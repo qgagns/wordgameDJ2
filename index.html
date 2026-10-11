@@ -2392,7 +2392,7 @@
                 
                 <!-- 책선생의 팩폭 호통 대사 -->
                 <div class="ending-desc" style="color:#451a03; font-size:13px; line-height:1.6; margin-bottom:10px;">
-                    "마왕의 시련이 코앞이다! 이대로 멍때릴 시간은 없지!<br><br>
+                    "마왕의 시련이 코앞이다! 이대로 멍때릴 시간은 없지!<br>
                     알짜배기들만 모아서 엑기스로 쥐어짜 줄 테니까,<br>
                     정신 똑바로 차리고 이 악물고 버텨봐라!"
                 </div>
@@ -2437,10 +2437,11 @@
                 <div class="ending-divider" style="color:#b45309;">❖ ❖ ❖</div>
                 
                 <!-- 책선생의 감동 츤데레 칭찬 -->
-                <div class="ending-desc" style="color:#451a03; font-size:13px; line-height:1.55; font-weight:700; margin-bottom:8px;">
-                    "오... 내 지옥 특훈을 기어코 버텨냈단 말이지?<br>
+                <div class="ending-desc" style="color:#451a03; font-size:13px; line-height:1.55; font-weight:800; margin-bottom:8px;">
+                    "오호...?<br>
+                    내 지옥 특훈을 기어코 버텨냈단 말이지?<br><br>
                     솔직히... 조금 감동했다.<br><br>
-                    <b>이 정도 독기면 실전에서도 1등급은 무조건 네 거다!</b>"
+                    이 정도 독기면 실전에서도 <b></b>1등급</b>은 무조건 네 거다!"
                 </div>
 
                 <!-- 완주 기록 알약 배지 -->
@@ -2960,6 +2961,15 @@
                         <div class="record-item-box">
                             <span class="record-item-label">⏳ 타임오버 횟수</span>
                             <span class="record-item-val" id="recTimeOutCount">0회</span>
+                        </div>
+
+                        <div class="record-item-box" style="border-color:#f59e0b; background:#fffbeb;">
+                            <span class="record-item-label" style="color:#b45309;">📖 특훈 최단시간</span>
+                            <span class="record-item-val" id="recFastestDrill" style="color:#b45309;">기록 없음</span>
+                        </div>
+                        <div class="record-item-box" style="border-color:#f59e0b; background:#fffbeb;">
+                            <span class="record-item-label" style="color:#b45309;">🏅 특훈 누적 완주</span>
+                            <span class="record-item-val" id="recDrillClearCount" style="color:#b45309;">0회</span>
                         </div>
                     </div>
                 </div>
@@ -4124,6 +4134,11 @@ const recTime = document.getElementById("recFastestTime");
         document.getElementById("recBossClearCount").innerText = `${gameRecords.bossClearCount || 0}회`;
         document.getElementById("recTotalWrong").innerText = `${gameRecords.totalWrong || 0}회`;
         document.getElementById("recTimeOutCount").innerText = `${gameRecords.timeOutCount || 0}회`;
+        // 🌟 [추가] 책선생 특훈 최단시간 & 완주 횟수 출력
+        const dTimeEl = document.getElementById("recFastestDrill");
+        if (dTimeEl) dTimeEl.innerText = (gameRecords.fastestDrillTime && gameRecords.fastestDrillTime < 9999) ? `${gameRecords.fastestDrillTime}초 ⚡` : "기록 없음";
+        const dCountEl = document.getElementById("recDrillClearCount");
+        if (dCountEl) dCountEl.innerText = `${gameRecords.drillClearCount || 0}회`;
         const container = document.getElementById("achieveListContainer");
         if (!container) return;
         container.innerHTML = "";
@@ -6311,8 +6326,12 @@ const recTime = document.getElementById("recFastestTime");
             const timeLimit = hc.timeLimit || 3.5;
             const pHearts = hc.playerHp || 3;
 
-            scopeEl.innerHTML = `🎯 출제 범위: <b>${scopeText}</b><br>⚡ 특훈 스펙: <b>${hpCount}문제</b> · <b>${timeLimit}초 타임어택</b> · 하트 <b>${pHearts}개</b>`;
-        }
+            // 🏆 내 최고 기록 및 누적 완주 횟수 문구 생성
+            const bestText = (gameRecords.drillClearCount > 0 && gameRecords.fastestDrillTime)
+                ? `🏆 내 최고 기록: <b style="color:#b45309;">${gameRecords.fastestDrillTime}초</b> (총 ${gameRecords.drillClearCount}회 완주)`
+                : `🏆 내 최고 기록: <b style="color:#785a3e;">아직 완주 기록 없음 (첫 도전!)</b>`;
+
+            scopeEl.innerHTML = `🎯 출제 범위: <b>${scopeText}</b><br>⚡ 특훈 스펙: <b>${hpCount}문제</b> · <b>${timeLimit}초 타임어택</b> · 하트 <b>${pHearts}개</b><br>${bestText}`;        }
 
         const modal = document.getElementById("hardcoreNoticeModal");
         if (modal) modal.style.display = "flex";
@@ -6485,6 +6504,15 @@ const recTime = document.getElementById("recFastestTime");
             if (bossMode === "hardcore") {
                 Sound.fanfare();
                 const elapsedSec = parseFloat(((Date.now() - bossStartTime) / 1000).toFixed(1));
+
+                // 🌟 [기록 갱신] 최단시간 신기록 갱신 및 누적 완주 횟수 카운트
+                if (!gameRecords.fastestDrillTime || elapsedSec < gameRecords.fastestDrillTime) {
+                    gameRecords.fastestDrillTime = elapsedSec;
+                }
+                gameRecords.drillClearCount = (gameRecords.drillClearCount || 0) + 1;
+                saveRecords();
+                syncToCloud(true); // 클라우드에 즉시 영구 저장
+
                 const pill = document.getElementById("hardcoreVictoryTimePill");
                 if (pill) pill.innerText = `특훈 완주: ${elapsedSec}초 돌파 ⚡`;
 

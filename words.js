@@ -362,7 +362,7 @@ raise	[동] 증진시키다; 올리다
 reveal	[동] 드러내다, 밝히다
 root	[동] 뿌리를 두다, 근거하다
 stimulate	[동] 자극하다, 촉진하다
-stimulus (- stimuli)	[명] 자극 (복수형 stimuli)
+stimulus (- stimuli)	[명] 자극
 ignore	[동] 무시하다
 minimize	[동] 최소화하다
 refrain from	[숙] ~을 삼가다, 자제하다

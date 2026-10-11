@@ -41,6 +41,190 @@ const GAME_CONFIG = {
 
 const WORLD_MAPS_TEXT = `
 
+[교모의 바다 1]
+ambiguous	[형] 모호한
+assumption	[명] 가정, 전제
+attention literacy	[명] 주의력 문해력
+awareness	[명] 의식, 자각
+clarify	[동] 명확히 하다
+conscious of	[숙] ~을 의식하는
+consciousness	[명] 의식
+declaration	[명] 선언
+explicit	[형] 명시적인
+foresee	[동] 예견하다
+implication	[명] 영향, 함의
+implicit	[형] 암시적인
+imply	[동] ~을 암시하다, 내포하다
+insight	[명] 통찰력
+literacy	[명] 문해력, 소양
+manifestation	[명] 표현, 표명
+media literacy	[명] 미디어 문해력
+observant	[형] 관찰력이 뛰어난
+perceive	[동] 인식하다, 여기다
+recognize ~ as ...	~을 …로 인정하다
+refer to	[숙] ~을 지칭하다
+regard ~ as …	~을 …로 여기다[간주하다]
+self-awareness	[명] 자기 인식
+subtle	[형] 미묘한
+thoroughly	[부] 철저하게, 꼼꼼하게
+underestimate	[동] 과소평가하다
+unpack	[동] 분석하다, (짐을) 풀다
+activeness	[명] 활발함, 적극성
+admiration	[명] 존경, 감탄
+admire	[동] 동경하다, 존경하다, 감탄하다
+commitment	[명] 헌신, 전념
+compassion	[명] 연민
+deliberate	[형] 의도적인, 고의의, 신중한
+despair	[명] 절망
+devotion	[명] 헌신
+guilt	[명] 죄책감
+half-hearted	[형] 성의 없는
+honour	① [동] 존중하다, 기리다; ② [명] 명예
+inclined	[형] ~하는 경향이 있는
+intended	[형] 고의된, 의도된
+motivate	[동] 동기를 부여하다
+preference	[명] 선호
+reluctant	[형] 꺼리는
+self-worth	[명] 자부심, 자존감
+strain	[명] 중압감, 압박
+advantage	[명] 이점, 장점
+attribute	① [명] 속성; ② [동] ~탓으로 돌리다
+beneficial	[형] 유익한, 이로운
+categorical	① [형] 단정적인; ② [형] 범주의
+competent	[형] 유능한
+credibility	[명] 신뢰성
+critical	[형] 비판적인; 중대한
+crucial	[형] 결정적인, 매우 중요한
+equivalent	[명] 상응하는 것, 등가물
+essential	[형] 필수적인
+evaluate	[동] 평가하다
+evaluation	[명] 평가
+fascinating	[형] 매혹적인, 대단히 흥미로운
+flexibility	[명] 융통성, 유연성
+flexible	[형] 융통성 있는
+harsh	[형] 가혹한
+influential	[형] 영향력 있는
+potential	[명] 가능성, 잠재력; [형] 잠재적인
+recommendation	[명] 권고, 추천
+requirement	[명] 요건
+significant	[형] 중대한, 상당한
+skilled	[형] 숙련된, 능숙한
+specialized	[형] 전문적인, 전문화된
+uniform	[형] 일관된, 획일적인
+uniqueness	[명] 고유성
+valuable	[형] 가치 있는, 소중한, 귀중한
+vibrant	[형] 활기찬, 생기가 넘치는
+charity	[명] 자선단체
+closeness	[명] 친밀함
+collective	[형] 집단적인
+confront	[동] ~에 맞서다
+cooperation	[명] 협력
+culture-specific	[형] 문화 특유의
+discrimination	[명] 차별
+dispute	[명] 분쟁, 논쟁
+diversity	[명] 다양성
+generous	[형] 관대한, 후한
+immigrant	[명] 이민자
+individualism	[명] 개인주의
+injustice	[명] 불의, 부당함, 불평등
+instruct	[동] 지시하다
+instructor	[명] 강사, 조교
+interaction	[명] 상호작용
+interdependence	[명] 상호의존
+petition	[명] 청원(서)
+progressive	[형] 진보적인
+racial	[형] 인종의
+treaty	[명] 조약, 협약
+unemployment	[명] 실업(률)
+unite	[동] 단결하다
+
+
+[교모의 바다 2]
+accessible	[형] 쉽게 얻을[이용할] 수 있는
+account A as B	[숙] A를 B로 여기다
+address	[동] ~에게 말을 건네다; [동] (문제·쟁점 등)을 다루다
+cheat	[동] 속이다, 부정행위를 하다
+compensate for	[동] ~을 보상하다
+contribute to ~	~에 기여하다
+deed	[명] 행위
+distract	[동] 주의를 산만하게 하다
+distraction	[명] 주의 산만
+divert	[동] (주의를) 돌리다
+ingest	[동] 섭취하다, 흡수하다
+manipulation	[명] 교묘한 처리, 조작
+overload	[동] 과부하를 주다
+overlook	[동] 간과하다
+persuade	[동] ~을 설득하다
+prioritize	[동] ~을 최우선시하다
+provoke	[동] 자극하다, 유발하다
+quick-fix	[명] 임시방편, 미봉책
+relate A to B	A를 B와 관련짓다
+restore	[동] 회복하다
+selection	[명] 갖춰 놓은 것
+take pains to	[숙] 애써 ~하다
+tasked with	~하는 과제를 맡은
+afford to	[동] ~할 여유가 되다, 형편이 되다
+affordable	[형] 살 만한 가격의, 저렴한
+consumption	[명] 소비(량), 섭취(량)
+convenience	[명] 편리(함), 편의
+cosmetics	[명] 화장품, 미용 제품
+customization	[명] 맞춤화
+disposable	[형] 일회용의
+earnings	[명] 수익, 소득
+luxury	[명] 사치(품)
+manufacture	[동] ~을 제조하다
+means	[명] [단·복수 동형] 수단
+overconsumption	[명] 과소비, 과잉 섭취
+ownership	[명] 소유(권)
+personalization	[명] 개인 맞춤화
+personalized	[형] (개인) 맞춤형의
+reusable	[형] 재사용이 가능한
+revenue	[명] 수익, 수입
+accumulate	[동] 축적되다
+acquisition	[명] 습득
+decline	[명] 감소
+deepen	[동] 심화시키다
+diminishment	[명] 위축, 감소
+driver	[명] 동인, 추진 요인
+emerge	[동] 나타나다, 출현하다
+enhance	[동] ~을 높이다, 향상시키다
+environmentally friendly	환경친화적인, 친환경적인
+fragmentation	[명] 프래그멘테이션, 파편화
+groundbreaking	[형] 획기적인, 혁신적인
+in turn	결과적으로
+initially	[부] 처음에, 초기에
+mortality	[명] 필멸성
+perpetuate	[동] 지속시키다, 영속시키다
+phenomenon	[명] 현상
+pioneer	[명] 선구자, 개척자
+re-establish	[동] 재확립하다
+revolutionize	[동] 혁신을 일으키다
+shift	[명] 변화
+transformation	[명] 변화, 변형
+transience	[명] 덧없음, 일시성
+birthplace	[명] 탄생지, 발생지
+embedded	[형] 깊이 새겨진, 뿌리 박힌
+for its own sake	[숙] 그 자체를 위해
+originate from ~	~에서부터 유래하다, 비롯되다
+per se	[숙] 그 자체로
+rooted in	[숙] ~에 뿌리를 둔
+a range[variety] of ~	[숙] 다양한, 넓은 범위의 ~, 다양한 종류의 ~
+burdening	[형] 부담을 주는
+dominant	[형] 우세한, 지배적인
+excessive	[형] 과도한, 지나친
+genre	[명] 장르, 유형
+hardship	[명] 어려움
+inconsistency	[명] 불일치
+indigestion	[명] 소화불량
+indirect	[형] 간접적인
+passive	[형] 수동적인
+virtual	[형] 가상의
+vulnerability	[명] 취약성
+from one’s perspective	~의 관점[시각]에서
+relative to	[전] ~에 상대적인, ~에 따른
+subject	① [명] 피실험자; ② [명] 주제, 과목
+
+
 [실모의 숲]
 # 
 clear the way towards	[숙]	~로 가는 길을 열어주다
@@ -362,7 +546,7 @@ raise	[동] 증진시키다; 올리다
 reveal	[동] 드러내다, 밝히다
 root	[동] 뿌리를 두다, 근거하다
 stimulate	[동] 자극하다, 촉진하다
-stimulus (- stimuli)	[명] 자극
+stimulus (- stimuli)	[명] 자극 (복수형 stimuli)
 ignore	[동] 무시하다
 minimize	[동] 최소화하다
 refrain from	[숙] ~을 삼가다, 자제하다

@@ -286,4 +286,132 @@ ultimately, in the end	[접부] 결국, 최종적으로, 궁극적으로
 to start (begin) with, first of all	[접부] 첫째로, 무엇보다 먼저
 subsequently	[접부] 그 후에, 이어서
 
+[실모4,5의 늪 1]
+algorithmic	[형] 알고리즘의
+discernment	[명] 안목, 분별력
+distinguish	[동] 구별하다, 분간하다
+expertise	[명] 전문 지식
+objective	[형] 객관적인
+precise	[형] 정확한, 정밀한
+predict	[동] 예측하다
+recall	[동] 상기하다, 회상하다
+recognition	[명] 인정, 인식
+capital letter	[명] 대문자
+convey	[동] 전달하다, 전하다
+demonstrate	[동] 입증하다, 보여주다
+fluent	[형] 능숙한, 유창한
+grammatical	[형] 문법적인
+highlight	[동] 강조하다, 두드러지게 하다
+literary	[형] 문학의
+script	[명] 문자, 문자 체계; 대본
+short for	[숙] ~의 줄임말인
+signify	[동] 의미하다, 나타내다
+spotlight	[명] 스포트라이트, 대중의 주목
+uppercase	[형] 대문자의
+attachment	[명] 애착, 결속
+depressive	[형] 우울증의, 우울한
+desperate	[형] 절박한, 자포자기의
+detachment	[명] 초연함, 거리 두기, 분리
+excite	[동] 흥분시키다, 열광시키다
+fatigue	[명] 피로, 피곤
+inclination	[명] 성향, 경향
+intimacy	[명] 친밀함
+mourning	[명] 애도
+playful	[형] 장난스러운, 유쾌한
+readiness	[명] 준비된 상태, 기꺼이 하는 태도
+tendency	[명] 경향, 성향
+unreserved	[형] 아낌없는, 조건 없는
+willingness	[명] 기꺼이 하는 마음, 의지
+accommodate	[동] 부응하다, 수용하다
+association	[명] 연관, 유대
+authority	[명] 당국, 기관; 권위
+autonomous	[형] 자주적인, 자율적인
+behavioral	[형] 행동의, 행동 양식의
+collectivist	[명] 집단주의자; [형] 집단주의의
+identity	[명] 정체성
+institution	[명] 기관, 협회
+interactive	[형] 쌍방향의, 대화형의
+norm	[명] 규범, 기준
+solidarity	[명] 연대, 결속
+subculture	[명] 하위문화
+supremacy	[명] 최고, 우위, 패권
+transparency	[명] 투명성
+advocate	[동] 옹호하다, 지지하다
+calamity	[명] 재난, 참사
+claim	[동] 주장하다; [명] 주장
+commit	[동] (과오·범죄를) 저지르다, 범하다
+competition	[명] 경쟁
+confrontation	[명] 대립, 대결
+disagreement	[명] 의견 충돌, 불일치
+dishonest	[형] 부정한, 불직한
+flawed	[형] 흠이 있는, 결함 있는
+theft	[명] 절도, 도둑질
+adapt	[동] 맞추다, 적응하다
+alter	[동] 바꾸다, 고치다
+differentiation	[명] 구별, 분화
+redirect	[동] 다른 방향으로 돌리다, 전환하다
+replacement	[명] 대체, 교체
+tailored	[형] 맞춤형의
+
+
+[실모4,5의 늪 2]
+attract	[동] 끌어들이다, 유인하다
+base	[동] 기초를 두다
+encourage	[동] 장려하다, 북돋우다
+raise	[동] 증진시키다; 올리다
+reveal	[동] 드러내다, 밝히다
+root	[동] 뿌리를 두다, 근거하다
+stimulate	[동] 자극하다, 촉진하다
+stimulus	[명] 자극 (복수형 stimuli)
+ignore	[동] 무시하다
+minimize	[동] 최소화하다
+refrain from	[숙] ~을 삼가다, 자제하다
+succumb to	[숙] ~에 굴복하다
+withdraw	[동] 물러나다, 손을 떼다
+yield to	[숙] ~에 굴복하다, 넘겨주다
+acknowledging	[동] 인정하다, 사례하다
+attempt	[동] 시도하다; [명] 시도
+ensure	[동] 보장하다, 확실하게 하다
+impact	[명] 영향, 충격
+improvement	[명] 향상, 개선
+method	[명] 방법, 수단
+performance	[명] 공연, 연주; 성과
+process	[동] 처리하다; [명] 과정
+productive	[형] 생산적인
+proposal	[명] 제안
+seek	[동] 구하다, 추구하다
+solution	[명] 해결책
+validation	[명] 확인, 인정
+invest	[동] 투자하다
+necessity	[명] 필요성, 필수품
+receipt	[명] 수령, 수취
+recipient	[명] 수용자, 수취인
+sake	[명] 위함, 목적, 이익
+spending	[명] 소비, 지출
+availability	[명] 이용 가능성, 유효성
+blindly	[부] 맹목적으로
+capacity	[명] 능력, 수용력
+casual	[형] 격식을 차리지 않는, 일상적인
+clinical	[형] 임상의
+comparable	[형] 비교할 만한, 필적하는
+dietary	[형] 식사의, 음식의
+effective	[형] 효과적인
+era	[명] 시대
+exposure	[명] 노출
+feature	[명] 특징, 특색
+flexibly	[부] 유연하게, 융통성 있게
+independent of	[전] ~와 무관한, ~로부터 독립된
+initial	[형] 초기의, 처음의
+instant	[형] 즉각적인
+irreversible	[형] 되돌릴 수 없는
+long-term	[형] 장기적인
+meaningful	[형] 의미 있는
+merely	[부] 단지, 그저
+purely	[부] 순전히, 전적으로
+rigorous	[형] 엄격한, 철저한
+security	[명] 안전, 안보
+structural	[형] 구조적인
+sustainable	[형] 지속 가능한
+temporarily	[부] 일시적으로
+
 `;

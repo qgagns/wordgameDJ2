@@ -369,7 +369,6 @@ refrain from	[숙] ~을 삼가다, 자제하다
 succumb to	[숙] ~에 굴복하다
 withdraw	[동] 물러나다, 손을 떼다
 yield to	[숙] ~에 굴복하다, 넘겨주다
-acknowledging	[동] 인정하다, 사례하다
 attempt	[동] 시도하다; [명] 시도
 ensure	[동] 보장하다, 확실하게 하다
 impact	[명] 영향, 충격

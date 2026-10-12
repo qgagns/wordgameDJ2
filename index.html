@@ -22,6 +22,16 @@
             font-family: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
             letter-spacing: -0.3px;
             -webkit-tap-highlight-color: transparent;
+            /* 🛡️ [컨닝 방어] 텍스트 드래그 및 모바일 꾹 누르기 복사 완벽 차단! */
+            user-select: none;
+            -webkit-user-select: none;
+            -webkit-touch-callout: none;
+        }
+        
+        /* 단, 학생이 학번/이름을 입력하는 로그인/수료증 칸은 타이핑해야 하므로 드래그 허용! */
+        input[type="text"], input[type="password"] {
+            user-select: auto;
+            -webkit-user-select: auto;
         }
 
         /* 🌟 [핵심 1] html 태그 자체를 모바일 화면에 100% 꽉 채움! */
@@ -557,7 +567,7 @@
             position: absolute;
             top: 78px;
             right: 0;
-            width: 250px;
+            width: 270px;
             background: #fdfaf2;
             border: 2.5px solid #8f603a;
             border-radius: 14px;
@@ -1057,7 +1067,140 @@
 
 
         /* ========================================================
-           🎰 [FEVER 모드] 화면 테두리 황금빛 불꽃 오라 (가림 현상 100% 해결)
+           🌀 [NEW] 형상변환 정령 룬 타일 조립창 전용 스타일
+           ======================================================== */
+        .morph-box-wrapper {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            height: 100%;
+            justify-content: space-between;
+            align-items: center;
+            box-sizing: border-box;
+            gap: 6px;
+        }
+
+        /* 1. 조립 중인 단어가 실시간으로 찍히는 마력 슬롯 바 */
+        .morph-slot-display {
+            width: 100%;
+            min-height: 48px;
+            background: #ede3cc;
+            border: 2px solid #b59f77;
+            border-radius: 12px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 4px 12px;
+            font-size: 26px;
+            font-weight: 900;
+            color: #2c1a0e;
+            letter-spacing: 3px;
+            text-transform: lowercase;
+            box-shadow: inset 0 2px 6px rgba(0,0,0,0.15);
+            box-sizing: border-box;
+            transition: border-color 0.2s ease;
+        }
+        .morph-slot-display.empty {
+            color: #a18366;
+            font-size: 14px;
+            letter-spacing: normal;
+            font-weight: 800;
+        }
+        .morph-slot-display.shake-error {
+            border-color: #ef4444;
+            animation: slotShakeAnim 0.35s ease-out;
+        }
+        @keyframes slotShakeAnim {
+            0%, 100% { transform: translateX(0); }
+            20% { transform: translateX(-6px); }
+            40% { transform: translateX(6px); }
+            60% { transform: translateX(-4px); }
+            80% { transform: translateX(4px); }
+        }
+
+        /* 2. 알파벳 룬 타일들이 모여있는 랙 (2열 또는 4개씩 자동 정렬) */
+        .morph-tile-rack {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            gap: 6px;
+            width: 100%;
+            padding: 4px 0;
+            box-sizing: border-box;
+        }
+
+        /* 개별 알파벳 룬 타일 버튼 */
+        .morph-tile-btn {
+            width: 44px;
+            height: 44px;
+            background: #fdfaf2;
+            border: 2px solid #c9b48c;
+            border-radius: 10px;
+            font-size: 20px;
+            font-weight: 900;
+            color: #3b1e08;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 3px 6px rgba(0,0,0,0.14);
+            transition: all 0.12s ease;
+            box-sizing: border-box;
+            text-transform: uppercase;
+        }
+        .morph-tile-btn:active {
+            transform: scale(0.92);
+        }
+        .morph-tile-btn.used {
+            opacity: 0.3;
+            pointer-events: none;
+            border-color: #cbd5e1;
+            background: #f1f5f9;
+            box-shadow: none;
+        }
+
+        /* 3. 하단 컨트롤 바 (지우기 & 주문 시전 완성 버튼) */
+        .morph-control-bar {
+            display: flex;
+            width: 100%;
+            gap: 6px;
+            margin-top: 2px;
+            box-sizing: border-box;
+        }
+        .morph-btn-clear {
+            width: 82px;
+            background: #ede3cc;
+            border: 1.5px solid #c9b48c;
+            border-radius: 10px;
+            font-size: 13px;
+            font-weight: 800;
+            color: #785a3e;
+            cursor: pointer;
+            padding: 10px;
+            transition: all 0.12s ease;
+        }
+        .morph-btn-clear:active { transform: scale(0.96); }
+
+        .morph-btn-submit {
+            flex: 1;
+            background: linear-gradient(180deg, #b45309 0%, #78350f 100%);
+            border: 2px solid #f59e0b;
+            border-radius: 10px;
+            font-size: 14.5px;
+            font-weight: 900;
+            color: #ffffff;
+            cursor: pointer;
+            padding: 10px;
+            box-shadow: 0 3px 8px rgba(180, 83, 9, 0.35);
+            transition: all 0.12s ease;
+            letter-spacing: -0.3px;
+        }
+        .morph-btn-submit:active { transform: scale(0.98); }
+
+
+        /* ========================================================
+           🎰 [FEVER 모드] 화면 테두리 황금빛 불꽃 오라
            ======================================================== */
         .fever-vignette-overlay {
             position: absolute;
@@ -1713,7 +1856,7 @@
 
     </style>
 </head>
-<body>
+<body oncontextmenu="return false;" ondragstart="return false;">
 
 <div class="game-container">
     <div class="parchment-inner">
@@ -2459,6 +2602,82 @@
         </div>
     </div>
 
+    <!-- 🏛️ 1. 정령 성소 로비 허브 모달 (2개의 문) -->
+    <div id="shrineHubModal" class="modal" style="background:#fbf6ea; border:3px solid #b45309;">
+        <div style="flex:1; display:flex; flex-direction:column; justify-content:center; align-items:center; width:100%;">
+            
+            <div class="ending-card-box" style="border-color:#b45309; background:#fffbeb; width:100%; padding:14px 12px; margin-bottom:12px;">
+                <span class="ending-badge-top" style="color:#b45309; letter-spacing:2px; font-size:11px;">✦ SANCTUARY SPIRIT SHRINE ✦</span>
+                <h2 class="ending-title" style="color:#78350f; font-size:20px; margin:4px 0 6px 0;">🏛️ 정령 성소 로비</h2>
+                <div class="ending-divider" style="color:#b45309;">❖ ❖ ❖</div>
+                <div class="ending-desc" style="color:#451a03; font-size:13px; line-height:1.55; margin-bottom:6px;">
+                    이곳은 너에게 서운함을 느끼거나,<br>
+                    안개에 상처 입은 정령이 오는 곳이다.<br>
+                    또는 네 쪽에서 먼저 친해지고 싶은 정령들을 불러낼 수도 있지.<br>
+                    <br>
+                    정령들과 친해진다면 그만큼 네 힘이 강해지는 거니까<br>
+                    주저 말고 정령들을 마주하라고.
+                </div>
+            </div>
+
+            <!-- 2개의 문 선택 카드 -->
+            <div style="width:100%; display:flex; flex-direction:column; gap:8px;">
+                <!-- 문 1: 정령 치유실 -->
+                <div id="shrineDoorHurt" class="pop-item" style="padding:12px 14px; background:#fff7ed; border:1.5px solid #ea580c; border-radius:12px; cursor:pointer;" onclick="openShrineRoom('hurt')">
+                    <div style="display:flex; flex-direction:column; text-align:left;">
+                        <span style="font-size:18px; font-weight:900; color:#9a3412;">🍂 정령 치유실</span>
+                        <span style="font-size:13px; color:#c2410c; margin-top:2px;">오답·침식으로 상처 입은 정령 케어</span>
+                    </div>
+                    <span id="shrineHurtCountBadge" style="display:inline-flex; align-items:baseline; font-size:12px; font-weight:900; color:#c2410c; background:#ffedd5; padding:3px 10px; border-radius:8px;"><b style="font-size:18px; margin-right:2px; line-height:1;">0</b>마리 대기</span>
+                </div>
+
+                <!-- 문 2: 친해지고 싶은 정령 교감실 -->
+                <div id="shrineDoorFav" class="pop-item" style="padding:12px 14px; background:#fdf2f8; border:1.5px solid #ec4899; border-radius:12px; cursor:pointer;" onclick="openShrineRoom('fav')">
+                    <div style="display:flex; flex-direction:column; text-align:left;">
+                        <span style="font-size:18px; font-weight:900; color:#9d174d;">💖 정령 교감실</span>
+                        <span style="font-size:13px; color:#be185d; margin-top:2px;">하트(찜)한 정령과의 집중 교감</span>
+                    </div>
+                    <span id="shrineFavCountBadge" style="display:inline-flex; align-items:baseline; font-size:12px; font-weight:900; color:#be185d; background:#fce7f3; padding:3px 10px; border-radius:8px;"><b style="font-size:18px; margin-right:2px; line-height:1;">0</b>마리 찜</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- 하단 닫기 버튼 -->
+        <div style="width:100%; margin-top:10px;">
+            <button class="btn-sub-wood" onclick="closeShrineHub()">
+                🗺️ 대륙 지도로 돌아가기
+            </button>
+        </div>
+    </div>
+
+    <!-- 📜 [NEW] 2. 정령 성소 단어장 선람 모달 (상담 전 단어 복습) -->
+    <div id="shrineWordlistModal" class="modal" style="background:#fbf6ea; border:3px solid #b45309;">
+        <div style="flex:1; display:flex; flex-direction:column; justify-content:flex-start; width:100%; text-align:left;">
+            
+            <!-- 상단 헤더 -->
+            <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:2px dashed #c9b48c; padding-bottom:6px; margin-bottom:8px;">
+                <div>
+                    <h3 id="shrineWordlistTitle" style="font-size:16px; font-weight:900; color:#451a03; margin:0;">🍂 서운해하는 정령 명단</h3>
+                    <div id="shrineWordlistDesc" style="font-size:11px; color:#785a3e; margin-top:2px;">충분히 훑어본 후 상담을 시작하세요.</div>
+                </div>
+                <span id="shrineWordlistCount" style="font-size:12px; font-weight:900; color:#b45309;">총 0마리</span>
+            </div>
+
+            <!-- 단어 리스트 컨테이너 -->
+            <div id="shrineWordlistContainer" style="flex:1; overflow-y:auto; display:flex; flex-direction:column; gap:6px; padding-right:2px; max-height:55vh;"></div>
+        </div>
+
+        <!-- 하단 액션 버튼 -->
+        <div style="width:100%; display:flex; flex-direction:column; gap:6px; margin-top:8px;">
+            <button id="shrineStartQuizBtn" class="btn-wood" style="background:linear-gradient(180deg, #16a34a 0%, #15803d 100%); border-color:#4ade80; color:#ffffff; font-weight:900;" onclick="startShrineRoomQuiz()">
+                🌿 정령들과 상담 시작하기! (출격) ➔
+            </button>
+            <button class="btn-sub-wood" onclick="backToShrineHubFromWordlist()">
+                ↩️ 성소 로비로 돌아가기
+            </button>
+        </div>
+    </div>
+
     <!-- 🌟 컴팩트 플로팅 피드백 팝업 (정답 일러스트 & 콤보 일체형) -->
     <div id="feedbackModal" style="display:none; position:absolute; top:0; left:0; right:0; bottom:0; background:rgba(18, 9, 5, 0.72); z-index:100; justify-content:center; align-items:center; padding:14px; backdrop-filter:blur(3px);">
         <div id="fbCardBody" style="background:#fbf6ea; border:3.5px solid #8f603a; border-radius:20px; padding:16px 18px; width:100%; max-width:380px; box-shadow:0 14px 40px rgba(0,0,0,0.9); display:flex; flex-direction:column; align-items:center; text-align:center; position:relative; animation: popInCard 0.2s cubic-bezier(0.18, 0.89, 0.32, 1.28) forwards; box-sizing:border-box;">
@@ -2482,8 +2701,10 @@
             <!-- 단어 & 한글 뜻 박스 (위아래 2줄 분리형) -->
             <div class="feedback-card" style="margin-bottom:10px; padding:8px 12px; width:100%; box-sizing:border-box; background:#ede3cc; border-radius:12px; border:1.5px solid #c9b48c; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:3px;">
                 <!-- 1행: 영단어 (크고 또렷하게) -->
-                <span id="fbWord" style="font-size:30px; font-weight:900; color:#2c1a0e; letter-spacing:-0.3px; margin-bottom: 10px;">apple</span>
-                
+                <div style="display:flex; align-items:center; justify-content:center; gap:8px; margin-bottom:10px;">
+                    <span id="fbWord" style="font-size:25px; font-weight:900; color:#2c1a0e; letter-spacing:-0.3px;">apple</span>
+                    <button id="fbHeartBtn" style="background:none; border:none; font-size:22px; cursor:pointer; padding:0; line-height:1; transition:transform 0.15s ease;" onclick="toggleCurrentWordFavorite(event)">🤍</button>
+                </div>
                 <!-- 2행: 한글 뜻 (작고 부드럽고 연한 톤) -->
                 <span id="fbMeaning" class="fb-meaning" style="font-size:20px; font-weight:700; color:#785a3e; word-break:keep-all;">사과</span>
             </div>
@@ -3190,7 +3411,8 @@
         const todayStr = new Date().toISOString().slice(0, 10);
         const savedTodayCount = safeStorageGet(`spirit_defense_today_count_${todayStr}`, 0);
         const savedEmergencyDate = safeStorageGet('spirit_emergency_cleared_date', "");
-        const savedAutoSkip = safeStorageGet('spirit_auto_skip_enabled', true);
+        const savedFavorites = safeStorageGet('spirit_favorites', {}); // 👈 🌟 찜한 목록 사전 보존!
+        const savedAutoSkip = safeStorageGet('spirit_auto_skip_enabled', {});
         const savedTts = safeStorageGet('spirit_tts_enabled', true);
         const savedMuted = safeStorageGet('spirit_muted', false);
 
@@ -3207,6 +3429,10 @@
         if (finalEmergencyDate) {
             lastEmergencyClearedDate = finalEmergencyDate;
             safeStorageSet('spirit_emergency_cleared_date', finalEmergencyDate);
+            // 🌟 [핵심] 찜한 정령 목록 완벽 보존 복원!
+            const finalFavs = (cloudData && cloudData.favorites) ? cloudData.favorites : savedFavorites;
+            wordFavorites = finalFavs || {};
+            safeStorageSet('spirit_favorites', wordFavorites);
         }
         safeStorageSet('spirit_auto_skip_enabled', savedAutoSkip);
         safeStorageSet('spirit_tts_enabled', savedTts);
@@ -3343,7 +3569,8 @@
             masteryTimestamps: wordMasteryTimestamps, 
             defenseCounts: wordDefenseCounts,          
             studyHistory: wordStudyHistory,
-            counselingData: wordCounselingData 
+            counselingData: wordCounselingData,
+            favorites: wordFavorites
         };
 
         db.collection(USER_COLLECTION).doc(currentUserDocId).set(payload, { merge: true })
@@ -3702,12 +3929,27 @@
                     const p = line.split('\t');
                     eng = p[0].trim();
                     kor = p.slice(1).join(' ').trim();
-                } else if (line.includes(',')) {
-                    const p = line.split(',');
-                    eng = p[0].trim();
-                    kor = p.slice(1).join(',').trim();
                 }
-                if (eng && kor) currentMap.words.push({ eng, kor });
+                if (eng && kor) {
+                    // 🌟 영지 ID에 'irreg'가 들어간 전용 맵에서만 형상변환 정령으로 정식 파싱!
+                    const isIrregMap = currentMap.id && currentMap.id.toLowerCase().includes('irreg');
+                    const parenMatch = eng.match(/^([^(]+)\s*\(([^)]+)\)/);
+
+                    if (isIrregMap && parenMatch) {
+                        const baseWord = parenMatch[1].trim();
+                        const mutations = parenMatch[2].split(',').map(s => s.trim()).filter(Boolean);
+                        currentMap.words.push({
+                            eng: baseWord,
+                            displayEng: eng, // 단어장에 보여줄 원형 (과거, 분사) 전체 서식
+                            kor: kor,
+                            isMorph: true,
+                            mutations: mutations // ['wrote', 'written']
+                        });
+                    } else {
+                        // 일반 영지는 괄호가 있든 없든 100% 일반 단어로 안전 등록!
+                        currentMap.words.push({ eng, kor });
+                    }
+                }
             }
         });
 
@@ -3883,16 +4125,16 @@
 
     function getDynamicGlobalTiers(totalWords) {
         return [
-            { req: 0, name: "입문 술사 🌱", color: "#64748b" },
-            { req: Math.max(1, Math.floor(totalWords * 0.08)), name: "견습 술사 🐾", color: "#785a3e" },
-            { req: Math.max(2, Math.floor(totalWords * 0.17)), name: "하급 술사 🌿", color: "#166534" },
-            { req: Math.max(3, Math.floor(totalWords * 0.26)), name: "중급 술사 🔮", color: "#0284c7" },
-            { req: Math.max(4, Math.floor(totalWords * 0.36)), name: "상급 술사 ⚡", color: "#ea580c" },
-            { req: Math.max(5, Math.floor(totalWords * 0.47)), name: "고위 술사 💎", color: "#0d9488" },
-            { req: Math.max(6, Math.floor(totalWords * 0.58)), name: "성역의 인도자 🧭", color: "#7c3aed" },
-            { req: Math.max(7, Math.floor(totalWords * 0.69)), name: "영혼의 조율사 🍃", color: "#059669" },
-            { req: Math.max(8, Math.floor(totalWords * 0.80)), name: "빛의 수호자 🛡️", color: "#2563eb" },
-            { req: Math.max(9, Math.floor(totalWords * 0.90)), name: "지혜의 대현자 📜", color: "#b45309" },
+            { req: 0, name: "Ⅰ. 입문 술사 🌱", color: "#64748b" },
+            { req: Math.max(1, Math.floor(totalWords * 0.08)), name: "Ⅱ. 견습 술사 🐾", color: "#785a3e" },
+            { req: Math.max(2, Math.floor(totalWords * 0.17)), name: "Ⅲ. 하급 술사 🌿", color: "#166534" },
+            { req: Math.max(3, Math.floor(totalWords * 0.26)), name: "Ⅳ. 중급 술사 🔮", color: "#0284c7" },
+            { req: Math.max(4, Math.floor(totalWords * 0.36)), name: "Ⅴ. 상급 술사 ⚡", color: "#ea580c" },
+            { req: Math.max(5, Math.floor(totalWords * 0.47)), name: "Ⅵ. 고위 술사 💎", color: "#0d9488" },
+            { req: Math.max(6, Math.floor(totalWords * 0.58)), name: "Ⅶ. 성역의 인도자 🧭", color: "#7c3aed" },
+            { req: Math.max(7, Math.floor(totalWords * 0.69)), name: "Ⅷ. 영혼의 조율사 🍃", color: "#059669" },
+            { req: Math.max(8, Math.floor(totalWords * 0.80)), name: "Ⅸ. 빛의 수호자 🛡️", color: "#2563eb" },
+            { req: Math.max(9, Math.floor(totalWords * 0.90)), name: "Ⅹ. 지혜의 대현자 📜", color: "#b45309" },
             { req: totalWords, name: "마왕의 대적자 ⚔️", color: "#dc2626" }, // 🌟 100% 계약 시 달성!
             { req: totalWords, name: "정령의 구원자 👑", color: "#be185d", isBossRequired: true } // 🌟 마왕 토벌 필수!
         ];
@@ -3981,6 +4223,36 @@
     let wordDefenseCounts = safeStorageGet('spirit_defense_counts', {});
     let wordStudyHistory = safeStorageGet('spirit_study_history', {});
     let wordCounselingData = safeStorageGet('spirit_counseling_data', {});
+    let wordFavorites = safeStorageGet('spirit_favorites', {});
+
+    function toggleWordFavorite(eng, e) {
+        if (e) e.stopPropagation();
+        Sound.click();
+        wordFavorites[eng] = !wordFavorites[eng];
+        if (!wordFavorites[eng]) delete wordFavorites[eng];
+        safeStorageSet('spirit_favorites', wordFavorites);
+        syncToCloud(); // 클라우드 동기화
+
+        // 화면에 떠 있는 하트 아이콘 즉시 갱신
+        updateFavoriteHeartUI(eng);
+    }
+
+    function updateFavoriteHeartUI(eng) {
+        const isFav = !!wordFavorites[eng];
+        // 피드백 창 하트 갱신
+        const fbHeart = document.getElementById("fbHeartBtn");
+        if (fbHeart) {
+            fbHeart.innerText = isFav ? "💖" : "🤍";
+            fbHeart.title = isFav ? "친해지고 싶은 정령 등록됨" : "친해지고 싶은 정령으로 찜하기";
+        }
+        // 🌟 띄어쓰기/특수문자가 있는 숙어 단어도 에러 없이 100% 안전 동기화!
+        document.querySelectorAll('button[data-fav-word]').forEach(btn => {
+            if (btn.dataset.favWord === eng) {
+                btn.innerText = isFav ? "💖" : "🤍";
+            }
+        });
+    }
+
     let isCounselingMode = false; // 현재 정령 성소 진행 중 플래그
     let isEmergencyDefenseMode = false; // 현재 긴급 수호전 진행 중인지 여부
     let lastEmergencyClearedDate = safeStorageGet('spirit_emergency_cleared_date', "");
@@ -4751,7 +5023,7 @@ const recTime = document.getElementById("recFastestTime");
             const minutes = String(lastMod.getMinutes()).padStart(2, '0');
             
             // 💡 게임 버전, 빌드 버전, 최신 버전
-            buildEl.innerText = `v1.3.2 · Update: ${year}.${month}.${day} ${hours}:${minutes}\n© 2025-${new Date().getFullYear()} Jayden. All Rights Reserved`
+            buildEl.innerText = `v1.3.3 · Update: ${year}.${month}.${day} ${hours}:${minutes}\n© 2025-${new Date().getFullYear()} Jayden. All Rights Reserved`
         }
 
         // 7. 최종 화면 전환
@@ -4857,15 +5129,7 @@ const recTime = document.getElementById("recFastestTime");
             openMistRescueBriefing(); // 👈 브리핑 모달로 이동
         } 
         else if (mode === 'counsel') {
-            const targets = getCounselingTargets();
-            if (targets.length === 0) {
-                // 🛑 상담 대상이 없을 때도 팝오버 창을 닫지 않고 알림만 띄움!
-                showGameAlert("정령 성소 안정", "지금은 서운해하는 정령이 없어.\n정령들과 사이가 꽤 좋아보이는 걸?", "확인", "✨ ALL CONTENT");
-                return;
-            }
-            closeOpsPopover();
-            startCounselingSession();
-
+            openShrineHub(); // 👈 퀴즈 직행 대신 성소 로비(2개의 문) 오픈!
         } 
         else if (mode === 'boss') {
             const { allMapsConquered } = getGlobalTotalStats();
@@ -4882,8 +5146,6 @@ const recTime = document.getElementById("recFastestTime");
                 // 🛑 마왕이 아직 봉인되어 있을 때도 팝오버 창 유지!
                 showGameAlert("마왕의 봉인", "모든 영지를 정복하고, 침식된 정령을 모두 구출해야 비로소 마왕을 마주할 수 있을 거야.", "확인", "🔒 SEALED");
             }
-
-            
         } else if (mode === 'hardcore') {
             openHardcoreBriefing(); // 👈 퀴즈 직행 대신 책선생 브리핑창 오픈!
         } else if (mode === 'abyss') {
@@ -5191,6 +5453,168 @@ const recTime = document.getElementById("recFastestTime");
         }
     }
 
+    // 🌀 [NEW] 형상변환 정령 전용 룬 타일 조립 렌더러
+    let morphCurrentAssembled = [];
+
+    function renderMorphTilePhase(q) {
+        const targetWord = q.mutations[q.morphPhase - 1].toLowerCase().trim();
+        const choicesGrid = document.getElementById("choicesGrid");
+        if (!choicesGrid) return;
+
+        // 문법 유형별 맞춤 라벨 판별 (동사: 과거/분사, 명사: 복수형, 형용사: 비교/최상급)
+        const meaningText = q.korMeaning || q.kor || "";
+        let formLabel = "과거형";
+        
+        // [명], (명사) 등 다양한 명사 표기 감지
+        if (meaningText.match(/\[명\]|\[명사\]|\(명\)|\(명사\)/)) {
+            formLabel = "복수형";
+        } 
+        // [형], [부], (형용사), [형/부] 등 다양한 형용사/부사 표기 감지
+        else if (meaningText.match(/\[형\]|\[부\]|\[형용사\]|\[부사\]|\[형\/부\]|\(형\)|\(부\)/)) {
+            formLabel = (q.morphPhase === 1) ? "비교급" : "최상급";
+        } 
+        // 그 외는 모두 동사로 처리
+        else {
+            formLabel = (q.morphPhase === 1) ? "과거형" : "과거분사형";
+        }
+
+        // 상단 안내 태그 갱신
+        const mTag = document.getElementById("masteryTag");
+        if (mTag) {
+            mTag.innerText = `⚡ [${formLabel}]을 조립하라!`;
+            mTag.style.background = "#b45309";
+            mTag.style.color = "#ffffff";
+        }
+        document.getElementById("wordDisplay").innerText = q.engWord;
+
+        // 알파벳 타일 풀 생성 (정답 철자 + 헷갈리는 함정 철자 2개 추가)
+        const letters = targetWord.split('');
+        const trapPool = ['a', 'e', 'i', 'o', 'u', 'd', 't', 'n', 's', 'r', 'l'];
+        // 자음 중복 함정(d, t 등) 고려하여 함정 2개 보충
+        for (let i = 0; i < 2; i++) {
+            const trap = trapPool[Math.floor(Math.random() * trapPool.length)];
+            letters.push(trap);
+        }
+        letters.sort(() => Math.random() - 0.5); // 타일 무작위 셔플
+
+        morphCurrentAssembled = [];
+
+        // 4지선다 대신 조립창 UI 주입
+        choicesGrid.innerHTML = `
+            <div class="morph-box-wrapper">
+                <!-- 1. 실시간 조립 슬롯 바 (터치 시 마지막 글자 지우기) -->
+                <div id="morphSlot" class="morph-slot-display empty" onclick="handleMorphBackspace()">
+                    터치하여 룬 조립...
+                </div>
+                
+                <!-- 2. 알파벳 룬 타일 랙 -->
+                <div id="morphRack" class="morph-tile-rack"></div>
+
+                <!-- 3. 하단 컨트롤 바 -->
+                <div class="morph-control-bar">
+                    <button class="morph-btn-clear" onclick="handleMorphBackspace()">⌫ 지우기</button>
+                    <button class="morph-btn-submit" onclick="handleMorphSubmit()">⚡ 주문 시전! (완성) ➔</button>
+                </div>
+            </div>
+        `;
+
+        // 룬 타일 버튼들 꽂기
+        const rack = document.getElementById("morphRack");
+        letters.forEach(char => {
+            const btn = document.createElement("button");
+            btn.className = "morph-tile-btn";
+            btn.innerText = char;
+            btn.onclick = () => {
+                Sound.click();
+                morphCurrentAssembled.push({ char, btn });
+                btn.classList.add("used");
+                updateMorphSlotUI();
+            };
+            rack.appendChild(btn);
+        });
+
+        // 슬롯 글씨 실시간 갱신
+        function updateMorphSlotUI() {
+            const slot = document.getElementById("morphSlot");
+            if (!slot) return;
+            const currentStr = morphCurrentAssembled.map(x => x.char).join('');
+            if (currentStr.length > 0) {
+                slot.className = "morph-slot-display";
+                slot.innerText = currentStr;
+            } else {
+                slot.className = "morph-slot-display empty";
+                slot.innerText = "터치하여 룬 조립...";
+            }
+        }
+
+        // 지우기 함수
+        window.handleMorphBackspace = () => {
+            if (morphCurrentAssembled.length === 0) return;
+            Sound.click();
+            const last = morphCurrentAssembled.pop();
+            if (last && last.btn) last.btn.classList.remove("used");
+            updateMorphSlotUI();
+        };
+
+        // 주문 시전 (제출) 함수
+        window.handleMorphSubmit = () => {
+            const currentStr = morphCurrentAssembled.map(x => x.char).join('').toLowerCase();
+
+            if (currentStr === targetWord) {
+                // 🌟 정답!
+                Sound.hit(true);
+
+                if (q.morphPhase >= q.mutations.length) {
+                    q.isMorphComplete = true;
+                    selectAnswer(q.correct, q); // 최종 성공 피드백 창으로 진입!
+                } else {
+                    q.morphPhase++;
+                    Sound.resonance();
+                    renderMorphTilePhase(q);
+                }
+            } else {
+                // ❌ 오답: 올바른 스펠링을 보여주고 다음 문제로 안전 이동!
+                streakCount = 0;
+                Sound.wrong();
+                if (typeof triggerPlayerDamageEffect === 'function') triggerPlayerDamageEffect();
+
+                if (!wrongPool.some(item => item.id === q.id)) wrongPool.push(q);
+                gameRecords.totalWrong = (gameRecords.totalWrong || 0) + 1;
+                saveRecords();
+
+                const fbModal = document.getElementById("feedbackModal");
+                const fbTitle = document.getElementById("fbTitle");
+                const fbWord = document.getElementById("fbWord");
+                const fbMeaning = document.getElementById("fbMeaning");
+                const imgWrong = document.getElementById("fbImgWrong");
+                const imgCorrect = document.getElementById("fbImgCorrect");
+                const imgContract = document.getElementById("fbImgContract");
+                const fbNextBtn = document.getElementById("fbNextBtn");
+
+                if (imgCorrect) imgCorrect.style.display = "none";
+                if (imgContract) imgContract.style.display = "none";
+                if (imgWrong) imgWrong.style.display = "block";
+
+                fbTitle.className = "fb-hero-badge fb-theme-wrong";
+                fbTitle.innerText = "🍂 룬 조립 실패 🍂";
+
+                const fullChain = [q.engWord, ...q.mutations].join(' - ');
+                fbWord.innerText = fullChain;
+                fbMeaning.className = "fb-meaning wrong-case";
+                fbMeaning.innerText = q.korMeaning;
+                updateFavoriteHeartUI(q.engWord); // 🌟 오답 시에도 하트 동기화!
+
+                const fbNotice = document.getElementById("fbResonanceNotice");
+                if (fbNotice) fbNotice.style.display = "none";
+                const fbTimer = document.getElementById("fbTimerWrap");
+                if (fbTimer) fbTimer.style.display = "none";
+
+                if (fbNextBtn) fbNextBtn.innerText = "오답 확인 후 다음으로 ➔";
+                if (fbModal) fbModal.style.display = "flex";
+            }
+        };
+    }
+
     /* 🧠 스마트 단어 출제 엔진 (마스터 단어 봉인 & 집중 돌파 가변 라운드) */
     function setupRound() {
         roundQuestions = [];
@@ -5247,7 +5671,7 @@ const recTime = document.getElementById("recFastestTime");
         recentRoundWords = pickedWords.map(w => w.eng);
 
         for (const w of pickedWords) {
-            const type = Math.random() < 0.5 ? "E2K" : "K2E";
+            const type = w.isMorph ? "E2K" : (Math.random() < 0.5 ? "E2K" : "K2E");
             const qId = `${currentMapId}_${type}_${w.eng}_r${currentRound}`;
             roundQuestions.push({
                 id: qId,
@@ -5258,7 +5682,10 @@ const recTime = document.getElementById("recFastestTime");
                 prompt: type === "E2K" ? w.eng : w.kor,
                 correct: type === "E2K" ? w.kor : w.eng,
                 pool: type === "E2K" ? rawWords.map(item => item.kor) : rawWords.map(item => item.eng),
-                isReview: !!w.isReview
+                isReview: !!w.isReview,
+                isMorph: !!w.isMorph,
+                mutations: w.mutations || [],
+                morphPhase: 0 // 0: 뜻 ➔ 1: 1차변형 ➔ 2: 2차변형
             });
         }
 
@@ -5366,6 +5793,14 @@ const recTime = document.getElementById("recFastestTime");
         const isCorrect = (selectedAnswer === q.correct);
         const elapsedSec = parseFloat(((Date.now() - questionStartTime) / 1000).toFixed(2));
 
+        // 🌀 [NEW] 형상변환 1단계 뜻을 맞히는 순간 피드백창 대신 2단계(과거형/복수형 룬 조립)로 즉시 전환!
+        if (q && q.isMorph && !q.isMorphComplete && isCorrect && q.morphPhase === 0) {
+            Sound.resonance();
+            q.morphPhase = 1;
+            renderMorphTilePhase(q);
+            return; // 👈 피드백창으로 나가지 않고 그 자리에서 룬 타일 조립으로 즉시 직행!
+        }
+
         const isInstantResonance = isCorrect && (elapsedSec <= 1.5); // 찰나의 공명
         const isQuickTuning = isCorrect && (!isInstantResonance && elapsedSec <= 2.5); // 기민한 조율
 
@@ -5398,8 +5833,13 @@ const recTime = document.getElementById("recFastestTime");
         if (imgWrong) imgWrong.style.display = "none";
         if (imgContract) imgContract.style.display = "none";
 
-        fbWord.innerText = q.engWord;
+        if (q && q.isMorph && q.mutations && q.mutations.length > 0) {
+            fbWord.innerText = [q.engWord, ...q.mutations].join(' - ');
+        } else {
+            fbWord.innerText = q.engWord;
+        }
         fbMeaning.innerText = q.korMeaning;
+        updateFavoriteHeartUI(q.engWord); // 🌟 [핵심] 이번 단어의 찜 상태(🤍/💖) 즉시 동기화!
 
         const beforeTierIdx = getGlobalTier().tierIndex;
         const currentCountBefore = wordMastery[key] || 0;
@@ -5424,18 +5864,22 @@ const recTime = document.getElementById("recFastestTime");
             if (streakCount >= 7) unlockTitle("combo_7");
             if (streakCount >= 15) unlockTitle("combo_15");
 
-            // 점수 계산
+            // 정답시 점수 계산
             let newCount = currentCountBefore;
-            if (isInstantResonance) {
-                newCount = 3;
-                hist.hadInstant = true;
-            } else if (isQuickTuning) {
-                newCount = Math.min(3, currentCountBefore + 2);
-                hist.hadQuick = true;
-            } else {
-                newCount = Math.min(3, currentCountBefore + 1);
+            if (!isCounselingMode) {
+                if (q && q.isMorph && q.isMorphComplete) {
+                    newCount = 3;
+                } else if (isInstantResonance) {
+                    newCount = 3;
+                    hist.hadInstant = true;
+                } else if (isQuickTuning) {
+                    newCount = Math.min(3, currentCountBefore + 2);
+                    hist.hadQuick = true;
+                } else {
+                    newCount = Math.min(3, currentCountBefore + 1);
+                }
+                wordMastery[key] = newCount;
             }
-            wordMastery[key] = newCount;
 
             // 🌟 [영원의 계약 순간 판별] 공명이든 조율이든 이번 문제로 3점(계약) 도달 시 계약 일러스트 가동!
             const isContractAchieved = (currentCountBefore < 3 && newCount === 3);
@@ -5599,6 +6043,10 @@ const recTime = document.getElementById("recFastestTime");
                 fbTitle.className = "fb-hero-badge fb-theme-success";
                 fbTitle.innerText = `✨교감 성공! (${elapsedSec}초)`;
                 fbResonanceNotice.style.display = "block";
+                // 🌟 교감실 훈련일 경우 전용 멘트
+                if (isCounselingMode && !q.isCounsel) {
+                    fbResonanceNotice.innerHTML = `정령과 즐거운 시간을 보냈네. 다음에 탐험하다 만날 땐 꼭 이름을 잘 불러주라고.<br><b style="color:#b45309;">(※ 교감실에서의 모의 퀴즈는 계약 진도에 반영되지 않음)</b>`;
+                }
             }
 
             // 3회 계약 체결 시 칭호 및 유예 기간 등록
@@ -5748,6 +6196,14 @@ const recTime = document.getElementById("recFastestTime");
         saveCurrentMapState();
         updateInGameTiers();
         if (fbModal) fbModal.style.display = "flex";
+    }
+
+    // 💖 피드백 창에서 하트 누를 때 현재 단어 찜하기
+    function toggleCurrentWordFavorite(e) {
+        const q = roundQuestions[currentQuestionIdx];
+        if (q && q.engWord) {
+            toggleWordFavorite(q.engWord, e);
+        }
     }
 
     function nextQuestion() {
@@ -7332,6 +7788,7 @@ function handleMidBossVictory() {
                 }
 
                 // 단어 카드 생성 (각인 뱃지 / 계약 뱃지 반영)
+                const isFav = !!wordFavorites[item.eng];
                 const row = document.createElement("div");
                 row.className = `word-item-clean stage-${mInfo.stage}`;
                 if (mInfo.stage === 4) {
@@ -7343,9 +7800,15 @@ function handleMidBossVictory() {
                         <span class="word-main-eng">${item.eng}</span>
                         <span class="word-sub-kor">${item.kor}</span>
                     </div>
-                    <span class="word-mini-status" style="background:${mInfo.bg}; color:${mInfo.color}; border: 1px solid ${mInfo.border || '#cbd5e1'}; box-shadow:${mInfo.shadow || 'none'}; font-weight:900;">
-                        ${mInfo.text}
-                    </span>
+                    <div style="display:flex; align-items:center; gap:6px;">
+                        <button data-fav-word="${item.eng.replace(/"/g, '&quot;')}" style="background:none; border:none; font-size:16px; cursor:pointer; padding:0; line-height:1;" onclick="toggleWordFavorite(this.dataset.favWord, event)" title="친해지고 싶은 정령 찜하기">
+                            ${isFav ? '💖' : '🤍'}
+                        </button>
+
+                        <span class="word-mini-status" style="background:${mInfo.bg}; color:${mInfo.color}; border: 1px solid ${mInfo.border || '#cbd5e1'}; font-weight:900;">
+                            ${mInfo.text}
+                        </span>
+                    </div>
                 `;
                 listContainer.appendChild(row);
             });
@@ -8281,6 +8744,187 @@ function handleMidBossVictory() {
     // ========================================================
     // 🛋️ 졍령 성소 상담 세션 시작 (시간제한 없는 차분한 면담)
     // ========================================================
+
+    // 🏛️ [NEW] 정령 성소 허브 & 단어장 선람 컨트롤러
+    let currentShrineMode = 'hurt'; // 'hurt' (치유실) | 'fav' (교감실)
+
+    // 성소 로비 모달 열기
+    function openShrineHub() {
+        Sound.click();
+        closeOpsPopover();
+
+        const hurtBadge = document.getElementById("shrineHurtCountBadge");
+        const favBadge = document.getElementById("shrineFavCountBadge");
+        
+        // 서운해하는 정령 수 & 찜한 정령 수 계산
+        const hurtCount = getCounselingTargets().length;
+        const favCount = Object.keys(wordFavorites).length;
+
+        if (hurtBadge) hurtBadge.innerHTML = `<b style="font-size:18px; margin-right:2px; line-height:1;">${hurtCount}</b>  마리 대기`;
+        if (favBadge) favBadge.innerHTML = `<b style="font-size:18px; margin-right:2px; line-height:1;">${favCount}</b>  마리 찜`;
+
+        const modal = document.getElementById("shrineHubModal");
+        if (modal) modal.style.display = "flex";
+    }
+
+    // 성소 로비 모달 닫기
+    function closeShrineHub() {
+        Sound.click();
+        const modal = document.getElementById("shrineHubModal");
+        if (modal) modal.style.display = "none";
+    }
+
+    // 2개의 방 중 하나 선택 ➔ 단어장 먼저 띄우기!
+    function openShrineRoom(type) {
+        Sound.click();
+        currentShrineMode = type;
+
+        let targetWords = [];
+        const titleEl = document.getElementById("shrineWordlistTitle");
+        const descEl = document.getElementById("shrineWordlistDesc");
+        const countEl = document.getElementById("shrineWordlistCount");
+        const startBtn = document.getElementById("shrineStartQuizBtn");
+        const listContainer = document.getElementById("shrineWordlistContainer");
+
+        if (type === 'hurt') {
+            // [문 1: 서운해하는 정령 치유실]
+            targetWords = getCounselingTargets();
+            if (targetWords.length === 0) {
+                showGameAlert("치유실 평화", "현재 서운해하거나 상처 입은 정령은 없어. 모든 정령과 원만한 관계를 유지하고 있군.", "확인", "✨ ALL CONTENT");
+                return;
+            }
+            if (titleEl) titleEl.innerText = "🍂 상처 입은 정령 명단";
+            if (descEl) descEl.innerText = "침식과 오답으로 지친 정령들이야. 꾸물거리지 말고 얼른 치유 상담을 시작해라!";
+            if (startBtn) startBtn.innerHTML = "🌿 정령들과 치유 상담 시작하기! (출격) ➔";
+
+        } else if (type === 'fav') {
+            // [문 2: 친해지고 싶은 정령 교감실]
+            worldMaps.forEach(map => {
+                map.words.forEach(w => {
+                    if (wordFavorites[w.eng] && !targetWords.some(item => item.eng === w.eng)) {
+                        targetWords.push({ ...w, mapId: map.id });
+                    }
+                });
+            });
+
+            if (targetWords.length === 0) {
+                showGameAlert("교감실 비어있음", "아직 찜💖한 정령이 없군. 그만큼 자신이 있다는 거겠지? 그게 아니라면, 어서 영지 단어장이나 교감 성공/실패창에서 하트를 눌러 등록해봐.", "확인", "💖 NO FAVORITES");
+                return;
+            }
+            if (titleEl) titleEl.innerText = "💖 친해지고 싶은 정령 명단";
+            if (descEl) descEl.innerText = "찜한 정령들과의 특별 집중 교감. 훑어본 후 교감을 시작해.";
+            if (startBtn) startBtn.innerHTML = "💖 정령들과 집중 교감 시작하기! ➔";
+        }
+
+        if (countEl) countEl.innerText = `총 ${targetWords.length}마리`;
+
+        // 단어장 카드 목록 렌더링
+        if (listContainer) {
+            listContainer.innerHTML = "";
+            targetWords.forEach(w => {
+                const isFav = !!wordFavorites[w.eng];
+                const row = document.createElement("div");
+                row.className = "word-item-clean stage-1";
+                row.style.borderLeftColor = (type === 'fav') ? '#ec4899' : '#ea580c';
+                row.innerHTML = `
+                    <div class="word-text-group">
+                        <span class="word-main-eng">${w.eng}</span>
+                        <span class="word-sub-kor">${w.kor}</span>
+                    </div>
+                    <button data-fav-word="${w.eng.replace(/"/g, '&quot;')}" style="background:none; border:none; font-size:18px; cursor:pointer;" onclick="toggleWordFavorite(this.dataset.favWord, event); updateShrineWordlistCount();">
+                        ${isFav ? '💖' : '🤍'}
+                    </button>
+                `;
+                listContainer.appendChild(row);
+            });
+        }
+
+        // 로비 닫고 단어장 모달 띄우기
+        closeShrineHub();
+        const wModal = document.getElementById("shrineWordlistModal");
+        if (wModal) wModal.style.display = "flex";
+    }
+
+    // 단어장에서 성소 로비로 돌아가기
+    function backToShrineHubFromWordlist() {
+        Sound.click();
+        const wModal = document.getElementById("shrineWordlistModal");
+        if (wModal) wModal.style.display = "none";
+        openShrineHub();
+    }
+
+    // 🌿 [상담/교감 시작하기!] 클릭 시 퀴즈 출격 개시
+    function startShrineRoomQuiz() {
+        const wModal = document.getElementById("shrineWordlistModal");
+        if (wModal) wModal.style.display = "none";
+
+        if (currentShrineMode === 'hurt') {
+            startCounselingSession(); // 서운한 정령 퀴즈
+        } else {
+            startFavoritePracticeQuiz(); // 친해지고 싶은 정령 퀴즈
+        }
+    }
+
+    // 💖 찜한 정령 전용 5문제 퀴즈 출격 엔진
+    function startFavoritePracticeQuiz() {
+        Sound.click();
+        const favWords = [];
+        worldMaps.forEach(map => {
+            map.words.forEach(w => {
+                if (wordFavorites[w.eng] && !favWords.some(item => item.eng === w.eng)) {
+                    favWords.push({ ...w, mapId: map.id });
+                }
+            });
+        });
+
+        if (favWords.length === 0) return;
+
+        isCounselingMode = true; // 성소 모드 활성화
+        roundQuestions = [];
+        currentQuestionIdx = 0;
+        roundCorrectCount = 0;
+
+        const allPool = getAllUniverseWords();
+        const pickList = [...favWords].sort(() => Math.random() - 0.5).slice(0, 5);
+
+        pickList.forEach(w => {
+            const type = w.isMorph ? "E2K" : (Math.random() < 0.5 ? "E2K" : "K2E");
+            roundQuestions.push({
+                id: `fav_${w.eng}_${Date.now()}`,
+                wordKey: w.eng,
+                engWord: w.eng,
+                korMeaning: w.kor,
+                type: type,
+                prompt: type === "E2K" ? w.eng : w.kor,
+                correct: type === "E2K" ? w.kor : w.eng,
+                pool: type === "E2K" ? allPool.map(item => item.kor) : allPool.map(item => item.eng),
+                mapId: w.mapId,
+                isCounsel: false,
+                // 🌟 [추가] 형상변환 3단 콤보 속성 전달
+                isMorph: !!w.isMorph,
+                mutations: w.mutations || [],
+                morphPhase: 0
+            });
+        });
+
+        document.getElementById("inGameMapTitle").innerText = "💖 친해지고 싶은 정령 집중 교감";
+        document.getElementById("gameSectorBadge").innerText = "1:1 집중 교감";
+        document.getElementById("gameSectorBadge").style.backgroundColor = "#be185d";
+
+        const exitBtn = document.getElementById("inGameExitBtn");
+        if (exitBtn) exitBtn.innerText = "🗺️ 대륙 지도로";
+
+        document.getElementById("titleScreen").style.display = "none";
+        document.getElementById("mapLobbyScreen").style.display = "none";
+        document.getElementById("bossScreen").style.display = "none";
+        document.getElementById("gameScreen").style.display = "flex";
+
+        updateInGameTiers();
+        runQuickGoCountdown(() => {
+            loadQuestion();
+        });
+    }
+
     function startCounselingSession() {
         Sound.click();
         const targets = getCounselingTargets();
@@ -8297,7 +8941,6 @@ function handleMidBossVictory() {
         const allPool = getAllUniverseWords();
 
         targets.forEach(w => {
-            // 0단계는 E2K (영➔한), 1단계는 K2E (한➔영)로 고정!
             const type = (w.step === 0) ? "E2K" : "K2E";
             roundQuestions.push({
                 id: `counsel_${w.eng}_${Date.now()}`,
@@ -8310,7 +8953,11 @@ function handleMidBossVictory() {
                 pool: type === "E2K" ? allPool.map(item => item.kor) : allPool.map(item => item.eng),
                 mapId: w.mapId,
                 isCounsel: true, // 🌟 상담 전용 문제 마킹
-                counselStep: w.step
+                counselStep: w.step,
+                // 🌟 [추가] 형상변환 3단 콤보 속성 전달
+                isMorph: !!w.isMorph,
+                mutations: w.mutations || [],
+                morphPhase: 0
             });
         });
 

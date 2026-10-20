@@ -5700,6 +5700,7 @@
                 const oldItem = localStorage.getItem(key);
                 if (oldItem && oldItem !== "undefined" && oldItem !== "null") {
                     localStorage.setItem(scopedKey, oldItem);
+                    localStorage.removeItem(key); // 👈 승계 완료 후 과거 레거시 키 즉시 파기
                     item = oldItem;
                 }
             }
@@ -10990,6 +10991,12 @@ function handleMidBossVictory() {
                     localStorage.removeItem(k);
                 }
             });
+
+            // 🌟 과거 레거시 로그인 키도 함께 정리하여 자동 재로그인 방지
+            ['spirit_current_uid', 'spirit_hero_name', 'spirit_user_name', 'spirit_is_admin'].forEach(k => {
+                localStorage.removeItem(k);
+            });
+            currentUserDocId = null;
             location.reload(); // 새로고침하여 로그인 창으로 깨끗하게 이동
         }
     }

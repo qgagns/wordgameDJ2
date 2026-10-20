@@ -49,7 +49,7 @@ const WORLD_MAPS_TEXT = `
 absence:[명] 부재, 없음
 access:[명] 접근, 이용 권한; [동] 접근하다
 adaptability:[명] 융통성, 적응성
-address:[동] (청중에게) 연설하다, 말을 걸다; 다루다
+address:[동] (청중에게) 연설하다, 말을 걸다; [동] 다루다
 align:[동] 나란히 맞추다, 일치시키다
 ambiguous:[형] 모호한, 다의적인
 analyze:[동] 분석하다
@@ -62,17 +62,17 @@ clash:[명] 충돌; [동] 충돌하다
 collectivistic:[형] 집단주의적인
 communal:[형] 공동의, 공동체의
 conformity:[명] 순응, 일치
-contemporary:[형] 현대의, 동시대의
+contemporary:[형] 현대의; [형] 동시대의, 당대의
 context:[명] 맥락, 문맥, 배경
 contribution:[명] 기여, 공헌
 convenient:[형] 편리한
 convey:[동] 전달하다, 전하다
 criticism:[명] 비판, 비평
 cumulative:[형] 누적되는, 누계의
-decline:[명] 쇠퇴, 하락; [동] 감소하다
+decline:[명] 쇠퇴, 하락; [동] 감소/하락하다
 desire:[명] 욕구, 갈망; [동] 바라다
 diminish:[동] 줄이다, 감소시키다
-disposable:[형] 일회용의; 처분할 수 있는
+disposable:[형] 일회용의; [형] 처분할 수 있는
 dispute:[명] 분쟁, 논쟁; [동] 반박하다
 diverse:[형] 다양한
 dominance:[명] 지배, 우세
@@ -91,8 +91,8 @@ fixed:[형] 고정된
 flexible:[형] 유연한, 융통성 있는
 flexibility:[명] 유연성, 융통성
 foster:[동] 육성하다, 발전시키다
-gain access to:[숙] ~에 접근하다, 이용 권한을 얻다
-give weight to:[숙] ~에 무게를 두다, 중요시하다
+gain access to:[동] ~에 접근하다, 이용 권한을 얻다
+give weight to:[동] ~에 무게를 두다, 중요시하다
 guilty:[형] 죄책감을 느끼는, 유죄의
 human-caused:[형] 인간 활동으로 초래된
 immigrant:[명] (타국에서 온) 이민자; [형] 이민의
@@ -117,7 +117,7 @@ numerous:[형] 수많은, 다수의
 ownership:[명] 소유, 소유권
 personalized:[형] 맞춤형의, 개인화된
 pioneer:[명] 개척자, 선구자
-platform:[명] (서비스) 플랫폼; 승강장
+platform:[명] 승강장, 플랫폼
 portion:[명] 부분, 몫
 predictable:[형] 예측 가능한
 preference:[명] 선호, 특혜
@@ -126,13 +126,13 @@ previous:[형] 이전의, 사전의
 primarily:[부] 주로, 본래
 prior to:[전] ~에 앞서, ~ 전에
 prioritize:[동] 우선순위를 매기다, 우선시하다
-property:[명] 부동산, 소유물, 재산
+property:[명] 부동산, 소유물, 재산; [명] 특성, 성질
 prosperity:[명] 번영, 번창
 purchase:[명] 구매; [동] 구매하다
 random:[형] 무작위의, 임의의
 regardless of:[숙] ~에 상관없이
 reject:[동] 거부하다, 거절하다
-reserve:[동] 따로 남겨두다; 예약하다
+reserve:[동] 따로 남겨두다, 보존하다; [동] 예약하다
 resident:[명] 거주자, 주민
 reusable:[형] 재사용할 수 있는
 revenue:[명] 수익, 세입
@@ -141,16 +141,15 @@ rhythm:[명] 리듬, 규칙적인 변화
 rivalry:[명] 라이벌 관계, 경쟁
 scrolling:[명] 스크롤하기, 화면 이동
 self-worth:[명] 자아 존중감, 자존감
-settle:[동] 해결하다, 정착하다
-shift:[명] 변화, 이동; [동] 이동하다
+settle:[동] 해결하다; [동] 정착하다
+shift:[명] 변화, 이동; [동] 이동하다, 옮겨가다
 significant:[형] 중대한, 상당한
 socioeconomic:[형] 사회경제적인
 specifically:[부] 구체적으로, 특별히
-straightforward:[형] 솔직한, 수월한, 복잡하지 않은
-structure:[명] 구조물, 체계
-subscription economy:[명] 구독 경제
+straightforward:[형] 수월한, 복잡하지 않은; [형] 솔직한
+structure:[명] 구조, 체계; [명] 구조물, 건물
 subtle:[형] 미묘한, 포착하기 어려운
-tailor:[동] (필요·목적에) 맞추다; [명] 재단사
+tailor:[명] 재단사; [동] (필요·목적에) 맞추다, 재단하다
 take action:[숙] 조치를 취하다, 행동에 나서다
 tendency:[명] 성향, 경향
 transformation:[명] 변용, 변화
@@ -158,10 +157,10 @@ typically:[부] 일반적으로, 전형적으로
 unclear:[형] 불분명한, 모호한
 undergo:[동] 겪다, 받다
 unforeseen:[형] 예측하지 못한, 뜻밖의
-uniform:[형] 획일적인, 균일한; [명] 제복
+uniform:[명] 제복; [형] 획일적인, 균일한
 urban:[형] 도시의
 variety:[명] 다양성
-virtual:[형] 가상의, 사실상의
+virtual:[형] 가상의; [형] 사실상의
 vulnerability:[명] 취약성, 연약함
 willingness:[명] 기꺼이 하려는 마음
 

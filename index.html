@@ -162,14 +162,9 @@
         }
 
         /* ========================================================
-           📜 [하단 페이드 마스크] 양피지 질감 보존 & 바닥 카드 자연스러운 페이드아웃
+           📜 [스마트 하단 페이드] 실제로 내용이 넘칠 때만 켜지는 마스크
            ======================================================== */
-        .sector-list-box,
-        .tab-content,
-        #shrineWordlistContainer,
-        #imprintListContainer,
-        #adminStudentListContainer,
-        #adminDetailMapsContainer {
+        .scroll-fade-bottom {
             -webkit-mask-image: linear-gradient(to bottom, black calc(100% - 30px), transparent 100%);
             mask-image: linear-gradient(to bottom, black calc(100% - 30px), transparent 100%);
         }
@@ -3275,7 +3270,7 @@
                 </span>
                 <h2 class="ending-title" style="color:#78350f; font-size:18px; margin:2px 0 4px 0;">🗺️ 성역 탐험</h2>
                 <div id="wmBriefingDesc" style="font-size:12.5px; color:#451a03; line-height:1.4; font-weight:700; word-break:keep-all; margin-bottom:6px;">
-                    성역의 수호령들이 잠들어 있는 영지들이다. 틈틈이 드나들면서 계약하고 시련을 통과해라!
+                    틈틈이 드나들면서 계약하고 시련을 통과해라!
                 </div>
                 <div class="overall-gauge-container" style="height:5px; margin-bottom:4px;">
                     <div id="wmOverallGaugeBar" class="overall-gauge-bar" style="width:0%;"></div>
@@ -3866,7 +3861,7 @@
     <div id="shrineHubModal" class="modal" style="background:#fbf6ea; border:3px solid #b45309;">
         <div style="flex:1; display:flex; flex-direction:column; justify-content:center; align-items:center; width:100%;">
             <!-- 🖼️ 정령 성소 일러스트 배너 액자 -->
-            <div class="art-box" style="height:180px; margin-bottom:8px; flex-shrink:0; border:2px solid #8f603a; border-radius:12px; overflow:hidden; width:100%;">
+            <div class="art-box" style="height:160px; margin-bottom:8px; flex-shrink:0; border:2px solid #8f603a; border-radius:12px; overflow:hidden; width:100%;">
                 <img src="images/shrine.webp" style="width:100%; height:100%; object-fit:cover; display:block;" alt="정령 성소">
             </div>
             <div class="ending-card-box" style="border-color:#b45309; background:#fffbeb; width:100%; padding:10px 12px; margin-bottom:8px;">
@@ -3874,8 +3869,8 @@
                 <h2 class="ending-title" style="color:#78350f; font-size:20px; margin:4px 0 6px 0;">🏛️ 정령의 성소</h2>
                 <div class="ending-divider" style="color:#b45309;">❖ ❖ ❖</div>
                 <div class="ending-desc" style="color:#451a03; font-size:13px; line-height:1.55; margin-bottom:6px;">
-                    이곳은 망각의 안개에 상처 입은 정령이 오는 곳이다.<br>
-                    네 쪽에서 먼저 친해지고 싶은 정령들을 불러낼 수도 있지.<br>
+                    상처 입은 정령이 오는 곳이다.<br>
+                    친해지고 싶은 정령들을 불러낼 수도 있지.<br>
                 </div>
             </div>
 
@@ -3980,7 +3975,7 @@
                     <div style="font-size:13px; font-weight:900; color:#1e40af;">🚨 1. 안개 속 구출과 매일 자정(00:00) 갱신</div>
                     <div style="font-size:12px; color:#451a03; line-height:1.45; margin-top:5px; font-weight:600;">
                         이미 계약한 든든한 아군 정령도 일정 시간 방치되면 망각의 안개에 침식된다. <b>매일 밤 자정(00:00)</b>에 일일 구출 임무가 갱신되니 잊지 말고 구해내라.<br>
-                        • 안개 속 구출은 마왕 토벌 전에는 하루 5문제, 토벌 이후에는 20문제가 적립된다. 하지만, 네가 원한다면 언제든 계속 자율 구출할 수도 있다!
+                        • 안개 속 구출은 정령술사 계급, 즉 단어 정령과의 계약 수에 따라 하루 5~20마리가 적립된다. 하지만, 네가 원한다면 언제든 계속 자율 구출할 수도 있고... 그러니, 가능한 한 최대한 많이 구출하는 게 좋을 거다!
                     </div>
                 </div>
 
@@ -4040,8 +4035,8 @@
                 <h2 class="ending-title" style="color:#7f1d1d; font-size:20px; margin:4px 0 6px 0;">🔥 차원의 틈새</h2>
                 <div class="ending-divider" style="color:#dc2626;">❖ ❖ ❖</div>
                 <div class="ending-desc" style="color:#450a0a; font-size:13px; line-height:1.55; margin-bottom:6px; font-weight:800;">
-                    성역의 경계가 무너지고 시련과 심연이 교차하는 균열이다.<br>
-                    준비가 되었다면 망설이지 말고 네 실력을 증명해라.
+                    성역의 경계가 무너진 심연의 균열이다.<br>
+                    현실로 돌아갈 생각이라면... 꼭 통과해야 하는 곳이지.
                 </div>
             </div>
 
@@ -4565,25 +4560,25 @@
                         <div class="record-grid" style="gap:6px;">
                             <!-- 영원의 계약 -->
                             <div class="record-item-box" style="display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:6px 6px; border-left:4px solid #eab308; background:#fffbeb; border-radius:9px;">
-                                <span class="record-item-label" style="font-size:13px; font-weight:800; color:#854d0e; margin-bottom:2px;">🌟 영원의 계약 (완료)</span>
+                                <span class="record-item-label" style="font-size:13px; font-weight:800; color:#854d0e; margin-bottom:2px;">🌟 영원의 계약</span>
                                 <span class="record-item-val" style="font-size:18px; font-weight:900; color:#b45309;" id="repStage3">0마리</span>
                             </div>
 
                             <!-- 따스한 유대 -->
                             <div class="record-item-box" style="display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:6px 6px; border-left:4px solid #10b981; background:#f0fdf4; border-radius:9px;">
-                                <span class="record-item-label" style="font-size:13px; font-weight:800; color:#065f46; margin-bottom:2px;">🍃 따스한 유대 (2회)</span>
+                                <span class="record-item-label" style="font-size:13px; font-weight:800; color:#065f46; margin-bottom:2px;">🍃 따스한 유대</span>
                                 <span class="record-item-val" style="font-size:18px; font-weight:900; color:#15803d;" id="repStage2">0마리</span>
                             </div>
 
                             <!-- 서먹한 대면 -->
                             <div class="record-item-box" style="display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:6px 6px; border-left:4px solid #f59e0b; background:#fffdf7; border-radius:9px;">
-                                <span class="record-item-label" style="font-size:13px; font-weight:800; color:#92400e; margin-bottom:2px;">🐾 서먹한 대면 (1회)</span>
+                                <span class="record-item-label" style="font-size:13px; font-weight:800; color:#92400e; margin-bottom:2px;">🐾 서먹한 대면</span>
                                 <span class="record-item-val" style="font-size:18px; font-weight:900; color:#d97706;" id="repStage1">0마리</span>
                             </div>
 
                             <!-- 야생의 정령 -->
                             <div class="record-item-box" style="display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:6px 6px; border-left:4px solid #94a3b8; background:#f8fafc; border-radius:9px;">
-                                <span class="record-item-label" style="font-size:13px; font-weight:800; color:#475569; margin-bottom:2px;">🌿 야생의 정령 (미탐색)</span>
+                                <span class="record-item-label" style="font-size:13px; font-weight:800; color:#475569; margin-bottom:2px;">🌿 야생의 정령</span>
                                 <span class="record-item-val" style="font-size:18px; font-weight:900; color:#64748b;" id="repStage0">0마리</span>
                             </div>
                         </div>
@@ -4597,7 +4592,7 @@
                         <div style="display:flex; flex-direction:column; gap:4px;">
                             <!-- 1. 수호령 제패 현황 -->
                             <div style="display:flex; justify-content:space-between; align-items:center; background:#fdfaf2; padding:6px 10px; border-radius:8px; border:1px solid #d8c7a6; font-size:13px;">
-                                <span style="font-weight:800; color:#4b301c;">⚔️ 성역 수호령 교감</span>
+                                <span style="font-weight:800; color:#4b301c;">⚔️ 수호령 교감</span>
                                 <span id="repGuardianPurified" style="font-weight:900; color:#047857;">0 / 4영지 완료</span>
                             </div>
                             <!-- 2. 침식 위험 현황 -->
@@ -5002,6 +4997,25 @@
         const savedTts = safeStorageGet('spirit_tts_enabled', true);
         const savedMuted = safeStorageGet('spirit_muted', false);
 
+        // 🌟 [타임스탬프 검사] 다른 기기에서 초기화된 계정인지 감지
+        const localLastSave = safeStorageGet('spirit_last_local_save', 0);
+        let serverResetAt = cloudData.resetAt || 0;
+        if (serverResetAt && serverResetAt.toMillis) serverResetAt = serverResetAt.toMillis();
+
+        // 서버의 초기화 날짜가 내 기기 데이터보다 최신이면 로컬 과거 데이터 전면 폐기!
+        const isResetByOtherDevice = (serverResetAt > 0 && serverResetAt > localLastSave);
+
+        // 🌟 [사전 수집] 기기 로컬에 남아있던 영지별 단어 진도 및 보스 클리어 상태 임시 보관
+        const localMasteries = {};
+        const localClearedBosses = [];
+        if (!isResetByOtherDevice && Array.isArray(worldMaps)) {
+            worldMaps.forEach(m => {
+                localMasteries[m.id] = safeStorageGet(`spirit_mastery_${m.id}`, {});
+                if (isMapBossDefeated(m.id)) localClearedBosses.push(m.id);
+            });
+        }
+        const localExamCleared = isResetByOtherDevice ? false : isFinalExamDefeated();
+
         // 🛑 [치명적 덮어쓰기 원천 차단] 
         // 다른 학년(dj1, dj2) 데이터까지 날려버리던 전체 삭제(clear)를 폐지하고,
         // 오직 현재 학년(DB_KEY)의 서랍만 깨끗하게 비웁니다!
@@ -5038,17 +5052,47 @@
         safeStorageSet('spirit_tts_enabled', savedTts);
         safeStorageSet('spirit_muted', savedMuted);
 
-        if (cloudData.mastery) {
-            Object.keys(cloudData.mastery).forEach(mapKey => {
-                safeStorageSet(`spirit_mastery_${mapKey}`, cloudData.mastery[mapKey]);
+        // 🌟 [트래픽 방어 체크] 로컬에만 있고 서버엔 없는 새 단어가 진짜 존재하는지 추적
+        let hasNewLocalProgressToUpload = false;
+
+        // 🌟 [지능형 병합] 기기 로컬 점수와 서버 점수를 단어별로 비교하여 더 높은 값(Math.max)으로 통합!
+        const allMapKeys = new Set([
+            ...Object.keys(localMasteries),
+            ...(cloudData.mastery ? Object.keys(cloudData.mastery) : [])
+        ]);
+
+        allMapKeys.forEach(mapKey => {
+            const localM = localMasteries[mapKey] || {};
+            const cloudM = (cloudData.mastery && cloudData.mastery[mapKey]) ? cloudData.mastery[mapKey] : {};
+            const merged = { ...localM };
+
+            Object.keys(cloudM).forEach(word => {
+                if ((localM[word] || 0) > (cloudM[word] || 0)) {
+                    hasNewLocalProgressToUpload = true; // 서버보다 로컬이 더 앞선 단어 발견!
+                }
+                merged[word] = Math.max(localM[word] || 0, cloudM[word] || 0);
             });
-        }
-        if (cloudData.clearedBosses) {
-            cloudData.clearedBosses.forEach(mapKey => {
-                safeStorageSet(`spirit_boss_cleared_${mapKey}`, true);
+            // 로컬에만 새로 추가된 단어가 있는 경우
+            Object.keys(localM).forEach(word => {
+                if (!(word in cloudM) && localM[word] > 0) {
+                    hasNewLocalProgressToUpload = true;
+                }
             });
+            safeStorageSet(`spirit_mastery_${mapKey}`, merged);
+        });
+
+        // 보스 클리어 상태도 양쪽 합집합 반영
+        const combinedBosses = new Set([
+            ...localClearedBosses,
+            ...(Array.isArray(cloudData.clearedBosses) ? cloudData.clearedBosses : [])
+        ]);
+        combinedBosses.forEach(mapKey => {
+            safeStorageSet(`spirit_boss_cleared_${mapKey}`, true);
+        });
+
+        if (cloudData.isExamCleared || localExamCleared) {
+            safeStorageSet('spirit_exam_cleared', true);
         }
-        if (cloudData.isExamCleared) safeStorageSet('spirit_exam_cleared', true);
 
         if (cloudData.records) {
             safeStorageSet('spirit_records_data', cloudData.records);
@@ -5089,6 +5133,12 @@
             wordCounselingData = cloudData.counselingData;
             safeStorageSet('spirit_counseling_data', wordCounselingData);
         }
+
+        // 내 로컬의 최신 저장 시각 갱신
+        safeStorageSet('spirit_last_local_save', Date.now());
+
+        // 서버에 진짜 올려줄 새 데이터가 있을 때만 true 반환
+        return (!isResetByOtherDevice && hasNewLocalProgressToUpload);
     }
 
     // 🌟 브라우저 ➔ 클라우드 동기화 (마왕 토벌 횟수 포함)
@@ -5899,6 +5949,50 @@
         return decayed;
     }
 
+    // ========================================================
+    // 🛡️ [구출전 쿼터 엔진] 일반 단어 계약량(계급 승급선)에 따른 계단식 배정
+    // ========================================================
+    function getDailyRescueQuota() {
+        let normalContracted = 0;
+
+        worldMaps.forEach(map => {
+            const idLower = (map.id || "").toLowerCase();
+            const nameLower = (map.name || "").toLowerCase();
+            // 비경(불규칙, 동의어 등) 영지는 쿼터 계산에서 완전 제외
+            const isSpecialMap = idLower.includes("irreg") || idLower.includes("net") || nameLower.includes("불규칙") || nameLower.includes("동의어");
+            if (isSpecialMap) return;
+
+            const savedMastery = (map.id === currentMapId && typeof wordMastery !== 'undefined' && Object.keys(wordMastery).length > 0)
+                ? wordMastery
+                : safeStorageGet(`spirit_mastery_${map.id}`, {});
+
+            map.words.forEach(w => {
+                if ((savedMastery[w.eng] || 0) >= 3) normalContracted++;
+            });
+        });
+
+        // 🌟 1. words.js의 GAME_CONFIG.rescueQuota 설정이 있으면 최우선 적용
+        const cfgList = (typeof GAME_CONFIG !== 'undefined' && Array.isArray(GAME_CONFIG.rescueQuota))
+            ? GAME_CONFIG.rescueQuota
+            : null;
+
+        if (cfgList && cfgList.length > 0) {
+            // 큰 숫자 순서대로 정렬하여 매칭되는 첫 번째 쿼터 반환
+            const sorted = [...cfgList].sort((a, b) => (b.reqWords || 0) - (a.reqWords || 0));
+            for (const item of sorted) {
+                if (normalContracted >= (item.reqWords || 0)) {
+                    return item.quota || 5;
+                }
+            }
+        }
+
+        // 🌟 2. 설정이 없을 때의 안전 기본값 (Fallback)
+        if (normalContracted >= 400) return 20; // Ⅸ. 빛의 수호자 이상 (총력 수호)
+        if (normalContracted >= 240) return 15; // Ⅶ. 성역의 인도자 이상
+        if (normalContracted >= 120) return 10; // Ⅴ. 상급 술사 이상
+        return 5;                               // Ⅰ. 입문~중급 술사 (진도 집중)
+    }
+
     let currentMapId = safeStorageGet('spirit_current_map_id', worldMaps[0].id);
     let currentSectorIndex = 0;
     let currentRound = 1;
@@ -6633,13 +6727,13 @@ const recTime = document.getElementById("recFastestTime");
             tabSpecial.classList.remove("active");
             
             // 🌟 일반 영지 탭 전용 책 선생 대사
-            if (descEl) descEl.innerText = '성역의 수호령들이 잠들어 있는 영지들이다.\n틈틈이 드나들면서 계약하고 시련을 통과해라!';
+            if (descEl) descEl.innerText = '틈틈이 드나들면서 계약하고 시련을 통과해라!';
         } else {
             tabNormal.classList.remove("active");
             tabSpecial.classList.add("active");
 
             // 🌟 특수 비경 탭 전용 책 선생 대사
-            if (descEl) descEl.innerText = '여긴 마력이 뒤틀린 비경이다.\n특별한 정령들이 득실대니 긴장하라고."';
+            if (descEl) descEl.innerText = '여긴 특별한 정령들이 득실대니 긴장하라고.';
         }
 
         renderWorldMapList();
@@ -7087,8 +7181,7 @@ const recTime = document.getElementById("recFastestTime");
 
         const countBadge = document.getElementById("mistRescueCountBadge");
         if (countBadge) {
-            const isBossDefeated = isFinalExamDefeated();
-            const dailyQuota = isBossDefeated ? 20 : 5;
+            const dailyQuota = getDailyRescueQuota();
             countBadge.innerHTML = `위험에 처한 정령: 총 <b>${decayedWords.length}마리</b>`;
         }
 
@@ -7479,8 +7572,7 @@ const recTime = document.getElementById("recFastestTime");
 
             // 2. 오른쪽 텍스트: '방어 목표: N/5마리'
             const todayStr = getTodayKSTString();
-            const isBossDefeated = isFinalExamDefeated();
-            const dailyQuota = isBossDefeated ? 20 : 5;
+            const dailyQuota = getDailyRescueQuota();
             const dailyCount = safeStorageGet(`spirit_defense_today_count_${todayStr}`, 0);
             expText.parentElement.innerHTML = `구출 목표: <span id="expText" style="color:#701a75; font-weight:900;">${dailyCount} / ${dailyQuota}마리</span>`;
 
@@ -8795,8 +8887,7 @@ const recTime = document.getElementById("recFastestTime");
         if (isEmergencyDefenseMode) {
             syncToCloud(true);
 
-            const isBossDefeated = isFinalExamDefeated();
-            const dailyQuota = isBossDefeated ? 20 : 5; // 미토벌 5마리, 토벌자 20마리
+            const dailyQuota = getDailyRescueQuota();
             const todayStr = getTodayKSTString();
 
             // 오늘 누적 방어 문제 수 카운트
@@ -10647,8 +10738,7 @@ function handleMidBossVictory() {
             const decayedEl = document.getElementById("repDecayedDanger");
 
             // 🌟 오늘 남은 일일 구출 목표치(5마리 vs 20마리) 계산
-            const isBossDefeated = isFinalExamDefeated();
-            const dailyQuota = isBossDefeated ? 20 : 5;
+            const dailyQuota = getDailyRescueQuota();
             const todayStr = getTodayKSTString();
             const todayCount = safeStorageGet(`spirit_defense_today_count_${todayStr}`, 0);
             const isDailyDone = (lastEmergencyClearedDate === todayStr || todayCount >= dailyQuota);
@@ -10950,6 +11040,7 @@ function handleMidBossVictory() {
                             tierName: "입문 술사 🌱",
                             mastery: {},
                             clearedBosses: [],
+                            resetAt: Date.now(), // 🌟 초기화 시각 타임스탬프 박제
                             records: {
                                 fastestBossTime: null,
                                 maxStreak: 0,
@@ -11277,6 +11368,56 @@ function handleMidBossVictory() {
         });
     }
 
+    // ========================================================
+    // 📜 [전역 스마트 스크롤 엔진] 모든 모달/화면비 순수 스크롤 박스 일괄 자동 감지
+    // ========================================================
+    function isScrollableElement(el) {
+        if (!el || el.nodeType !== 1) return false;
+        // 최상위 뷰포트나 게임 프레임 자체는 제외
+        if (el.tagName === 'HTML' || el.tagName === 'BODY' || el.classList.contains('game-container') || el.classList.contains('parchment-inner')) return false;
+        const style = window.getComputedStyle(el);
+        return (style.overflowY === 'auto' || style.overflowY === 'scroll');
+    }
+
+    function updateElementScrollFade(el) {
+        if (!el || typeof el.scrollHeight !== 'number') return;
+        // 1. 실제로 눈에 보이는 높이보다 내용물이 넘치는가?
+        const isOverflowing = el.scrollHeight > el.clientHeight + 4;
+        // 2. 손가락으로 맨 밑(바닥 6px 이내)까지 다 내렸는가?
+        const isAtBottom = (el.scrollTop + el.clientHeight) >= (el.scrollHeight - 6);
+
+        // 내용이 넘치고 아직 바닥에 안 닿았을 때만 페이드 가동!
+        if (isOverflowing && !isAtBottom) {
+            el.classList.add('scroll-fade-bottom');
+        } else {
+            el.classList.remove('scroll-fade-bottom');
+        }
+    }
+
+    // 1) 터치/휠 스크롤 시 해당 박스 즉시 실시간 계산 (렉 0% passive)
+    document.addEventListener('scroll', (e) => {
+        const target = e.target;
+        if (isScrollableElement(target)) {
+            updateElementScrollFade(target);
+        }
+    }, { capture: true, passive: true });
+
+    // 2) 어떤 모달이 열리든(클릭/터치/화면크기 변경 시) 현재 열려있는 스크롤 박스를 자동 스캔
+    function autoScanAllVisibleScrolls() {
+        requestAnimationFrame(() => {
+            document.querySelectorAll('*').forEach(el => {
+                // 현재 화면에 실제로 보이고 있는 스크롤 박스만 선별 검사
+                if (el.offsetParent !== null && isScrollableElement(el)) {
+                    updateElementScrollFade(el);
+                }
+            });
+        });
+    }
+
+    window.addEventListener('click', autoScanAllVisibleScrolls, { passive: true });
+    window.addEventListener('touchstart', autoScanAllVisibleScrolls, { passive: true });
+    window.addEventListener('resize', autoScanAllVisibleScrolls, { passive: true });
+
     // 🌟 앱 실행 시 자동 로그인 처리
     window.onload = async function() {
         initSystemSettingsListener(); // 🌟 실시간 마왕 강림 리스너 가동!
@@ -11306,16 +11447,10 @@ function handleMidBossVictory() {
                 if (doc.exists) {
                     const cloudData = doc.data();
                     
-                    // 🌟 [스마트 롤백 방어막] 기기 로컬 진도 vs 클라우드 진도 비교
-                    const { totalContracted: localContracted } = getGlobalTotalStats();
-                    const cloudContracted = cloudData.masteryCount || 0;
-                    // 폰에서 퀴즈를 풀다 새로고침해서 로컬이 더 최신인 경우:
-                    if (localContracted > cloudContracted) {
-                        // 덮어쓰지 않고, 오히려 폰의 최신 진도를 클라우드로 역전송하여 최신화!
+                    // 🌟 양쪽 병합 후, "실제로 서버보다 더 앞선 새 단어가 있을 때만" 딱 1회 백업!
+                    const hasNewProgress = restoreDataFromCloud(cloudData);
+                    if (hasNewProgress) {
                         syncToCloud(true);
-                    } else {
-                        // 새 기기이거나 클라우드가 더 최신인 경우에만 정상 다운로드
-                        restoreDataFromCloud(cloudData);
                     }
                 }
             } catch (e) {

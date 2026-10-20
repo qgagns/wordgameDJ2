@@ -1893,16 +1893,17 @@
             display: flex; 
             justify-content: center; 
             align-items: center; 
-            flex-wrap: wrap; 
+            flex-wrap: nowrap;
+            max-width: 96%;
             gap: 4px; 
             white-space: nowrap;
             z-index: 2;
         }
 
         .tag { 
-            font-size: 14px; 
+            font-size: 13px; 
             font-weight: 700; 
-            padding: 2px 7px; 
+            padding: 2px 6px; 
             border-radius: 8px; 
         }
         .review-tag {
@@ -4988,7 +4989,15 @@
         const savedTts = safeStorageGet('spirit_tts_enabled', true);
         const savedMuted = safeStorageGet('spirit_muted', false);
 
-        localStorage.clear(); 
+        // 🛑 [치명적 덮어쓰기 원천 차단] 
+        // 다른 학년(dj1, dj2) 데이터까지 날려버리던 전체 삭제(clear)를 폐지하고,
+        // 오직 현재 학년(DB_KEY)의 서랍만 깨끗하게 비웁니다!
+        const prefix = `spirit_${DB_KEY}_`;
+        Object.keys(localStorage).forEach(k => {
+            if (k.startsWith(prefix)) {
+                localStorage.removeItem(k);
+            }
+        });
 
         if (currentUid) safeStorageSet('spirit_current_uid', currentUid);
         if (savedHeroName) safeStorageSet('spirit_hero_name', savedHeroName);
@@ -5205,13 +5214,13 @@
             } catch(e) {}
         },
         click() {
-            this.playTone(700, 'triangle', 0.04, 0.12, 0.001);
+            this.playTone(700, 'triangle', 0.04, 0.22, 0.001); // 편안한 탭음
         },
         countdownTick() {
-            this.playTone(550, 'sine', 0.09, 0.25, 0.01);
+            this.playTone(550, 'sine', 0.09, 0.38, 0.01);
         },
         countdownStart() {
-            this.playTone(880, 'triangle', 0.35, 0.35, 0.001);
+            this.playTone(880, 'triangle', 0.35, 0.45, 0.001);
         },
         correct(combo = 0) {
             if (this.muted) return;
@@ -5220,7 +5229,7 @@
             const notes = [523.25 + pitchBonus, 659.25 + pitchBonus, 783.99 + pitchBonus, 1046.50 + pitchBonus];
             notes.forEach((freq, idx) => {
                 setTimeout(() => {
-                    this.playTone(freq, 'sine', 0.16, 0.22, 0.001);
+                    this.playTone(freq, 'sine', 0.16, 0.42, 0.001); // 🌟 TTS와 정확히 일치하는 체감 음량
                 }, idx * 55);
             });
         },
@@ -5234,7 +5243,7 @@
                 const notes = [1046.50, 1318.51, 1567.98, 2093.00]; // 높은 도-미-솔-도
                 notes.forEach((freq, idx) => {
                     setTimeout(() => {
-                        this.playTone(freq, 'sine', 0.18, 0.25, 0.001);
+                        this.playTone(freq, 'sine', 0.18, 0.45, 0.001);
                     }, idx * 35);
                 });
             } catch(e) {}
@@ -5243,8 +5252,8 @@
         wrong() {
             if (this.muted) return;
             this.init();
-            this.playTone(220, 'sawtooth', 0.2, 0.18, 0.001);
-            setTimeout(() => this.playTone(164.81, 'sawtooth', 0.25, 0.18, 0.001), 90);
+            this.playTone(220, 'sawtooth', 0.2, 0.32, 0.001); // 🌟 귀를 찌르지 않는 적당한 오답음
+            setTimeout(() => this.playTone(164.81, 'sawtooth', 0.25, 0.32, 0.001), 90);
         },
         fanfare() {
             if (this.muted) return;
@@ -5258,7 +5267,7 @@
             let delay = 0;
             melody.forEach(m => {
                 setTimeout(() => {
-                    this.playTone(m.f, 'triangle', m.d, 0.25, 0.001);
+                    this.playTone(m.f, 'triangle', m.d, 0.42, 0.001);
                 }, delay);
                 delay += m.d * 1000 + 25;
             });
@@ -5320,7 +5329,7 @@
         damage() {
             if (this.muted) return;
             this.init();
-            this.playTone(130, 'sawtooth', 0.3, 0.28, 0.01);
+            this.playTone(130, 'sawtooth', 0.3, 0.35, 0.01);
         }
     };
 
@@ -5387,7 +5396,8 @@
                 const cleanText = text.replace(/\([^)]+\)/g, '').trim();
                 const uttr = new SpeechSynthesisUtterance(cleanText);
                 uttr.lang = 'en-US';
-                uttr.rate = 0.88;
+                uttr.volume = 1.0; // 🌟 스마트폰 표준 미디어 최대치로 일관 고정
+                uttr.rate = 0.9;   // 🌟 너무 처지지 않는 자연스러운 대화 속도
                 uttr.pitch = 1.0;
                 if (englishVoice) uttr.voice = englishVoice;
 
@@ -5673,16 +5683,37 @@
         { level: 4, name: "영원의 낙원 🌟", range: "100%", bg: "#d97706", color: "#fef3c7" }
     ];
 
+    // 🌟 현재 학년(DB_KEY) 고유의 로컬 서랍 키 생성 헬퍼
+    function getScopedStorageKey(key) {
+        const prefix = `spirit_${DB_KEY}_`;
+        if (key.startsWith(prefix)) return key;
+        return `${prefix}${key.replace(/^spirit_/, '')}`;
+    }
+
     function safeStorageGet(key, defaultVal) {
         try {
-            const item = localStorage.getItem(key);
+            const scopedKey = getScopedStorageKey(key);
+            let item = localStorage.getItem(scopedKey);
+
+            // 🌟 [자동 승계 브릿지] 새 학년 서랍에 데이터가 없으면 구버전 공용 서랍에서 자동 이사!
+            if ((!item || item === "undefined" || item === "null") && scopedKey !== key) {
+                const oldItem = localStorage.getItem(key);
+                if (oldItem && oldItem !== "undefined" && oldItem !== "null") {
+                    localStorage.setItem(scopedKey, oldItem);
+                    item = oldItem;
+                }
+            }
+
             if (!item || item === "undefined" || item === "null") return defaultVal;
             return JSON.parse(item);
         } catch (e) { return defaultVal; }
     }
 
     function safeStorageSet(key, val) {
-        try { localStorage.setItem(key, JSON.stringify(val)); } catch (e) {}
+        try { 
+            const scopedKey = getScopedStorageKey(key);
+            localStorage.setItem(scopedKey, JSON.stringify(val)); 
+        } catch (e) {}
     }
 
     // ⏰ [한국 시간 기준 매일 밤 자정(00:00) 칼같이 리셋되는 날짜 문자열]
@@ -5936,13 +5967,13 @@
         { id: "mid_no_dmg", name: "🛡️ 철벽의 결계사", desc: "수호령전을 노데미지(하트 3개 온존)로 클리어" },
         { id: "speed_demon", name: "⏱️ 광속의 정령술사", desc: "마왕 『EXAM』을 25초 이내에 토벌" },
         { id: "boss_3", name: "👑 마왕의 천적", desc: "마왕 『EXAM』을 3회 이상 토벌" },
-        { id: "clutch_win", name: "🩸 피 1로 버틴 턱걸이", desc: "하트 1개 남은 빈사 상태로 마왕 격파" },
+        { id: "clutch_win", name: "🩸 피 1로 턱걸이", desc: "하트 1개 남은 빈사 상태로 마왕 격파" },
         { id: "legend_ok", name: "🌟 1등급의 전설", desc: "마왕전을 노데미지(하트 3개 온존)로 완전 토벌" },
-        { id: "wrong_20", name: "🍂 정령 기피 대상 1호", desc: "누적 오답 20회 달성 (정령들이 널 피하는데?)" },
-        { id: "wrong_50", name: "🌾 오답도 거름이 된다", desc: "누적 오답 50회 달성 (실패는 1등급의 어머니)" },
-        { id: "time_out", name: "⏳ 시간을 달리는 멍때림", desc: "보스전에서 시간 초과(Time Over) 3회 겪음" },
-        { id: "mental_break", name: "💔 깨진 유리 멘탈", desc: "보스전에서 하트 3개를 모두 잃고 패배" },
-        { id: "phoenix", name: "🩹 칠전팔기 불사조", desc: "보스전에서 패배한 직후 다시 도전해서 승리" }
+        { id: "wrong_20", name: "🍂 정령 기피 1호", desc: "누적 오답 20회 달성 (정령들이 널 피하는데?)" },
+        { id: "wrong_50", name: "🌾 오답도 거름이...", desc: "누적 오답 50회 달성 (실패는 1등급의 어머니)" },
+        { id: "time_out", name: "⏳ 그냥 멍때림", desc: "보스전에서 시간 초과(Time Over) 3회 겪음" },
+        { id: "mental_break", name: "💔 유리 멘탈", desc: "보스전에서 하트 3개를 모두 잃고 패배" },
+        { id: "phoenix", name: "🩹 칠전팔기", desc: "보스전에서 패배한 직후 다시 도전해서 승리" }
     ];
 
     let gameRecords = safeStorageGet('spirit_records_data', {
@@ -5961,6 +5992,11 @@
     let hadBossDefeatBefore = false;
 
     function saveRecords() {
+        // 🌟 기본 칭호 및 해금 목록 뼈대 데이터 100% 안전 보장
+        if (!gameRecords) gameRecords = {};
+        if (!gameRecords.equippedTitle) gameRecords.equippedTitle = "🌱 첫 걸음의 탐색자";
+        if (!Array.isArray(gameRecords.unlocked)) gameRecords.unlocked = ["first_bond"];
+
         safeStorageSet('spirit_records_data', gameRecords);
         updateEquippedBadgeDisplay();
         // 🌟 중앙 플레이어 성명/학번 자동 출력
@@ -5969,6 +6005,8 @@
             const heroName = safeStorageGet('spirit_hero_name', safeStorageGet('spirit_user_name', '정령술사'));
             playerNameEl.innerText = heroName;
         }
+        // 🌟 칭호 획득/장착 시 즉시 파이어베이스 클라우드로 강제 영구 백업!
+        syncToCloud(true);
     }
 
     // 🌟 피드백 창 위에 안전하게 칭호 알림창을 띄우는 함수
@@ -7293,6 +7331,8 @@ const recTime = document.getElementById("recFastestTime");
             if (startBtn) {
                 startBtn.innerText = "⚔️ 지침을 숙지하고 실전 출격! ➔";
             }
+            const bModal = document.getElementById("bookModal");
+            if (bModal) bModal.style.display = "flex";
             return;
         }
 
@@ -7334,13 +7374,23 @@ const recTime = document.getElementById("recFastestTime");
             "탐사 중단하고 복귀 ➔", 
             "🏕️ RETURN",
             () => {
-                // 1. 구출전이나 성소였으면 ➔ 대륙 지도(타이틀)로 복귀!
-                if (isEmergencyDefenseMode || isCounselingMode) {
+                // 1. 구출전이나 성소였으면
+                if (isEmergencyDefenseMode) {
                     isEmergencyDefenseMode = false;
-                    isCounselingMode = false;
                     syncToCloud(true);
                     document.getElementById("gameScreen").style.display = "none";
                     renderTitleScreen();
+                } else if (isCounselingMode) {
+                    const wasFav = (currentShrineMode === 'fav');
+                    isCounselingMode = false;
+                    syncToCloud(true);
+                    document.getElementById("gameScreen").style.display = "none";
+                    // 🌟 배경에 야영지를 먼저 켜두고 그 위에 단어장 얹기
+                    renderTitleScreen();
+                    // 🌟 찜 퀴즈 도중 나갔을 때도 찜 목록 단어장으로 부드럽게 복귀!
+                    if (wasFav) {
+                        openShrineRoom('fav');
+                    }
                 } 
                 // 2. 일반 영지 탐험이었으면 ➔ 전초기지로 복귀!
                 else {
@@ -8704,16 +8754,26 @@ const recTime = document.getElementById("recFastestTime");
 
         // 🌟 성소 세션 종료 정산
         if (isCounselingMode) {
+            const wasFavMode = (currentShrineMode === 'fav'); // 🌟 찜 퀴즈였는지 판별
             isCounselingMode = false;
             syncToCloud(true);
 
-            // 1. 팝업창 없이 즉시 타이틀로 쾌속 복귀!
+            // 1. 퀴즈 화면 닫기
             document.getElementById("gameScreen").style.display = "none";
-            renderTitleScreen();
-            Sound.fanfare();
 
-            // 2. 상단에 2초 자동 소멸 토스트 띄우기
-            showGameToast(`🍃 <b>정령 상담 완료!</b> (${roundCorrectCount}/${roundQuestions.length}마리 교감)`);
+            // 🌟 핵심: 모달 뒤편에 야영지 화면을 먼저 켜두어 블랙아웃을 원천 차단!
+            renderTitleScreen();
+
+            // 🌟 찜 퀴즈는 야영지로 나가지 않고, 방금 전의 찜 목록 단어장으로 즉시 복귀!
+            if (wasFavMode) {
+                Sound.fanfare();
+                openShrineRoom('fav'); // 찜 목록 단어장 재오픈
+                showGameToast(`💖 <b>정령 집중 교감 완료!</b> (${roundCorrectCount}/${roundQuestions.length}마리 완료)`);
+            } else {
+                Sound.fanfare();
+                // 2. 상단에 2초 자동 소멸 토스트 띄우기
+                showGameToast(`🍃 <b>정령 교감 완료!</b> (${roundCorrectCount}/${roundQuestions.length}마리 교감)`);
+            }
             return;
         }
 
@@ -9186,6 +9246,14 @@ const recTime = document.getElementById("recFastestTime");
         if (idLower.includes('irreg') || idLower.includes('net_')) {
             bossTimeLimit = isReExam ? 8.0 : 9.5;
         }
+        // 🌟 [철자 영지 전용 보스 스펙] 체력 10 / 하트 3 / 시간 14초
+        if (idLower.includes('spell_')) {
+            bossMaxHp = 10;
+            bossHp = 10;
+            playerMaxShields = 3;
+            playerShields = 3;
+            bossTimeLimit = 14.0;
+        }
 
         isPhase2Enraged = false;
         hasUsedLastStand = true;  // 수호령전은 부활 없음
@@ -9581,6 +9649,11 @@ const recTime = document.getElementById("recFastestTime");
                 renderBossSynonymQuestion(targetWord);
                 return;
             }
+            // 🌟 철자 영지 보스전: 100% 룬 조립 타격 배틀로 직행!
+            if (mapIdLower.includes('spell_')) {
+                renderBossSpellQuestion(targetWord);
+                return;
+            }
         }
 
         // 🛑 [영지 격리] 수호령전은 해당 영지 단어만, 마왕/특훈은 전 대륙 단어에서 선지 추출
@@ -9865,6 +9938,101 @@ const recTime = document.getElementById("recFastestTime");
         });
     }
 
+    // 🔤 [NEW] 철자 영지 전용 수호령전 룬 조립 배틀 렌더러
+    function renderBossSpellQuestion(targetWord) {
+        startBossTimer(); // 14초 카운트다운 시작
+        const target = targetWord.eng.toLowerCase().trim();
+        const firstChar = target[0]; // 첫 글자 힌트!
+        const remaining = target.slice(1).split('');
+
+        // 함정 알파벳 2개 추가 후 셔플
+        const trapPool = ['a', 'e', 'i', 'o', 'u', 'r', 's', 't', 'l', 'n', 'c', 'p', 'd', 'm'];
+        for (let i = 0; i < 2; i++) {
+            remaining.push(trapPool[Math.floor(Math.random() * trapPool.length)]);
+        }
+        remaining.sort(() => Math.random() - 0.5);
+
+        // 보스 화면 문구 세팅
+        document.getElementById("bossQuestionTag").innerText = `🔤 첫 글자 [${firstChar.toUpperCase()}] 힌트! 영단어를 조립하여 수호령을 타격하라! (14초)`;
+        document.getElementById("bossWordDisplay").innerText = targetWord.kor; // 한글 뜻 제시
+
+        let bossSpellAssembled = [];
+        const grid = document.getElementById("bossChoicesGrid");
+        grid.style.opacity = "1";
+        grid.innerHTML = `
+            <div class="morph-box-wrapper" style="gap:4px;">
+                <!-- 1. 첫 글자가 꽂혀있는 조립 슬롯 바 -->
+                <div id="bossSpellSlot" class="morph-slot-display" style="min-height:42px; font-size:22px;" onclick="bossSpellBack()">
+                    ${firstChar.toUpperCase()} _
+                </div>
+                <!-- 2. 알파벳 룬 타일 랙 -->
+                <div id="bossSpellRack" class="morph-tile-rack" style="padding:2px 0;"></div>
+                <!-- 3. 하단 컨트롤 바 -->
+                <div class="morph-control-bar">
+                    <button class="morph-btn-clear" onclick="bossSpellBack()">⌫ 지우기</button>
+                    <button class="morph-btn-submit" onclick="bossSpellSubmit()">⚡ 주문 시전! (타격) ➔</button>
+                </div>
+            </div>
+        `;
+
+        const rack = document.getElementById("bossSpellRack");
+        remaining.forEach(char => {
+            const btn = document.createElement("button");
+            btn.className = "morph-tile-btn";
+            btn.innerText = char;
+            btn.onclick = () => {
+                Sound.click();
+                bossSpellAssembled.push({ char, btn });
+                btn.classList.add("used");
+                updateBossSpellSlot();
+            };
+            rack.appendChild(btn);
+        });
+
+        function updateBossSpellSlot() {
+            const slot = document.getElementById("bossSpellSlot");
+            if (!slot) return;
+            const assembledPart = bossSpellAssembled.map(x => x.char).join('');
+            const fullStr = firstChar + assembledPart;
+            const blanks = Math.max(0, target.length - fullStr.length);
+            slot.innerText = fullStr.toUpperCase() + (blanks > 0 ? " " + "_ ".repeat(blanks).trim() : "");
+        }
+
+        window.bossSpellBack = () => {
+            if (bossSpellAssembled.length === 0) return;
+            Sound.click();
+            const last = bossSpellAssembled.pop();
+            if (last && last.btn) last.btn.classList.remove("used");
+            updateBossSpellSlot();
+        };
+
+        window.bossSpellSubmit = () => {
+            if (isBossChecking) return;
+            const assembledWord = firstChar + bossSpellAssembled.map(x => x.char).join('').toLowerCase();
+
+            if (assembledWord === target) {
+                // 🌟 조립 성공! ➔ 수호령 체력 -1 타격
+                isBossChecking = true;
+                clearInterval(bossTimerInterval);
+                const isCrit = (bossHp <= 2);
+                Sound.hit(isCrit);
+                bossHp--;
+                triggerBossHitEffect(isCrit);
+                updateBossUI();
+                setTimeout(() => { isBossChecking = false; loadNextBossQuestion(); }, 700);
+            } else {
+                // ❌ 조립 실패 ➔ 플레이어 하트 -1 피격
+                isBossChecking = true;
+                clearInterval(bossTimerInterval);
+                Sound.damage();
+                playerShields--;
+                triggerPlayerDamageEffect();
+                updateBossUI();
+                setTimeout(() => { isBossChecking = false; loadNextBossQuestion(); }, 800);
+            }
+        };
+    }
+
 // 보스 타이머 함수
     function startBossTimer() {
         clearInterval(bossTimerInterval);
@@ -10109,39 +10277,21 @@ function handleMidBossVictory() {
         Sound.fanfare();
         syncToCloud(true);
 
-        const { allMapsConquered } = getGlobalTotalStats();
-        // 🌟 [우회로 차단] 침식 단어가 0개인지 함께 확인!
-        const decayedWords = getDecayedWords();
-        const isAllCleanAndConquered = allMapsConquered && (decayedWords.length === 0);
-
-        // 오직 모든 영지 정복 + 침식 0마리일 때만 대각성 모달 팝업!
-        if (isAllCleanAndConquered) {
-            document.getElementById("greatAwakeningModal").style.display = "flex";
-        } else {
-            // 침식 단어가 남아있다면 일반 승리 엔딩 모달을 띄움
-            const activeMap = worldMaps.find(m => m.id === currentMapId) || worldMaps[0];
-            document.getElementById("endingSubBadge").innerText = "GUARDIAN PURIFIED";
-            document.getElementById("endingTitle").innerText = `정화된 ${activeMap.name}`;
-            
-            // 안내 멘트 보강
-            if (allMapsConquered && decayedWords.length > 0) {
-                document.getElementById("endingDesc").innerHTML = `
-                    수호령의 시련을 이겨냈다!<br><br>
-                    하지만 대륙 곳곳에 <b>침식된 정령(${decayedWords.length}마리)</b>이 남아있어<br>아직은 마왕을 둘러싼 결계가 열리지 않았어.<br><br>
-                    대륙으로 돌아가, 침식된 정령들을 먼저 구출해야해!
-                `;
-            } else {
-                document.getElementById("endingDesc").innerHTML = `
-                    수호령의 시련을 완벽하게 통과했구나!<br>
-                    성역의 수호령이 네 능력을 인정하고<br>이곳에 낙원의 축복이 내렸어.<br><br>
-                    크흠... 잘 했다. 하지만, 이게 끝은 아니니까!<br>
-                    자, 어서 나아가자고.
-                `;
-            }
-
-            document.getElementById("endingContractStats").innerText = `모든 구역 계약 및 수호령 정화 완료 (100%)`;
-            document.getElementById("endingModal").style.display = "flex";
-        }
+        // 🌟 수호령을 격파하면 언제나 단정하게 해당 영지 정화 승리 모달(endingModal) 단일 출력!
+        const activeMap = worldMaps.find(m => m.id === currentMapId) || worldMaps[0];
+        const theme = getMapTheme(activeMap.name, activeMap.id);
+ 
+        document.getElementById("endingSubBadge").innerText = "GUARDIAN PURIFIED";
+        document.getElementById("endingTitle").innerText = `정화된 ${activeMap.name}`;
+        document.getElementById("endingDesc").innerHTML = `
+            ${theme.guardianName}의 시련을 완벽하게 통과했구나!<br>
+            성역의 수호령이 네 능력을 인정하고<br>이곳에 낙원의 축복이 내렸다.<br><br>
+            크흠... 잘했다. 하지만 이게 끝은 아니니까!<br>
+            자, 계속해서 다음 모험으로 나아가자고!
+        `;
+ 
+     document.getElementById("endingContractStats").innerText = `모든 구역 계약 및 ${theme.guardianName} 정화 완료 (100%)`;
+     document.getElementById("endingModal").style.display = "flex";
     }
 
     function goToBossFromAwakening() {
@@ -10167,10 +10317,10 @@ function handleMidBossVictory() {
     const BOSS_SCRIPTS = {
         // 1. [전투 전] 1회차: 첫 결전
         intro_first: [
-            { speaker: "👑 마왕 『EXAM』", color: "#dc2626", text: "설마 네놈이 사방의 수호령을 모조리 깨뜨리고 이곳까지 올 줄이야." }, 
-            { speaker: "👑 마왕 『EXAM』", color: "#dc2626", text: "...하지만 착각 마라. 나의 시험은 네놈의 얕은 지식 따위로 넘을 수 있는 벽이 아니다!" },
+            { speaker: "👑 마왕 『EXAM』", color: "#dc2626", text: "설마 네놈이 수호령들을 모조리 깨뜨리고 이곳까지 올 줄이야." }, 
+            { speaker: "👑 마왕 『EXAM』", color: "#dc2626", text: "...하지만 착각 마라. 나의 시험은 네놈의 얕은 지식 따위로 넘을 수 있는 벽이 아니니." },
             { speaker: "🧙‍♂️ 정령술사 (나)", color: "#059669", text: "가증스러운 놈. 온 대륙의 정령들과 맺은 유대의 힘으로... 오늘 널 완전히 박살 내주마!" },
-            { speaker: "👑 마왕 『EXAM』", color: "#dc2626", text: "크하하하! 좋다, 찰나의 절망 속에 네놈의 영혼을 갈아 넣어주마. 덤벼라!!" }
+            { speaker: "👑 마왕 『EXAM』", color: "#dc2626", text: "크하하하! 좋다, 찰나의 절망 속에 네놈의 영혼을 갈아 넣어주마. 덤벼라!" }
         ],
         // 2. [전투 전] 2회차 이상: 패퇴 후 부활한 마왕
         intro_repeat: [
@@ -10804,10 +10954,15 @@ function handleMidBossVictory() {
                     }
                 }
 
-                // 2. 브라우저 로컬 저장소 완전 삭제
-                localStorage.clear();
+                // 🌟 오직 현재 사이트(DB_KEY)의 서랍만 선별 초기화 (다른 학년/클라이언트 데이터 100% 보호)
+                const prefix = `spirit_${DB_KEY}_`;
+                Object.keys(localStorage).forEach(k => {
+                    if (k.startsWith(prefix)) {
+                        localStorage.removeItem(k);
+                    }
+                });
                 
-                showGameAlert("모험 기록 초기화", "모든 기록이 깨끗하게 초기화되었다...\n기존 비밀번호로 다시 로그인할 수 있으니, 꼭 다시 보자.", "새 모험 시작", "✨ RESET COMPLETE", () => {
+                showGameAlert("모험 기록 초기화", "모든 기록이 깨끗하게 초기화되었다...\n꼭 다시 보자.", "새 모험 시작", "✨ RESET COMPLETE", () => {
                 location.reload();
                 });
             }
@@ -10828,8 +10983,13 @@ function handleMidBossVictory() {
         } catch (e) {
             console.error("로그아웃 전 클라우드 저장 실패:", e);
         } finally {
-            // 2. 서버 저장이 끝났으므로 브라우저 로컬 저장소 완전 소독!
-            localStorage.clear();
+            // 🌟 오직 현재 사이트(DB_KEY)의 로그인 정보만 해제하고, 다른 학년 데이터는 건드리지 않음!
+            const prefix = `spirit_${DB_KEY}_`;
+            Object.keys(localStorage).forEach(k => {
+                if (k.startsWith(prefix)) {
+                    localStorage.removeItem(k);
+                }
+            });
             location.reload(); // 새로고침하여 로그인 창으로 깨끗하게 이동
         }
     }
@@ -11124,7 +11284,19 @@ function handleMidBossVictory() {
             try {
                 const doc = await db.collection(USER_COLLECTION).doc(savedUid).get();
                 if (doc.exists) {
-                    restoreDataFromCloud(doc.data());
+                    const cloudData = doc.data();
+                    
+                    // 🌟 [스마트 롤백 방어막] 기기 로컬 진도 vs 클라우드 진도 비교
+                    const { totalContracted: localContracted } = getGlobalTotalStats();
+                    const cloudContracted = cloudData.masteryCount || 0;
+                    // 폰에서 퀴즈를 풀다 새로고침해서 로컬이 더 최신인 경우:
+                    if (localContracted > cloudContracted) {
+                        // 덮어쓰지 않고, 오히려 폰의 최신 진도를 클라우드로 역전송하여 최신화!
+                        syncToCloud(true);
+                    } else {
+                        // 새 기기이거나 클라우드가 더 최신인 경우에만 정상 다운로드
+                        restoreDataFromCloud(cloudData);
+                    }
                 }
             } catch (e) {
                 console.log("오프라인 상태이거나 로컬 데이터를 사용합니다.");
@@ -11858,6 +12030,20 @@ function handleMidBossVictory() {
     // 🌟 뒤로가기 발생 시 현재 화면 단계(Depth)를 감지하여 한 단계씩 복귀
     let lastBackPressTime = 0; // 뒤로가기 연속 누름 감지용
 
+    // 🛡️ [전역 안전 그물망] 어떤 모달이 닫히든 바닥 화면이 비어있으면 즉시 야영지를 점등!
+    function ensureBaseScreenActive() {
+        const baseScreens = ['titleScreen', 'mapLobbyScreen', 'gameScreen', 'bossScreen', 'introScreen'];
+        const hasActiveScreen = baseScreens.some(id => {
+            const el = document.getElementById(id);
+            return el && window.getComputedStyle(el).display !== 'none';
+        });
+
+        // 켜져 있는 기본 화면이 0개라면 블랙아웃 방지를 위해 야영지 자동 복구!
+        if (!hasActiveScreen) {
+            renderTitleScreen();
+        }
+    }
+    
     window.addEventListener("popstate", (e) => {
         // 🌟 [추가] 야영지 세로 두루마리 팝오버 닫기
         if (activeCampPopoverId) {
@@ -11932,6 +12118,8 @@ function handleMidBossVictory() {
             else {
                 topModal.style.display = "none";
             }
+            // 🌟 모달이 닫힌 직후 바닥 화면이 켜져 있는지 항상 0.01초 확인
+            setTimeout(ensureBaseScreenActive, 10);
             return;
         }
 

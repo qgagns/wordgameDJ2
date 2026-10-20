@@ -161,6 +161,19 @@
             border-color: #fde047;
         }
 
+        /* ========================================================
+           📜 [하단 페이드 마스크] 양피지 질감 보존 & 바닥 카드 자연스러운 페이드아웃
+           ======================================================== */
+        .sector-list-box,
+        .tab-content,
+        #shrineWordlistContainer,
+        #imprintListContainer,
+        #adminStudentListContainer,
+        #adminDetailMapsContainer {
+            -webkit-mask-image: linear-gradient(to bottom, black calc(100% - 30px), transparent 100%);
+            mask-image: linear-gradient(to bottom, black calc(100% - 30px), transparent 100%);
+        }
+
         /* 🖥️ 오직 PC 모니터나 가로가 넓은 화면(태블릿)에서만 예쁜 창모드 적용 */
         @media (min-width: 768px) {
             body {
@@ -957,7 +970,7 @@
             width: 46%;
             display: flex;
             flex-direction: column;
-            gap: 7px;
+            gap: 2px;
             z-index: 10;
         }
 
@@ -3324,7 +3337,7 @@
             <div class="sector-list-box" id="lobbySectorListContainer"></div>
 
             <button id="lobbyGuardianTrialBtn" class="guardian-trial-btn locked" onclick="handleGuardianBannerClick()">
-                🔒 성역의 심장 : 수호령의 시련<br>(모든 구역 정복 필요)
+                🔒 수호령의 시련<br>(모든 구역 정복 필요)
             </button>
 
             <div>
@@ -7274,10 +7287,10 @@ const recTime = document.getElementById("recFastestTime");
             if (unlockPercent > 0) {
                 // 🌟 자물쇠 균열 모드: 주황색 테마
                 guardianBtn.className = "guardian-trial-btn theme-amber cracked";
-                guardianBtn.innerHTML = `🔒 성역의 심장 : 봉인 ${unlockPercent}% 해제!<br>(자물쇠 균열)`;
+                guardianBtn.innerHTML = `🔒 수호령 : 봉인 ${unlockPercent}% 해제!`;
             } else {
                 guardianBtn.className = "guardian-trial-btn locked";
-                guardianBtn.innerHTML = `🔒 성역의 심장 : 수호령의 시련<br>(모든 구역 정복 필요)`;
+                guardianBtn.innerHTML = `🔒 수호령의 시련 (모든 구역 정복 필요)`;
             }
         }
 

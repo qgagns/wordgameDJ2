@@ -3,7 +3,11 @@
 // ========================================================
 const GAME_CONFIG = {
     schoolTag: "덕정고2",      // 부제 옆에 붙을 학교/버전명 (예: The Trial of EXAM · 덕정고2 ver)
-    dbKey: "2026_2_1_DJ2",      // 학교별 독립 DB 분리 키 (연도_학기_시험차수_학교학년)
+    dbKey: "2026_2_2_dj2",      // 학교별 독립 DB 분리 키 (연도_학기_차_학교학년)
+
+    // 🎛️ [교사용 마스터 계정] 선생님만 아는 관리자 로그인 아이디/비밀번호
+    adminId: "qlagn",          // 관리자 로그인 아이디 (기본: admin)
+    adminPw: "0112",           // 관리자 비밀번호 (기본: 0000)
     
     // ⚔️ [수호령전 체력 & 시간 & 플레이어 목숨]
     guardianHp1: 5,            // 1회차 수호령 체력 (기본: 5)
@@ -14,20 +18,20 @@ const GAME_CONFIG = {
     guardianPlayerHpRepeat: 3, // 👈 2회차 수호령전 플레이어 하트 수 (기본: 3개)
 
     // 👑 [마왕전 체력 & 시간 & 플레이어 목숨]
-    bossHp1: 10,               // 1회차 마왕 체력 (기본: 10)
-    bossTime1: 5.0,            // 1회차 마왕 시간 (기본: 5.0초)
+    bossHp1: 12,               // 1회차 마왕 체력 (기본: 10)
+    bossTime1: 4.0,            // 1회차 마왕 시간 (기본: 5.0초)
 
-    bossHpRepeat: 12,          // 2회차 마왕 체력 (기본: 12)
-    bossTimeRepeat: 4.0,       // 2회차 마왕 시간 (기본: 4.0초)
-    bossPlayerHpRepeat: 3,     // 👈 2회차 마왕전 플레이어 하트 수 (기본: 3개)
+    bossHpRepeat: 15,          // 2회차 마왕 체력 (기본: 12)
+    bossTimeRepeat: 3.0,       // 2회차 마왕 시간 (기본: 4.0초)
+    bossPlayerHpRepeat: 1,     // 👈 2회차 마왕전 플레이어 하트 수 (기본: 3개)
 
     // 🔥 [시험 직전 파이널] 하드코어 마왕전 설정
     hardcoreMode: {
         enabled: true,                       // 켜기(true) / 끄기(false)
         title: "책 선생의 하드코어 점검",            // 시험 명칭
         targetMaps: "all",                   // "all" 또는 ["ch1", "ch2"]
-        hp: 15,                              // 출제 문제 수 (마왕 체력)
-        playerHp: 3,                         // 👈 하드코어 플레이어 하트 수 (기본: 3개, 1개로 하면 원코인 데스!)
+        hp: 10,                              // 출제 문제 수 (마왕 체력)
+        playerHp: 1,                         // 👈 하드코어 플레이어 하트 수 (기본: 3개, 1개로 하면 원코인 데스!)
         timeLimit: 3                       // 문제당 제한 시간 (초)
     }
 };
@@ -40,561 +44,125 @@ const GAME_CONFIG = {
 //            유적, 신전, 사원, 도서관, 책, 고대, 교과서\
 
 const WORLD_MAPS_TEXT = `
-
-[교모의 바다 1]
-ambiguous	[형] 모호한
-assumption	[명] 가정, 전제
-attention literacy	[명] 주의력 문해력
-awareness	[명] 의식, 자각
-clarify	[동] 명확히 하다
-conscious of	[숙] ~을 의식하는
-consciousness	[명] 의식
-declaration	[명] 선언
-explicit	[형] 명시적인
-foresee	[동] 예견하다
-implication	[명] 영향, 함의
-implicit	[형] 암시적인
-imply	[동] ~을 암시하다, 내포하다
-insight	[명] 통찰력
-literacy	[명] 문해력, 소양
-manifestation	[명] 표현, 표명
-media literacy	[명] 미디어 문해력
-observant	[형] 관찰력이 뛰어난
-perceive	[동] 인식하다, 여기다
-recognize ~ as ...	~을 …로 인정하다
-refer to	[숙] ~을 지칭하다
-regard ~ as …	~을 …로 여기다[간주하다]
-self-awareness	[명] 자기 인식
-subtle	[형] 미묘한
-thoroughly	[부] 철저하게, 꼼꼼하게
-underestimate	[동] 과소평가하다
-unpack	[동] 분석하다, (짐을) 풀다
-activeness	[명] 활발함, 적극성
-admiration	[명] 존경, 감탄
-admire	[동] 동경하다, 존경하다, 감탄하다
-commitment	[명] 헌신, 전념
-compassion	[명] 연민
-deliberate	[형] 의도적인, 고의의, 신중한
-despair	[명] 절망
-devotion	[명] 헌신
-guilt	[명] 죄책감
-half-hearted	[형] 성의 없는
-honour	① [동] 존중하다, 기리다; ② [명] 명예
-inclined	[형] ~하는 경향이 있는
-intended	[형] 고의된, 의도된
-motivate	[동] 동기를 부여하다
-preference	[명] 선호
-reluctant	[형] 꺼리는
-self-worth	[명] 자부심, 자존감
-strain	[명] 중압감, 압박
-advantage	[명] 이점, 장점
-attribute	① [명] 속성; ② [동] ~탓으로 돌리다
-beneficial	[형] 유익한, 이로운
-categorical	① [형] 단정적인; ② [형] 범주의
-competent	[형] 유능한
-credibility	[명] 신뢰성
-critical	[형] 비판적인; 중대한
-crucial	[형] 결정적인, 매우 중요한
-equivalent	[명] 상응하는 것, 등가물
-essential	[형] 필수적인
-evaluate	[동] 평가하다
-evaluation	[명] 평가
-fascinating	[형] 매혹적인, 대단히 흥미로운
-flexibility	[명] 융통성, 유연성
-flexible	[형] 융통성 있는
-harsh	[형] 가혹한
-influential	[형] 영향력 있는
-potential	[명] 가능성, 잠재력; [형] 잠재적인
-recommendation	[명] 권고, 추천
-requirement	[명] 요건
-significant	[형] 중대한, 상당한
-skilled	[형] 숙련된, 능숙한
-specialized	[형] 전문적인, 전문화된
-uniform	[형] 일관된, 획일적인
-uniqueness	[명] 고유성
-valuable	[형] 가치 있는, 소중한, 귀중한
-vibrant	[형] 활기찬, 생기가 넘치는
-charity	[명] 자선단체
-closeness	[명] 친밀함
-collective	[형] 집단적인
-confront	[동] ~에 맞서다
-cooperation	[명] 협력
-culture-specific	[형] 문화 특유의
-discrimination	[명] 차별
-dispute	[명] 분쟁, 논쟁
-diversity	[명] 다양성
-generous	[형] 관대한, 후한
-immigrant	[명] 이민자
-individualism	[명] 개인주의
-injustice	[명] 불의, 부당함, 불평등
-instruct	[동] 지시하다
-instructor	[명] 강사, 조교
-interaction	[명] 상호작용
-interdependence	[명] 상호의존
-petition	[명] 청원(서)
-progressive	[형] 진보적인
-racial	[형] 인종의
-treaty	[명] 조약, 협약
-unemployment	[명] 실업(률)
-unite	[동] 단결하다
-
-
-[교모의 바다 2]
-accessible	[형] 쉽게 얻을[이용할] 수 있는
-account A as B	[숙] A를 B로 여기다
-address	[동] ~에게 말을 건네다; [동] (문제·쟁점 등)을 다루다
-cheat	[동] 속이다, 부정행위를 하다
-compensate for	[동] ~을 보상하다
-contribute to ~	~에 기여하다
-deed	[명] 행위
-distract	[동] 주의를 산만하게 하다
-distraction	[명] 주의 산만
-divert	[동] (주의를) 돌리다
-ingest	[동] 섭취하다, 흡수하다
-manipulation	[명] 교묘한 처리, 조작
-overload	[동] 과부하를 주다
-overlook	[동] 간과하다
-persuade	[동] ~을 설득하다
-prioritize	[동] ~을 최우선시하다
-provoke	[동] 자극하다, 유발하다
-quick-fix	[명] 임시방편, 미봉책
-relate A to B	A를 B와 관련짓다
-restore	[동] 회복하다
-selection	[명] 갖춰 놓은 것
-take pains to	[숙] 애써 ~하다
-tasked with	~하는 과제를 맡은
-afford to	[동] ~할 여유가 되다, 형편이 되다
-affordable	[형] 살 만한 가격의, 저렴한
-consumption	[명] 소비(량), 섭취(량)
-convenience	[명] 편리(함), 편의
-cosmetics	[명] 화장품, 미용 제품
-customization	[명] 맞춤화
-disposable	[형] 일회용의
-earnings	[명] 수익, 소득
-luxury	[명] 사치(품)
-manufacture	[동] ~을 제조하다
-means	[명] [단·복수 동형] 수단
-overconsumption	[명] 과소비, 과잉 섭취
-ownership	[명] 소유(권)
-personalization	[명] 개인 맞춤화
-personalized	[형] (개인) 맞춤형의
-reusable	[형] 재사용이 가능한
-revenue	[명] 수익, 수입
-accumulate	[동] 축적되다
-acquisition	[명] 습득
-decline	[명] 감소
-deepen	[동] 심화시키다
-diminishment	[명] 위축, 감소
-driver	[명] 동인, 추진 요인
-emerge	[동] 나타나다, 출현하다
-enhance	[동] ~을 높이다, 향상시키다
-environmentally friendly	환경친화적인, 친환경적인
-fragmentation	[명] 프래그멘테이션, 파편화
-groundbreaking	[형] 획기적인, 혁신적인
-in turn	결과적으로
-initially	[부] 처음에, 초기에
-mortality	[명] 필멸성
-perpetuate	[동] 지속시키다, 영속시키다
-phenomenon	[명] 현상
-pioneer	[명] 선구자, 개척자
-re-establish	[동] 재확립하다
-revolutionize	[동] 혁신을 일으키다
-shift	[명] 변화
-transformation	[명] 변화, 변형
-transience	[명] 덧없음, 일시성
-birthplace	[명] 탄생지, 발생지
-embedded	[형] 깊이 새겨진, 뿌리 박힌
-for its own sake	[숙] 그 자체를 위해
-originate from ~	~에서부터 유래하다, 비롯되다
-per se	[숙] 그 자체로
-rooted in	[숙] ~에 뿌리를 둔
-a range[variety] of ~	[숙] 다양한, 넓은 범위의 ~, 다양한 종류의 ~
-burdening	[형] 부담을 주는
-dominant	[형] 우세한, 지배적인
-excessive	[형] 과도한, 지나친
-genre	[명] 장르, 유형
-hardship	[명] 어려움
-inconsistency	[명] 불일치
-indigestion	[명] 소화불량
-indirect	[형] 간접적인
-passive	[형] 수동적인
-virtual	[형] 가상의
-vulnerability	[명] 취약성
-from one’s perspective	~의 관점[시각]에서
-relative to	[전] ~에 상대적인, ~에 따른
-subject	① [명] 피실험자; ② [명] 주제, 과목
-
-
-[실모의 숲]
-# 
-clear the way towards	[숙]	~로 가는 길을 열어주다
-originate from, stem from	[동]	비롯되다, 유래하다
-occurrence	[명]	발생, 사건
-rare occurrence	[숙]	드물게 일어나는 일
-emergence, rise	[명]	출현, 부상
-proliferation	[명]	급증, 확산
-generate, create	[동]	창출하다, 생성하다, 만들다
-prompt, trigger	[동]	촉발하다, 유발하다, 자극하다
-promote, foster	[동] 촉진하다, 육성하다
-facilitate:[동] 용이하게 하다, 쉬워지게 하다
-accelerate  [동]    가속하다[시키다]
-evolve, develop	[동]	진화하다, 발전시키다, 개발하다
-evolution, development	[명]	진화, 발전
-evolutionary	[형]	진화의, 진화론적인
-transform, convert	[동]	변형시키다, 바꾸다
-self-transformation	[명]	자기 변화
-render	[동]	(어떤 상태로) 만들다
-lengthen, prolong, extend	[동]	늘이다, 연장하다
-postpone, delay, put off	[동]	연기하다, 미루다
-continuous, ongoing	[형]	지속적인, 끊임없는, 계속 진행 중인
-continuation	[명]	지속, 연속
-maintain, endure	[동]	유지하다, 지속되다, 견디다
-premature	[형]	시기상조의, 너무 이른
-frequent	[형]	빈번한, 잦은
-gradual	[형]	점진적인
-simultaneous	[형]	동시의
-meanwhile	[부]	한편, 그동안에
-reinforce, strengthen	[동]	강화하다
-diminish, weaken	[동]	줄이다, 감소시키다, 약화시키다
-hinder, impede	[동]	방해하다, 저해하다
-suppress	[동]	억누르다, 억압하다
-confine	[동]	한정하다, 국한하다
-accept	[동]	받아들이다, 수락하다
-acknowledge, recognize	[동]	인정하다, 인지하다, 알아보다
-refuse, reject	[동]	거부하다, 거절하다
-resist	[동]	저항하다, 반대하다
-doubt	[동]	의심하다; [명] 의심
-abandon	[동]	버리다, 포기하다
-battle, conflict	[명]	싸움, 갈등, 충돌
-aggressive	[형]	공격적인
-rival	[명]	경쟁자, 라이벌; [형] 경쟁하는
-allied	[형]	연합한, 동맹의
-criticize	[동]	비판하다, 비난하다
-criticism	[명]	비판, 비평
-constructive	[형]	건설적인
-destructive	[형]	파괴적인
-peace treaty	[명]	평화 협정
-nonviolent	[형]	비폭력적인
-harmony	[명]	조화, 화합
-resolve, settle	[동]	해결하다, 정착하다; 결심하다
-negotiate	[동]	협상하다
-dilemma	[명]	딜레마, 진퇴양난
-individualistic	[형]	개인주의적인
-collectivism	[명]	집단주의
-peer	[명]	또래, 동료
-adolescent	[명]	청소년; [형] 청소년기의
-solitary	[형]	혼자의, 고립된
-independent	[형]	독립적인
-intimate	[형]	친밀한, 밀접한
-affection	[명]	애정, 호의
-cooperative	[형]	협력적인
-stay away from, distance oneself from	[숙]	~을 피하다, 멀리하다, 거리를 두다
-status, standing	[명]	지위, 신분, 평판
-dominance	[명]	지배, 우세
-govern, rule	[동]	지배하다, 통치하다
-liberation	[명]	해방, 석방
-block party	[명]	동네 축제, 동네 잔치
-ghetto	[명]	빈민가
-domestic	[형]	가정의; 국내의
-relocate	[동]	이주하다, 이전하다
-cognitive, perceptive	[형]	인지의, 인식의
-analytical	[형]	분석적인
-critical insight	[숙]	비판적 통찰력
-perspective	[명]	관점, 시각
-misunderstanding	[명]	오해
-distort	[동]	왜곡하다
-reflect, represent	[동]	반영하다, 나타내다
-embody	[동]	구현하다, 나타내다
-underlie	[동]	~의 기저[핵심]를 이루다
-unexplained	[형]	설명되지 않은, 원인 불명의
-persuasive	[형]	설득력 있는
-immersion	[명]	몰입, 몰두
-capability, capacity	[명]	능력, 역량
-incapable of	[숙]	~을 할 수 없는
-empower	[동]	권한을 주다, 힘을 북돋우다
-enable O toR	[동]	O가 R할 수 있게 하다
-strive, take pains	[동/숙]	노력하다, 분투하다, 공을 들이다, 애를 쓰다
-pursue, seek	[동]	추구하다
-motive, motivation	[명]	동기, 유인
-with great ease	[숙]	아주 쉽게
-manage, handle	[동]	관리하다, 다루다
-
-
-
-[실모의 바다]
-#
-opt for	[숙]	~을 선택하다
-determine	[동]	결정하다, 밝히다
-have no choice but toR	[숙]	~하지 않을 수 없다
-resort to, rely on, depend on	[숙]	~에 의지하다, 기대다
-reliance, dependence	[명]	의존, 의지
-try out	[숙]	시험해 보다
-customize, personalize, individualize	[동]	맞춤 제작하다, 개인화하다
-standardize	[동]	표준화하다
-moral, ethical	[형]	도덕적인, 윤리적인
-moral licensing	[명]	도덕적 허가
-eco-guilt	[명]	환경 죄책감
-eco-friendly	[형]	친환경적인
-grief	[명]	비탄, 애도
-comfort, relieve, ease	[명/동]	위로, 편안함, 덜다, 안도하게 하다
-restorative	[형]	회복시키는
-self-esteem, self-regard	[명]	자존감, 자부심
-psychotherapist	[명]	심리치료사
-impulsive	[형]	충동적인
-voluntary	[형]	자발적인
-grudging	[형]	마지못해 하는
-addictive	[형]	중독적인, 중독성의
-alert	[명/형]	경보, 알림; 방심하지 않는
-emotional	[형]	정서적인, 감정적인
-linguistic	[형]	언어의, 언어학적인
-syntax	[명]	통사론, 구문론
-pronoun	[명]	대명사
-lyrics	[명]	가사
-rhyme	[명/동]	운, 각운; 운을 맞추다
-drafting	[명]	초고 작성, 기초 작업
-curriculum	[명]	교육과정
-heritage, tradition	[명]	유산, 전통
-customary, conventioal	[형]	통상적인, 관례적인
-ceremony	[명]	의식, 식
-audience	[명]	청중, 관객
-recreational	[형]	여가의, 오락의
-enjoyment	[명]	즐거움, 향유
-afford	[동]	~할 여유가 있다
-unaffordable	[형]	너무 비싼, 감당하기 어려운
-commercial	[형]	상업적인
-economic recession	[명]	경기 침체
-convenient	[형]	편리한
-accessibility	[명]	접근성
-appetite	[명]	식욕
-dining	[명]	식사, 정찬
-digestion, ingestion	[명]	소화(력)
-vacant, empty	[형]	비어 있는
-secure	[동/형]	확보하다; 안전한
-license	[동/명]	허가하다, 면허를 주다; 면허
-import	[동/명]	들여오다, 수입하다; 수입, 도입
-transmit	[동/명]	전송하다, 전달하다; 전송, 전달
-consequently, hence, therefore	[부]	그 결과, 따라서, 그러므로
-consequence	[명]	결과; 중요성
-besides	[부]	게다가, 뿐만 아니라
-relative	[형]	상대적인; 관련된
-relevant, to the point	[형/숙]	유의미한, 관련된, 적절한, 요점을 짚는
-disadvantage	[명]	단점, 불리한 점
-neutral	[형]	중립적인
-universal, general	[형]	보편적인, 일반적인
-diverse, various	[형]	다양한
-distinctive	[형]	독특한, 차별적인
-appealing, charming, attractive	[형]	매력적인, 흥미를 끄는
-unappealing	[형]	매력 없는, 흥미를 끌지 못하는
-notable, intriguing	[형]	주목할 만한, 눈에 띄는, 아주 흥미로운
-popularity	[명]	인기
-mainstream	[명/형]	주류; 주류의
-boast, show off	[동]	자랑하다, 뽐내다
-display	[동/명]	보여주다, 발휘하다; 전시
-appreciate	[동]	높이 평가하다; 감사하다; 감상하다
-propose, suggest	[동]	제안하다
-procedure, technique	[명]	절차, 순서, 기법, 기술
-strategy, tactic	[명]	전략, 책략, 전술
-mechanism	[명]	기제, 메커니즘
-function	[동/명]	기능하다, 작동하다; 기능
-feedback	[명]	피드백, 조언
-for one's own sake	[숙]	그 자체를 위하여
-formal	[형]	정규의, 격식 있는
-intermediate	[형/명]	중간의; 중급자
-physiological	[형]	생리적인, 생리학의
-balance	[동/명]	균형을 맞추다; 균형
-strict	[형]	엄격한
-acquire, attain	[동]	습득하다, 얻다
-accompany	[동]	동반하다, 수반하다
-accuracy	[명]	정확성, 정확도
-emphasis, stress	[명]	강조, 역점
-establish, found	[동]	확립하다, 설립하다
-pivotal, principal	[형]	중추적인, 결정적인, 주요한, 주된
-primarily	[부]	주로, 본래
-scarce, rare	[형]	부족한, 드문
-situational	[형]	상황에 따른, 상황적인
-
-
-[connecting: 이어짐의 신전]
-# 서로를 이어주는 정령들이 노니는 곳
-also, in addition, additionally	[접부] 또한, 추가적으로, 게다가
-besides, moreover, furthermore	[접부] 게다가, 더욱이
-on top of that, what's more	[접부] 거기에 더, 게다가, 더한 것은
-not only A but (also) B, B as well as A	[접] A뿐만 아니라 B도
-either A or B	[접] A나 B 둘 중 하나
-neither A nor B	[접] A도 B도 둘 다 아닌
-in essence, essentially	[접부] 본질적으로
-however, yet, still:[접부] 하지만, 그런데
-nevertheless, nonetheless: [접부] 그럼에도 불구하고   
-while, whereas	[접] ~인 반면에
-on the other hand	[접부] 반면에
-instead, rather	[접부] 대신에, 오히려
-despite, in spite of	[전] ~에도 불구하고
-instead of, rather than	[전] ~대신에, ~보다는
-though, although, even though	[접] (사실일 때) 비록 ~일지라도
-even if	[접] (가정일 때) 비록 ~하더라도, 설령 ~일지라도
-on the contrary, in contrast, by contrast	[접부] 대조적으로
-conversely	[접부] 반대로, 역으로
-by comparison	[접부] 그에 비해, 비교해 보면
-meanwhile	[접부] 한편으로는, 그러는 동안에
-likewise, similarly	[접부] 비슷하게, 유사하게
-equally, by the same token	[접부] 같은 이유로, 마찬가지로
-in the same way, in like manner	[접부] 같은 방식으로, 마찬가지 방식으로
-as ~ as ...	[구] ...만큼 ~한
-as ~, so ...	[구] ~인 것처럼, ...도 그렇다
-for example, for instance, e.g.: [접부] 예를 들어
-as an example, to illustrate, as an illustration: [접부] 설명하자면, 한 예로써
-(let us) say	[접부] 예를 들어 ~라고 말해보자
-a case in point is ~	[구] ~가 좋은 예이다
-providing, provided	[접] 만약 ~라면
-unless	[접] ~하지 않는 한, ~ 하지 않으면
-in case (that)	[접] ~할 경우에 대비하여
-as long as	[접] ~하는 한
-because, since, as	[접] ~ 때문에, ~이므로
-because of, due to, owing to	[전] ~ 때문에
-therefore, thus, hence, as a result	[접부] 따라서, 그러므로
-accordingly	[접부] 그에 따라서, 그에 맞춰서
-for this reason	[접부] 이러한 이유 때문에
-so ~ that ..., such ~ that ...	[구] 너무 ~해서 ...하다
-surely, certainly: [접부] 확실히
-undoubtedly, unquestionably:[접부] 의심할 여지 없이
-above all	[접부] 무엇보다도
-in particular, particularly, especially	[접부] 특히, 특별히
-in fact, as a matter of fact, actually, indeed	[접부] 사실은, 실제로
-in other words, that is (to say), namely	[접부] 즉, 다시 말해
-to put it another way	[접부] 다른 말로 하자면
-in short, in brief, to be brief, to put it simply	[접부] 간단히 말하자면, 짧게 말하자면
-in summary, to sum up, to summarize, in a nutshell	[접부] 요약하자면, 정리하자면
-consequently, as a consequence, in conclusion, to conclude	[접부] 결론적으로, 결론 짓자면
-all in all, largerly, on the whole, overall	[접부] 대체로, 전반적으로
-ultimately, in the end	[접부] 결국, 최종적으로, 궁극적으로
-to start (begin) with, first of all	[접부] 첫째로, 무엇보다 먼저
-subsequently	[접부] 그 후에, 이어서
-
-[실모4,5의 늪 1]
-algorithmic	[형] 알고리즘의
-discernment	[명] 안목, 분별력
-distinguish	[동] 구별하다, 분간하다
-expertise	[명] 전문 지식
-objective	[형] 객관적인
-precise	[형] 정확한, 정밀한
-predict	[동] 예측하다
-recall	[동] 상기하다, 회상하다
-recognition	[명] 인정, 인식
-capital letter	[명] 대문자
-convey	[동] 전달하다, 전하다
-demonstrate	[동] 입증하다, 보여주다
-fluent	[형] 능숙한, 유창한
-grammatical	[형] 문법적인
-highlight	[동] 강조하다, 두드러지게 하다
-literary	[형] 문학의
-script	[명] 문자, 문자 체계; 대본
-short for	[숙] ~의 줄임말인
-signify	[동] 의미하다, 나타내다
-spotlight	[명] 스포트라이트, 대중의 주목
-uppercase	[형] 대문자의
-attachment	[명] 애착, 결속
-depressive	[형] 우울증의, 우울한
-desperate	[형] 절박한, 자포자기의
-detachment	[명] 초연함, 거리 두기, 분리
-excite	[동] 흥분시키다, 열광시키다
-fatigue	[명] 피로, 피곤
-inclination	[명] 성향, 경향
-intimacy	[명] 친밀함
-mourning	[명] 애도
-playful	[형] 장난스러운, 유쾌한
-readiness	[명] 준비된 상태, 기꺼이 하는 태도
-tendency	[명] 경향, 성향
-unreserved	[형] 아낌없는, 조건 없는
-willingness	[명] 기꺼이 하는 마음, 의지
-accommodate	[동] 부응하다, 수용하다
-association	[명] 연관, 유대
-authority	[명] 당국, 기관; 권위
-autonomous	[형] 자주적인, 자율적인
-behavioral	[형] 행동의, 행동 양식의
-collectivist	[명] 집단주의자; [형] 집단주의의
-identity	[명] 정체성
-institution	[명] 기관, 협회
-interactive	[형] 쌍방향의, 대화형의
-norm	[명] 규범, 기준
-solidarity	[명] 연대, 결속
-subculture	[명] 하위문화
-supremacy	[명] 최고, 우위, 패권
-transparency	[명] 투명성
-advocate	[동] 옹호하다, 지지하다
-calamity	[명] 재난, 참사
-claim	[동] 주장하다; [명] 주장
-commit	[동] (과오·범죄를) 저지르다, 범하다
-competition	[명] 경쟁
-confrontation	[명] 대립, 대결
-disagreement	[명] 의견 충돌, 불일치
-dishonest	[형] 부정한, 불직한
-flawed	[형] 흠이 있는, 결함 있는
-theft	[명] 절도, 도둑질
-adapt	[동] 맞추다, 적응하다
-alter	[동] 바꾸다, 고치다
-differentiation	[명] 구별, 분화
-redirect	[동] 다른 방향으로 돌리다, 전환하다
-replacement	[명] 대체, 교체
-tailored	[형] 맞춤형의
-
-
-[실모4,5의 늪 2]
-attract	[동] 끌어들이다, 유인하다
-base	[동] 기초를 두다
-encourage	[동] 장려하다, 북돋우다
-raise	[동] 증진시키다; 올리다
-reveal	[동] 드러내다, 밝히다
-root	[동] 뿌리를 두다, 근거하다
-stimulate	[동] 자극하다, 촉진하다
-stimulus (- stimuli)	[명] 자극 (복수형 stimuli)
-ignore	[동] 무시하다
-minimize	[동] 최소화하다
-refrain from	[숙] ~을 삼가다, 자제하다
-succumb to	[숙] ~에 굴복하다
-withdraw	[동] 물러나다, 손을 떼다
-yield to	[숙] ~에 굴복하다, 넘겨주다
-attempt	[동] 시도하다; [명] 시도
-ensure	[동] 보장하다, 확실하게 하다
-impact	[명] 영향, 충격
-improvement	[명] 향상, 개선
-method	[명] 방법, 수단
-performance	[명] 공연, 연주; 성과
-process	[동] 처리하다; [명] 과정
-productive	[형] 생산적인
-proposal	[명] 제안
-seek	[동] 구하다, 추구하다
-solution	[명] 해결책
-validation	[명] 확인, 인정
-invest	[동] 투자하다
-necessity	[명] 필요성, 필수품
-receipt	[명] 수령, 수취
-recipient	[명] 수용자, 수취인
-sake	[명] 위함, 목적, 이익
-spending	[명] 소비, 지출
-availability	[명] 이용 가능성, 유효성
-blindly	[부] 맹목적으로
-capacity	[명] 능력, 수용력
-casual	[형] 격식을 차리지 않는, 일상적인
-clinical	[형] 임상의
-comparable	[형] 비교할 만한, 필적하는
-dietary	[형] 식사의, 음식의
-effective	[형] 효과적인
-era	[명] 시대
-exposure	[명] 노출
-feature	[명] 특징, 특색
-flexibly	[부] 유연하게, 융통성 있게
-independent of	[전] ~와 무관한, ~로부터 독립된
-initial	[형] 초기의, 처음의
-instant	[형] 즉각적인
-irreversible	[형] 되돌릴 수 없는
-long-term	[형] 장기적인
-meaningful	[형] 의미 있는
-merely	[부] 단지, 그저
-purely	[부] 순전히, 전적으로
-rigorous	[형] 엄격한, 철저한
-security	[명] 안전, 안보
-structural	[형] 구조적인
-sustainable	[형] 지속 가능한
-temporarily	[부] 일시적으로
+[2_2_1: 과거의 잔재]
+#2학기 1차 시험지 속 단어들. 제대로 복습하자.
+absence:[명] 부재, 없음
+access:[명] 접근, 이용 권한; [동] 접근하다
+adaptability:[명] 융통성, 적응성
+address:[동] (청중에게) 연설하다, 말을 걸다; 다루다
+align:[동] 나란히 맞추다, 일치시키다
+ambiguous:[형] 모호한, 다의적인
+analyze:[동] 분석하다
+appealing:[형] 매력적인, 흥미를 끄는
+assimilation:[명] 동화, 흡수
+assistance:[명] 도움, 원조
+awareness:[명] 인식, 자각
+categorical:[형] 단정적인, 명확한
+clash:[명] 충돌; [동] 충돌하다
+collectivistic:[형] 집단주의적인
+communal:[형] 공동의, 공동체의
+conformity:[명] 순응, 일치
+contemporary:[형] 현대의, 동시대의
+context:[명] 맥락, 문맥, 배경
+contribution:[명] 기여, 공헌
+convenient:[형] 편리한
+convey:[동] 전달하다, 전하다
+criticism:[명] 비판, 비평
+cumulative:[형] 누적되는, 누계의
+decline:[명] 쇠퇴, 하락; [동] 감소하다
+desire:[명] 욕구, 갈망; [동] 바라다
+diminish:[동] 줄이다, 감소시키다
+disposable:[형] 일회용의; 처분할 수 있는
+dispute:[명] 분쟁, 논쟁; [동] 반박하다
+diverse:[형] 다양한
+dominance:[명] 지배, 우세
+downturn:[명] (경기) 침체, 하강 국면
+drawback:[명] 결점, 문제점
+earnings:[명] 소득, 수입
+efficiently:[부] 효율적으로
+emphasize:[동] 강조하다
+endure:[동] 견디다, 참다
+engage in:[숙] ~에 참여하다, 종사하다
+environmentally friendly:[형] 친환경적인
+evident:[형] 분명한, 명백한
+evolution:[명] 진화, 발전
+expand:[동] 확장하다, 확대하다
+fixed:[형] 고정된
+flexible:[형] 유연한, 융통성 있는
+flexibility:[명] 유연성, 융통성
+foster:[동] 육성하다, 발전시키다
+gain access to:[숙] ~에 접근하다, 이용 권한을 얻다
+give weight to:[숙] ~에 무게를 두다, 중요시하다
+guilty:[형] 죄책감을 느끼는, 유죄의
+human-caused:[형] 인간 활동으로 초래된
+immigrant:[명] (타국에서 온) 이민자; [형] 이민의
+impact:[명] 영향, 충격; [동] 영향을 주다
+in exchange for:[숙] ~의 대가로, ~와 교환하여
+increasingly:[부] 점점 더, 갈수록
+individualism:[명] 개인주의
+individualistic:[형] 개인주의적인
+individually:[부] 개별적으로, 각자
+initial:[형] 처음의, 초기의
+innovation:[명] 혁신, 쇄신
+joblessness:[명] 실직, 실업 상태
+loyalty:[명] 충성도, 충실
+maintain:[동] 유지하다, 지속하다
+make up for:[숙] ~을 보상하다, 만회하다
+meaningful:[형] 의미 있는
+multiple:[형] 다수의, 다양한
+neglect:[동] 방치하다, 소홀히 하다; [명] 방치
+nonverbal:[형] 비언어적인
+notification:[명] 알림, 통지
+numerous:[형] 수많은, 다수의
+ownership:[명] 소유, 소유권
+personalized:[형] 맞춤형의, 개인화된
+pioneer:[명] 개척자, 선구자
+platform:[명] (서비스) 플랫폼; 승강장
+portion:[명] 부분, 몫
+predictable:[형] 예측 가능한
+preference:[명] 선호, 특혜
+premium:[형] 고급의; [명] 할증금
+previous:[형] 이전의, 사전의
+primarily:[부] 주로, 본래
+prior to:[전] ~에 앞서, ~ 전에
+prioritize:[동] 우선순위를 매기다, 우선시하다
+property:[명] 부동산, 소유물, 재산
+prosperity:[명] 번영, 번창
+purchase:[명] 구매; [동] 구매하다
+random:[형] 무작위의, 임의의
+regardless of:[숙] ~에 상관없이
+reject:[동] 거부하다, 거절하다
+reserve:[동] 따로 남겨두다; 예약하다
+resident:[명] 거주자, 주민
+reusable:[형] 재사용할 수 있는
+revenue:[명] 수익, 세입
+rhyme:[명] 각운, 운; [동] 운을 맞추다
+rhythm:[명] 리듬, 규칙적인 변화
+rivalry:[명] 라이벌 관계, 경쟁
+scrolling:[명] 스크롤하기, 화면 이동
+self-worth:[명] 자아 존중감, 자존감
+settle:[동] 해결하다, 정착하다
+shift:[명] 변화, 이동; [동] 이동하다
+significant:[형] 중대한, 상당한
+socioeconomic:[형] 사회경제적인
+specifically:[부] 구체적으로, 특별히
+straightforward:[형] 솔직한, 수월한, 복잡하지 않은
+structure:[명] 구조물, 체계
+subscription economy:[명] 구독 경제
+subtle:[형] 미묘한, 포착하기 어려운
+tailor:[동] (필요·목적에) 맞추다; [명] 재단사
+take action:[숙] 조치를 취하다, 행동에 나서다
+tendency:[명] 성향, 경향
+transformation:[명] 변용, 변화
+typically:[부] 일반적으로, 전형적으로
+unclear:[형] 불분명한, 모호한
+undergo:[동] 겪다, 받다
+unforeseen:[형] 예측하지 못한, 뜻밖의
+uniform:[형] 획일적인, 균일한; [명] 제복
+urban:[형] 도시의
+variety:[명] 다양성
+virtual:[형] 가상의, 사실상의
+vulnerability:[명] 취약성, 연약함
+willingness:[명] 기꺼이 하려는 마음
 
 `;

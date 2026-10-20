@@ -1,0 +1,17 @@
+{
+  "name": "Word Spirits for DJ2",
+  "short_name": "WS forDJ2",
+  "id": "?app=DJ2",
+  "start_url": "./index.html?app=DJ2",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#1c0e07",
+  "theme_color": "#1c0e07",
+  "icons": [
+    {
+      "src": "images/mr.book_icon.webp",
+      "sizes": "192x192 512x512",
+      "type": "image/webp"
+    }
+  ]
+}

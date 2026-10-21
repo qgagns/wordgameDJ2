@@ -229,9 +229,9 @@
            ======================================================== */
         .game-alert-card {
             background: #fbf6ea;
-            border: none; /* 👈 사각 실선 원천 제거 */
+            border: 3px solid #8f603a;
             border-radius: 16px;
-            padding: 0;
+            padding: 18px 16px;
             width: 100%;
             max-width: 320px;
             box-shadow: 0 12px 30px rgba(0,0,0,0.85);
@@ -458,7 +458,7 @@
 
         .lobby-art-box {
             width: 100%;
-            height: 70px;
+            height: 95px;
             border-radius: 12px;
             border: 2px solid #b59f77;
             overflow: hidden;
@@ -1409,11 +1409,11 @@
         /* 🌟 [수정] 오직 전초기지, 퀴즈, 보스전, 모달창에만 양피지 액자 씌우기 (타이틀 완벽 제외!) */
         #mapLobbyScreen, #gameScreen, #bossScreen, .modal {
             background: transparent !important; 
-            border: 12px solid transparent !important; /* 양피지 4변 테두리 두께 */
+            border: 30px solid transparent !important; /* 양피지 4변 테두리 두께 */
             border-image: url('images/parchment.webp') 15% fill stretch !important;
             box-sizing: border-box !important;
             box-shadow: none !important;
-            padding: 2px 4px !important; /* 👈 좌우·상하 여백을 바짝 줄여 내부 작업 공간 확장 */
+            padding: 10px 12px !important; /* 양피지 롤러 안쪽 콘텐츠 여백 */
         }
 
         /* 2. 내부 카드 밝기 상향 (우유빛 반투명) */
@@ -1494,15 +1494,14 @@
 
             /* 🌟 9-Slice 세로 두루마리 적용 (가운데 양피지만 내용물 높이에 맞게 늘어남) */
             border-style: solid !important;
-            border-color: transparent !important; /* 👈 두루마리 이미지 밑 잔여 실선 100% 소멸 */
-            border-width: 30px 15px 30px 15px !important;
-            border-image: url('images/scroll_btn_v.webp') 14% 8% 14% 8% fill stretch !important;
+            border-width: 56px 20px 56px 20px !important;
+            border-image: url('images/scroll_btn_v.webp') 20% 10% 20% 10% fill stretch !important;
             
             /* 입체감 있는 다크 섀도우 & 은은한 황금빛 오라 */
             filter: drop-shadow(0 15px 40px rgba(0,0,0,0.95)) drop-shadow(0 0 10px rgba(245, 158, 11, 0.35)) !important;
             
             /* 롤러 안쪽 깨끗한 양피지에 내용물이 안착하도록 내부 패딩 정돈 */
-            padding: 2px 8px 8px 8px !important; /* 👈 좌우 패딩을 줄여 작업 폭 확대 */
+            padding: 4px 16px 10px 16px !important;
             width: 86% !important;
             max-width: 350px !important;
             box-sizing: border-box !important;
@@ -3748,7 +3747,7 @@
                 <div class="ending-divider" style="color:#3b82f6; margin-bottom:4px;">❖ ❖ ❖</div>
                 <div class="ending-desc">
                     마왕의 사악한 망각의 안개에 휩싸인 정령들을 구출해라.<br>
-                    그 정령들이 네 영혼에 <b>진명의 각인</b>을 새겨줄 거다!
+                    끝까지 구출해낸 정령만이 네 영혼에 <b>진명의 각인</b>을 새겨줄 거다!
                 </div>
             </div>
 
@@ -4219,17 +4218,14 @@
             <div id="fbResonanceNotice" class="fb-sub-notice"></div>
 
             <!-- 단어 & 한글 뜻 박스 (위아래 2줄 분리형) -->
-            <div class="feedback-card" style="position:relative; margin-bottom:10px; padding:10px 12px; width:100%; box-sizing:border-box; background:#ede3cc; border-radius:12px; border:1.5px solid #c9b48c; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:4px;">
-                <!-- 💖 우측 상단 모서리 고정 하트 버튼 (영단어 가로 공간 침범 0%) -->
-                <button id="fbHeartBtn" style="position:absolute; top:6px; right:8px; background:none; border:none; font-size:20px; cursor:pointer; padding:4px; line-height:1; transition:transform 0.15s ease;" onclick="toggleCurrentWordFavorite(event)">🤍</button>
-                
-                <!-- 1행: 영단어 (가로 100% 온전하게 독차지) -->
-                <div style="width:100%; text-align:center; padding:0 24px; box-sizing:border-box;">
-                    <span id="fbWord" style="font-size:25px; font-weight:900; color:#2c1a0e; letter-spacing:-0.3px; word-break:keep-all; line-height:1.2;">apple</span>
+            <div class="feedback-card" style="margin-bottom:10px; padding:8px 12px; width:100%; box-sizing:border-box; background:#ede3cc; border-radius:12px; border:1.5px solid #c9b48c; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:3px;">
+                <!-- 1행: 영단어 (크고 또렷하게) -->
+                <div style="display:flex; align-items:center; justify-content:center; gap:8px; margin-bottom:10px;">
+                    <span id="fbWord" style="font-size:25px; font-weight:900; color:#2c1a0e; letter-spacing:-0.3px;">apple</span>
+                    <button id="fbHeartBtn" style="background:none; border:none; font-size:22px; cursor:pointer; padding:0; line-height:1; transition:transform 0.15s ease;" onclick="toggleCurrentWordFavorite(event)">🤍</button>
                 </div>
-                
-                <!-- 2행: 한글 뜻 -->
-                <span id="fbMeaning" class="fb-meaning" style="font-size:18px; font-weight:700; color:#785a3e; word-break:keep-all; line-height:1.3;">사과</span>
+                <!-- 2행: 한글 뜻 (작고 부드럽고 연한 톤) -->
+                <span id="fbMeaning" class="fb-meaning" style="font-size:20px; font-weight:700; color:#785a3e; word-break:keep-all;">사과</span>
             </div>
 
             <!-- 5. 자동 타이머 게이지바 (6px로 선명화) -->
@@ -5208,7 +5204,12 @@
         const savedUserName = safeStorageGet('spirit_user_name', '빛의 구원자');
         const finalHeroName = currentHeroName || savedUserName;
 
+        // 순수 학생 이름 추출 ("10415 안재훈" ➔ "안재훈")
+        const pureName = finalHeroName.replace(currentUserDocId || '', '').replace(/^[0-9\s]+/, '').trim() || finalHeroName;
+
         const payload = {
+            id: currentUserDocId,
+            name: pureName, // 👈 DB 최상위에 name 필드 항상 영구 유지!
             lastUpdated: firebase.firestore.FieldValue.serverTimestamp(),
             heroName: finalHeroName,
             masteryCount: totalMasteredCount,
@@ -6834,7 +6835,7 @@ const recTime = document.getElementById("recFastestTime");
         closeCampPopovers();
 
         if (currentSmartMode === 'emergency') {
-            openMistRescueFromShrine(); // 👈 실제 존재하는 함수명으로 연결
+            openMistRescueBriefing(); // 안개 구출
         } else if (currentSmartMode === 'boss') {
             startFinalBossRaid(); // 마왕 결전
         } else if (currentSmartMode === 'counsel') {
@@ -6850,7 +6851,7 @@ const recTime = document.getElementById("recFastestTime");
         closeCampPopovers();
 
         if (actionType === 'emergency') {
-            openMistRescueFromShrine(); // 👈 실제 존재하는 함수명으로 연결
+            openMistRescueBriefing();
         } else if (actionType === 'counsel_hurt') {
             openShrineRoom('hurt'); // 상처 입은 정령 치유실
         } else if (actionType === 'counsel_fav') {
@@ -7228,7 +7229,7 @@ const recTime = document.getElementById("recFastestTime");
         closeOpsPopover();
 
         if (currentSmartMode === 'emergency') {
-            openMistRescueFromShrine(); // 👈 실제 존재하는 함수명으로 연결
+            openMistRescueBriefing(); // 👈 수호전 직접 진입 대신 브리핑 모달을 먼저 오픈!
         } else if (currentSmartMode === 'boss') {
             startFinalBossRaid();
         } else {
@@ -7266,7 +7267,7 @@ const recTime = document.getElementById("recFastestTime");
         Sound.click();
 
         if (mode === 'emergency') {
-            openMistRescueFromShrine(); // 👈 실제 존재하는 함수명으로 연결
+            openMistRescueBriefing(); // 👈 브리핑 모달로 이동
         } 
         else if (mode === 'counsel') {
             openShrineHub(); // 👈 퀴즈 직행 대신 성소 로비(2개의 문) 오픈!
@@ -11571,6 +11572,13 @@ function handleMidBossVictory() {
         }
 
         list.forEach(s => {
+            // 🌟 [지능형 이름 복원] s.name이 없으면 heroName("10231 김철수")에서 이름만 쏙 추출!
+            let displayName = s.name;
+            if (!displayName && s.heroName) {
+                displayName = s.heroName.replace(s.id || '', '').replace(/^[0-9\s]+/, '').trim() || s.heroName;
+            }
+            displayName = displayName || '무명';
+            const displayPw = s.pw || '미등록';
             const clearCount = s.bossClearCount || (s.records && s.records.bossClearCount) || 0;
             let bossBadge = clearCount > 0 
                 ? `<b style="color:#dc2626;">토벌 👑 (${clearCount}회)</b>` 
@@ -11593,9 +11601,8 @@ function handleMidBossVictory() {
             card.innerHTML = `
                 <div style="text-align:left;">
                     <div style="font-size:14.5px; font-weight:900; color:#2e1065;">
-                        ${s.name || '무명'} <span style="font-size:12px; font-weight:800; color:#7e22ce;">(${s.id})</span>
-                        <!-- 🔑 비밀번호 분실 구원 배지! -->
-                        <span style="font-size:11px; background:#fef3c7; border:1px solid #f59e0b; color:#92400e; padding:1px 6px; border-radius:6px; font-weight:900; margin-left:4px;">🔑 ${s.pw || '????'}</span>
+                        ${displayName} <span style="font-size:12px; font-weight:800; color:#7e22ce;">(${s.id})</span>
+                        <span style="font-size:11px; background:#fef3c7; border:1px solid #f59e0b; color:#92400e; padding:1px 6px; border-radius:6px; font-weight:900; margin-left:4px;">🔑 ${displayPw}</span>
                     </div>
                     <div style="font-size:11.5px; font-weight:700; color:#6b21a8; margin-top:2px;">
                         ${s.tierName || '입문 술사'} · 최근: ${lastTimeStr}
@@ -11696,9 +11703,14 @@ function handleMidBossVictory() {
         const towerModal = document.getElementById("adminTowerModal");
         if (towerModal) towerModal.style.display = "none";
 
-        // 1. 학생 기본 프로필 및 비밀번호 세팅
-        document.getElementById("adminDetailStudentName").innerText = `${s.name || '무명'} (${s.id})`;
-        document.getElementById("adminDetailPwBadge").innerText = `🔑 비번: ${s.pw || '????'}`;
+        let displayName = s.name;
+        if (!displayName && s.heroName) {
+            displayName = s.heroName.replace(s.id || '', '').replace(/^[0-9\s]+/, '').trim() || s.heroName;
+        }
+        displayName = displayName || '무명';
+
+        document.getElementById("adminDetailStudentName").innerText = `${displayName} (${s.id})`;
+        document.getElementById("adminDetailPwBadge").innerText = `🔑 비번: ${s.pw || '미등록'}`;
         
         const titleStr = (s.records && s.records.equippedTitle) ? s.records.equippedTitle : "칭호 없음";
         document.getElementById("adminDetailMetaText").innerText = `계급: ${s.tierName || '입문 술사'} · 장착칭호: ${titleStr}`;
@@ -11949,6 +11961,13 @@ function handleMidBossVictory() {
         let rank = 1;
         userList.forEach(u => {
             const isMe = (u.id === currentUserDocId);
+
+            // 🌟 [지능형 이름 복원] u.name이 없으면 heroName("10231 김철수")에서 이름 추출!
+            let displayName = u.name;
+            if (!displayName && u.heroName) {
+                displayName = u.heroName.replace(u.id || '', '').replace(/^[0-9\s]+/, '').trim() || u.heroName;
+            }
+            displayName = displayName || '무명 술사';
             
             // 메달/등수 뱃지 분기
             let rankBadge = `<span class="rank-badge-text">${rank}위</span>`;
@@ -11972,7 +11991,7 @@ function handleMidBossVictory() {
                     ${rankBadge}
                     <div style="text-align:left;">
                         <div class="rank-user-name">
-                            ${u.name || '무명 술사'} <span class="rank-user-id">(${u.id})</span>
+                            ${displayName} <span class="rank-user-id">(${u.id})</span>
                             ${isMe ? '<span class="rank-me-tag">ME</span>' : ''}
                         </div>
                         <div class="rank-user-tier">${u.tierName || '입문 술사'}</div>

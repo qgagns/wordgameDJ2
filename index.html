@@ -458,7 +458,7 @@
 
         .lobby-art-box {
             width: 100%;
-            height: 95px;
+            height: 70px;
             border-radius: 12px;
             border: 2px solid #b59f77;
             overflow: hidden;
@@ -1409,11 +1409,11 @@
         /* 🌟 [수정] 오직 전초기지, 퀴즈, 보스전, 모달창에만 양피지 액자 씌우기 (타이틀 완벽 제외!) */
         #mapLobbyScreen, #gameScreen, #bossScreen, .modal {
             background: transparent !important; 
-            border: 30px solid transparent !important; /* 양피지 4변 테두리 두께 */
+            border: 15px solid transparent !important; /* 양피지 4변 테두리 두께 */
             border-image: url('images/parchment.webp') 15% fill stretch !important;
             box-sizing: border-box !important;
             box-shadow: none !important;
-            padding: 10px 12px !important; /* 양피지 롤러 안쪽 콘텐츠 여백 */
+            padding: 2px 4px !important; /* 👈 좌우·상하 여백을 바짝 줄여 내부 작업 공간 확장 */
         }
 
         /* 2. 내부 카드 밝기 상향 (우유빛 반투명) */
@@ -1494,14 +1494,14 @@
 
             /* 🌟 9-Slice 세로 두루마리 적용 (가운데 양피지만 내용물 높이에 맞게 늘어남) */
             border-style: solid !important;
-            border-width: 56px 20px 56px 20px !important;
-            border-image: url('images/scroll_btn_v.webp') 20% 10% 20% 10% fill stretch !important;
+            border-width: 30px 10px 30px 10px !important; /* 👈 상하 롤러 두께를 56px -> 42px로 슬림화 */
+            border-image: url('images/scroll_btn_v.webp') 15% 10% 15% 10% fill stretch !important;
             
             /* 입체감 있는 다크 섀도우 & 은은한 황금빛 오라 */
             filter: drop-shadow(0 15px 40px rgba(0,0,0,0.95)) drop-shadow(0 0 10px rgba(245, 158, 11, 0.35)) !important;
             
             /* 롤러 안쪽 깨끗한 양피지에 내용물이 안착하도록 내부 패딩 정돈 */
-            padding: 4px 16px 10px 16px !important;
+            padding: 0 8px 4px 8px !important; /* 👈 상하 내부 패딩도 최소화하여 컴팩트하게 밀착 */
             width: 86% !important;
             max-width: 350px !important;
             box-sizing: border-box !important;
@@ -1849,7 +1849,7 @@
 
         .battle-arena-box {
             width: 100%;
-            height: 100px;
+            height: 80px;
             border-radius: 12px;
             border: 2px solid #b59f77;
             overflow: hidden;
@@ -3422,7 +3422,7 @@
                 </div>
             </div>
 
-            <div class="art-box" id="bossArtBox" style="height:100px; margin-bottom:8px;"></div>
+            <div class="art-box" id="bossArtBox" style="height:80px; margin-bottom:8px;"></div>
 
             <div class="boss-timer-container">
                 <div id="bossTimerBar" class="boss-timer-bar"></div>
@@ -3746,8 +3746,8 @@
                 <h2 class="ending-title" style="color:#1e3a8a; font-size:18px; margin:2px 0 4px 0;">🚨 안개 속 구출</h2>
                 <div class="ending-divider" style="color:#3b82f6; margin-bottom:4px;">❖ ❖ ❖</div>
                 <div class="ending-desc">
-                    마왕의 사악한 망각의 안개에 휩싸인 정령들을 구출해라.<br>
-                    끝까지 구출해낸 정령만이 네 영혼에 <b>진명의 각인</b>을 새겨줄 거다!
+                    망각의 안개에 휩싸인 정령들을 구출해라.<br>
+                    그 정령들이 네 영혼에 <b>진명의 각인</b>을 새겨줄 거다!
                 </div>
             </div>
 
@@ -4095,8 +4095,8 @@
     </div>
 
     <!-- 🎛️ [NEW] 교사용 비밀 관제탑 모달 대시보드 -->
-    <div id="adminTowerModal" class="modal" style="background:#fbf6ea; border:3px solid #7e22ce;">
-        <div style="flex:1; display:flex; flex-direction:column; justify-content:flex-start; width:100%; text-align:left;">
+    <div id="adminTowerModal" class="modal" style="background:#fbf6ea; border:3px solid #7e22ce; overflow:hidden;">
+        <div style="flex:1; min-height:0; display:flex; flex-direction:column; justify-content:flex-start; width:100%; text-align:left;">
             
             <!-- 상단 헤더 -->
             <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:2px dashed #c084fc; padding-bottom:6px; margin-bottom:8px;">
@@ -4130,7 +4130,7 @@
             </div>
 
             <!-- 실시간 학생 카드 목록 컨테이너 -->
-            <div id="adminStudentListContainer" style="flex:1; overflow-y:auto; display:flex; flex-direction:column; gap:5px; padding-right:2px; max-height:50vh;">
+            <div id="adminStudentListContainer" style="flex:1; min-height:0; overflow-y:auto; display:flex; flex-direction:column; gap:5px; padding-right:2px; margin-bottom:4px;">
                 <div style="text-align:center; padding:20px; font-size:13px; color:#785a3e;">
                     ☁️ 학생 데이터를 불러오는 중...
                 </div>
@@ -4138,7 +4138,7 @@
         </div>
 
         <!-- 하단 액션 버튼 (새로고침 & 닫기) -->
-        <div style="width:100%; display:flex; gap:6px; margin-top:8px;">
+        <div style="width:100%; display:flex; gap:6px; margin-top:4px; flex-shrink:0;">
             <button class="btn-sub-wood" style="flex:1; margin-bottom:0;" onclick="loadAdminTowerData()">
                 🔄 진도 새로고침
             </button>
@@ -4149,8 +4149,8 @@
     </div>
 
     <!-- 📊 [NEW] 학생 상세 진도 & 구역별 그래픽 리포트 모달 -->
-    <div id="adminStudentDetailModal" class="modal" style="background:#fbf6ea; border:3px solid #7e22ce;">
-        <div style="flex:1; display:flex; flex-direction:column; justify-content:flex-start; width:100%; text-align:left;">
+    <div id="adminStudentDetailModal" class="modal" style="background:#fbf6ea; border:3px solid #7e22ce; overflow:hidden;">
+        <div style="flex:1; min-height:0; display:flex; flex-direction:column; justify-content:flex-start; width:100%; text-align:left;">
             
             <!-- 상단 학생 프로필 헤더 -->
             <div style="border-bottom:2px dashed #c084fc; padding-bottom:6px; margin-bottom:8px;">
@@ -4183,14 +4183,14 @@
             </div>
 
             <!-- 2. 🗺️ 영지별 & 구역별 상세 진척도 스크롤 영역 -->
-            <div style="font-size:13px; font-weight:900; color:#4a044e; margin-bottom:4px;">
+            <div style="font-size:13px; font-weight:900; color:#4a044e; margin-bottom:4px; flex-shrink:0;">
                 📍 영지별 & 하위 구역별 진척도
             </div>
-            <div id="adminDetailMapsContainer" style="flex:1; overflow-y:auto; display:flex; flex-direction:column; gap:6px; padding-right:2px; max-height:45vh;"></div>
+            <div id="adminDetailMapsContainer" style="flex:1; min-height:0; overflow-y:auto; display:flex; flex-direction:column; gap:6px; padding-right:2px; margin-bottom:4px;"></div>
         </div>
 
         <!-- 하단 닫기 버튼 -->
-        <div style="width:100%; margin-top:8px;">
+        <div style="width:100%; margin-top:4px; flex-shrink:0;">
             <button class="btn-wood" style="padding:11px; font-size:14px; background:#5c3a21;" onclick="closeStudentDetailModal()">
                 ↩️ 학생 목록으로 돌아가기
             </button>
@@ -4205,7 +4205,7 @@
             <div id="fbComboBadge" style="display:none; padding:5px 16px; border-radius:20px; border:2px solid #f59e0b; background:linear-gradient(180deg, #fffbeb 0%, #fef3c7 100%); box-shadow:0 3px 10px rgba(245,158,11,0.3); margin-bottom:8px; font-size:20px; font-weight:900; line-height:1; display:inline-flex; align-items:center; justify-content:center;"></div>
 
             <!-- 정답창/오답창 일러스트 액자 -->
-            <div id="fbArtBox" class="art-box" style="width:100%; height:130px; margin-bottom:10px; border:2.5px solid #c9b48c; border-radius:14px; overflow:hidden; position:relative; box-shadow:0 4px 10px rgba(0,0,0,0.15);">
+            <div id="fbArtBox" class="art-box" style="width:100%; height:110px; margin-bottom:10px; border:2.5px solid #c9b48c; border-radius:14px; overflow:hidden; position:relative; box-shadow:0 4px 10px rgba(0,0,0,0.15);">
                 <img id="fbImgCorrect" src="images/fb_correct.webp" style="width:100%; height:100%; object-fit:cover; display:none;" alt="정답">
                 <img id="fbImgWrong" src="images/fb_wrong.webp" style="width:100%; height:100%; object-fit:cover; display:none;" alt="오답">
                 <img id="fbImgContract" src="images/fb_contract.webp" style="width:100%; height:100%; object-fit:cover; display:none;" alt="영원의 계약">
@@ -4218,14 +4218,17 @@
             <div id="fbResonanceNotice" class="fb-sub-notice"></div>
 
             <!-- 단어 & 한글 뜻 박스 (위아래 2줄 분리형) -->
-            <div class="feedback-card" style="margin-bottom:10px; padding:8px 12px; width:100%; box-sizing:border-box; background:#ede3cc; border-radius:12px; border:1.5px solid #c9b48c; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:3px;">
-                <!-- 1행: 영단어 (크고 또렷하게) -->
-                <div style="display:flex; align-items:center; justify-content:center; gap:8px; margin-bottom:10px;">
-                    <span id="fbWord" style="font-size:25px; font-weight:900; color:#2c1a0e; letter-spacing:-0.3px;">apple</span>
-                    <button id="fbHeartBtn" style="background:none; border:none; font-size:22px; cursor:pointer; padding:0; line-height:1; transition:transform 0.15s ease;" onclick="toggleCurrentWordFavorite(event)">🤍</button>
+            <div class="feedback-card" style="position:relative; margin-bottom:10px; padding:10px 12px; width:100%; box-sizing:border-box; background:#ede3cc; border-radius:12px; border:1.5px solid #c9b48c; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:4px;">
+                <!-- 💖 우측 상단 모서리 고정 하트 버튼 (영단어 가로 공간 침범 0%) -->
+                <button id="fbHeartBtn" style="position:absolute; top:1px; right:1px; background:none; border:none; font-size:20px; cursor:pointer; padding:1px; line-height:1; transition:transform 0.15s ease;" onclick="toggleCurrentWordFavorite(event)">🤍</button>
+                
+                <!-- 1행: 영단어 (가로 100% 온전하게 독차지) -->
+                <div style="width:100%; text-align:center; padding:0 10px; box-sizing:border-box;">
+                    <span id="fbWord" style="font-size:22px; font-weight:900; color:#2c1a0e; letter-spacing:-0.3px; word-break:keep-all; line-height:1.2;">apple</span>
                 </div>
-                <!-- 2행: 한글 뜻 (작고 부드럽고 연한 톤) -->
-                <span id="fbMeaning" class="fb-meaning" style="font-size:20px; font-weight:700; color:#785a3e; word-break:keep-all;">사과</span>
+                
+                <!-- 2행: 한글 뜻 -->
+                <span id="fbMeaning" class="fb-meaning" style="font-size:16px; font-weight:700; color:#785a3e; word-break:keep-all; line-height:1.3;">사과</span>
             </div>
 
             <!-- 5. 자동 타이머 게이지바 (6px로 선명화) -->
@@ -4293,7 +4296,7 @@
         </div>
         <div>
             <button id="modalContinueBtn" class="btn-wood theme-emerald" style="margin-bottom:6px;" onclick="startNextRound()">
-                계속 정령들을 구하기 (단 15초 ⚡) ➔
+                계속 정령들을 구하기 (15초⚡) ➔
 
             </button>
             <button class="btn-sub-wood" style="margin-bottom:6px;" onclick="openWordBook(false)">
@@ -6846,7 +6849,7 @@ const recTime = document.getElementById("recFastestTime");
         closeCampPopovers();
 
         if (currentSmartMode === 'emergency') {
-            openMistRescueBriefing(); // 안개 구출
+            openMistRescueFromShrine(); // 👈 실제 존재하는 함수명으로 연결
         } else if (currentSmartMode === 'boss') {
             startFinalBossRaid(); // 마왕 결전
         } else if (currentSmartMode === 'counsel') {
@@ -6862,7 +6865,7 @@ const recTime = document.getElementById("recFastestTime");
         closeCampPopovers();
 
         if (actionType === 'emergency') {
-            openMistRescueBriefing();
+            openMistRescueFromShrine(); // 👈 실제 존재하는 함수명으로 연결
         } else if (actionType === 'counsel_hurt') {
             openShrineRoom('hurt'); // 상처 입은 정령 치유실
         } else if (actionType === 'counsel_fav') {
@@ -9148,7 +9151,7 @@ const recTime = document.getElementById("recFastestTime");
         } else {
             streakBox.style.display = "none";
             if (continueBtn) {
-                continueBtn.innerHTML = `계속 정령들을 구하기 (단 15초 소요 ⚡) ➔`;
+                continueBtn.innerHTML = `계속 정령들을 구하기 (15초⚡) ➔`;
                 continueBtn.classList.remove("btn-fever-pulse");
             }
         }
@@ -9166,7 +9169,7 @@ const recTime = document.getElementById("recFastestTime");
             scarcityBox.innerHTML = `
                 <div style="font-size:11px; color:#e11d48; letter-spacing:1px; margin-bottom:2px;">⚡ CONQUEST IMMINENT ⚡</div>
                 <div style="font-size:15px; color:#9f1239;">
-                    🔥 완전 정복까지 딱 <span style="font-size:25px; color:#e11d48; text-decoration:underline;">${remainCount}마리</span> 남았다. 마무리해!
+                    🔥 완전 정복까지 딱 <span style="font-size:25px; color:#e11d48; text-decoration:underline;">${remainCount}마리</span> 남았다!
                 </div>
             `;
         } else {
@@ -9177,7 +9180,7 @@ const recTime = document.getElementById("recFastestTime");
             scarcityBox.innerHTML = `
                 <div style="font-size:12px; color:#b45309; margin-bottom:2px;">📍 구역 탐사 진척도</div>
                 <div style="font-size:14px; color:#78350f;">
-                    완전 정복까지 <span style="font-size:25px; color:#b45309;">${remainCount}마리</span>의 정령이 남았다. 멈추지마!
+                    완전 정복까지 <span style="font-size:25px; color:#b45309;">${remainCount}마리</span>의 정령이 남았다!
                 </div>
             `;
         }

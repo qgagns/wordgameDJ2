@@ -4895,7 +4895,18 @@
             if (doc.exists) {
                 // 기존 계정 로그인 검증
                 const data = doc.data();
-                if (data.pw !== pw) {
+
+                // 🌟 [자동 구제] DB에 비번이 누락되어 있던 계정은 지금 입력한 비번과 이름을 즉시 등록!
+                if (!data.pw) {
+                    await userRef.set({
+                        pw: pw,
+                        name: name,
+                        id: id
+                    }, { merge: true });
+                    data.pw = pw;
+                    data.name = name;
+                } else if (data.pw !== pw) {
+                    // 비번이 정상 등록되어 있던 계정만 일치 여부 검사
                     msg.style.color = "#dc2626";
                     msg.innerText = "❌ 비밀번호가 일치하지 않습니다!";
                     return;

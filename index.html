@@ -4099,7 +4099,7 @@
         <div style="flex:1; min-height:0; display:flex; flex-direction:column; justify-content:flex-start; width:100%; text-align:left;">
             
             <!-- 상단 헤더 -->
-            <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:2px dashed #c084fc; padding-bottom:6px; margin-bottom:8px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:2px dashed #c084fc; padding-bottom:6px; margin-bottom:6px; flex-shrink:0;">
                 <div>
                     <span style="font-size:10px; font-weight:900; color:#7e22ce; letter-spacing:2px;">✦ TEACHER COMMAND TOWER ✦</span>
                     <h3 style="font-size:17px; font-weight:900; color:#4a044e; margin:2px 0 0 0;">🎛️ 교사용 실시간 관제탑</h3>
@@ -4107,21 +4107,20 @@
                 <span id="adminStudentTotalCount" style="font-size:12px; font-weight:900; color:#7e22ce; background:#f3e8ff; padding:3px 8px; border-radius:8px;">총 0명 등록</span>
             </div>
 
-            <!-- 🌟 [NEW] 마왕 『EXAM』 실시간 강림/봉인 원격 컨트롤러 -->
-            <div id="adminBossSwitchCard" style="display:flex; justify-content:space-between; align-items:center; background:#f1f5f9; border:2px solid #cbd5e1; border-radius:10px; padding:8px 12px; margin-bottom:8px;">
-                <div>
-                    <span style="font-size:10px; font-weight:900; color:#64748b; letter-spacing:1px; display:block;">✦ RAID EVENT SWITCH ✦</span>
-                    <div id="adminBossStatusText" style="font-size:14px; font-weight:900; color:#334155; margin-top:1px;">🔒 마왕 심연 봉인 중 (평상시)</div>
-                </div>
-                <button id="adminBossToggleBtn" style="padding:6px 12px; font-size:12px; font-weight:900; border-radius:8px; cursor:pointer; border:1.5px solid #dc2626; background:#fee2e2; color:#dc2626; transition:all 0.15s ease;" onclick="toggleBossRaidSwitch()">
-                     🔥 강림 선포
+            <!-- 🌟 관제탑 2단 탭 바 [학생 목록] [원격 관제 기능] -->
+            <div style="display:flex; gap:6px; margin-bottom:8px; flex-shrink:0;">
+                <button id="adminTabBtn1" onclick="switchAdminTowerTab(1)" style="flex:1; padding:7px; border-radius:8px; font-size:12.5px; font-weight:900; cursor:pointer; background:#7e22ce; color:#ffffff; border:1px solid #581c87;">
+                    👥 학생 목록
+                </button>
+                <button id="adminTabBtn2" onclick="switchAdminTowerTab(2)" style="flex:1; padding:7px; border-radius:8px; font-size:12.5px; font-weight:900; cursor:pointer; background:#ede3cc; color:#5c3a21; border:1px solid #c9b48c;">
+                    ⚙️ 원격 관제 기능
                 </button>
             </div>
 
-            <!-- 원클릭 성적표 엑셀 다운로드 버튼 -->
-            <button class="btn-wood theme-emerald" style="padding:10px; font-size:13.5px; margin-bottom:8px;" onclick="downloadAdminCSV()">
-                📥 전교생 성적 엑셀(CSV) 다운로드 ➔
-            </button>
+            <!-- ==============================================
+                 탭 1: 👥 학생 목록 및 성적 관리
+                 ============================================== -->
+            <div id="adminTowerTab1" style="display:flex; flex-direction:column; flex:1; min-height:0;">
 
             <!-- 실시간 검색창 -->
             <div style="margin-bottom:8px;">
@@ -4133,6 +4132,51 @@
             <div id="adminStudentListContainer" style="flex:1; min-height:0; overflow-y:auto; display:flex; flex-direction:column; gap:5px; padding-right:2px; margin-bottom:4px;">
                 <div style="text-align:center; padding:20px; font-size:13px; color:#785a3e;">
                     ☁️ 학생 데이터를 불러오는 중...
+                </div>
+            </div>
+        </div>
+
+        <!-- ==============================================
+                 탭 2: ⚙️ 원격 관제 기능 (마왕 / 특훈 / 영지탭)
+                 ============================================== -->
+        <div id="adminTowerTab2" style="display:none; flex-direction:column; flex:1; min-height:0; overflow-y:auto; padding-right:2px;">
+                <!-- 1. 마왕 『EXAM』 실시간 강림 스위치 -->
+                <div id="adminBossSwitchCard" style="display:flex; justify-content:space-between; align-items:center; background:#f1f5f9; border:2px solid #cbd5e1; border-radius:10px; padding:8px 12px; margin-bottom:8px; flex-shrink:0;">
+                    <div>
+                        <span style="font-size:10px; font-weight:900; color:#64748b; letter-spacing:1px; display:block;">✦ RAID EVENT SWITCH ✦</span>
+                         <div id="adminBossStatusText" style="font-size:14px; font-weight:900; color:#334155; margin-top:1px;">🔒 마왕 심연 봉인 중 (평상시)</div>
+                    </div>
+                    <button id="adminBossToggleBtn" style="padding:6px 12px; font-size:12px; font-weight:900; border-radius:8px; cursor:pointer; border:1.5px solid #dc2626; background:#fee2e2; color:#dc2626; transition:all 0.15s ease;" onclick="toggleBossRaidSwitch()">
+                          🔥 강림 선포
+                    </button>
+                </div>
+
+                <!-- 2. 책 선생의 하드코어 특훈 실시간 원격 제어판 -->
+                <div style="background:#fffbeb; border:1.5px solid #f59e0b; border-radius:10px; padding:8px 10px; margin-bottom:8px; font-size:12px; flex-shrink:0;">
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
+                        <b style="color:#78350f;">📖 특훈 출제 범위 원격 제어</b>
+                        <button onclick="saveAdminHardcoreSettings()" style="background:#b45309; color:#ffffff; border:none; border-radius:6px; padding:4px 9px; font-size:11px; font-weight:900; cursor:pointer;">💾 전교생 특훈 저장</button>
+                    </div>
+                    <div style="display:flex; gap:8px; margin-bottom:6px; flex-wrap:wrap;">
+                        <label style="cursor:pointer;"><input type="radio" name="adminHcScope" value="all" checked onchange="toggleAdminHcCustomScope()"> 🌍 전 대륙 (전 범위)</label>
+                        <label style="cursor:pointer;"><input type="radio" name="adminHcScope" value="normal" onchange="toggleAdminHcCustomScope()"> 🌲 일반 영지만</label>
+                        <label style="cursor:pointer;"><input type="radio" name="adminHcScope" value="custom" onchange="toggleAdminHcCustomScope()"> 🎯 지정 영지 선택</label>
+                    </div>
+                    <div id="adminHcCustomBox" style="display:none; max-height:80px; overflow-y:auto; background:#ffffff; border:1px solid #d8c7a6; border-radius:6px; padding:4px 6px; margin-bottom:6px; gap:4px; flex-wrap:wrap;"></div>
+                    <div style="display:flex; gap:8px; align-items:center; color:#78350f; font-weight:700;">
+                        <span>문제수(HP): <input id="adminHchp" type="number" value="10" min="5" max="30" style="width:42px; text-align:center; padding:2px; border-radius:4px; border:1px solid #c9b48c;"></span>
+                        <span>제한시간: <input id="adminHcTime" type="number" value="3.0" step="0.5" min="2.0" max="10.0" style="width:46px; text-align:center; padding:2px; border-radius:4px; border:1px solid #c9b48c;">초</span>
+                    </div>
+                </div>
+
+                <!-- 3. 영지 탭 실시간 배정기 (+ 💾 일괄 저장 버튼 신설) -->
+                <div style="background:#fdfaf2; border:1.5px solid #d8c7a6; border-radius:10px; padding:8px 10px; font-size:12px; flex:1; min-height:0; display:flex; flex-direction:column; margin-bottom:0;">
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px; flex-shrink:0;">
+                        <b style="color:#4b301c;">🗺️ 영지 탭 실시간 배정</b>
+                        <button onclick="saveAdminMapTabOverrides()" style="background:#15803d; color:#ffffff; border:none; border-radius:6px; padding:4px 9px; font-size:11px; font-weight:900; cursor:pointer;">💾 영지 배정 저장</button>
+                    </div>
+                    <!-- 🌟 고정 높이 140px 제거 -> 하단 버튼 바로 윗선까지 100% 꽉 채움! -->
+                    <div id="adminMapTabList" style="display:flex; flex-direction:column; gap:4px; flex:1; min-height:0; overflow-y:auto; padding-right:2px;"></div>
                 </div>
             </div>
         </div>
@@ -4593,20 +4637,16 @@
                             🛡️ 실시간 대륙 안보 브리핑
                         </div>
                         <div style="display:flex; flex-direction:column; gap:4px;">
-                            <!-- 1. 수호령 제패 현황 -->
+
+                            <!-- 1. 영지 정화 현황 -->
                             <div style="display:flex; justify-content:space-between; align-items:center; background:#fdfaf2; padding:6px 10px; border-radius:8px; border:1px solid #d8c7a6; font-size:13px;">
-                                <span style="font-weight:800; color:#4b301c;">⚔️ 수호령 교감</span>
-                                <span id="repGuardianPurified" style="font-weight:900; color:#047857;">0 / 4영지 완료</span>
+                                <span style="font-weight:800; color:#4b301c;">⚔️ 영지 정화</span>
+                                <span id="repGuardianPurified" style="font-weight:900; color:#047857;">0 / 0영지 완료</span>
                             </div>
-                            <!-- 2. 침식 위험 현황 -->
+                            <!-- 2. 안개 침식 현황 (통합) -->
                             <div style="display:flex; justify-content:space-between; align-items:center; background:#fdfaf2; padding:6px 10px; border-radius:8px; border:1px solid #d8c7a6; font-size:13px;">
-                                <span style="font-weight:800; color:#4b301c;">🚨 망각의 안개 침식</span>
-                                <span id="repDecayedDanger" style="font-weight:900; color:#15803d;">0마리 (안전 🟢)</span>
-                            </div>
-                            <!-- 3. 정령 성소 대기 현황 -->
-                            <div style="display:flex; justify-content:space-between; align-items:center; background:#fdfaf2; padding:6px 10px; border-radius:8px; border:1px solid #d8c7a6; font-size:13px;">
-                                <span style="font-weight:800; color:#4b301c;">🛋️ 정령 성소 대기</span>
-                                <span id="repCounselPending" style="font-weight:900; color:#15803d;">0 마리 🟢</span>
+                                <span style="font-weight:800; color:#4b301c;">🚨 안개 침식</span>
+                                <span id="repDecayedDanger" style="font-weight:900; color:#15803d;">계산 중...</span>
                             </div>
                         </div>
                     </div>
@@ -5562,6 +5602,16 @@
                 let mapId = "";
                 let mapName = rawHeader;
                 let mapDesc = "";
+                let mapCategory = null; // 🌟 @normal 또는 @special 태그
+
+                // 🌟 2순위: @normal 또는 @special 태그 추출
+                if (rawHeader.includes('@normal')) {
+                    mapCategory = 'normal';
+                    rawHeader = rawHeader.replace('@normal', '').trim();
+                } else if (rawHeader.includes('@special')) {
+                    mapCategory = 'special';
+                    rawHeader = rawHeader.replace('@special', '').trim();
+                }
 
                 // 🌟 [ID: 영지이름] 문법 지원
                 if (rawHeader.includes(':')) {
@@ -5582,7 +5632,7 @@
                 const oldHashId = 'map_' + Math.abs(hashCode(mapName));
                 if (!mapId) mapId = oldHashId; // ID를 안 적었으면 예전 방식 호환
 
-                currentMap = { id: mapId, oldHashId: oldHashId, name: mapName, desc: mapDesc, words: [] };
+                currentMap = { id: mapId, oldHashId: oldHashId, name: mapName, desc: mapDesc, category: mapCategory, words: [] };
                 maps.push(currentMap);
                 return;
             }
@@ -5667,6 +5717,31 @@
         });
 
         return maps.filter(m => m.words.length >= 4);
+    }
+
+    // ========================================================
+    // 🧭 [3단계 우선순위 영지 판별 마스터 엔진]
+    // 1순위: 관제탑 원격 오버라이드 ➔ 2순위: 단어장 태그(@) ➔ 3순위: 기본 규칙
+    // ========================================================
+    window.cloudMapTabOverrides = {}; // 관제탑 실시간 오버라이드 저장소
+
+    function isMapSpecial(map) {
+        if (!map) return false;
+        const mapId = map.id || '';
+
+        // 1순위: 교사용 관제탑 실시간 원격 설정
+        if (window.cloudMapTabOverrides && window.cloudMapTabOverrides[mapId]) {
+            return window.cloudMapTabOverrides[mapId] === 'special';
+        }
+
+        // 2순위: 단어장(@normal / @special) 태그 지정
+        if (map.category === 'special') return true;
+        if (map.category === 'normal') return false;
+
+        // 3순위: index.html 기본 판별 (Fallback: irreg, net 등)
+        const idLower = mapId.toLowerCase();
+        const nameLower = (map.name || '').toLowerCase();
+        return idLower.includes('irreg') || idLower.includes('net') || nameLower.includes('불규칙') || nameLower.includes('동의어');
     }
 
     function hashCode(str) {
@@ -5877,7 +5952,6 @@
             { req: 315, name: "Ⅷ. 영혼의 조율사 🍃", color: "#059669" },
             { req: 400, name: "Ⅸ. 빛의 수호자 🛡️", color: "#2563eb" },
             { req: 500, name: "Ⅹ. 지혜의 대현자 📜", color: "#b45309" },
-            { req: 500, name: "마왕의 대적자 ⚔️", color: "#dc2626" },
             { req: 500, name: "정령의 구원자 👑", color: "#be185d", isBossRequired: true }
         ];
     }
@@ -5888,21 +5962,15 @@
         const isExamDefeated = isFinalExamDefeated(); // 마왕 토벌 여부
 
         let idx = 0;
-        // 11단계(마왕의 대적자)까지는 계약 수로 체크
-        // 🌟 0~9단계(입문 ~ 대현자 500단어)까지 누적 계약 수 절대평가 판정
-        for (let i = 0; i <= 9; i++) {
+        // 0~9단계(입문 ~ 대현자) 누적 계약 수 판정
+        for (let i = 0; i < tiers.length - 1; i++) {
             if (totalContracted >= tiers[i].req) idx = i;
             else break;
         }
 
-        // 🌟 모든 정령 계약 완료(11단계) + 마왕까지 격파했을 때만 12단계 최종 각성!
-        // 🌟 500단어 이상 도달 시 '마왕의 대적자' 승급
-        if (totalContracted >= 500) {
-            idx = 10;
-        }
-        // 🌟 마왕 토벌 성공 시 단어 수 상관없이 '정령의 구원자 👑' 최종 각성
+        // 🌟 마왕 토벌 성공 시에만 최종 칭호인 '정령의 구원자 👑' 각성
         if (isExamDefeated) {
-            idx = 11; // 정령의 구원자
+            idx = tiers.length - 1; // 정령의 구원자
         }
 
         return { 
@@ -6029,6 +6097,11 @@
         wordFavorites[eng] = !wordFavorites[eng];
         if (!wordFavorites[eng]) delete wordFavorites[eng];
         safeStorageSet('spirit_favorites', wordFavorites);
+
+        if (Object.keys(wordFavorites).length >= 10) {
+            unlockTitle("fav_10");
+        }
+
         syncToCloud(); // 클라우드 동기화
 
         // 화면에 떠 있는 하트 아이콘 즉시 갱신
@@ -6086,18 +6159,26 @@
 
     /* 🎖️ 칭호 15종 및 명예의 전당 기록 시스템 */
     const ALL_TITLES = [
-        { id: "first_bond", name: "🌱 첫 걸음의 탐색자", desc: "첫 번째 정령과 영원의 계약 완료" },
+        { id: "first_bond", name: "🌱 첫걸음의 탐색자", desc: "첫 번째 정령과 영원의 계약 완료" },
         { id: "ten_bonds", name: "🍃 삼세번의 미덕", desc: "누적 10마리 정령과 계약 체결" },
-        { id: "all_master", name: "📚 걸어 다니는 단어장", desc: "대륙의 모든 정령(100%) 계약 완료" },
+        { id: "bonds_50", name: "🌲 숲을 이루는 인연", desc: "누적 50마리 정령과 영원의 계약 달성" },
+        { id: "bonds_100", name: "👑 백인대장", desc: "누적 100마리 정령과 영원의 계약 달성" },
         { id: "combo_7", name: "🔥 불꽃의 암기 머신", desc: "퀴즈에서 7연속 콤보 달성" },
         { id: "combo_15", name: "⚡ 신들린 뇌세포", desc: "퀴즈에서 15연속 콤보 달성" },
+        { id: "combo_30", name: "🌪️ 폭풍 질주", desc: "퀴즈에서 30연속 콤보 달성" },
+        { id: "combo_50", name: "☄️ 멈추지 않아 BOY", desc: "퀴즈에서 50연속 콤보 달성" },
+        { id: "combo_77", name: "🎰 행운 & 실력", desc: "퀴즈에서 77연속 콤보 달성" },
+        { id: "combo_100", name: "🌌 주모 여기 단어 더!", desc: "전설의 100연속 콤보 대기록 달성!" },
+        { id: "speed_08", name: "⚡ 찰나의 눈빛", desc: "0.8초 이내 초광속 정답 성공" },
+        { id: "speed_05", name: "🚀 광속의 손길", desc: "0.5초 이내 신의 반사신경 달성" },
+        { id: "fav_10", name: "💖 플러팅 전문가", desc: "친해지고 싶은 정령(하트) 10마리 찜하기" },
+        { id: "imprint_1", name: "⚜️ 영혼에 새기다", desc: "안개 구출전 3차 통과로 첫 진명의 각인 달성" },
         { id: "mid_no_dmg", name: "🛡️ 철벽의 결계사", desc: "수호령전을 노데미지(하트 3개 온존)로 클리어" },
-        { id: "speed_demon", name: "⏱️ 광속의 정령술사", desc: "마왕 『EXAM』을 25초 이내에 토벌" },
-        { id: "boss_3", name: "👑 마왕의 천적", desc: "마왕 『EXAM』을 3회 이상 토벌" },
-        { id: "clutch_win", name: "🩸 피 1로 턱걸이", desc: "하트 1개 남은 빈사 상태로 마왕 격파" },
-        { id: "legend_ok", name: "🌟 1등급의 전설", desc: "마왕전을 노데미지(하트 3개 온존)로 완전 토벌" },
         { id: "wrong_20", name: "🍂 정령 기피 1호", desc: "누적 오답 20회 달성 (정령들이 널 피하는데?)" },
         { id: "wrong_50", name: "🌾 오답도 거름이...", desc: "누적 오답 50회 달성 (실패는 1등급의 어머니)" },
+        { id: "grit_100", name: "💎 꺾이지 않는 마음", desc: "누적 오답 100회 달성 (백 번 넘어져도 백 번 일어난다!)" },
+        { id: "book_poke_10", name: "📖 잔소리 좋아요", desc: "야영지 책 선생을 10번 찔러 대화 나누기" },
+        { id: "book_poke_30", name: "📚 책 선생의 찐팬", desc: "야영지 책 선생을 30번 찔러 괴롭히기" },
         { id: "time_out", name: "⏳ 그냥 멍때림", desc: "보스전에서 시간 초과(Time Over) 3회 겪음" },
         { id: "mental_break", name: "💔 유리 멘탈", desc: "보스전에서 하트 3개를 모두 잃고 패배" },
         { id: "phoenix", name: "🩹 칠전팔기", desc: "보스전에서 패배한 직후 다시 도전해서 승리" }
@@ -6249,7 +6330,7 @@ const recTime = document.getElementById("recFastestTime");
             card.innerHTML = `
                 <div class="achieve-info">
                     <span class="achieve-title">${isUnlocked ? t.name : '🔒 ' + t.name}</span>
-                    <span class="achieve-desc">${t.desc}</span>
+                    <span class="achieve-desc">${isUnlocked ? t.desc : '🔒 ???'}</span>
                 </div>
                 <div>
                     ${!isUnlocked 
@@ -6705,9 +6786,7 @@ const recTime = document.getElementById("recFastestTime");
 
         // 2. 방금 보던 영지가 비경이었는지 스토리였는지 판별하여 해당 탭으로 오픈!
         const curMap = worldMaps.find(m => m.id === currentMapId);
-        const idLower = (curMap && curMap.id || "").toLowerCase();
-        const nameLower = (curMap && curMap.name || "").toLowerCase();
-        const isSpecial = idLower.includes("irreg") || idLower.includes("net") || nameLower.includes("불규칙") || nameLower.includes("동의어") || nameLower.includes("반의어");
+        const isSpecial = isMapSpecial(curMap);
         
         openWorldMap(isSpecial ? 'special' : 'normal');
     }
@@ -6769,7 +6848,7 @@ const recTime = document.getElementById("recFastestTime");
         const filteredMaps = worldMaps.filter(m => {
             const idLower = (m.id || "").toLowerCase();
             const nameLower = (m.name || "").toLowerCase();
-            const isSpecial = idLower.includes("irreg") || idLower.includes("net") || idLower.includes("spell") || nameLower.includes("불규칙") || nameLower.includes("동의어") || nameLower.includes("반의어") || nameLower.includes("철자");
+            const isSpecial = isMapSpecial(m);
             return currentWorldMapTab === 'normal' ? !isSpecial : isSpecial;
         });
 
@@ -7026,7 +7105,7 @@ const recTime = document.getElementById("recFastestTime");
                 const secPct = Math.round((secContracted / secTotal) * 100);
 
                 if (smartTagRow) smartTagRow.innerText = "✦ 모험 이어하기 ✦";
-                smartMainText.innerText = `「${curMap.name} · ${targetSec.name}」`;
+                smartMainText.innerText = `「${curMap.name}」`;
                 if (smartProgressText) {
                     smartProgressText.innerText = `계약: ${secContracted} / ${secTotal}마리 (${secPct}%)`;
                 }
@@ -7198,15 +7277,46 @@ const recTime = document.getElementById("recFastestTime");
             return;
         }
 
+        const todayStr = getTodayKSTString();
+        const dailyQuota = getDailyRescueQuota();
+        const todayCount = safeStorageGet(`spirit_defense_today_count_${todayStr}`, 0);
+        const isDailyDone = (lastEmergencyClearedDate === todayStr || todayCount >= dailyQuota);
+        const remainToday = Math.max(0, dailyQuota - todayCount);
+
         const countBadge = document.getElementById("mistRescueCountBadge");
         if (countBadge) {
-            const dailyQuota = getDailyRescueQuota();
-            countBadge.innerHTML = `위험에 처한 정령: 총 <b>${decayedWords.length}마리</b>`;
+
+            if (isDailyDone) {
+                // ✨ 오늘치 완료 상태 (초록빛 골드 배지)
+                countBadge.style.background = "#ecfdf5";
+                countBadge.style.borderColor = "#10b981";
+                countBadge.style.color = "#065f46";
+                countBadge.innerHTML = `
+                    <div style="font-size:11px; letter-spacing:1px; margin-bottom:2px; color:#047857;">✦ DAILY MISSION COMPLETE ✦</div>
+                    <div style="font-size:15px; font-weight:900;">✨ 오늘의 일일 수호 완수! (${dailyQuota}마리 완료)</div>
+                    <div style="font-size:12px; font-weight:700; color:#047857; margin-top:2px;">남은 위험 정령 ${decayedWords.length}마리 추가 자율 구출 가능</div>
+                `;
+            } else {
+                // ⏳ 오늘치 진행 중 상태 (사파이어 블루 배지)
+                countBadge.style.background = "#eff6ff";
+                countBadge.style.borderColor = "#3b82f6";
+                countBadge.style.color = "#1e40af";
+                countBadge.innerHTML = `
+                    <div style="font-size:11px; letter-spacing:1px; margin-bottom:2px; color:#2563eb;">✦ TODAY'S RESCUE QUOTA ✦</div>
+                    <div style="font-size:15px; font-weight:900;">🎯 오늘의 수호 목표: <span style="font-size:18px; color:#1d4ed8;">${todayCount} / ${dailyQuota}마리</span></div>
+                    <div style="font-size:12px; font-weight:700; color:#1e40af; margin-top:2px;">(남은 임무: ${remainToday}마리 / 총 위험 정령: ${decayedWords.length}마리)</div>
+                `;
+            }
         }
 
+        // 출격 버튼 텍스트도 완수 여부에 맞게 변경
         const modal = document.getElementById("mistRescueNoticeModal");
         if (modal) {
-            modal.style.zIndex = "60"; // 🌟 성소(50) 바로 위에 자연스럽게 얹힘
+            const startBtn = modal.querySelector(".btn-wood");
+            if (startBtn) {
+                startBtn.innerText = isDailyDone ? "⚔️ [자율 구출] 남은 정령 계속 구하기 ➔" : "🚨 오늘의 구출 작전 출격! (5마리) ➔";
+            }
+            modal.style.zIndex = "60";
             modal.style.display = "flex";
         }
     }
@@ -8448,6 +8558,14 @@ const recTime = document.getElementById("recFastestTime");
             }
             if (streakCount >= 7) unlockTitle("combo_7");
             if (streakCount >= 15) unlockTitle("combo_15");
+            if (streakCount >= 30) unlockTitle("combo_30");
+            if (streakCount >= 50) unlockTitle("combo_50");
+            if (streakCount >= 77) unlockTitle("combo_77");
+            if (streakCount >= 100) unlockTitle("combo_100");
+
+            // 초광속 반응속도 칭호
+            if (elapsedSec <= 0.8) unlockTitle("speed_08");
+            if (elapsedSec <= 0.5) unlockTitle("speed_05");
 
             // 정답시 점수 계산
             let newCount = currentCountBefore;
@@ -8574,6 +8692,7 @@ const recTime = document.getElementById("recFastestTime");
                 const nextStage = prevStage + 1;
                 wordDefenseCounts[key] = nextStage;
                 safeStorageSet('spirit_defense_counts', wordDefenseCounts);
+                if (nextStage >= 3) unlockTitle("imprint_1"); // ⚜️ 첫 각인 달성!
 
                 let safePeriod = (nextStage >= 3) ? "영구 봉인 완료! 👑" : (nextStage === 2 ? "7일간 결계 유지 🛡️" : "3일간 결계 유지 🛡️");
                 Sound.resonance();
@@ -8677,7 +8796,8 @@ const recTime = document.getElementById("recFastestTime");
                     const { totalWords, totalContracted } = getGlobalTotalStats(); // 2. 오차 없는 정확한 통계 추출
                     if (totalContracted >= 1) unlockTitle("first_bond");
                     if (totalContracted >= 10) unlockTitle("ten_bonds");
-                    if (totalWords > 0 && totalContracted >= totalWords) unlockTitle("all_master");
+                    if (totalContracted >= 50) unlockTitle("bonds_50");
+                    if (totalContracted >= 100) unlockTitle("bonds_100");
                 } catch(e) {
                     console.warn("칭호 체크 오류 무시:", e);
                 }
@@ -8794,6 +8914,7 @@ const recTime = document.getElementById("recFastestTime");
                 saveRecords();
                 if (gameRecords.totalWrong >= 20) unlockTitle("wrong_20");
                 if (gameRecords.totalWrong >= 50) unlockTitle("wrong_50");
+                if (gameRecords.totalWrong >= 100) unlockTitle("grit_100");
             } catch(e) {}
         }
 
@@ -8925,7 +9046,7 @@ const recTime = document.getElementById("recFastestTime");
             const subBtns = modal ? modal.querySelectorAll(".btn-sub-wood") : [];
 
             // 점수 세팅
-            scoreEl.innerText = `이번 구출: ${roundCorrectCount} / ${roundQuestions.length}마리 (실패 강등: ${wrongCount}마리)`;
+            scoreEl.innerText = `이번 구출: ${roundCorrectCount} / ${roundQuestions.length}마리`;
 
             // 🎯 [판정] 오늘치 목표치(5개 or 20개)를 달성했거나 대륙에 침식 단어가 0개일 때!
             if (todayCount >= dailyQuota || remainCount === 0) {
@@ -8939,7 +9060,7 @@ const recTime = document.getElementById("recFastestTime");
                     if (wrongCount === 0) {
                         if (commentEl) commentEl.innerHTML = "✨ <b>일일 수호 작전 성공!</b><br>오늘 목표했던 정령들을 전원 무사히 지켜냈다.<br>아주 훌륭했어, 제자!";
                     } else {
-                        if (commentEl) commentEl.innerHTML = `⚠️ <b>일일 수호 작전 종료...</b><br>구출 도중 <b>${wrongCount}마리</b>가 탈주했다.<br>늦기 전에 해당 영지에서 다시 찾아봐라!`;
+                        if (commentEl) commentEl.innerHTML = `⚠️ <b>일일 수호 작전 종료...</b><br>구출 도중 <b>${wrongCount}마리를 놓칠 뻔 했군. 그래도 고생했다.`;
                     }
 
                     // 메인 왕버튼 ➔ 대륙 지도로 복귀
@@ -9457,17 +9578,21 @@ const recTime = document.getElementById("recFastestTime");
     function startHardcoreBossRaidActual() {
         closeHardcoreNotice();
         closeRiftHub(); // 🌟 진짜 전투로 출격할 때는 뒤에 있던 틈새 허브도 완전히 닫기
-        const hc = (typeof GAME_CONFIG !== 'undefined' && GAME_CONFIG.hardcoreMode) ? GAME_CONFIG.hardcoreMode : {};
+        // 🌟 1순위: 관제탑 원격 특훈 설정 ➔ 2순위: words.js 기본 설정
+        const hc = window.cloudHardcoreConfig || ((typeof GAME_CONFIG !== 'undefined' && GAME_CONFIG.hardcoreMode) ? GAME_CONFIG.hardcoreMode : {});
 
         // 출제 풀 필터링 ("all" 이거나 비어있으면 전 대륙, 지정되어 있으면 해당 영지만 쏙 추출)
         let pool = [];
-        const targets = hc.targetMaps;
+        const targets = hc.targetMaps || "all";
 
-        if (!targets || targets === "all" || (Array.isArray(targets) && (targets.length === 0 || targets.includes("all")))) {
+        if (targets === "all") {
             pool = getAllUniverseWords();
+        } else if (targets === "normal") {
+            // 일반 탐험 영지만 출제 (비경 제외)
+            worldMaps.filter(m => !isMapSpecial(m)).forEach(m => m.words.forEach(w => pool.push(w)));
         } else {
             worldMaps.forEach(map => {
-                const isMatched = Array.isArray(targets) && targets.some(t => map.id === t || map.id === 'map_' + t || map.name.includes(t));
+                const isMatched = Array.isArray(targets) && targets.includes(map.id);
                 if (isMatched) {
                     map.words.forEach(w => {
                         if (!pool.some(item => item.eng === w.eng)) pool.push(w);
@@ -10720,11 +10845,22 @@ function handleMidBossVictory() {
                 goalEl.innerText = "👑 최고 등급 도달!";
             }
 
-            // 2. 전 대륙 단어 5단계 분포 집계 (0회 / 1회 / 2회 / 계약 / 각인)
+            // 2. 시험 점수 산정 대상 영지 필터링 (일반 영지 + spell_ 영지만 포함, irreg/net 제외)
             let s0 = 0, s1 = 0, s2 = 0, s3 = 0, s4 = 0;
             let purifiedCount = 0;
+            let examMapsCount = 0;
+            let examTotalWords = 0;
 
             worldMaps.forEach(map => {
+                const idLower = (map.id || "").toLowerCase();
+                const nameLower = (map.name || "").toLowerCase();
+                // 🌟 spell_은 포함하고, irreg_ 및 net_은 점수 산정에서 제외
+                const isSpell = idLower.includes('spell_');
+                const isOtherSpecial = idLower.includes('irreg') || idLower.includes('net') || nameLower.includes('불규칙') || nameLower.includes('동의어');
+                if (!isSpell && isOtherSpecial) return; // 제외!
+
+                examMapsCount++;
+                examTotalWords += map.words.length;
                 const savedMastery = safeStorageGet(`spirit_mastery_${map.id}`, {});
                 map.words.forEach(w => {
                     const cnt = savedMastery[w.eng] || 0;
@@ -10743,15 +10879,16 @@ function handleMidBossVictory() {
             document.getElementById("repStage1").innerHTML = `${s1} <span style="font-size:13.5px; font-weight:700; opacity:0.85;">마리</span>`;
             document.getElementById("repStage0").innerHTML = `${s0} <span style="font-size:13.5px; font-weight:700; opacity:0.85;">마리</span>`;
 
-            const maxScore = totalWords * 3;
+            // 🌟 일반 + spell_ 영지만으로 100점 만점 산출
+            const maxScore = examTotalWords * 3;
             const earnedScore = ((s3 + s4) * 3) + (s2 * 2) + (s1 * 1);
             const weightedScore = maxScore > 0 ? Math.round((earnedScore / maxScore) * 100) : 0;
 
             const examScoreEl = document.getElementById("repExamScore");
             if (examScoreEl) examScoreEl.innerText = `${weightedScore}점`;
 
-            // 3. 실시간 안보 현황
-            document.getElementById("repGuardianPurified").innerText = `${purifiedCount} / ${worldMaps.length} 영지 완료`;
+            // 3. 실시간 안보 현황 2줄 동기화
+            document.getElementById("repGuardianPurified").innerText = `${purifiedCount} / ${examMapsCount} 영지 완료`;
 
             const decayedCount = getDecayedWords().length;
             const decayedEl = document.getElementById("repDecayedDanger");
@@ -10763,22 +10900,14 @@ function handleMidBossVictory() {
             const isDailyDone = (lastEmergencyClearedDate === todayStr || todayCount >= dailyQuota);
             const remainToday = Math.max(0, dailyQuota - todayCount);
 
-            if (decayedCount > 0) {
-                if (isDailyDone) {
-                    decayedEl.innerHTML = `<span style="color:#dc2626; font-size:13px;">${decayedCount} 마리 침식 🔴`;
+            if (decayedEl) {
+                if (decayedCount === 0) {
+                    decayedEl.innerHTML = `<span style="color:#15803d;">0마리 (안전 🟢)</span>`;
+                } else if (isDailyDone) {
+                    decayedEl.innerHTML = `<span style="color:#047857; font-weight:900;">임무 완료 🛡️ (${todayCount}/${dailyQuota})</span> · <span style="color:#dc2626; font-weight:900;">위험 ${decayedCount} 마리</span>`;
                 } else {
-                    decayedEl.innerHTML = `<span style="color:#dc2626; font-size:13px;">${decayedCount} 마리 침식 🔴`;
+                    decayedEl.innerHTML = `<span style="color:#b45309; font-weight:900;">진행 중 ⏳ (${todayCount}/${dailyQuota})</span> · <span style="color:#dc2626; font-weight:900;">위험 ${decayedCount} 마리 🔴</span>`;
                 }
-            } else {
-                decayedEl.innerHTML = `<span style="color:#15803d;">0마리 (안전 🟢)</span>`;
-            }
-
-            const counselCount = getCounselingTargets().length;
-            const counselEl = document.getElementById("repCounselPending");
-            if (counselCount > 0) {
-                counselEl.innerHTML = `<span style="color:#ea580c;">${counselCount}마리 면담 대기 🟠</span>`;
-            } else {
-                counselEl.innerHTML = `<span style="color:#15803d;">0 마리 🟢</span>`;
             }
 
             switchBookTab(1); // 타이틀은 1번 진행도 탭 기본 오픈
@@ -11439,6 +11568,36 @@ function handleMidBossVictory() {
 
     // 🌟 앱 실행 시 자동 로그인 처리
     window.onload = async function() {
+
+        // ========================================================
+        // 🧹 과거 승계된 마왕/칭호 오염 1회 강제 소각 (1~2주 후 없애기)
+        // ========================================================
+        const isPurified = safeStorageGet('spirit_patch_boss_records_purified', false);
+        if (!isPurified) {
+            // 1. 마왕 클리어 강제 취소 ➔ '정령의 구원자 👑' 계급 박탈
+            safeStorageSet('spirit_exam_cleared', false);
+
+            // 2. 마왕 토벌 기록 0화 & 삭제된 칭호 5종 영구 회수
+            const rec = safeStorageGet('spirit_records_data', {});
+            rec.bossClearCount = 0;
+            rec.fastestBossTime = null;
+            rec.bossNoDamage = false;
+            
+            const removedTitleIds = ['all_master', 'speed_demon', 'boss_3', 'clutch_win', 'legend_ok'];
+            if (Array.isArray(rec.unlocked)) {
+                rec.unlocked = rec.unlocked.filter(id => !removedTitleIds.includes(id));
+            }
+            // 장착 칭호가 마왕/구원자 관련이면 기본 칭호로 변경
+            if (!rec.equippedTitle || rec.equippedTitle.includes('마왕') || rec.equippedTitle.includes('구원자') || rec.equippedTitle.includes('1등급') || rec.equippedTitle.includes('단어장')) {
+                rec.equippedTitle = "🌱 첫 걸음의 탐색자";
+            }
+            safeStorageSet('spirit_records_data', rec);
+            gameRecords = rec;
+
+            // 3. 도장 쾅! (이 폰에서는 다시는 실행되지 않음)
+            safeStorageSet('spirit_patch_boss_records_purified', true);
+        }
+
         initSystemSettingsListener(); // 🌟 실시간 마왕 강림 리스너 가동!
         preloadGameAssets(); // 👈 접속 즉시 백그라운드 프리로드 개시!
         migrateOldMapDataIfNeeded(); // 🌟 [추가] 구버전 진도 자동 승계 실행!
@@ -11568,9 +11727,152 @@ function handleMidBossVictory() {
 
             if (totalEl) totalEl.innerText = `총 ${adminCachedStudents.length}명 등록`;
             renderAdminStudentCards(adminCachedStudents);
+            renderAdminMapTabControls(); // 👈 원격 제어 박스 동기화 렌더링
         } catch (e) {
             console.error("관제탑 로드 실패:", e);
             if (container) container.innerHTML = `<div style="text-align:center; padding:20px; font-size:13px; color:#dc2626;">⚠️ 데이터를 불러오지 못했습니다. (네트워크 확인)</div>`;
+        }
+    }
+
+    // ========================================================
+    // 🎛️ 관제탑 2단 탭 전환 컨트롤러
+    // ========================================================
+    function switchAdminTowerTab(tabNum) {
+        Sound.click();
+        const btn1 = document.getElementById("adminTabBtn1");
+        const btn2 = document.getElementById("adminTabBtn2");
+        const tab1 = document.getElementById("adminTowerTab1");
+        const tab2 = document.getElementById("adminTowerTab2");
+
+        if (tabNum === 1) {
+            btn1.style.background = "#7e22ce"; btn1.style.color = "#ffffff"; btn1.style.borderColor = "#581c87";
+            btn2.style.background = "#ede3cc"; btn2.style.color = "#5c3a21"; btn2.style.borderColor = "#c9b48c";
+            tab1.style.display = "flex";
+            tab2.style.display = "none";
+        } else {
+            btn1.style.background = "#ede3cc"; btn1.style.color = "#5c3a21"; btn1.style.borderColor = "#c9b48c";
+            btn2.style.background = "#7e22ce"; btn2.style.color = "#ffffff"; btn2.style.borderColor = "#581c87";
+            tab1.style.display = "none";
+            tab2.style.display = "flex";
+            renderAdminMapTabControls(); // 2번 탭 열릴 때 컨트롤러 렌더
+        }
+    }
+
+    // 임시 토글 상태 보관 객체
+    let adminPendingMapTabOverrides = null;
+
+    // ========================================================
+    // 🎛️ [관제탑 원격 제어 엔진] 특훈 범위 저장 & 영지 탭 실시간 토글
+    // ========================================================
+    function renderAdminMapTabControls() {
+        const container = document.getElementById("adminMapTabList");
+        if (!container || !Array.isArray(worldMaps)) return;
+        container.innerHTML = "";
+
+        if (!adminPendingMapTabOverrides) {
+            adminPendingMapTabOverrides = { ...(window.cloudMapTabOverrides || {}) };
+        }
+
+        worldMaps.forEach(map => {
+            // 현재 임시 상태 확인 (없으면 마스터 함수 기본값)
+            const isSpecial = adminPendingMapTabOverrides[map.id] 
+                ? (adminPendingMapTabOverrides[map.id] === 'special') 
+                : isMapSpecial(map);
+
+            const row = document.createElement("div");
+            row.style.cssText = "display:flex; justify-content:space-between; align-items:center; background:#ffffff; border:1px solid #d8c7a6; border-radius:6px; padding:4px 8px; font-size:11.5px;";
+            row.innerHTML = `
+                <span style="font-weight:800; color:#2c1a0e; text-overflow:ellipsis; overflow:hidden; white-space:nowrap; max-width:180px;">${map.name}</span>
+                <button type="button" onclick="toggleAdminMapTabLocal('${map.id}')" style="background:${isSpecial ? '#7e22ce' : '#15803d'}; color:#ffffff; border:none; border-radius:5px; padding:3px 8px; font-size:11px; font-weight:900; cursor:pointer;">
+                    ${isSpecial ? '🌀 숨겨진 비경' : '🌲 일반 탐험'}
+                </button>
+            `;
+            container.appendChild(row);
+        });
+
+        // 특훈 지정 영지 체크박스 목록 렌더링
+        const customBox = document.getElementById("adminHcCustomBox");
+        if (customBox) {
+            customBox.innerHTML = "";
+            worldMaps.forEach(map => {
+                const label = document.createElement("label");
+                label.style.cssText = "display:inline-flex; align-items:center; gap:2px; font-size:11px; margin-right:8px; cursor:pointer;";
+                label.innerHTML = `<input type="checkbox" class="admin-hc-map-cb" value="${map.id}"> ${map.name}`;
+                customBox.appendChild(label);
+            });
+        }
+    }
+
+    // 로컬 화면에서 먼저 토글 (즉시 서버 전송 X)
+    function toggleAdminMapTabLocal(mapId) {
+        Sound.click();
+        const map = worldMaps.find(m => m.id === mapId);
+        const currentIsSpecial = adminPendingMapTabOverrides[mapId] 
+            ? (adminPendingMapTabOverrides[mapId] === 'special') 
+            : isMapSpecial(map);
+
+        adminPendingMapTabOverrides[mapId] = currentIsSpecial ? 'normal' : 'special';
+        renderAdminMapTabControls();
+    }
+
+    // 💾 [영지 배정 저장] 버튼을 누를 때 한 번에 서버에 전송!
+    async function saveAdminMapTabOverrides() {
+        Sound.click();
+        if (!adminPendingMapTabOverrides) return;
+
+        try {
+            await db.collection(USER_COLLECTION).doc('_system_settings').set({
+                mapTabOverrides: adminPendingMapTabOverrides
+            }, { merge: true });
+            window.cloudMapTabOverrides = { ...adminPendingMapTabOverrides };
+            Sound.fanfare();
+            alert("✨ 전 영지의 탭 배정(일반/비경)이 전교생 화면에 즉시 반영되었습니다!");
+        } catch (e) {
+            alert("⚠️ 저장 실패: 네트워크를 확인해 주세요.");
+        }
+    }
+
+    function toggleAdminHcCustomScope() {
+        const val = document.querySelector('input[name="adminHcScope"]:checked')?.value;
+        const box = document.getElementById("adminHcCustomBox");
+        if (box) box.style.display = (val === 'custom') ? 'flex' : 'none';
+    }
+
+    // 💾 전교생 특훈 원격 설정 저장
+    async function saveAdminHardcoreSettings() {
+        Sound.click();
+        const scopeType = document.querySelector('input[name="adminHcScope"]:checked')?.value || 'all';
+        let targetMaps = scopeType;
+
+        if (scopeType === 'custom') {
+            const checked = Array.from(document.querySelectorAll('.admin-hc-map-cb:checked')).map(cb => cb.value);
+            if (checked.length === 0) {
+                alert("지정할 영지를 최소 1개 이상 선택해 주세요!");
+                return;
+            }
+            targetMaps = checked;
+        }
+
+        const hp = parseInt(document.getElementById("adminHchp").value) || 10;
+        const timeLimit = parseFloat(document.getElementById("adminHcTime").value) || 3.0;
+
+        const config = {
+            targetMaps: targetMaps,
+            hp: hp,
+            timeLimit: timeLimit,
+            playerHp: 3,
+            updatedAt: Date.now()
+        };
+
+        try {
+            await db.collection(USER_COLLECTION).doc('_system_settings').set({
+                hardcoreConfig: config
+            }, { merge: true });
+            window.cloudHardcoreConfig = config;
+            Sound.fanfare();
+            alert("✨ 전교생 특훈 출제 범위와 난이도가 실시간 반영되었습니다!");
+        } catch (e) {
+            alert("⚠️ 저장 실패: 네트워크를 확인해 주세요.");
         }
     }
 
@@ -11903,6 +12205,8 @@ function handleMidBossVictory() {
               if (doc.exists) {
                   const data = doc.data();
                   window.isBossRaidOpenCloud = !!data.isBossRaidOpen;
+                  window.cloudMapTabOverrides = data.mapTabOverrides || {};
+                  window.cloudHardcoreConfig = data.hardcoreConfig || null; // 🌟 관제탑 특훈 설정 수신
                   
                   // 야영지에 머물고 있다면 대형 스마트 버튼 즉시 갱신
                   const titleScreen = document.getElementById("titleScreen");
@@ -12884,21 +13188,48 @@ function handleMidBossVictory() {
         "피곤하면 모닥불 앞에서 잠시 숨 돌리고... 자, 딱 5개만 더 보자!",
         "꾸준한 공부. 그것만이 답이야. 꾸준히 해라!",
         "정령들이 너한테 「진명의 각인」을 새겨줄 때까지 쉬지 않고 굴릴 거다, 각오해!",
-         "1.5초 만에 맞히면 '찰나의 공명'으로 즉시 계약 체결이다. 광속으로 골라봐!",
-         "헷갈리는 단어는 피드백 창에서 하트(💖) 꾹 눌러둬라. 성소에서 각 잡고 훈련시켜 줄 테니.",
-         "안개 속 구출전 3차까지 버텨내면 '진명의 각인'이 찍혀서 영원히 안 까먹는다!",
-         "거대 두루마리가 번쩍일 땐 이유가 있는 법이야. 군말 말고 눌러라!",
-         "구역을 정복했으면 수호령 시련까지 끝장내야 진짜 그 영지 마력을 흡수하는 거다.",
-         "포기하지마. 내가 옆에서 끝까지 멱살 잡고 1등급으로 캐리해 줄 테니까.",
-         "노력은 배신 안 한다. 내가 보증하지. 자, 다시 가자고!",
-         "'내일부터 해야지' 하는 녀석치고 내일 진짜 하는 꼴을 못 봤다.",
-         "손가락 아프다고? 실전에선 멘탈에 쥐가 난다. 멘탈 단련해라!",
-         "영어 3등급 맞고 울지 마라. 지금 네가 탭하는 그 단어가 등급을 가른다.",
-         "단어 암기는 벼락치기가 안 통해. 매일 5분씩 보는 놈이 결국 이긴다.",
-         "호주에서 쓰는 돈이 뭔 줄 아냐? ...호주머니! 크하하! ...웃었지?",
-         "소가 계단을 올라가면? ...소오름! ㅋㅋㅋ ...소름 돋았으면 그 집중력으로 출격해!",
-         "세상에서 가장 착한 사자는? ...자원봉사자. ...이런 고급 유머를 몰라보다니 안타깝군.",
-         "세상에서 제일 가난한 왕이 누군지 알아? ...최저임금. ...이제 좀 시원해졌겠지?"
+        "1.5초 만에 맞히면 '찰나의 공명'으로 즉시 계약 체결이다. 광속으로 골라봐!",
+        "헷갈리는 단어는 피드백 창에서 하트(💖) 꾹 눌러둬라. 성소에서 각 잡고 훈련시켜 줄 테니.",
+        "안개 속 구출전 3차까지 버텨내면 '진명의 각인'이 찍혀서 영원히 안 까먹는다!",
+        "거대 두루마리가 번쩍일 땐 이유가 있는 법이야. 군말 말고 눌러라!",
+        "구역을 정복했으면 수호령 시련까지 끝장내야 진짜 그 영지 마력을 흡수하는 거다.",
+        "포기하지마. 내가 옆에서 끝까지 멱살 잡고 1등급으로 캐리해 줄 테니까.",
+        "노력은 배신 안 한다. 내가 보증하지. 자, 다시 가자고!",
+        "'내일부터 해야지' 하는 녀석치고 내일 진짜 하는 꼴을 못 봤다.",
+        "손가락 아프다고? 실전에선 멘탈에 쥐가 난다. 멘탈 단련해라!",
+        "영어 3등급 맞고 울지 마라. 지금 네가 탭하는 그 단어가 등급을 가른다.",
+        "단어 암기는 벼락치기가 안 통해. 매일 5분씩 보는 놈이 결국 이긴다.",
+        "야, 손가락으로 나 찌를 시간에 단어 3개는 더 외웠겠다!",
+        "단어는 안 외우고 나만 귀찮게 굴면 1등급이 하늘에서 뚝 떨어지냐?",
+        "네가 멍때리는 지금 이 순간에도 라이벌의 단어장은 사각사각 넘어가고 있다.",
+        "단어 외우기 싫지? 근데 뭐 어쩔 ㅋㅋㅋ 해야지.",
+        "나는 거짓말 안 해. 단어만 꽉 잡아도 기본 3등급은 깔고 간다.",
+        "침대에 누워있냐? 그래~ 누워서라도 단어 좀 봐라.",
+        "다의어 정령은 숨은 뜻이 많아. 하나만 대충 알고 넘어가면 시험지 보고 피눈물 흘린다!",
+        "동의어 잘 봐둬라~. 그러면 나중에 패러프레이징의 달인이 될테니.",
+        "정령의 성소에 뭐가 떴다? 그럼 일단 들어가라!",
+        "단어 암기가 막막하면, 입으로 소리 내서 읽어봐. 네 머리는 기억 못 해도 혓바닥은 기억하는 법이니까.",
+        "힘들지? 안다. 그래도 이 악물고 버티는 놈이 결국 시험 끝나고 웃는 법이야.",
+        "네가 매일 들이는 노력을 내가 다 지켜보고 있어. 넌 무조건 된다.",
+        "틀렸다고 기죽지 마라! 근육이 살짝 찢어지면서 근육이 크게 붙는 거랑 같은 거니까.",
+        "공부는 머리로 하는 게 아니라 엉덩이로 하는 거다. 딱 앉아서 단어나 외워라!",
+        "단어는 종잣돈 같은 거다. 쌓이면 쌓일수록 같은 이율이어도 벌어들이는 양이 달라지지.",
+        "단어 외우기 힘들지? 야, 나도 단어 외우는 게 제일 힘들어...",
+        "영어 공부하다 머리 터질 것 같으면 암기 과목 좀 보면서 힐링하고... 지겨워지면 단어 외우고... 그렇게 계속 돌려~",
+        "그래도 학교에서 배우는 과목 중에 그나마 제일 오래 잘 써먹는 게 영어다! 그러니 포기하지마.",
+        "지금 힘들다고 영어를 포기하면 안 돼. 왜냐면... 어차피 나중에 또 만날 거거든.",
+        "기회는 앞머리는 풍성한데 뒷머리는 빡빡이라더라. 올 땐 잡기 쉽지만 갈 땐 못 잡는다는 거지.",
+        "남이 돈 내 줄 때 열심히 공부해라! 아니면 나중에 내가 벌어 내가 내면서 공부해야 하니까.",
+        "참기름이 고소당하면 뭔지 알아? ...고소공포증! ㅋㅋㅋ ...웃어.",
+        "차를 발로 차면? ...카놀라유! ㅋㅋㅋ ...이런 고급 유머에 뇌세포가 깨어나는 거다.",
+        "신데렐라가 잠을 못 자면? ...모짜렐라! ...피식했지? 다 봤다.",
+        "반성문을 영어로 하면? ...글로벌! ...글(글자)로 벌을 받으니까! 크하하!",
+        "오리가 얼어붙으면? ...언덕(Duck)! 완벽한 영단어 언어유희 아니냐?",
+        "왕이 궁궐에서 넘어지면? ...킹콩! ...자, 웃었으면 당장 출격해라!",
+        "호주에서 쓰는 돈이 뭔 줄 아냐? ...호주머니! 흐흐흐 ...웃었지?",
+        "소가 계단을 올라가면? ...소오름! ㅋㅋㅋ ...소름 돋았으면 그 집중력으로 출격해!",
+        "세상에서 가장 착한 사자는? ...자원봉사자. ...이런 고급 유머를 몰라보다니 안타깝군.",
+        "세상에서 제일 가난한 왕이 누군지 알아? ...최저임금. ...이제 좀 시원해졌겠지?"
     ];
 
     let mrBookBubbleTimer = null;
@@ -12910,6 +13241,12 @@ function handleMidBossVictory() {
         const bubble = document.getElementById("campMrBookBubble");
         const textEl = document.getElementById("campMrBookText");
         if (!sprite || !bubble || !textEl) return;
+
+        // 📖 책 선생 찌르기 횟수 누적 및 칭호 해금
+        gameRecords.bookPokeCount = (gameRecords.bookPokeCount || 0) + 1;
+        saveRecords();
+        if (gameRecords.bookPokeCount >= 10) unlockTitle("book_poke_10");
+        if (gameRecords.bookPokeCount >= 30) unlockTitle("book_poke_30");
 
         // 1. 펄쩍 뛰는 점프 모션 재생
         sprite.classList.remove("jump");

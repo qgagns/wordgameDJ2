@@ -4162,7 +4162,8 @@
                         <label style="cursor:pointer;"><input type="radio" name="adminHcScope" value="normal" onchange="toggleAdminHcCustomScope()"> 🌲 일반 영지만</label>
                         <label style="cursor:pointer;"><input type="radio" name="adminHcScope" value="custom" onchange="toggleAdminHcCustomScope()"> 🎯 지정 영지 선택</label>
                     </div>
-                    <div id="adminHcCustomBox" style="display:none; max-height:80px; overflow-y:auto; background:#ffffff; border:1px solid #d8c7a6; border-radius:6px; padding:4px 6px; margin-bottom:6px; gap:4px; flex-wrap:wrap;"></div>
+                    <!-- 🌟 2열 격자 그리드로 모든 영지가 한눈에 쏙 들어오게 확장 -->
+                    <div id="adminHcCustomBox" style="display:none; max-height:180px; overflow-y:auto; background:#ffffff; border:1.5px solid #d8c7a6; border-radius:8px; padding:6px 8px; margin-bottom:6px; display:none; grid-template-columns:1fr 1fr; gap:6px;"></div>
                     <div style="display:flex; gap:8px; align-items:center; color:#78350f; font-weight:700;">
                         <span>문제수(HP): <input id="adminHchp" type="number" value="10" min="5" max="30" style="width:42px; text-align:center; padding:2px; border-radius:4px; border:1px solid #c9b48c;"></span>
                         <span>제한시간: <input id="adminHcTime" type="number" value="3.0" step="0.5" min="2.0" max="10.0" style="width:46px; text-align:center; padding:2px; border-radius:4px; border:1px solid #c9b48c;">초</span>
@@ -9542,14 +9543,26 @@ const recTime = document.getElementById("recFastestTime");
         Sound.click();
         closeOpsPopover();
 
-        const hc = (typeof GAME_CONFIG !== 'undefined' && GAME_CONFIG.hardcoreMode) ? GAME_CONFIG.hardcoreMode : {};
+        // 🌟 관제탑 원격 설정을 최우선으로 읽어옴!
+        const hc = window.cloudHardcoreConfig || ((typeof GAME_CONFIG !== 'undefined' && GAME_CONFIG.hardcoreMode) ? GAME_CONFIG.hardcoreMode : {});
         const titleEl = document.getElementById("hardcoreNoticeTitle");
         const scopeEl = document.getElementById("hardcoreNoticeScopeBadge");
 
         if (titleEl) titleEl.innerText = `📖 ${hc.title || '책 선생의 하드코어 특훈'}`;
         if (scopeEl) {
-            const isAll = (!hc.targetMaps || hc.targetMaps === "all" || (Array.isArray(hc.targetMaps) && hc.targetMaps.includes("all")));
-            const scopeText = isAll ? "전 대륙 모든 영지 (전 범위 총괄)" : `지정 시험 영지 (${Array.isArray(hc.targetMaps) ? hc.targetMaps.join(', ') : hc.targetMaps})`;
+            const targets = hc.targetMaps || "all";
+            let scopeText = "전 대륙 모든 영지 (전 범위 총괄)";
+            
+            if (targets === "normal") {
+                scopeText = "일반 탐험 영지만 (비경 제외)";
+            } else if (Array.isArray(targets)) {
+                // 지정된 영지 ID를 실제 영지 이름으로 친절하게 변환!
+                const names = targets.map(id => {
+                    const found = worldMaps.find(m => m.id === id);
+                    return found ? found.name : id;
+                });
+                scopeText = `지정 영지 (${names.join(', ')})`;
+            }
             const hpCount = hc.hp || 15;
             const timeLimit = hc.timeLimit || 3.5;
             const pHearts = hc.playerHp || 3;
@@ -11773,6 +11786,34 @@ function handleMidBossVictory() {
             adminPendingMapTabOverrides = { ...(window.cloudMapTabOverrides || {}) };
         }
 
+        // 🌟 1. 특훈 현재 설정값 복원 (라디오, 인풋, 체크박스)
+        const hc = window.cloudHardcoreConfig || {};
+        if (document.getElementById("adminHchp")) {
+            document.getElementById("adminHchp").value = hc.hp || 10;
+        }
+        if (document.getElementById("adminHcTime")) {
+            document.getElementById("adminHcTime").value = hc.timeLimit || 3.0;
+        }
+
+        const targetMaps = hc.targetMaps || "all";
+        const customBox = document.getElementById("adminHcCustomBox");
+        const isCustom = Array.isArray(targetMaps);
+        const scopeVal = isCustom ? "custom" : targetMaps;
+
+        const radio = document.querySelector(`input[name="adminHcScope"][value="${scopeVal}"]`);
+        if (radio) radio.checked = true;
+        if (customBox) {
+            customBox.style.display = isCustom ? "grid" : "none";
+            customBox.innerHTML = "";
+            worldMaps.forEach(map => {
+                const isChecked = isCustom && targetMaps.includes(map.id);
+                const label = document.createElement("label");
+                label.style.cssText = "display:inline-flex; align-items:center; gap:4px; font-size:11.5px; cursor:pointer; font-weight:700; color:#2c1a0e;";
+                label.innerHTML = `<input type="checkbox" class="admin-hc-map-cb" value="${map.id}" ${isChecked ? 'checked' : ''}> <span style="text-overflow:ellipsis; overflow:hidden; white-space:nowrap;">${map.name}</span>`;
+                customBox.appendChild(label);
+            });
+        }
+
         worldMaps.forEach(map => {
             // 현재 임시 상태 확인 (없으면 마스터 함수 기본값)
             const isSpecial = adminPendingMapTabOverrides[map.id] 
@@ -11789,18 +11830,6 @@ function handleMidBossVictory() {
             `;
             container.appendChild(row);
         });
-
-        // 특훈 지정 영지 체크박스 목록 렌더링
-        const customBox = document.getElementById("adminHcCustomBox");
-        if (customBox) {
-            customBox.innerHTML = "";
-            worldMaps.forEach(map => {
-                const label = document.createElement("label");
-                label.style.cssText = "display:inline-flex; align-items:center; gap:2px; font-size:11px; margin-right:8px; cursor:pointer;";
-                label.innerHTML = `<input type="checkbox" class="admin-hc-map-cb" value="${map.id}"> ${map.name}`;
-                customBox.appendChild(label);
-            });
-        }
     }
 
     // 로컬 화면에서 먼저 토글 (즉시 서버 전송 X)
@@ -11835,7 +11864,7 @@ function handleMidBossVictory() {
     function toggleAdminHcCustomScope() {
         const val = document.querySelector('input[name="adminHcScope"]:checked')?.value;
         const box = document.getElementById("adminHcCustomBox");
-        if (box) box.style.display = (val === 'custom') ? 'flex' : 'none';
+        if (box) box.style.display = (val === 'custom') ? 'grid' : 'none';
     }
 
     // 💾 전교생 특훈 원격 설정 저장

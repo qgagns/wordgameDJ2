@@ -179,7 +179,7 @@ it appears[seems] that ~	:	[숙] ~인 것으로 보인다
 exist	:	[동] 있다, 존재하다
 solely	:	[부] 단독으로, 오로지
 suffering	:	[명] 고통
-humanity	:	[명] 인류, 인간; [명] 인간애, 인류해
+humanity	:	[명] 인류, 인간; [명] 인간애, 인류에
 influenza	:	[명] 유행성 감기, 독감
 pandemic	:	[명] 전세계적인 유행병
 estimate	:	[동] 추정하다

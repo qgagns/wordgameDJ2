@@ -5002,13 +5002,18 @@
         // 🎛️ [교사 관리자 로그인]
         const masterId = (typeof GAME_CONFIG !== 'undefined' && GAME_CONFIG.adminId) ? GAME_CONFIG.adminId : "admin";
         const masterPw = (typeof GAME_CONFIG !== 'undefined' && GAME_CONFIG.adminPw) ? GAME_CONFIG.adminPw : "0000";
+        const masterName = (typeof GAME_CONFIG !== 'undefined' && GAME_CONFIG.adminName) ? GAME_CONFIG.adminName : "선생님";
+
         if (id === masterId && pw === masterPw) {
             safeStorageSet('spirit_is_admin', true);
             safeStorageSet('spirit_current_uid', id);
+            safeStorageSet('spirit_user_name', masterName); // 🌟 관리자 성함 즉시 박제!
+            safeStorageSet('spirit_hero_name', masterName);
             currentUserDocId = id;
             document.getElementById("authModal").style.display = "none";
             document.getElementById("titleScreen").style.display = "flex";
             renderTitleScreen();
+            updateEquippedBadgeDisplay(); // 👈 현판 즉시 갱신
             const adminBtn = document.getElementById("adminTowerBtn");
             if (adminBtn) adminBtn.style.display = "block";
             return;
@@ -5044,13 +5049,20 @@
             currentUserDocId = id;
             safeStorageSet('spirit_current_uid', id);
 
+            // 🌟 로그인 즉시 새 학생 이름 로컬에 박제 (잔상 0% 차단!)
+            let studentName = data.name || data.heroName || '';
+            studentName = studentName.replace(id, '').replace(/^[0-9\s]+/, '').trim() || studentName || '정령술사';
+            safeStorageSet('spirit_hero_name', studentName);
+            safeStorageSet('spirit_user_name', studentName);
+
             msg.style.color = "#15803d";
-            msg.innerText = `✨ 환영합니다, [${data.name || data.heroName || id}] 술사님!`;
+            msg.innerText = `✨ 환영합니다, [${studentName}] 술사님!`;
 
             setTimeout(() => {
                 document.getElementById("authModal").style.display = "none";
                 document.getElementById("titleScreen").style.display = "flex";
                 renderTitleScreen();
+                updateEquippedBadgeDisplay(); // 👈 현판 이름 즉시 새로고침!
             }, 500);
 
         } catch (e) {
@@ -5099,8 +5111,8 @@
                 lastLogin: new Date()
             });
 
-            safeStorageSet('spirit_hero_name', `${id} ${name}`);
-            safeStorageSet('spirit_user_name', `${id} ${name}`);
+            safeStorageSet('spirit_hero_name', name);
+            safeStorageSet('spirit_user_name', name);
             safeStorageSet('spirit_current_uid', id);
             currentUserDocId = id;
 
@@ -5244,13 +5256,11 @@
             safeStorageSet('spirit_records_data', gameRecords);
         }
 
-        if (cloudData.heroName) {
-            safeStorageSet('spirit_hero_name', cloudData.heroName);
-        } else if (cloudData.name) {
-            const fullName = cloudData.id ? `${cloudData.id} ${cloudData.name}` : cloudData.name;
-            safeStorageSet('spirit_hero_name', fullName);
-            safeStorageSet('spirit_user_name', fullName);
-        }
+        // 🌟 [이름 표준화] 학번을 떼어내고 오직 순수 학생 이름만 저장!
+        let cleanName = cloudData.name || cloudData.heroName || '';
+        cleanName = cleanName.replace(cloudData.id || '', '').replace(/^[0-9\s]+/, '').trim() || cleanName || '정령술사';
+        safeStorageSet('spirit_hero_name', cleanName);
+        safeStorageSet('spirit_user_name', cleanName);
 
         if (cloudData.masteryTimestamps) {
         wordMasteryTimestamps = cloudData.masteryTimestamps;
@@ -5335,18 +5345,15 @@
         const records = safeStorageGet('spirit_records_data', {});
         const fastestTime = records.fastestBossTime || 9999;
         const bossClearCount = records.bossClearCount || 0;
-        const currentHeroName = safeStorageGet('spirit_hero_name', null);
-        const savedUserName = safeStorageGet('spirit_user_name', '빛의 구원자');
-        const finalHeroName = currentHeroName || savedUserName;
-
-        // 순수 학생 이름 추출 ("10415 안재훈" ➔ "안재훈")
-        const pureName = finalHeroName.replace(currentUserDocId || '', '').replace(/^[0-9\s]+/, '').trim() || finalHeroName;
+        // 🌟 '빛의 구원자' 더미 박멸 -> 순수 이름만 추출
+        const rawName = safeStorageGet('spirit_user_name', safeStorageGet('spirit_hero_name', '정령술사'));
+        const pureName = rawName.replace(currentUserDocId || '', '').replace(/^[0-9\s]+/, '').trim() || rawName;
 
         const payload = {
             id: currentUserDocId,
             name: pureName, // 👈 DB 최상위에 name 필드 항상 영구 유지!
             lastUpdated: firebase.firestore.FieldValue.serverTimestamp(),
-            heroName: finalHeroName,
+            heroName: pureName, // 👈 heroName에도 학번 없이 순수 이름만 통일 저장!
             masteryCount: totalMasteredCount,
             fastestBossTime: fastestTime,
             bossClearCount: bossClearCount,
@@ -6458,11 +6465,12 @@
         const badge = document.getElementById("titleEquippedBadge");
         if (badge) badge.innerText = gameRecords.equippedTitle || "🌱 칭호 없음";
         
-        // 🌟 플레이어 성명/학번 B안 (✦ 이름 ✦) 동기화 출력
         const nameEl = document.getElementById("titlePlayerNameText");
         if (nameEl) {
-            const heroName = safeStorageGet('spirit_hero_name', safeStorageGet('spirit_user_name', '2521 술사'));
-            nameEl.innerHTML = `<span style="color:#b45309; font-size:11px;">✦✦</span> ${heroName} <span style="color:#b45309; font-size:11px;">✦✦</span>`;
+            // 🌟 학번을 뺀 순수 이름만 100% 일관되게 추출하여 출력!
+            let rawName = safeStorageGet('spirit_user_name', safeStorageGet('spirit_hero_name', '정령술사'));
+            let pureName = rawName.replace(currentUserDocId || '', '').replace(/^[0-9\s]+/, '').trim() || rawName;
+            nameEl.innerHTML = `<span style="color:#b45309; font-size:11px;">✦✦</span> ${pureName} <span style="color:#b45309; font-size:11px;">✦✦</span>`;
         }
         const adminBtn = document.getElementById("adminTowerBtn");
         if (adminBtn) {
@@ -7185,8 +7193,9 @@ const recTime = document.getElementById("recFastestTime");
         // 2. HUD 플레이어 이름 & 계급 & 칭호 동기화
         const nameEl = document.getElementById("titlePlayerNameText");
         if (nameEl) {
-            const heroName = safeStorageGet('spirit_hero_name', safeStorageGet('spirit_user_name', '정령술사'));
-            nameEl.innerText = `✦✦ ${heroName} ✦✦`;
+            let rawName = safeStorageGet('spirit_user_name', safeStorageGet('spirit_hero_name', '정령술사'));
+            let pureName = rawName.replace(currentUserDocId || '', '').replace(/^[0-9\s]+/, '').trim() || rawName;
+            nameEl.innerText = `✦✦ ${pureName} ✦✦`;
         }
 
         const badge = document.getElementById("titleGlobalTierBadge");
@@ -11030,11 +11039,12 @@ function handleMidBossVictory() {
 
     function applyCertName() {
         const input = document.getElementById("userNameInput");
-        const defaultHeroName = currentUserDocId ? safeStorageGet('spirit_hero_name', '빛의 구원자') : '빛의 구원자';
+        const defaultHeroName = safeStorageGet('spirit_user_name', safeStorageGet('spirit_hero_name', '영웅'));
         const name = input.value.trim() || defaultHeroName;
         
         document.getElementById("certNameDisplay").innerText = name;
-        safeStorageSet('spirit_hero_name', name); // 브라우저 로컬 저장
+        safeStorageSet('spirit_hero_name', name);
+        safeStorageSet('spirit_user_name', name);
         
         Sound.fanfare();
         // 🌟 [핵심 해결책] 수료증에 새긴 이름을 구글 클라우드에 0.1초 만에 즉시 영구 저장!

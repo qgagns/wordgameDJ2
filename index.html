@@ -1783,8 +1783,8 @@
         .stamp-clear-mark {
             position: absolute;
             right: 14px;
-            top: 50%;
-            transform: translateY(-50%) rotate(-7deg);
+            top: 40%;
+            transform: translateY(-50%) rotate(-6deg);
             border: 2px solid #b91c1c;
             color: #b91c1c;
             padding: 3px 8px;
@@ -2185,6 +2185,7 @@
         }
         .morph-btn-submit:active { transform: scale(0.98);}
 
+
         /* ========================================================
            🎭 [NEW] 다의어 모든 뜻 쓸어담기(POLY_SWEEP) 전용 스타일
            ======================================================== */
@@ -2206,6 +2207,46 @@
         }
         .poly-sweep-container .choice-btn.correct {
             pointer-events: none;
+        }
+
+
+        /* ========================================================
+           📜 지문 순차 돌파 퀘스트 전용 하이라이트 스타일
+           ======================================================== */
+        .passage-token {
+            display: inline-block;
+            padding: 1px 6px;
+            border-radius: 6px;
+            font-weight: 800;
+            margin: 0 2px;
+            transition: all 0.25s ease;
+            line-height: 1.3;
+        }
+        /* 1. 대기 상태 (아직 안 푼 뒤쪽 단어) */
+        .passage-token.pending {
+            background: rgba(181, 148, 97, 0.2);
+            color: #785a3e;
+            border-bottom: 2px dashed #b59f77;
+        }
+        /* 2. 현재 타깃 (지금 풀어야 하는 단어: 황금 형광펜 발광) */
+        .passage-token.active {
+            background: #fde047;
+            color: #78350f;
+            border: 1.5px solid #d97706;
+            box-shadow: 0 0 10px rgba(245, 158, 11, 0.8);
+            transform: scale(1.06);
+            animation: passagePulse 1.2s infinite alternate ease-in-out;
+        }
+        /* 3. 정답 완료 (이미 통과한 앞쪽 단어) */
+        .passage-token.completed {
+            background: #dcfce7;
+            color: #15803d;
+            border: 1px solid #86efac;
+            text-decoration: none;
+        }
+        @keyframes passagePulse {
+            0% { box-shadow: 0 0 4px #f59e0b; }
+            100% { box-shadow: 0 0 14px #ea580c; }
         }
 
 
@@ -3372,6 +3413,28 @@
             </div>
             </div>
 
+            <!-- 📜 [NEW] 지문 퀘스트 전용 양피지 스크롤 뷰어 박스 (평소엔 숨김) -->
+            <div id="passageViewerBox" class="scroll-fade-bottom" style="
+                display:none; 
+                flex:1; 
+                min-height:160px; 
+                max-height:220px; 
+                background:rgba(253, 250, 242, 0.85); 
+                border:1.5px solid #c9b48c; 
+                border-radius:12px; 
+                padding:10px 14px; 
+                overflow-y:auto; 
+                text-align:left; 
+                font-family: Georgia, 'Times New Roman', serif;
+                font-size:14.5px; 
+                font-weight:500;
+                line-height:1.75; 
+                color:#2c1a0e; 
+                word-break:keep-all; 
+                box-shadow:inset 0 0 10px rgba(181,148,97,0.18); 
+                margin-bottom:6px;">
+            </div>
+
             <div class="battle-arena-box">
                 <img src="images/battle_field.webp" style="width:100%; height:100%; object-fit:cover; display:block;" alt="전투 대치">
             </div>
@@ -3505,29 +3568,63 @@
 
     <!-- 👇 여기에 로그인 창 -->
     <div id="authModal" class="modal" style="display:flex; z-index:100; background:#fbf6ea; border:3px solid #8f603a;">
-        <div style="flex:1; display:flex; flex-direction:column; justify-content:center; align-items:center; width:100%; text-align:center;">
-            <div style="font-size:10px; font-weight:900; color:#b45309; letter-spacing:2px; margin-bottom:2px;">✦ CLOUD SAVE SYNC ✦</div>
-            <h2 style="font-size:20px; font-weight:900; color:#451a03; margin:2px 0 6px 0;">정령술사 등록 및 로그인</h2>
-            <div style="font-size:11.5px; color:#785a3e; margin-bottom:12px; line-height:1.4;">
-                아이디와 비밀번호를 입력하면<br><b>진도가 자동 연동</b>됩니다.
+        <!-- 1. [기본 화면] 기존 정령술사 로그인 (ID + PW 딱 2칸) -->
+        <div id="authLoginView" style="flex:1; display:flex; flex-direction:column; justify-content:center; align-items:center; width:100%; text-align:center;">
+            <div style="font-size:10px; font-weight:900; color:#b45309; letter-spacing:2px; margin-bottom:2px;">✦ LOGIN ✦</div>
+            <h2 style="font-size:21px; font-weight:900; color:#451a03; margin:2px 0 6px 0;">정령술사 로그인</h2>
+            <div style="font-size:12px; color:#785a3e; margin-bottom:14px; line-height:1.4;">
+                학번(아이디)과 간편 비밀번호를 입력해 주세요.
             </div>
 
-            <!-- 아이디, 이름, 4자리 비번 입력칸 -->
-            <div style="width:100%; display:flex; flex-direction:column; gap:8px; margin-bottom:12px;">
-                <input id="loginStudentId" type="text" placeholder="아이디 (예: 10415. 전화번호 뒷자리를 추천)" maxlength="5"
-                       style="padding:10px 12px; border-radius:8px; border:1.5px solid #c9b48c; font-size:13px; font-weight:800; text-align:center;">
-                <input id="loginStudentName" type="text" placeholder="이름 (예: 안재훈)" maxlength="6"
-                       style="padding:10px 12px; border-radius:8px; border:1.5px solid #c9b48c; font-size:13px; font-weight:800; text-align:center;">
-                <input id="loginPassword" type="password" placeholder="간편 비밀번호 (4자리 숫자)" maxlength="4"
-                       style="padding:10px 12px; border-radius:8px; border:1.5px solid #c9b48c; font-size:13px; font-weight:800; text-align:center;">
+            <div style="width:100%; display:flex; flex-direction:column; gap:8px; margin-bottom:10px;">
+                <input id="loginStudentId" type="text" placeholder="학번 / 아이디 (예: 10415)" maxlength="8"
+                       style="padding:11px 12px; border-radius:9px; border:1.5px solid #c9b48c; font-size:14px; font-weight:800; text-align:center;">
+                <input id="loginPassword" type="password" placeholder="간편 비밀번호 (4자리)" maxlength="4"
+                       style="padding:11px 12px; border-radius:9px; border:1.5px solid #c9b48c; font-size:14px; font-weight:800; text-align:center;">
             </div>
 
-            <div id="loginStatusMsg" style="font-size:11px; font-weight:bold; color:#dc2626; min-height:16px; margin-bottom:4px;"></div>
+            <div id="loginStatusMsg" style="font-size:11.5px; font-weight:800; color:#dc2626; min-height:18px; margin-bottom:8px;"></div>
+
+            <!-- 메인 로그인 버튼 -->
+            <button class="btn-wood theme-emerald" style="width:100%; margin-bottom:10px;" onclick="handleUserLogin()">
+                🔑 로그인하고 출격하기 ➔
+            </button>
+
+            <!-- 완전히 구별되는 신규 가입 진입 버튼 (점선 테두리 + 호박색) -->
+            <button type="button" class="btn-sub-wood" style="margin-bottom:0; background:#fffdf7; border:1.5px dashed #b45309; color:#92400e; font-size:13px;" onclick="switchAuthView('register')">
+                🌱 처음 오셨나요? 신규 등록하기 ➔
+            </button>
         </div>
 
-        <button class="btn-wood theme-emerald" onclick="handleCloudLogin()">
-            ☁️ 클라우드 동기화 시작하기 ➔
-        </button>
+        <!-- 2. [신규 화면] 처음 온 학생 계정 등록 (ID + 이름 + PW) -->
+        <div id="authRegisterView" style="display:none; flex:1; flex-direction:column; justify-content:center; align-items:center; width:100%; text-align:center;">
+            <div style="font-size:10px; font-weight:900; color:#047857; letter-spacing:2px; margin-bottom:2px;">✦ NEW ADVENTURER ✦</div>
+            <h2 style="font-size:21px; font-weight:900; color:#065f46; margin:2px 0 6px 0;">신규 정령술사 등록</h2>
+            <div style="font-size:12px; color:#047857; margin-bottom:14px; line-height:1.4;">
+                새로운 모험을 위해 정보를 딱 한 번 등록합니다.
+            </div>
+
+            <div style="width:100%; display:flex; flex-direction:column; gap:8px; margin-bottom:10px;">
+                <input id="regStudentId" type="text" placeholder="학번 / 아이디 (예: 10415)" maxlength="8"
+                       style="padding:11px 12px; border-radius:9px; border:1.5px solid #a7f3d0; font-size:14px; font-weight:800; text-align:center;">
+                <input id="regStudentName" type="text" placeholder="이름 (예: 홍길동)" maxlength="6"
+                       style="padding:11px 12px; border-radius:9px; border:1.5px solid #a7f3d0; font-size:14px; font-weight:800; text-align:center;">
+                <input id="regPassword" type="password" placeholder="간편 비밀번호 (4자리 숫자)" maxlength="4"
+                       style="padding:11px 12px; border-radius:9px; border:1.5px solid #a7f3d0; font-size:14px; font-weight:800; text-align:center;">
+            </div>
+
+            <div id="regStatusMsg" style="font-size:11.5px; font-weight:800; color:#dc2626; min-height:18px; margin-bottom:8px;"></div>
+
+            <!-- 계정 생성 완료 버튼 -->
+            <button class="btn-wood theme-emerald" style="width:100%; margin-bottom:10px;" onclick="handleUserRegister()">
+                ✨ 새 계정 생성하고 모험 시작! ➔
+            </button>
+
+            <!-- 로그인으로 돌아가기 버튼 -->
+            <button type="button" class="btn-sub-wood" style="margin-bottom:0;" onclick="switchAuthView('login')">
+                ↩️ 이미 계정이 있습니다 (로그인으로 복귀)
+            </button>
+        </div>
     </div>
 
     <!-- ⚙️ 환경 설정 모달 팝업 -->
@@ -4872,15 +4969,106 @@
     const MIN_FORCE_COOLDOWN_MS = 5 * 1000;   // 🛡️ [핵심] 긴급 전송 최소 버퍼: 5초
 
     
-    // 🌟 아이디/이름/비번으로 간편 로그인 및 계정 자동 생성
-    async function handleCloudLogin() {
+    // ========================================================
+    // 🔑 정령술사 로그인 / 신규 등록 화면 전환 및 인증 분리 시스템
+    // ========================================================
+    function switchAuthView(viewName) {
+        Sound.click();
+        const loginView = document.getElementById("authLoginView");
+        const regView = document.getElementById("authRegisterView");
+        document.getElementById("loginStatusMsg").innerText = "";
+        document.getElementById("regStatusMsg").innerText = "";
+
+        if (viewName === 'register') {
+            loginView.style.display = "none";
+            regView.style.display = "flex";
+        } else {
+            loginView.style.display = "flex";
+            regView.style.display = "none";
+        }
+    }
+
+    // 1. [기존 학생 로그인] (오타 시 절대 새 계정 생성 안 됨!)
+    async function handleUserLogin() {
         const id = document.getElementById("loginStudentId").value.trim();
-        const name = document.getElementById("loginStudentName").value.trim();
         const pw = document.getElementById("loginPassword").value.trim();
         const msg = document.getElementById("loginStatusMsg");
 
+        if (!id || !pw) {
+            msg.innerText = "⚠️ 학번(아이디)과 비밀번호 4자리를 모두 입력해 주세요.";
+            return;
+        }
+
+        // 🎛️ [교사 관리자 로그인]
+        const masterId = (typeof GAME_CONFIG !== 'undefined' && GAME_CONFIG.adminId) ? GAME_CONFIG.adminId : "admin";
+        const masterPw = (typeof GAME_CONFIG !== 'undefined' && GAME_CONFIG.adminPw) ? GAME_CONFIG.adminPw : "0000";
+        if (id === masterId && pw === masterPw) {
+            safeStorageSet('spirit_is_admin', true);
+            safeStorageSet('spirit_current_uid', id);
+            currentUserDocId = id;
+            document.getElementById("authModal").style.display = "none";
+            document.getElementById("titleScreen").style.display = "flex";
+            renderTitleScreen();
+            const adminBtn = document.getElementById("adminTowerBtn");
+            if (adminBtn) adminBtn.style.display = "block";
+            return;
+        }
+
+        msg.style.color = "#0284c7";
+        msg.innerText = "☁️ 정령술사 확인 중...";
+
+        try {
+            const userRef = db.collection(USER_COLLECTION).doc(id);
+            const doc = await userRef.get();
+
+            // 🛑 [오타 방어막] 등록되지 않은 학번이면 칼같이 차단!
+            if (!doc.exists) {
+                msg.style.color = "#dc2626";
+                msg.innerText = "❌ 등록되지 않은 학번입니다! 학번을 확인하거나 처음 등록 버튼을 누르세요.";
+                return;
+            }
+
+            const data = doc.data();
+
+            // 🌟 [자동 구제] 비번이 비어있던 계정은 지금 친 비번으로 즉시 등록
+            if (!data.pw) {
+                await userRef.set({ pw: pw }, { merge: true });
+                data.pw = pw;
+            } else if (data.pw !== pw) {
+                msg.style.color = "#dc2626";
+                msg.innerText = "❌ 비밀번호가 일치하지 않습니다!";
+                return;
+            }
+
+            restoreDataFromCloud(data);
+            currentUserDocId = id;
+            safeStorageSet('spirit_current_uid', id);
+
+            msg.style.color = "#15803d";
+            msg.innerText = `✨ 환영합니다, [${data.name || data.heroName || id}] 술사님!`;
+
+            setTimeout(() => {
+                document.getElementById("authModal").style.display = "none";
+                document.getElementById("titleScreen").style.display = "flex";
+                renderTitleScreen();
+            }, 500);
+
+        } catch (e) {
+            console.error(e);
+            msg.style.color = "#dc2626";
+            msg.innerText = "⚠️ 연결 실패: 인터넷 연결을 확인해 주세요.";
+        }
+    }
+
+    // 2. [신규 계정 등록] (첫날 1회 가입용)
+    async function handleUserRegister() {
+        const id = document.getElementById("regStudentId").value.trim();
+        const name = document.getElementById("regStudentName").value.trim();
+        const pw = document.getElementById("regPassword").value.trim();
+        const msg = document.getElementById("regStatusMsg");
+
         if (!id || !name || !pw) {
-            msg.innerText = "⚠️ 아이디, 이름, 비밀번호 4자리를 모두 입력해 주세요.";
+            msg.innerText = "⚠️ 학번, 이름, 비밀번호 4자리를 모두 입력해 주세요.";
             return;
         }
         if (pw.length < 4) {
@@ -4889,152 +5077,45 @@
         }
 
         msg.style.color = "#0284c7";
-        msg.innerText = "☁️ 클라우드 서버와 교신 중...";
-
-        // 🎛️ [교사 관리자 로그인 즉시 판별]
-        const masterId = (typeof GAME_CONFIG !== 'undefined' && GAME_CONFIG.adminId) ? GAME_CONFIG.adminId : "admin";
-        const masterPw = (typeof GAME_CONFIG !== 'undefined' && GAME_CONFIG.adminPw) ? GAME_CONFIG.adminPw : "0000";
-        const isAdmin = (id === masterId && pw === masterPw);
-
-        if (isAdmin) {
-            safeStorageSet('spirit_is_admin', true);
-            safeStorageSet('spirit_current_uid', id);
-            // 🌟 입력하신 본인 이름 그대로 로컬에 저장
-            safeStorageSet('spirit_hero_name', name);
-            safeStorageSet('spirit_user_name', name);
-            currentUserDocId = id;
-
-            // 🌟 파이어베이스 DB의 admin 문서에도 본인 이름을 실시간 동기화 (랭킹보드 연동)
-            try {
-                await db.collection(USER_COLLECTION).doc(id).set({
-                    id: id,
-                    name: name,
-                    heroName: name,
-                    lastLogin: firebase.firestore.FieldValue.serverTimestamp()
-                }, { merge: true });
-            } catch(e) { console.warn("관리자 이름 동기화:", e); }
-            
-            msg.style.color = "#7e22ce";
-            msg.innerText = "🎛️ [교사 관리자] 인증 성공! 관제탑 권한이 활성화됩니다.";
-
-            setTimeout(() => {
-                document.getElementById("authModal").style.display = "none";
-                document.getElementById("titleScreen").style.display = "flex";
-                renderTitleScreen();
-                const adminBtn = document.getElementById("adminTowerBtn");
-                if (adminBtn) adminBtn.style.display = "block";
-            }, 500);
-            return; // 👈 학생용 초기화/DB 등록을 거치지 않고 즉시 관리자 승인 완료!
-        } else {
-            safeStorageSet('spirit_is_admin', false);
-        }
+        msg.innerText = "☁️ 신규 등록 검증 중...";
 
         try {
             const userRef = db.collection(USER_COLLECTION).doc(id);
             const doc = await userRef.get();
 
-            // 🌟 1. '신규 유저인가요?' 깃발을 일단 거짓(false)으로 준비
-            let isNewUser = false; 
-
+            // 🛑 [중복 방어막] 이미 있는 학번이면 차단!
             if (doc.exists) {
-                // 기존 계정 로그인 검증
-                const data = doc.data();
-
-                // 🌟 [자동 구제] DB에 비번이 누락되어 있던 계정은 지금 입력한 비번과 이름을 즉시 등록!
-                if (!data.pw) {
-                    await userRef.set({
-                        pw: pw,
-                        name: name,
-                        id: id
-                    }, { merge: true });
-                    data.pw = pw;
-                    data.name = name;
-                } else if (data.pw !== pw) {
-                    // 비번이 정상 등록되어 있던 계정만 일치 여부 검사
-                    msg.style.color = "#dc2626";
-                    msg.innerText = "❌ 비밀번호가 일치하지 않습니다!";
-                    return;
-                }
-                restoreDataFromCloud(data);
-                msg.style.color = "#15803d";
-                msg.innerText = `✨ [${name}] 술사님, 모험 기록을 복원했습니다!`;
-                
-                // 🌟 이미 등록된 학생이므로 신규 아님!
-                isNewUser = false; 
-
-            } else {
-                // 🌟 [NEW] 기기에 이전에 외워둔 단어가 있는지 자동 검사
-                const { totalContracted } = getGlobalTotalStats();
-                let shouldMigrateOldData = false;
-
-                // 이전에 외운 단어가 1마리라도 발견된 경우 학생에게 확인!
-                if (totalContracted > 0) {
-                    shouldMigrateOldData = confirm(
-                        `📱 [이전 모험 기록 발견]\n` +
-                        `이 기기에서 이전에 진행한 단어(계약 완료: ${totalContracted}마리)가 발견되었습니다!\n\n` +
-                        `이 기록을 지금 등록하는 [${name}] 계정으로 가져올까요?\n\n` +
-                        `[확인] ➔ 내 기록 맞음 (기존 진도 클라우드로 연동)\n` +
-                        `[취소] ➔ 새로 시작하기 (공용 PC 등 다른 사람의 기록임)`
-                    );
-                }
-
-                if (shouldMigrateOldData) {
-                    // 1) 본인 폰에서 하던 학생: 기존 로컬 데이터를 지우지 않고 클라우드로 즉시 업로드!
-                    await userRef.set({
-                        id: id,
-                        name: name,
-                        pw: pw,
-                        createdAt: new Date(),
-                        lastLogin: new Date()
-                    });
-                    safeStorageSet('spirit_hero_name', `${id} ${name}`);
-                    currentUserDocId = id;
-                    syncToCloud(true); // 기존 진도 서버로 즉시 강제 백업!
-
-                    msg.style.color = "#15803d";
-                    msg.innerText = `✨ 기존 기록(${totalContracted}마리)이 클라우드에 연동되었습니다!`;
-                    isNewUser = false; // 이미 하던 학생이므로 프롤로그 건너뛰고 타이틀 직행!
-
-                } else {
-                    // 2) 공용 PC의 새 학생 (또는 기존 기록이 0개인 신규): 이전 찌꺼기 청소 후 0부터 출발!
-                    localStorage.clear();
-                    await userRef.set({
-                        id: id,
-                        name: name,
-                        pw: pw,
-                        createdAt: new Date(),
-                        lastLogin: new Date()
-                    });
-                    safeStorageSet('spirit_hero_name', `${id} ${name}`);
-                    msg.style.color = "#15803d";
-                    msg.innerText = `🎉 [${name}] 술사님, 신규 등록 완료. 모험을 시작합니다.`;
-                    isNewUser = true; // 순수 신규이므로 프롤로그 상영
-                }
+                msg.style.color = "#dc2626";
+                msg.innerText = "⚠️ 이미 등록되어 있는 학번입니다! 로그인 화면으로 돌아가 로그인하세요.";
+                return;
             }
 
-            currentUserDocId = id;
-            safeStorageSet('spirit_current_uid', id);
-            safeStorageSet('spirit_user_name', `${id} ${name}`);
+            // 완전 신규 계정 생성
+            await userRef.set({
+                id: id,
+                name: name,
+                pw: pw,
+                createdAt: new Date(),
+                lastLogin: new Date()
+            });
 
-            // 🌟 2. 0.6초 뒤 화면 전환할 때 깃발을 확인!
+            safeStorageSet('spirit_hero_name', `${id} ${name}`);
+            safeStorageSet('spirit_user_name', `${id} ${name}`);
+            safeStorageSet('spirit_current_uid', id);
+            currentUserDocId = id;
+
+            msg.style.color = "#15803d";
+            msg.innerText = `🎉 [${name}] 술사님, 등록 완료! 모험을 시작합니다.`;
+
             setTimeout(() => {
                 document.getElementById("authModal").style.display = "none";
-
-                if (isNewUser) {
-                    // 👉 신규 학생인 경우: 프롤로그를 상영한다!
-                    openIntroScreen();
-                } else {
-                    // 👉 기존 학생인 경우: 프롤로그는 끄고, 타이틀 화면으로 바로 직행!
-                    document.getElementById("introScreen").style.display = "none";
-                    document.getElementById("titleScreen").style.display = "flex";
-                    renderTitleScreen();
-                }
+                openIntroScreen(); // 신규 학생은 프롤로그 상영
             }, 600);
 
         } catch (e) {
             console.error(e);
             msg.style.color = "#dc2626";
-            msg.innerText = "⚠️ 연결 실패: 인터넷 연결 또는 보안 규칙을 확인해 주세요.";
+            msg.innerText = "⚠️ 등록 실패: 인터넷 연결을 확인해 주세요.";
         }
     }
 
@@ -5587,6 +5668,73 @@
     }
 
 
+    // ========================================================
+    // 📖 [지문 어휘 지능형 원형 추적기] [[단어]] ➔ 원형 및 한글 뜻 자동 매칭
+    // ========================================================
+    function findWordMeaningHelper(rawToken, existingMaps) {
+        // 1. 만약 직접 지정한 경우: [[undermine:약화시키다]]
+        if (rawToken.includes(':')) {
+            const parts = rawToken.split(':');
+            return { eng: parts[0].trim(), kor: parts.slice(1).join(':').trim(), displayWord: parts[0].trim() };
+        }
+
+        const target = rawToken.trim();
+        const targetLower = target.toLowerCase();
+
+        // 2. 기존 단어장에서 정확히 일치하는 단어 먼저 검색
+        for (const m of existingMaps) {
+            for (const w of m.words) {
+                if (w.eng.toLowerCase() === targetLower) {
+                    return { eng: w.eng, kor: w.kor, displayWord: target };
+                }
+            }
+        }
+
+        // 3. 불규칙 영지(irreg_)에서 과거형/분사형 역추적 (예: saw ➔ see, drove ➔ drive)
+        for (const m of existingMaps) {
+            for (const w of m.words) {
+                if (w.isMorph && Array.isArray(w.mutations)) {
+                    if (w.mutations.some(mut => mut.toLowerCase() === targetLower)) {
+                        return { eng: w.eng, kor: w.kor, displayWord: target };
+                    }
+                }
+            }
+        }
+
+        // 4. 규칙 어간 추출 (-ed, -ing, -es, -s, -d 떼어내고 원형 매칭)
+        const stemCandidates = [];
+        if (targetLower.endsWith('ing')) {
+            stemCandidates.push(targetLower.slice(0, -3));        // helping ➔ help
+            stemCandidates.push(targetLower.slice(0, -3) + 'e');   // making ➔ make
+            stemCandidates.push(targetLower.slice(0, -4));        // stopping ➔ stop
+        }
+        if (targetLower.endsWith('ed')) {
+            stemCandidates.push(targetLower.slice(0, -2));        // walked ➔ walk
+            stemCandidates.push(targetLower.slice(0, -1));        // lived ➔ live
+            stemCandidates.push(targetLower.slice(0, -3));        // stopped ➔ stop
+        }
+        if (targetLower.endsWith('es')) {
+            stemCandidates.push(targetLower.slice(0, -2));        // watches ➔ watch
+            stemCandidates.push(targetLower.slice(0, -1));
+        } else if (targetLower.endsWith('s')) {
+            stemCandidates.push(targetLower.slice(0, -1));        // helps ➔ help
+        }
+
+        for (const stem of stemCandidates) {
+            for (const m of existingMaps) {
+                for (const w of m.words) {
+                    if (w.eng.toLowerCase() === stem) {
+                        return { eng: w.eng, kor: w.kor, displayWord: target };
+                    }
+                }
+            }
+        }
+
+        // 5. 어디에도 없으면 단어 자체를 뜻으로 임시 반환
+        return { eng: target, kor: `[문맥] ${target}`, displayWord: target };
+    }
+
+
     function parseTextToWorlds(rawText) {
         if (!rawText) return [];
         const lines = rawText.split('\n');
@@ -5646,6 +5794,14 @@
             }
 
             if (currentMap) {
+
+                // 📜 [지문 영지 전용 파싱] passage_ 로 시작하는 지문 맵인 경우
+                if (currentMap.id && currentMap.id.toLowerCase().includes('passage_')) {
+                    currentMap.isPassage = true;
+                    if (!currentMap.passageRawLines) currentMap.passageRawLines = [];
+                    currentMap.passageRawLines.push(line);
+                    return;
+                }
 
                 // 🌐 [동의어 영지] <=> 기호는 건너뛰고, 쉼표 묶음 전체를 1개의 영단어로 취급
                 if (line.includes('<=>')) return;
@@ -5710,13 +5866,37 @@
         });
 
         maps.forEach(m => {
+            // 지문 영지 후처리: 본문에서 [[단어]]들을 1번부터 차례대로 번호 매겨 추출
+            if (m.isPassage && Array.isArray(m.passageRawLines)) {
+                const fullText = m.passageRawLines.join('\n');
+                m.passageFullText = fullText;
+                m.words = [];
+                
+                const regex = /\[\[(.*?)\]\]/g;
+                let match;
+                let markerIdx = 1;
+                
+                while ((match = regex.exec(fullText)) !== null) {
+                    const token = match[1];
+                    const wordData = findWordMeaningHelper(token, maps);
+                    m.words.push({
+                        eng: wordData.eng,
+                        kor: wordData.kor,
+                        displayEng: wordData.displayWord,
+                        markerNumber: markerIdx++, // ①, ②, ③ 순번
+                        rawToken: token
+                    });
+                }
+            }
+
             if (!m.desc) {
                 const theme = getMapTheme(m.name, m.id);
                 m.desc = theme.defaultDesc;
             }
         });
 
-        return maps.filter(m => m.words.length >= 4);
+        // 🌟 지문 영지는 1단어 이상, 일반 영지는 4단어 이상이면 정상 등록!
+        return maps.filter(m => m.isPassage ? m.words.length >= 1 : m.words.length >= 4);
     }
 
     // ========================================================
@@ -5741,7 +5921,8 @@
         // 3순위: index.html 기본 판별 (Fallback: irreg, net 등)
         const idLower = mapId.toLowerCase();
         const nameLower = (map.name || '').toLowerCase();
-        return idLower.includes('irreg') || idLower.includes('net') || nameLower.includes('불규칙') || nameLower.includes('동의어');
+        // 🌟 지문 영지(passage_)도 숨겨진 비경 탭으로 자동 배정!
+        return idLower.includes('passage') || idLower.includes('irreg') || idLower.includes('net') || nameLower.includes('불규칙') || nameLower.includes('동의어');
     }
 
     function hashCode(str) {
@@ -5894,6 +6075,17 @@
     function getMapCalculatedTier(mapId, wordsLength, contractedCount) {
         let percent = wordsLength > 0 ? Math.round((contractedCount / wordsLength) * 100) : 0;
         const bossDefeated = isMapBossDefeated(mapId);
+        const activeMap = worldMaps.find(m => m.id === mapId);
+        const isPassage = activeMap ? activeMap.isPassage : (mapId && mapId.includes('passage_'));
+
+        // 🌟 지문 영지는 수호령이 없으므로 단어 완주 시 즉시 정복 완료!
+        if (isPassage) {
+            if (percent >= 100) return { tier: mapMasteryTiers[4], percent: 100, isConquered: true };
+            if (percent === 0) return { tier: mapMasteryTiers[0], percent: 0, isConquered: false };
+            if (percent < 30) return { tier: mapMasteryTiers[1], percent, isConquered: false };
+            if (percent < 60) return { tier: mapMasteryTiers[2], percent, isConquered: false };
+            return { tier: mapMasteryTiers[3], percent, isConquered: false };
+        }
 
         if (percent >= 100 && !bossDefeated) {
             return {
@@ -5916,8 +6108,8 @@
         let allMapsConquered = true;
 
         worldMaps.forEach(map => {
-            const idLower = (map.id || "").toLowerCase();
-            const isSpecialMap = idLower.includes('net_') || idLower.includes('irreg'); // 비경 판별
+            // 🌟 비경 영지(지문, 불규칙, 동의어 등)는 정령/계약/영지 카운트에서 100% 제외!
+            if (isMapSpecial(map)) return;
             totalWords += map.words.length;
             const savedMastery = (map.id === currentMapId && typeof wordMastery !== 'undefined')
                 ? wordMastery
@@ -5929,13 +6121,10 @@
             });
             totalContracted += mapContracted;
 
-            // 🛑 [마왕전 오픈 판정] 비경은 건너뛰고, 오직 '일반 스토리 영지'만 검사!
-            if (!isSpecialMap) {
                 const bossDefeated = isMapBossDefeated(map.id);
                 if (mapContracted < map.words.length || !bossDefeated) {
                     allMapsConquered = false;
                 }
-            }
         });
         return { totalWords, totalContracted, allMapsConquered };
     }
@@ -6863,7 +7052,10 @@ const recTime = document.getElementById("recFastestTime");
             let contracted = 0;
             map.words.forEach(w => { if ((savedMastery[w.eng] || 0) >= 3) contracted++; });
             const { percent } = getMapCalculatedTier(map.id, map.words.length, contracted);
-            const isCleared = (contracted >= map.words.length && isMapBossDefeated(map.id));
+             // 🌟 지문 영지는 단어만 다 풀면 즉시 올클리어! (일반 영지는 수호령까지 격파해야 올클리어)
+            const isCleared = map.isPassage 
+                ? (contracted >= map.words.length && map.words.length > 0)
+                : (contracted >= map.words.length && isMapBossDefeated(map.id));
 
             // 🌟 전초기지의 sector-card 클래스를 그대로 사용하여 완벽한 통일성 부여
             const card = document.createElement("div");
@@ -6880,12 +7072,13 @@ const recTime = document.getElementById("recFastestTime");
 
             // 🌟 정복 완료 시: 조잡한 알약 뱃지 완전 삭제 + 붉은 직인 도장 단독 안착!
             if (isCleared) {
+                // 🌟 완주 시 붉은 불도장 직인 쾅!
                 card.innerHTML = `
                     <div class="stamp-clear-mark">【 ALL CLEAR 】</div>
-                    <div style="padding-right: 110px;">
+                    <div>
                         <span class="sector-title" style="color:#78350f;">${map.name}</span>
                     </div>
-                    <div class="sector-range" style="line-height:1.35; word-break:keep-all; padding-right:110px;">
+                    <div class="sector-range" style="line-height:1.35; word-break:keep-all;">
                         ${map.desc || '이 영지에는 아직 알려진 정보가 없습니다.'}
                     </div>
                     <div class="world-map-gauge-track">
@@ -6894,7 +7087,8 @@ const recTime = document.getElementById("recFastestTime");
                 `;
             } else {
                 // 🌟 [추가] 단어는 100% 다 외웠고 수호령만 남은 상태인지 판별
-                const isWaitingGuardian = (contracted >= map.words.length && !isMapBossDefeated(map.id));
+                // 🌟 지문 영지는 수호령 대기 알약 완전 차단!
+                const isWaitingGuardian = (!map.isPassage && contracted >= map.words.length && !isMapBossDefeated(map.id));
 
                 // 수호령 시련 대기 시 전용 에메랄드 검 뱃지 부여
                 let badgeHtml = '';
@@ -7229,7 +7423,7 @@ const recTime = document.getElementById("recFastestTime");
             const hours = String(lastMod.getHours()).padStart(2, '0');
             const minutes = String(lastMod.getMinutes()).padStart(2, '0');
             
-            buildEl.innerText = `v1.3.7 · Update: ${year}.${month}.${day} ${hours}:${minutes}\n© 2025-${new Date().getFullYear()} Jayden. All Rights Reserved`;
+            buildEl.innerText = `v1.3.8 · Update: ${year}.${month}.${day} ${hours}:${minutes}\n© 2025-${new Date().getFullYear()} Jayden. All Rights Reserved`;
         }
 
         // 8. 최종 화면 뷰 전환
@@ -7495,6 +7689,12 @@ const recTime = document.getElementById("recFastestTime");
         });
 
         const guardianBtn = document.getElementById("lobbyGuardianTrialBtn");
+        // 🌟 지문 영지는 수호령전이 없으므로 버튼 자체를 숨김 처리!
+        if (activeMap.isPassage) {
+            guardianBtn.style.display = "none";
+        } else {
+            guardianBtn.style.display = "block";
+        }
 
         if (bossDefeated) {
             // 🌟 JS의 촌스러운 색상 덧칠 삭제
@@ -7896,6 +8096,28 @@ const recTime = document.getElementById("recFastestTime");
         roundQuestions = [];
         currentQuestionIdx = 0;
         roundCorrectCount = 0;
+
+        const activeMap = worldMaps.find(m => m.id === currentMapId) || worldMaps[0];
+        // 📜 [지문 영지 전용 순차 출제] 지문 속 등장 순서대로 1번부터 차례대로 출제!
+        if (activeMap.isPassage && Array.isArray(activeMap.words) && activeMap.words.length > 0) {
+            activeMap.words.forEach(w => {
+                roundQuestions.push({
+                    id: `passage_${w.eng}_${w.markerNumber}`,
+                    wordKey: w.eng,
+                    engWord: w.eng,
+                    displayEng: w.displayEng,
+                    korMeaning: w.kor,
+                    type: "E2K",
+                    prompt: w.displayEng, // 👈 번호 떼고 순수 단어만 등록!
+                    correct: w.kor,
+                    pool: getAllUniverseWords().map(item => item.kor),
+                    markerNumber: w.markerNumber,
+                    isPassage: true
+                });
+            });
+            loadQuestion();
+            return;
+        }
 
         // 1. 오답 노트 자동 정화
         wrongPool = wrongPool.filter(item => (wordMastery[item.wordKey || item.engWord] || 0) < 3);
@@ -8304,6 +8526,68 @@ const recTime = document.getElementById("recFastestTime");
             return;
         }
 
+        // 🌟 [에러 해결] 문제 데이터 객체 q를 가장 먼저 안전하게 선언!
+        const q = roundQuestions[currentQuestionIdx];
+        if (!q) return;
+
+        const activeMap = worldMaps.find(m => m.id === currentMapId) || worldMaps[0];
+        const viewerBox = document.getElementById("passageViewerBox");
+        const arenaBox = document.querySelector(".battle-arena-box");
+        const questionBox = document.querySelector(".question-box");
+
+        // 📜 지문 영지 뷰어 렌더링 및 실시간 형광펜 이동
+        if (activeMap.isPassage && viewerBox) {
+            viewerBox.style.display = "block";
+            viewerBox.style.maxHeight = "none"; // 🌟 높이 제한 해제 -> 선지 위쪽 공간 100% 꽉 채움!
+            if (arenaBox) arenaBox.style.display = "none";     // 일러스트 숨김
+            // 🌟 불필요한 알약 태그 숨기고, 타깃 단어만 15px로 단정하게 출력
+            const tagsWrap = document.querySelector(".tags-wrapper");
+            if (tagsWrap) tagsWrap.style.display = "none";
+            if (questionBox) {
+                questionBox.style.minHeight = "28px";
+                questionBox.style.flex = "0 0 auto";
+                questionBox.style.margin = "2px 0 6px 0";
+            }
+            const wordDisplay = document.getElementById("wordDisplay");
+            if (wordDisplay) {
+                // 🌟 번호 없이 단정하고 예쁜 호박빛 알약 뱃지 형태로 출력!
+                wordDisplay.innerHTML = `<span style="display:inline-flex; align-items:center; gap:5px; background:linear-gradient(180deg, #fffdf5 0%, #fef3c7 100%); border:1.5px solid #d97706; padding:3px 14px; border-radius:18px; font-size:17px; font-weight:900; color:#78350f; box-shadow:0 2px 6px rgba(0,0,0,0.12);">🎯 ${q.displayEng}</span>`;
+            }
+
+            // 지문 본문 생성 및 토큰 하이라이트 처리
+            let html = activeMap.passageFullText || "";
+            activeMap.words.forEach(w => {
+                const isDone = (w.markerNumber < currentQuestionIdx + 1);
+                const isActive = (w.markerNumber === currentQuestionIdx + 1);
+                const cls = isActive ? "passage-token active" : (isDone ? "passage-token completed" : "passage-token pending");
+                const icon = isDone ? " ✓" : "";
+                const tokenHtml = `<span id="ptoken_${w.markerNumber}" class="${cls}">${w.displayEng}${icon}</span>`; // 👈 지문 속 번호 삭제
+                html = html.replace(`[[${w.rawToken}]]`, tokenHtml);
+            });
+            viewerBox.innerHTML = html.replace(/\n/g, '<br>');
+
+            // 현재 문제 단어가 지문 중간에 있어도 보이도록 자동 부드러운 스크롤!
+            requestAnimationFrame(() => {
+                const activeEl = document.getElementById(`ptoken_${currentQuestionIdx + 1}`);
+                if (activeEl) activeEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            });
+        } else if (viewerBox) {
+            // 일반 퀴즈일 때는 지문 뷰어를 끄고 원래대로 복구
+            viewerBox.style.display = "none";
+            if (arenaBox) arenaBox.style.display = "block";
+            if (questionBox) questionBox.style.minHeight = "130px";const tagsWrap = document.querySelector(".tags-wrapper");
+            if (tagsWrap) tagsWrap.style.display = "flex";
+            if (questionBox) {
+                questionBox.style.minHeight = "130px";
+                questionBox.style.flex = "1";
+            }
+            const wordDisplay = document.getElementById("wordDisplay");
+            if (wordDisplay) {
+                wordDisplay.style.fontSize = "28px";
+                wordDisplay.style.color = "#3b2211";
+            }
+        }
+
         questionStartTime = Date.now(); // 🌟 반응 속도 측정 시작
 
         const groveEl = document.getElementById("groveInfoDisplay");
@@ -8316,9 +8600,11 @@ const recTime = document.getElementById("recFastestTime");
                 groveEl.innerText = `🌿 탐사 ${currentQuestionIdx + 1} / ${roundQuestions.length}`;
             }
         }
-        const q = roundQuestions[currentQuestionIdx];
 
-        document.getElementById("wordDisplay").innerText = q.prompt;
+        // 🌟 지문 영지가 아닐 때만 기본 28px 텍스트로 표시 (지문 영지의 알약 뱃지 보호!)
+        if (!activeMap.isPassage) {
+            document.getElementById("wordDisplay").innerText = q.prompt;
+        }
 
         // 영어가 문제로 나왔을 때(E2K)만 발음해 줌! (한글 문제일 때 답 스포일러 방지)
         if (q.type === "E2K") {
@@ -8366,7 +8652,15 @@ const recTime = document.getElementById("recFastestTime");
         const parchmentInner = document.querySelector(".parchment-inner");
         let feverOverlay = document.getElementById("feverVignette");
 
-        if (streakCount >= 2) {
+        // 📜 [지문 영지 전용] 차분한 독해 집중을 위해 콤보 알약과 여백을 완전히 숨김!
+        if (activeMap.isPassage) {
+            if (streakBadge) {
+                streakBadge.style.display = "none";
+                if (streakBadge.parentElement) streakBadge.parentElement.style.display = "none";
+            }
+            if (feverOverlay) feverOverlay.remove();
+        } else if (streakCount >= 2) {
+            if (streakBadge && streakBadge.parentElement) streakBadge.parentElement.style.display = "flex";
             streakBadge.style.display = "block";
             if (streakCount >= 5) {
                 // 5콤보 이상: FEVER 가동!
@@ -8388,6 +8682,7 @@ const recTime = document.getElementById("recFastestTime");
             }
         } else {
             streakBadge.style.display = "none";
+            if (streakBadge && streakBadge.parentElement) streakBadge.parentElement.style.display = "flex";
             if (feverOverlay) feverOverlay.remove(); // 콤보 끊기면 오라 즉시 소멸!
         }
 
@@ -8570,7 +8865,8 @@ const recTime = document.getElementById("recFastestTime");
             // 정답시 점수 계산
             let newCount = currentCountBefore;
             if (!isCounselingMode) {
-                if (q && q.isMorph && q.isMorphComplete) {
+                // 🌟 지문 퀘스트는 1회 통과 즉시 3점 완수 처리! (3번 반복 면제)
+                if (q && (q.isPassage || (q.isMorph && q.isMorphComplete))) {
                     newCount = 3;
                 // 🌟 다의어는 숨은 뜻을 모두 경험해야 하므로 한방 계약(3점 점프) 스킵 방지!
                 } else if (isInstantResonance && !q.isPoly && !currentMapId.includes('net_')) {
@@ -9141,13 +9437,25 @@ const recTime = document.getElementById("recFastestTime");
                     // 🌿 1) 다음 구역 출격: 프로젝트 표준 딥 에메랄드 테마 적용
                     nextBtn.className = "btn-wood theme-emerald";
                     nextBtn.innerHTML = `⚡ 다음 구역으로 즉시 진격! (${nextSec.name}) ➔`;
+                    nextBtn.onclick = handleSectorClearProceed;
 
                 } else {
-                    // 영지의 모든 구역 완파 시 ➔ 수호령 시련 직행 버튼으로 격상!
-                    const theme = getMapTheme(activeMap.name, activeMap.id);
-                    // 🔥 2) 수호령 시련 대면: 수호령/보스전 표준 딥 루비(버건디) 테마 적용
-                    nextBtn.className = "btn-wood theme-ruby";
-                    nextBtn.innerHTML = `⚔️ ${theme.guardianName}의 시련 대면하기! ➔`;
+                    // 🌟 지문 영지는 수호령이 없으므로 대륙 지도로 당당히 복귀!
+                    if (activeMap.isPassage) {
+                        nextBtn.className = "btn-wood theme-emerald";
+                        nextBtn.innerHTML = "🗺️ 대륙 지도로 돌아가기 ➔";
+                        nextBtn.onclick = backToWorldMapFromEnding;
+                        const clearDesc = document.querySelector("#sectorClearModal .ending-desc");
+                        if (clearDesc) {
+                            clearDesc.innerHTML = `지문 속 모든 핵심 어휘를 완벽하게 돌파했다!<br><br>문맥을 꿰뚫는 네 독해력이 한 단계 더 진화했군.<br>다음 지문이나 다른 영지로 진격하자!`;
+                        }
+                    } else {
+                        // 일반 영지는 기존 수호령 시련 직행 버튼
+                        const theme = getMapTheme(activeMap.name, activeMap.id);
+                        nextBtn.className = "btn-wood theme-ruby";
+                        nextBtn.innerHTML = `⚔️ ${theme.guardianName}의 시련 대면하기! ➔`;
+                        nextBtn.onclick = handleSectorClearProceed;
+                    }
                 }
             }
 
@@ -10949,90 +11257,160 @@ function handleMidBossVictory() {
             let currentSecIdx = -1;
             let boundCount = 0;
 
-            currentWords.forEach((item, idx) => {
-                const count = currentSavedMastery[item.eng] || 0;
-                if (count >= 3) boundCount++;
+            // 📜 [지문 영지 전용 도감] 문장 하나가 카드 1장 + 그 안의 어휘들 나열!
+            if (activeMap.isPassage) {
+                // 마침표/물음표/느낌표 기준으로 지문을 문장 단위로 분할
+                const rawSentences = (activeMap.passageFullText || "").match(/[^.!?\n]+[.!?]?/g) || [];
                 
-                // 🌟 단어 고유 키(item.eng)를 넘겨 계약과 각인을 정확히 구분
-                const mInfo = getMasteryInfo(count, item.eng);
+                rawSentences.forEach((rawSent) => {
+                    const sentTrimmed = rawSent.trim();
+                    if (!sentTrimmed) return;
 
-                // 구역 분할 헤더 생성
-                // 구역 분할 헤더 생성 (getMapSectors 통합 범위와 완벽 일치)
-                const foundSecIdx = sectors.findIndex(s => idx >= s.startIdx && idx < s.endIdx);
-                if (foundSecIdx !== -1 && foundSecIdx !== currentSecIdx) {
-                    currentSecIdx = foundSecIdx;
-                    const secInfo = sectors[currentSecIdx];
-                    
-                    const secWords = secInfo.words || [];
-                    let secBound = 0;
-                    secWords.forEach(sw => {
-                        if ((currentSavedMastery[sw.eng] || 0) >= 3) secBound++;
+                    // 이 문장 안에 [[단어]]가 들어있는지 검사
+                    const matchedWordsInSentence = [];
+                    activeMap.words.forEach(w => {
+                        if (sentTrimmed.includes(`[[${w.rawToken}]]`)) {
+                            matchedWordsInSentence.push(w);
+                        }
                     });
-                    const isSecAllDone = (secWords.length > 0 && secBound >= secWords.length);
 
-                    const header = document.createElement("div");
-                    header.className = `sector-divider-header ${isSecAllDone ? 'conquered' : ''}`;
-                    header.innerHTML = `
-                        <div style="display:flex; align-items:center; gap:6px;">
-                            <span>📍 ${secInfo.name}</span>
-                            <span style="font-size:10px; font-weight:600; opacity:0.8;">(${secInfo.rangeText})</span>
-                        </div>
-                        <div>
-                            <span class="tag" style="background:${isSecAllDone ? '#10b981' : '#b45309'}; color:white; font-size:9.5px; padding:2px 6px;">
-                                ${isSecAllDone ? '정복 완료 🌟' : `${secBound} / ${secWords.length}`}
-                            </span>
-                        </div>
+                    // 출제 대상 단어가 1개라도 있는 문장만 카드로 생성!
+                    if (matchedWordsInSentence.length > 0) {
+                        // 문장 본문에서 [[단어]]를 굵은 밑줄 번호로 치환
+                        let sentHtml = sentTrimmed;
+                        matchedWordsInSentence.forEach(w => {
+                            sentHtml = sentHtml.replace(`[[${w.rawToken}]]`, `<b style="color:#b45309; text-decoration:underline;">${w.displayEng}</b>`);
+                        });
+
+                        // 아래에 달릴 단어 목록 HTML 생성
+                        const wordsListHtml = matchedWordsInSentence.map(w => `
+                            <div style="background:#f4ecda; border-radius:6px; padding:5px 8px; margin-top:4px; display:flex; justify-content:space-between; align-items:center;">
+                                <span style="font-size:12.5px; font-weight:900; color:#78350f;"><b>${w.displayEng}</b> : ${w.kor}
+                            </div>
+                        `).join('');
+
+                        const sentenceCard = document.createElement("div");
+                        sentenceCard.style.cssText = "background:#fdfaf2; border:1.5px solid #d8c7a6; border-left:5px solid #b45309; border-radius:10px; padding:10px 12px; margin-bottom:8px; text-align:left;";
+                        sentenceCard.innerHTML = `
+                            <div style="font-size:13.5px; font-weight:700; color:#2c1a0e; line-height:1.65; word-break:keep-all;">
+                                ${sentHtml}
+                            </div>
+                            <div style="margin-top:6px; border-top:1px dashed #d8c7a6; padding-top:4px;">
+                                ${wordsListHtml}
+                            </div>
+                        `;
+                        listContainer.appendChild(sentenceCard);
+                    }
+                });
+
+                // 지문 영지는 전체 게이지를 100%로 채우고 종료
+                document.getElementById("overallPercentageText").innerText = `지문 어휘 총 ${activeMap.words.length}개`;
+                document.getElementById("overallGaugeBar").style.width = "100%";
+                document.getElementById("mapBookTitleText").innerText = `📜 ${activeMap.name}`;
+
+                } else {
+                    // 일반 영지 단어 루프는 else 블록으로 안전하게 격리!
+                    currentWords.forEach((item, idx) => {
+                    const count = currentSavedMastery[item.eng] || 0;
+                    if (count >= 3) boundCount++;
+                    
+                    // 🌟 단어 고유 키(item.eng)를 넘겨 계약과 각인을 정확히 구분
+                    const mInfo = getMasteryInfo(count, item.eng);
+
+                    // 📜 [지문 영지 전용 도감] 문장 자체가 하나의 정령으로 렌더링!
+                    if (activeMap.isPassage) {
+                        const sentenceCard = document.createElement("div");
+                        sentenceCard.style.cssText = "background:#fdfaf2; border:1.5px solid #d8c7a6; border-left:5px solid #b45309; border-radius:10px; padding:10px 12px; margin-bottom:8px; text-align:left;";
+                        sentenceCard.innerHTML = `
+                            <div style="font-size:13.5px; font-weight:700; color:#2c1a0e; line-height:1.6; word-break:keep-all; margin-bottom:8px;">
+                                ${activeMap.passageFullText ? activeMap.passageFullText.replace(/\[\[(.*?)\]\]/g, '<b style="color:#b45309; text-decoration:underline;">$1</b>') : item.eng}
+                            </div>
+                            <div style="background:#f4ecda; border-radius:6px; padding:6px 10px; display:flex; justify-content:space-between; align-items:center;">
+                                <span style="font-size:13px; font-weight:900; color:#78350f;"><b>${item.markerNumber || idx+1}.</b> ${item.displayEng || item.eng} : ${item.kor}</span>
+                                <span style="font-size:11px; font-weight:900; color:#15803d;">문맥 어휘 ✓</span>
+                            </div>
+                        `;
+                        listContainer.appendChild(sentenceCard);
+                        return;
+                    }
+
+                    // 구역 분할 헤더 생성 (getMapSectors 통합 범위와 완벽 일치)
+                    const foundSecIdx = sectors.findIndex(s => idx >= s.startIdx && idx < s.endIdx);
+                    if (foundSecIdx !== -1 && foundSecIdx !== currentSecIdx) {
+                        currentSecIdx = foundSecIdx;
+                        const secInfo = sectors[currentSecIdx];
+                        
+                        const secWords = secInfo.words || [];
+                        let secBound = 0;
+                        secWords.forEach(sw => {
+                            if ((currentSavedMastery[sw.eng] || 0) >= 3) secBound++;
+                        });
+                        const isSecAllDone = (secWords.length > 0 && secBound >= secWords.length);
+
+                        const header = document.createElement("div");
+                        header.className = `sector-divider-header ${isSecAllDone ? 'conquered' : ''}`;
+                        header.innerHTML = `
+                            <div style="display:flex; align-items:center; gap:6px;">
+                                <span>📍 ${secInfo.name}</span>
+                                <span style="font-size:10px; font-weight:600; opacity:0.8;">(${secInfo.rangeText})</span>
+                            </div>
+                            <div>
+                                <span class="tag" style="background:${isSecAllDone ? '#10b981' : '#b45309'}; color:white; font-size:9.5px; padding:2px 6px;">
+                                    ${isSecAllDone ? '정복 완료 🌟' : `${secBound} / ${secWords.length}`}
+                                </span>
+                            </div>
+                        `;
+                        listContainer.appendChild(header);
+                    }
+
+                    // 단어 카드 생성 (각인 뱃지 / 계약 뱃지 반영)
+                    const isFav = !!wordFavorites[item.eng];
+                    const row = document.createElement("div");
+                    row.className = `word-item-clean stage-${mInfo.stage}`;
+                    if (mInfo.stage === 4) {
+                        row.style.borderLeftColor = "#c084fc";
+                        row.style.background = "#faf5ff";
+                    }
+                    
+                    // 텍스트 영역
+                    const textGroup = document.createElement("div");
+                    textGroup.className = "word-text-group";
+                    textGroup.innerHTML = `
+                        <span class="word-main-eng">${item.displayEng || item.eng}</span>
+                        <span class="word-sub-kor">${item.kor}</span>
                     `;
-                    listContainer.appendChild(header);
-                }
 
-                // 단어 카드 생성 (각인 뱃지 / 계약 뱃지 반영)
-                const isFav = !!wordFavorites[item.eng];
-                const row = document.createElement("div");
-                row.className = `word-item-clean stage-${mInfo.stage}`;
-                if (mInfo.stage === 4) {
-                    row.style.borderLeftColor = "#c084fc";
-                    row.style.background = "#faf5ff";
-                }
-                
-                // 텍스트 영역
-                const textGroup = document.createElement("div");
-                textGroup.className = "word-text-group";
-                textGroup.innerHTML = `
-                    <span class="word-main-eng">${item.displayEng || item.eng}</span>
-                    <span class="word-sub-kor">${item.kor}</span>
-                `;
+                    // 우측 버튼 및 상태 태그 그룹
+                    const rightGroup = document.createElement("div");
+                    rightGroup.style.cssText = "display:flex; align-items:center; gap:6px;";
 
-                // 우측 버튼 및 상태 태그 그룹
-                const rightGroup = document.createElement("div");
-                rightGroup.style.cssText = "display:flex; align-items:center; gap:6px;";
+                    // 🌟 [안전한 하트 버튼] DOM 직접 생성 및 바인딩
+                    const favBtn = document.createElement("button");
+                    favBtn.dataset.favWord = item.eng;
+                    favBtn.style.cssText = "background:none; border:none; font-size:16px; cursor:pointer; padding:0; line-height:1;";
+                    favBtn.title = "친해지고 싶은 정령 찜하기";
+                    favBtn.innerText = isFav ? '💖' : '🤍';
+                    favBtn.onclick = (e) => toggleWordFavorite(item.eng, e); // 👈 따옴표 에러 100% 차단!
 
-                // 🌟 [안전한 하트 버튼] DOM 직접 생성 및 바인딩
-                const favBtn = document.createElement("button");
-                favBtn.dataset.favWord = item.eng;
-                favBtn.style.cssText = "background:none; border:none; font-size:16px; cursor:pointer; padding:0; line-height:1;";
-                favBtn.title = "친해지고 싶은 정령 찜하기";
-                favBtn.innerText = isFav ? '💖' : '🤍';
-                favBtn.onclick = (e) => toggleWordFavorite(item.eng, e); // 👈 따옴표 에러 100% 차단!
+                    const statusSpan = document.createElement("span");
+                    statusSpan.className = "word-mini-status";
+                    statusSpan.style.cssText = `background:${mInfo.bg}; color:${mInfo.color}; border:1px solid ${mInfo.border || '#cbd5e1'}; font-weight:900;`;
+                    statusSpan.innerText = mInfo.text;
 
-                const statusSpan = document.createElement("span");
-                statusSpan.className = "word-mini-status";
-                statusSpan.style.cssText = `background:${mInfo.bg}; color:${mInfo.color}; border:1px solid ${mInfo.border || '#cbd5e1'}; font-weight:900;`;
-                statusSpan.innerText = mInfo.text;
+                    rightGroup.appendChild(favBtn);
+                    rightGroup.appendChild(statusSpan);
 
-                rightGroup.appendChild(favBtn);
-                rightGroup.appendChild(statusSpan);
+                    row.appendChild(textGroup);
+                    row.appendChild(rightGroup);
 
-                row.appendChild(textGroup);
-                row.appendChild(rightGroup);
+                    listContainer.appendChild(row);
+                });
 
-                listContainer.appendChild(row);
-            });
-
-            const overallPercent = currentWords.length > 0 ? Math.round((boundCount / currentWords.length) * 100) : 0;
-            document.getElementById("overallPercentageText").innerText = `${boundCount} / ${currentWords.length}마리 (${overallPercent}%)`;
-            document.getElementById("overallGaugeBar").style.width = overallPercent + "%";
-            document.getElementById("mapBookTitleText").innerText = `🌟 ${activeMap.name} 교감도`;
+                const overallPercent = currentWords.length > 0 ? Math.round((boundCount / currentWords.length) * 100) : 0;
+                document.getElementById("overallPercentageText").innerText = `${boundCount} / ${currentWords.length}마리 (${overallPercent}%)`;
+                document.getElementById("overallGaugeBar").style.width = overallPercent + "%";
+                document.getElementById("mapBookTitleText").innerText = `🌟 ${activeMap.name} 교감도`;
+            }
         }
 
         // 로드맵 및 맵 여정 동기화

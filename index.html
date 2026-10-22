@@ -5145,9 +5145,8 @@
             safeStorageSet(`spirit_boss_cleared_${mapKey}`, true);
         });
 
-        if (cloudData.isExamCleared || localExamCleared) {
-            safeStorageSet('spirit_exam_cleared', true);
-        }
+        // 🌟 [도돌이표 차단] 마왕 클리어 여부는 폰의 과거 찌꺼기를 보지 않고 서버 DB 판정(false/true)을 100% 동기화!
+        safeStorageSet('spirit_exam_cleared', !!cloudData.isExamCleared);
 
         if (cloudData.records) {
             safeStorageSet('spirit_records_data', cloudData.records);

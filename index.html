@@ -5943,17 +5943,17 @@
 
     function getDynamicGlobalTiers(totalWords) {
         return [
-            { req: 0, name: "Ⅰ. 입문 술사 🌱", color: "#64748b" },
-            { req: 15,  name: "Ⅱ. 견습 술사 🐾", color: "#785a3e" },
-            { req: 40,  name: "Ⅲ. 하급 술사 🌿", color: "#166534" },
-            { req: 75,  name: "Ⅳ. 중급 술사 🔮", color: "#0284c7" },
-            { req: 120, name: "Ⅴ. 상급 술사 ⚡", color: "#ea580c" },
-            { req: 175, name: "Ⅵ. 고위 술사 💎", color: "#0d9488" },
-            { req: 240, name: "Ⅶ. 성역의 인도자 🧭", color: "#7c3aed" },
-            { req: 315, name: "Ⅷ. 영혼의 조율사 🍃", color: "#059669" },
-            { req: 400, name: "Ⅸ. 빛의 수호자 🛡️", color: "#2563eb" },
-            { req: 500, name: "Ⅹ. 지혜의 대현자 📜", color: "#b45309" },
-            { req: 500, name: "정령의 구원자 👑", color: "#be185d", isBossRequired: true }
+            { req: 0,   name: "Ⅰ. 입문 술사 🌱", color: "#64748b", reqText: "시작 (0마리)" },
+            { req: 15,  name: "Ⅱ. 견습 술사 🐾", color: "#785a3e", reqText: "15마리 계약 달성" },
+            { req: 40,  name: "Ⅲ. 하급 술사 🌿", color: "#166534", reqText: "40마리 계약 달성" },
+            { req: 75,  name: "Ⅳ. 중급 술사 🔮", color: "#0284c7", reqText: "75마리 계약 달성" },
+            { req: 120, name: "Ⅴ. 상급 술사 ⚡", color: "#ea580c", reqText: "120마리 계약 달성" },
+            { req: 175, name: "Ⅵ. 고위 술사 💎", color: "#0d9488", reqText: "175마리 계약 달성" },
+            { req: 240, name: "Ⅶ. 성역의 인도자 🧭", color: "#7c3aed", reqText: "240마리 계약 달성" },
+            { req: 315, name: "Ⅷ. 영혼의 조율사 🍃", color: "#059669", reqText: "315마리 계약 달성" },
+            { req: 400, name: "Ⅸ. 빛의 수호자 🛡️", color: "#2563eb", reqText: "400마리 계약 달성" },
+            { req: 500, name: "Ⅹ. 지혜의 대현자 📜", color: "#b45309", reqText: "500마리 계약 달성" },
+            { req: 500, name: "정령의 구원자 👑", color: "#be185d", reqText: "마왕 토벌 👑", isBossRequired: true }
         ];
     }
 
@@ -6000,7 +6000,7 @@
         const decayed = [];
 
         worldMaps.forEach(map => {
-            // 🛑 [비경 침식 면제] 동의어(net_) 및 불규칙(irreg) 영지는 망각의 안개에 침식되지 않음!
+            // 🛑 [비경 침식 면제] 동의어(net_) 및 불규칙(irreg_) 영지는 망각의 안개에 침식되지 않음!
             const idLower = (map.id || "").toLowerCase();
             const nameLower = (map.name || "").toLowerCase();
             const isSpecialMap = idLower.includes("irreg") || idLower.includes("net") || nameLower.includes("불규칙") || nameLower.includes("동의어");
@@ -11045,12 +11045,9 @@ function handleMidBossVictory() {
                 const isCurrent = (t.name === currentTier.name);
                 const item = document.createElement("div");
                 item.className = `timeline-item ${isCurrent ? 'current-tier' : ''}`;
-                let reqText = `${t.req}마리 계약 달성`;
-                if (idx === 0) reqText = "시작 (0마리)";
-                else if (idx === tiers.length - 2) reqText = `전체 ${totalWords}마리 (100%) 계약`;
-                else if (idx === tiers.length - 1) reqText = `마왕 토벌👑`;
-                
-                item.innerHTML = `<span>${t.name}</span><span>${isCurrent ? '📍 [현재 계급]' : reqText}</span>`;
+                // 🌟 계급 객체의 고정 문구를 1:1로 깨끗하게 출력!
+                const statusText = isCurrent ? '📍 [현재 계급]' : (t.reqText || `${t.req}마리 계약`);
+                item.innerHTML = `<span>${t.name}</span><span>${statusText}</span>`;
                 tierListContainer.appendChild(item);
             });
         }

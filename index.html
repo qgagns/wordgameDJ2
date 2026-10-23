@@ -8877,11 +8877,11 @@ const recTime = document.getElementById("recFastestTime");
                 // 🌟 지문 퀘스트는 1회 통과 즉시 3점 완수 처리! (3번 반복 면제)
                 if (q && (q.isPassage || (q.isMorph && q.isMorphComplete))) {
                     newCount = 3;
-                // 🌟 다의어는 숨은 뜻을 모두 경험해야 하므로 한방 계약(3점 점프) 스킵 방지!
-                } else if (isInstantResonance && !q.isPoly && !currentMapId.includes('net_')) {
+                // 🌟 다의어, 동의어, 철자 영지는 3단계 특수 기믹이 있으므로 한방 계약(3점 점프) 강제 스킵 방지!
+                } else if (isInstantResonance && !q.isPoly && !currentMapId.includes('net_') && !q.isSpell) {
                     newCount = 3;
                     hist.hadInstant = true;
-                } else if (isQuickTuning && !q.isPoly && !currentMapId.includes('net_')) {
+                } else if (isQuickTuning && !q.isPoly && !currentMapId.includes('net_') && !q.isSpell) {
                     newCount = Math.min(3, currentCountBefore + 2);
                     hist.hadQuick = true;
                 } else {

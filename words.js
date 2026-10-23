@@ -241,7 +241,7 @@ organism	:	[명] 유기체, 생물체
 multiply	:	[동] 증식[번식]하다; [동] 곱해지다, 배가되다
 continue	:	[동] 계속하다, 지속하다
 eventually	:	[부] 결국, 마침내
-produce	:	[동] ~을 만들어내다, 생성하다; [명] 농작물
+produce	:	[동] 만들어내다, 생성하다; [명] 농작물
 go on toR	:	[동] 다음으로 ~하다, 이어서 ~하다
 whole	:	[형] 전체의, 전부의
 control	:	[동] ~을 통제·억제하다; [명] 통제, 제어
@@ -319,7 +319,7 @@ notable	:	[형] 주목할 만한
 interest	:	[명] 흥미로움, 매력적임, 관심; [동] 관심을 끌다; [명] 이자, 이득
 gene	:	[명] 유전자
 therapy	:	[명] 치료, 요법
-cancer	:	[명] 암
+cancer	:	[명] 암, 종양
 compare ~ to …	:	[동] ~를 …와 비교하다
 instruction	:	[명] 지시 (사항)
 guide	:	[명] 안내서, 지침; [동] 인도하다, 가이드하다
@@ -334,8 +334,8 @@ deliver ~ to …	:	[동] ~을 …에게 전달하다
 correct	:	[동] 바로잡다, 수정하다; [형] 맞는, 옳은
 patient	:	[명] 환자; [형] 참을성 있는
 enable ~ toR	:	[동] ~가 …할 수 있게 하다
-modify	:	[동] ~을 수정하다, 변경하다
-carrier	:	[명] (병원체의) 매개체
+modify	:	[동] 수정하다, 변경하다
+carrier	:	[명] (병원체의) 매개체, 보균자
 fight ~ off	:	[동] (질병 등)과 싸워 이겨내다
 based on[upon] ~	:	[전] ~에 기초를 둔, ~을 바탕으로 하는
 notion	:	[명] 생각, 개념, 관념
@@ -344,11 +344,11 @@ specifically	:	[부] 구체적으로, 분명하게
 target	:	[동] 목표로 삼다; [명] 목표
 unharmed	:	[형] 다치지[손상되지] 않은
 still	:	[부] 아직(도); [형] 가만히 있는, 고요한; [부] 훨씬
-stage	:	[명] 단계, 국면, 시기
+stage	:	[명] 단계, 국면, 시기; [명] 무대, 스테이지
 involve ~ in …	:	[동] ~을 …에 참여시키다
 discover	:	[동] 발견하다
 incurable	:	[형] 치료 불가능한, 불치의
-find ~ out	:	[동] ~을 알아내다
+find ~ out	:	[동] 알아내다
 let alone	:	[전] ~은 말할 것도 없고, ~은 커녕
 characteristic	:	[명] 특징, 특성
 equip ~ toR	:	[동] ~에게 …할 능력[기술]을 키워주다
@@ -363,14 +363,14 @@ working	:	[명] 작동[운용/작용] (방식)
 [E2_L4_1: 4과의 호수 1]
 # 4과의 단어 정령들. 잘 보살펴주자.
 guardian	:	[명] 수호자
-fascinate	:	[동]~을 매혹[매료]하다
+fascinate	:	[동] 매혹[매료]하다
 mystery	:	[명] 불가사의, 미스터리, 수수께끼
 explore	:	[동] 탐험하다, 탐사하다
-space	:	[명] 우주
+space	:	[명] 우주; [명] 공간
 remarkable	:	[형] 놀랄 만한, 주목할 만한
 individual	:	[명] 개(개)인; [형] 개별적인, 개인의
-appreciate	:	[동] ~의 가치[진가]를 알다
-appeal	:	[명] 호소력, 매력
+appreciate	:	[동] 가치[진가]를 알다; [동] 고마워하다; [동] 감상하다
+appeal	:	[명] 호소력, 매력; [동] 호소하다, 어필하다
 ocean	:	[명] 바다
 eagerly	:	[부] 열렬히, 열심히
 afraid of ~	:	[형] ~을 무서워하는
@@ -391,21 +391,19 @@ gift	:	[동] ~을 선물로 주다; [명] 선물; [명] 재능
 goggles	:	[명] 고글
 encourage	:	[동] 격려하다, 촉진하다
 help ~ with …	:	[동] (사람)의 …을 돕다
-underwater	:	[형] 수중의; [부] 수중에(서), 수중으로
+underwater	:	[형/부] 수중의, 수중에
 exploration	:	[명] 탐험, 탐사
-dive in	:	[동] 물속으로 뛰어들다
-gain	:	[동] ~을 얻다; [명] 이득, 얻는 것
+gain	:	[동] 얻다, 획득하다; [명] 이득, 얻는 것
 view	:	[명] 시야; [명] 광경; [동] 보다
 wonder	:	[명] 경이로운 것[일]; [동] 궁금해하다
-dive	:	[명] 잠수[동] 잠수하다
+dive	:	[명] 잠수; [동] 잠수하다, 뛰어들다
 descend	:	[동] 하강하다
-diving suit	:	[명] 잠수복
 belong to ~	:	[동] ~의 것[소유]이다, ~에 속해있다
 thrilled	:	[형] 크게 기뻐하는, 흥분된
 breathe	:	[동] 숨쉬다, 호흡하다
 naturally	:	[부] 자연스럽게
 excitement	:	[명] 흥미진진함, 자극, 흥분
-desire	:	[명] 욕구, 열망
+desire	:	[명] 욕구, 열망; [동] 바라다
 grow	:	[동] 증가하다, 늘다; [동] 성장하다, 자라다; [동] 기르다, 키우다
 scuba	:	[명] 스쿠버, 수중 자급식 호흡 장비
 equipment	:	[명] 장비, 설비, 도구
@@ -434,7 +432,7 @@ choose ~ toR	:	[동] (사람)을 …하게 하려고 선택하다
 spend ~ V-ing	:	[동] ...하는데 ~을 쓰다
 beneath	:	[전] ~의 바로 밑에
 surface	:	[명] 표면
-along with ~	:	[전] ~와 함께
+along with ~	:	[전] ~와 함께, ~에 덧불여
 oceanographer	:	[명] 해양학자
 push the boundaries of ~	:	[동] ~의 영역[경계]을 확장하다
 challenge	:	[동] 도전하다; [동] 이의를 제기하다; [명] 도전, 어려움
@@ -444,7 +442,7 @@ residence	:	[명] 거주
 reef	:	[명] 암초, 사초
 complexity	:	[명] 복잡함
 scientific	:	[형] 과학의, 과학적인
-finding	:	[명] 결과, 발견
+finding	:	[명] 결과(물), 발견(물)
 publish	:	[동] 공개하다, 발표하다
 including	:	[전] ~을 포함해서
 coral reef	:	[명] 산호초
@@ -455,7 +453,7 @@ attention	:	[명] 주목, 주의, 관심
 similar to ~	:	[형] ~와 비슷한
 historic	:	[형] (사건) 역사적인,역사상 중요한
 landing	:	[명] 착륙
-accomplish	:	[동] ~을 이루다, 성취하다, 달성하다
+accomplish	:	[동] 이루다, 성취하다, 달성하다
 achievement	:	[명] 성과, 업적
 off the coast	:	[전명] 연안에(서),근해에(서)
 suit	:	[명] 정장, 슈트; [동] 적합하다, 꼭 맞다
@@ -466,14 +464,14 @@ solo	:	[형] 단독의, 개인의
 earn A B	:	[동] A에게 B를 벌어다주다, 가져다주다
 title	:	[명] 호칭, 칭호
 deepness	:	[명] 깊숙한 곳, 심연
-glow	:	[동] (은은하게) 빛나다
+glow	:	[동] (은은하게) 빛나다; [명] 은은한 불빛
 creature	:	[명] 생명체, 생물
-flash	:	[동] 번쩍이다; [먕] 번쩍임
+flash	:	[동] 번쩍이다; [명] 번쩍임
 darkness	:	[명] 어둠, 암흑
 squid	:	[명] 오징어
 emit	:	[동] 방출하다, 내뿜다
 liquid	:	[명] 액체
-defend	:	[동] ~을 지키다, 방어하다
+defend	:	[동] 지키다, 방어하다
 plant	:	[동] 박아놓다, 심다; [명] 식물; [명] 공장
 flag	:	[명] 기(旗), 깃발
 
@@ -503,23 +501,23 @@ shift	:	[동] 움직이다, 이동하다; [명] 이동, 변화
 exploit	:	[동] 활용하다, 개발하다; [동] 착취하다
 resource	:	[명] 자원
 prioritize	:	[동] 우선시하다, 우선순위를 두다
-research	:	[명] 연구
+research	:	[명] 연구; [동] 연구하다
 despite	:	[전] ~에도 불구하고
 effort	:	[명] 분투, 노력
 senior	:	[형] 상급의, 고위의, 선배의
-official	:	[명] 관리, 간부 (직원); [형] 공식적인
+official	:	[명] 관리, 간부; [형] 공식적인
 government	:	[명] 정부, 정권
 face	:	[동] 직면하다; [명] 얼굴, 면
 restriction	:	[명] 규제, 제한
 freedom	:	[명] 자유
-speech	:	[명] 말하기, 발화
+speech	:	[명] 말하기, 연설, 발화
 resign	:	[동] 사임하다, 사직하다
 active	:	[형]적극적으로 참여하는
 environmental	:	[형] 환경의
 activist	:	[명] 활동가, 운동가
-private	:	[형] 민간의, 개인의
+private	:	[형] 민간의, 개인의, 사적인
 sector	:	[명] 부문, 분야
-grant	:	[동] 부여하다; [명] 지원금
+grant	:	[동] 부여하다, 수여하다; [명] 지원금
 technology	:	[명] 기술
 business	:	[명] 사업체, 회사, 기업
 public	:	[형] 대중의, 일반인의
@@ -535,23 +533,23 @@ raise awareness	:	[동] 의식을 높이다, 인식을 재고하다
 prominence	:	[명] 유명함, 저명함
 key	:	[명] 비결, 핵심; [명] 열쇠
 initiate	:	[동] 시작하다, 착수하다
-global	:	[형] 세계적인, 전 지구적인
+global	:	[형] 세계적인, 전지구적인
 platform	:	[명] 플랫폼, 승강장
 virtually	:	[부] 가상으로
 foster	:	[동] 조장하다, 육성하다; [형] 입양의, 양
 
 [E2_L4_4: 4과의 호수 4]
 # 4과의 단어 정령들. 잘 보살펴주자.
-appreciation	:	[명] 인식, 이해
+appreciation	:	[명] 인식, 이해; [명] 감사; [명] 감상
 award	:	[동](상 등을) 수여하다; [명] 상
 distinguished	:	[형] 저명한, 위대한
-annual	:	[형] 연례의
+annual	:	[형] 연례의, 매년의
 financial	:	[형] 재정적인, 금융적인
 refuge	:	[명] 피난처, 대피소
 pollution	:	[명] 오염
 overfishing	:	[명] 물고기 남획
 threat	:	[명] 위협
-establish	:	[동] ~을 설립하다
+establish	:	[동] 설립하다, 정립하다
 non-profit	:	[형] 비영리의, 비영리적인
 organization	:	[명] 조직, 기구, 단체
 inspire	:	[동] 고무하다, 자극하다
@@ -562,22 +560,22 @@ in line with ~	:	[전명] ~에 맞추어[일치하여]
 union	:	[명] 연맹, 연합, 협회
 recommend	:	[동] 권장하다, 추천하다
 maintain	:	[동] 유지하다, 지속하다
-represent	:	[동] ~을 나타내다
+represent	:	[동] 나타내다; [동] 대표하다, 대리하다
 drive	:	[동] ~을 이끌다, 추동하다; [동] 몰다, 운전하다; [명] 원동력
 share	:	[동] 공유하다; [명] 지분, 몫
 passion	:	[명] 열정
-dedication	:	[명] 헌신
-author	:	[명]작가,저자,지은이
+dedication	:	[명] 헌신, 전념
+author	:	[명] 작가, 저자, 지은이
 lecturer	:	[명] 강연자
 consistently	:	[부] 일관되게, 한결같이
 acknowledge	:	[동] ~을 인정하다
 endangered	:	[형] 멸종 위기에 처한
 nation	:	[명] 국가, 나라
-largely	:	[부] 주로, 대체로, 대부분
+largely	:	[부] 주로, 대체로
 responsible for ~	:	[형] ~에 책임이 있는
 stress	:	[명] 스트레스; [명] 강세; [동] 강세를 주다, 강조하다
-power	:	[명] 능력, 힘
-ensure	:	[동] ~을 보장하다
+power	:	[명] 능력, 힘; [명] 전력, 동력
+ensure	:	[동] 보장하다
 survival	:	[명] 생존, 살아남음
 remind A of B	:	[동] A에게 B를 상기시키다
 imagine	:	[동] 상상하다

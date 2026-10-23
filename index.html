@@ -7001,6 +7001,15 @@ const recTime = document.getElementById("recFastestTime");
         backToWorldMapFromLobby();
     }
 
+    // 🌟 [NEW] 지문 영지 전용 완주 복귀 함수 (모달 먹통 해결)
+    function backToWorldMapFromPassageClear() {
+        Sound.click();
+        document.getElementById("sectorClearModal").style.display = "none";
+        document.getElementById("gameScreen").style.display = "none";
+        saveCurrentMapState();
+        backToWorldMapFromLobby();
+    }
+
     function closeWorldMap() {
         Sound.click();
         document.getElementById("worldMapModal").style.display = "none";
@@ -9440,6 +9449,7 @@ const recTime = document.getElementById("recFastestTime");
             // 🌟 다음 구역 유무에 따라 버튼 텍스트와 목적지 자동 분기
             const nextSecIdx = currentSectorIndex + 1;
             const nextBtn = document.getElementById("sectorClearNextBtn");
+            const subBtn = document.querySelector("#sectorClearModal .btn-sub-wood"); // 하단 보조 버튼
             if (nextBtn) {
                 if (nextSecIdx < sectors.length) {
                     const nextSec = sectors[nextSecIdx];
@@ -9447,13 +9457,15 @@ const recTime = document.getElementById("recFastestTime");
                     nextBtn.className = "btn-wood theme-emerald";
                     nextBtn.innerHTML = `⚡ 다음 구역으로 즉시 진격! (${nextSec.name}) ➔`;
                     nextBtn.onclick = handleSectorClearProceed;
+                    if (subBtn) subBtn.style.display = "flex"; // 다음 구역이 있을 땐 보조 버튼 유지
 
                 } else {
                     // 🌟 지문 영지는 수호령이 없으므로 대륙 지도로 당당히 복귀!
                     if (activeMap.isPassage) {
                         nextBtn.className = "btn-wood theme-emerald";
                         nextBtn.innerHTML = "🗺️ 대륙 지도로 돌아가기 ➔";
-                        nextBtn.onclick = backToWorldMapFromEnding;
+                        nextBtn.onclick = backToWorldMapFromPassageClear; // 👈 먹통 버그 해결!
+                        if (subBtn) subBtn.style.display = "none";        // 👈 깔끔하게 1버튼으로 통일
                         const clearDesc = document.querySelector("#sectorClearModal .ending-desc");
                         if (clearDesc) {
                             clearDesc.innerHTML = `지문 속 모든 핵심 어휘를 완벽하게 돌파했다!<br><br>문맥을 꿰뚫는 네 독해력이 한 단계 더 진화했군.<br>다음 지문이나 다른 영지로 진격하자!`;
@@ -9464,6 +9476,7 @@ const recTime = document.getElementById("recFastestTime");
                         nextBtn.className = "btn-wood theme-ruby";
                         nextBtn.innerHTML = `⚔️ ${theme.guardianName}의 시련 대면하기! ➔`;
                         nextBtn.onclick = handleSectorClearProceed;
+                        if (subBtn) subBtn.style.display = "flex";
                     }
                 }
             }

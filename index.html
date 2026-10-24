@@ -2995,12 +2995,108 @@
             100% { filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5)) drop-shadow(0 0 3px #fef08a) drop-shadow(0 0 8px #d97706) brightness(1.12); }
         }
 
+        /* ========================================================
+        🌌 [스플래시 인트로 로딩 화면]
+        첫 접속 / 새로고침 시 레이아웃 튐 및 미완성 화면 100% 차단
+        ======================================================== */
+        .splash-screen-overlay {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            width: 100%; height: 100%;
+            background: #0d0704; /* 양피지 바깥 메인 딥나이트 톤 */
+            z-index: 9999;        /* 모든 모달과 인게임 요소 최상위 점유 */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 24px;
+            box-sizing: border-box;
+            transition: opacity 0.45s ease-out, visibility 0.45s ease-out;
+            opacity: 1;
+            visibility: visible;
+            pointer-events: auto;
+        }
+
+        /* 준비 완료 시 부드럽게 암전 해제 */
+        .splash-screen-overlay.fade-out {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+
+        /* 타이틀 타이포 그룹 */
+        .splash-title-box {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            margin-bottom: 24px;
+        }
+        .splash-tag {
+            font-size: 11px;
+            font-weight: 900;
+            color: #b45309;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-bottom: 4px;
+        }
+        .splash-main-title {
+            font-size: 32px;
+            font-weight: 900;
+            color: #fef08a;
+            letter-spacing: -0.6px;
+            line-height: 1.15;
+            text-shadow: 0 0 20px rgba(245, 158, 11, 0.45), 0 3px 6px rgba(0, 0, 0, 0.9);
+        }
+
+        /* 게이지 홈 & 채움 */
+        .splash-gauge-track {
+            width: 200px;
+            height: 4px;
+            background: rgba(181, 148, 97, 0.25);
+            border-radius: 2px;
+            overflow: hidden;
+            margin-bottom: 12px;
+            box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.8);
+        }
+        .splash-gauge-bar {
+            width: 0%;
+            height: 100%;
+            background: linear-gradient(90deg, #d97706, #fde047);
+            border-radius: 2px;
+            transition: width 0.3s ease;
+            box-shadow: 0 0 8px rgba(245, 158, 11, 0.8);
+        }
+
+        /* 위트 있는 로딩 팁 문구 */
+        .splash-tip-text {
+            font-size: 12.5px;
+            font-weight: 700;
+            color: #d4a373;
+            line-height: 1.4;
+            text-align: center;
+            word-break: keep-all;
+            min-height: 18px;
+            opacity: 0.9;
+        }
+
     </style>
 </head>
 <body oncontextmenu="return false;" ondragstart="return false;">
 
 <div class="game-container">
     <div class="parchment-inner">
+        <!-- 🌌 [스플래시 인트로 로딩 오버레이] -->
+        <div id="appSplashScreen" class="splash-screen-overlay">
+            <div class="splash-title-box">
+                <span class="splash-tag">✦ THE CRISIS OF ✦</span>
+                <div class="splash-main-title">Word Spirits</div>
+            </div>
+            <div class="splash-gauge-track">
+                <div id="splashGaugeBar" class="splash-gauge-bar"></div>
+            </div>
+            <div id="splashTipText" class="splash-tip-text">정령계의 마력을 조율하는 중...</div>
+        </div>
         <div id="errorBanner" class="error-banner">
             ⚠️ <b>[words.js 파일 인식 실패]</b><br>
             같은 폴더에 <code>words.js</code>가 있는지 확인해 주세요.
@@ -7300,6 +7396,122 @@ const recTime = document.getElementById("recFastestTime");
     }
 
     // ========================================================
+    // 🔔 [알림 알약 & 스마트 버튼 전용 고속 갱신 엔진]
+    // Firestore 호출 0회, 순수 메모리 시간 계산만으로 UI 즉각 반영
+    // ========================================================
+    function updateShrineBadgesOnly() {
+        if (!currentUserDocId) return;
+
+        const decayedWords = (typeof getDecayedWords === 'function') ? getDecayedWords() : [];
+        const counselTargets = (typeof getCounselingTargets === 'function') ? getCounselingTargets() : [];
+        const todayStr = getTodayKSTString();
+        const isTodayCleared = (typeof lastEmergencyClearedDate !== 'undefined' && lastEmergencyClearedDate === todayStr);
+
+        // 1. 성소 두루마리 우상단 미니 알약 2종
+        const mistPill = document.getElementById("pillMistNotice");
+        if (mistPill) {
+            if (decayedWords.length > 0 && !isTodayCleared) {
+                mistPill.innerText = `🚨 ${decayedWords.length}`;
+                mistPill.style.display = "inline-block";
+            } else {
+                mistPill.style.display = "none";
+            }
+        }
+
+        const counselPill = document.getElementById("pillCounselNotice");
+        if (counselPill) {
+            if (counselTargets.length > 0) {
+                counselPill.innerText = `🍂 ${counselTargets.length}`;
+                counselPill.style.display = "inline-block";
+            } else {
+                counselPill.style.display = "none";
+            }
+        }
+
+        // 2. 팝오버 내부 뱃지 동기화
+        const mistBadge = document.getElementById("campMistBadge");
+        if (mistBadge) {
+            mistBadge.innerText = (decayedWords.length > 0) ? `${decayedWords.length}마리 ⚠️` : `안전 🟢`;
+            mistBadge.style.background = (decayedWords.length > 0) ? `#dc2626` : `#15803d`;
+        }
+
+        const hurtBadge = document.getElementById("campHurtBadge");
+        if (hurtBadge) {
+            hurtBadge.innerText = (counselTargets.length > 0) ? `${counselTargets.length}마리` : `평화 🟢`;
+        }
+
+        // 3. 타이틀 화면이 현재 켜져 있을 때만 스마트 칙령 버튼 상태도 함께 갱신
+        const titleScreen = document.getElementById("titleScreen");
+        if (titleScreen && window.getComputedStyle(titleScreen).display !== 'none') {
+            const smartBtn = document.getElementById("smartMainBtn");
+            const smartTagRow = document.getElementById("smartTagRow");
+            const smartMainText = document.getElementById("smartMainText");
+            const smartProgressText = document.getElementById("smartProgressText");
+
+            if (smartBtn && smartMainText) {
+                const bossDefeated = (typeof isFinalExamDefeated === 'function') ? isFinalExamDefeated() : false;
+                const bossReady = !!window.isBossRaidOpenCloud && !bossDefeated;
+
+                // [1순위: 안개 침식]
+                if (decayedWords.length > 0 && !isTodayCleared) {
+                    currentSmartMode = 'emergency';
+                    smartBtn.className = "big-scroll-btn smart-hero-scroll skin-blue";
+                    if (smartTagRow) smartTagRow.innerText = "🚨 망각의 안개 경보!";
+                    smartMainText.innerText = "안개 속 정령 구출 ➔";
+                    if (smartProgressText) smartProgressText.innerText = `침식 위험: ${decayedWords.length}마리 대기`;
+                }
+                // [2순위: 초회 마왕전]
+                else if (bossReady && !bossDefeated) {
+                    currentSmartMode = 'boss';
+                    smartBtn.className = "big-scroll-btn smart-hero-scroll skin-red";
+                    if (smartTagRow) smartTagRow.innerText = "👑 최종 결전의 순간!";
+                    smartMainText.innerText = "마왕 EXAM 결전 ➔";
+                    if (smartProgressText) smartProgressText.innerText = "대륙 모든 정령 결속 완료 (100%)";
+                }
+                // [3순위: 성소 상담]
+                else if (counselTargets.length > 0) {
+                    currentSmartMode = 'counsel';
+                    smartBtn.className = "big-scroll-btn smart-hero-scroll skin-orange";
+                    if (smartTagRow) smartTagRow.innerText = "🍂 마음의 상처 치유!";
+                    smartMainText.innerText = "정령 성소 심층 상담 ➔";
+                    if (smartProgressText) smartProgressText.innerText = `상담 대기: ${counselTargets.length}마리 케어 필요`;
+                }
+                // [4순위: 평상시 원정]
+                else {
+                    currentSmartMode = 'resume';
+                    smartBtn.className = "big-scroll-btn smart-hero-scroll skin-amber";
+                    const curMap = (worldMaps && worldMaps.find(m => m.id === currentMapId)) || worldMaps[0];
+                    const sectors = (typeof getMapSectors === 'function') ? getMapSectors(curMap) : [{ name: "제1구역", words: curMap.words }];
+                    const mapMastery = safeStorageGet(`spirit_mastery_${curMap.id}`, {});
+
+                    let targetSec = sectors[0] || { name: "제1구역", words: [] };
+                    let secContracted = 0;
+
+                    for (let i = 0; i < sectors.length; i++) {
+                        let doneCount = 0;
+                        sectors[i].words.forEach(w => { if ((mapMastery[w.eng] || 0) >= 3) doneCount++; });
+                        if (doneCount < sectors[i].words.length) {
+                            targetSec = sectors[i];
+                            secContracted = doneCount;
+                            break;
+                        }
+                        if (i === sectors.length - 1) {
+                            targetSec = sectors[i];
+                            secContracted = doneCount;
+                        }
+                    }
+                    const secTotal = targetSec.words.length || 1;
+                    const secPct = Math.round((secContracted / secTotal) * 100);
+
+                    if (smartTagRow) smartTagRow.innerText = "✦ 모험 이어하기 ✦";
+                    smartMainText.innerText = `「${curMap.name}」`;
+                    if (smartProgressText) smartProgressText.innerText = `계약: ${secContracted} / ${secTotal}마리 (${secPct}%)`;
+                }
+            }
+        }
+    }
+
+    // ========================================================
     // 🏛️ 야영지 타이틀 화면 통합 렌더러
     // ========================================================
     function renderTitleScreen() {
@@ -7570,6 +7782,8 @@ const recTime = document.getElementById("recFastestTime");
         document.getElementById("mapLobbyScreen").style.display = "none";
         document.getElementById("gameScreen").style.display = "none";
         document.getElementById("bossScreen").style.display = "none";
+        updateShrineBadgesOnly();
+
     }
 
     // 🌟 타이틀 영지 카테고리 탭 전환 상태 및 함수
@@ -9682,41 +9896,44 @@ const recTime = document.getElementById("recFastestTime");
             Sound.fanfare();
             const activeMap = worldMaps.find(m => m.id === currentMapId) || worldMaps[0];
             const sectors = getMapSectors(activeMap);
-            const sec = sectors[currentSectorIndex] || sectors[0];
-            document.getElementById("sectorClearTitle").innerText = `${sec.name} 정복 완료!`;
-
-            // 🌟 다음 구역 유무에 따라 버튼 텍스트와 목적지 자동 분기
             const nextSecIdx = currentSectorIndex + 1;
+
+            // 🌟 [개선] 지문 영지의 마지막 구역 완주 시 ➔ 곧바로 지문 완전 독파 엔딩 모달(endingModal) 가동!
+            if (activeMap.isPassage && nextSecIdx >= sectors.length) {
+                document.getElementById("endingSubBadge").innerText = "PASSAGE MASTERED";
+                document.getElementById("endingTitle").innerText = `${activeMap.name} 독파 완료!`;
+                document.getElementById("endingDesc").innerHTML = `
+                    지문 속 모든 핵심 어휘의 문맥을 완벽히 꿰뚫었다.<br>
+                    이 지문은 완전히 정복되었으니,<br>
+                    다음 지문이나 다른 영지로 넘어가자고!
+                `;
+                document.getElementById("endingContractStats").innerText = `지문 핵심 어휘 완주: ${activeMap.words.length} / ${activeMap.words.length}마리 (100%)`;
+
+                document.getElementById("endingModal").style.display = "flex";
+                syncToCloud(true);
+                return;
+            }
+
+            // 그 외(일반 영지 전 구역 또는 지문 영지의 중간 구역) ➔ 기존 구역 완료창
+            const sec = sectors[currentSectorIndex] || sectors[0];
+            document.getElementById("sectorClearTitle").innerText = `${sec.name} 완료!`;
+
             const nextBtn = document.getElementById("sectorClearNextBtn");
-            const subBtn = document.querySelector("#sectorClearModal .btn-sub-wood"); // 하단 보조 버튼
+            const subBtn = document.querySelector("#sectorClearModal .btn-sub-wood");
             if (nextBtn) {
                 if (nextSecIdx < sectors.length) {
                     const nextSec = sectors[nextSecIdx];
-                    // 🌿 1) 다음 구역 출격: 프로젝트 표준 딥 에메랄드 테마 적용
                     nextBtn.className = "btn-wood theme-emerald";
-                    nextBtn.innerHTML = `⚡ 다음 구역으로 즉시 진격! (${nextSec.name}) ➔`;
+                    nextBtn.innerHTML = `⚡ 다음 구역으로 바로 가기! (${nextSec.name}) ➔`;
                     nextBtn.onclick = handleSectorClearProceed;
-                    if (subBtn) subBtn.style.display = "flex"; // 다음 구역이 있을 땐 보조 버튼 유지
-
+                    if (subBtn) subBtn.style.display = "flex";
                 } else {
-                    // 🌟 지문 영지는 수호령이 없으므로 대륙 지도로 당당히 복귀!
-                    if (activeMap.isPassage) {
-                        nextBtn.className = "btn-wood theme-emerald";
-                        nextBtn.innerHTML = "🗺️ 대륙 지도로 돌아가기 ➔";
-                        nextBtn.onclick = backToWorldMapFromPassageClear; // 👈 먹통 버그 해결!
-                        if (subBtn) subBtn.style.display = "none";        // 👈 깔끔하게 1버튼으로 통일
-                        const clearDesc = document.querySelector("#sectorClearModal .ending-desc");
-                        if (clearDesc) {
-                            clearDesc.innerHTML = `지문 속 모든 핵심 어휘를 완벽하게 돌파했다!<br><br>문맥을 꿰뚫는 네 독해력이 한 단계 더 진화했군.<br>다음 지문으로 넘어가자고!`;
-                        }
-                    } else {
-                        // 일반 영지는 기존 수호령 시련 직행 버튼
-                        const theme = getMapTheme(activeMap.name, activeMap.id);
-                        nextBtn.className = "btn-wood theme-ruby";
-                        nextBtn.innerHTML = `⚔️ ${theme.guardianName}의 시련 대면하기! ➔`;
-                        nextBtn.onclick = handleSectorClearProceed;
-                        if (subBtn) subBtn.style.display = "flex";
-                    }
+                    // 일반 영지의 마지막 구역 ➔ 수호령 시련 대면 버튼
+                    const theme = getMapTheme(activeMap.name, activeMap.id);
+                    nextBtn.className = "btn-wood theme-ruby";
+                    nextBtn.innerHTML = `⚔️ ${theme.guardianName}의 시련 대면하기! ➔`;
+                    nextBtn.onclick = handleSectorClearProceed;
+                    if (subBtn) subBtn.style.display = "flex";
                 }
             }
 
@@ -12259,8 +12476,51 @@ function handleMidBossVictory() {
     window.addEventListener('touchstart', autoScanAllVisibleScrolls, { passive: true });
     window.addEventListener('resize', autoScanAllVisibleScrolls, { passive: true });
 
+    // ========================================================
+    // 🌌 스플래시 인트로 로딩 제어기
+    // ========================================================
+    const SPLASH_TIPS = [
+        "책 선생이 잔소리를 장전하는 중...",
+        "정령들이 단어장 속에 숨는 중...",
+        "마왕 EXAM이 문제를 꼬아 출제하는 중...",
+        "1.5초 컷! 찰나의 공명을 준비하는 중...",
+        "단어 암기는 벼락치기가 안 통한다. - 책 선생",
+        "틀린 단어는 정령 성소에서 꼭 보살펴라.",
+        "키보드 1~4번을 누르면 광속으로 풀린다."
+    ];
+
+    function initSplashScreen() {
+        const tipEl = document.getElementById("splashTipText");
+        const gaugeEl = document.getElementById("splashGaugeBar");
+        if (tipEl) {
+            const randIdx = Math.floor(Math.random() * SPLASH_TIPS.length);
+            tipEl.innerText = SPLASH_TIPS[randIdx];
+        }
+        // 0.4초 만에 게이지가 80%까지 차오르는 연출
+        setTimeout(() => {
+            if (gaugeEl) gaugeEl.style.width = "85%";
+        }, 50);
+    }
+
+    function dismissSplashScreen() {
+        const splash = document.getElementById("appSplashScreen");
+        const gaugeEl = document.getElementById("splashGaugeBar");
+        if (!splash) return;
+
+        if (gaugeEl) gaugeEl.style.width = "100%";
+
+        // 게이지가 다 찬 후 부드럽게 페이드 아웃
+        setTimeout(() => {
+            splash.classList.add("fade-out");
+            setTimeout(() => {
+                splash.style.display = "none";
+            }, 450); // CSS transition 시간(0.45s) 후 DOM 끄기
+        }, 350);
+    }
+
     // 🌟 앱 실행 시 자동 로그인 처리
     window.onload = async function() {
+        initSplashScreen(); // 🌟 스플래시 가동 (팁 문구 롤링 & 게이지 시작)
 
         // ========================================================
         // 🧹 과거 승계된 마왕/칭호 오염 1회 강제 소각 (1~2주 후 없애기)
@@ -12349,14 +12609,25 @@ function handleMidBossVictory() {
             document.getElementById("bossScreen").style.display = "none";
         }
         pushNavState();
+        dismissSplashScreen(); // 🌟 모든 데이터 로드 완료 후 스플래시 해제
     };
     
     // 🌟 브라우저 창을 닫거나 다른 앱으로 전환할 때 자동 긴급 백업
     window.addEventListener("visibilitychange", () => {
-    if (document.visibilityState === "hidden") {
-        syncToCloud(true);
-    }}
-    );
+        if (document.visibilityState === "hidden") {
+            syncToCloud(true);
+        } else if (document.visibilityState === "visible") {
+            // 🌟 다른 앱을 보다가 게임 화면으로 돌아왔을 때 즉시 알약 갱신!
+            updateShrineBadgesOnly();
+        }
+    });
+
+    // 🌟 게임을 켜둔 채 시간이 흐를 때를 대비해 1분(60초)마다 가벼운 연산 실행
+    setInterval(() => {
+        if (document.visibilityState === "visible") {
+            updateShrineBadgesOnly();
+        }
+    }, 60 * 1000);
     
     // ========================================================
     // 👑 랭킹보드 스마트 캐싱 엔진 (Firestore Read 폭탄 방어 패치)

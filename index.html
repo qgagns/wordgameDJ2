@@ -3333,7 +3333,7 @@
                 <button id="wmTabNormal" class="wm-tab-btn tab-emerald active" onclick="switchWorldMapTab('normal')">
                     <div class="wm-tab-bg"></div>
                     <div class="wm-tab-text-layer">
-                        <span class="wm-tab-title">🌲 일반 탐험</span>
+                        <span class="wm-tab-title">🌲 일반 영지</span>
                     </div>
                 </button>
                 <button id="wmTabSpecial" class="wm-tab-btn tab-purple" onclick="switchWorldMapTab('special')">
@@ -4045,6 +4045,22 @@
             <span id="shrineWordlistCount" style="font-size:12px; font-weight:900; color:#b45309;">총 0마리</span>
         </div>
 
+        <!-- 🌟 [대륙 지도 1:1 일치] 3D 두루마리 에메랄드 & 자수정 2단 탭 바 -->
+        <div id="shrineFavTabBar" style="display:none; gap:6px; margin-bottom:6px; flex-shrink:0; width:100%;">
+            <button id="shrineFavTabBtnNormal" class="wm-tab-btn tab-emerald active" onclick="switchShrineFavTab('normal')">
+                <div class="wm-tab-bg"></div>
+                <div class="wm-tab-text-layer">
+                    <span class="wm-tab-title">🌲 일반 영지</span>
+                </div>
+            </button>
+            <button id="shrineFavTabBtnSpecial" class="wm-tab-btn tab-purple" onclick="switchShrineFavTab('special')">
+                <div class="wm-tab-bg"></div>
+                <div class="wm-tab-text-layer">
+                    <span class="wm-tab-title">🌀 숨겨진 비경</span>
+                </div>
+            </button>
+        </div>
+
         <!-- 2. 단어 목록 컨테이너 (오직 여기만 하단 버튼 바로 윗선까지 채우며 단독 스크롤!) -->
         <div id="shrineWordlistContainer" style="flex:1; min-height:0; overflow-y:auto; display:flex; flex-direction:column; gap:6px; padding-right:2px; margin-bottom:15px; width:100%;"></div>
 
@@ -4225,11 +4241,18 @@
                  ============================================== -->
             <div id="adminTowerTab1" style="display:flex; flex-direction:column; flex:1; min-height:0;">
 
-            <!-- 실시간 검색창 -->
-            <div style="margin-bottom:8px;">
-                <input id="adminStudentSearchInput" type="text" placeholder="🔍 학번 또는 이름으로 실시간 검색..." oninput="filterAdminStudents()" 
-                       style="width:100%; padding:8px 12px; border-radius:8px; border:1.5px solid #c9b48c; font-size:13px; font-weight:800; box-sizing:border-box;">
-            </div>
+            <!-- 실시간 검색창 + 정렬 드롭다운 (기본: 가나다 이름순) -->
+                <div style="display:flex; gap:6px; margin-bottom:8px; flex-shrink:0;">
+                    <input id="adminStudentSearchInput" type="text" placeholder="🔍 검색..." oninput="filterAdminStudents()" 
+                           style="flex:1; padding:7px 10px; border-radius:8px; border:1.5px solid #c9b48c; font-size:12.5px; font-weight:800; box-sizing:border-box;">
+                    <select id="adminStudentSortSelect" onchange="changeAdminSortMode(this.value)" style="background:#ffffff; border:1.5px solid #c084fc; border-radius:8px; padding:7px 8px; font-size:12px; font-weight:800; color:#4a044e; cursor:pointer;">
+                        <option value="name" selected>이름 가나다순</option>
+                        <option value="masteryDesc">단어 많은순 👑</option>
+                        <option value="masteryAsc">단어 적은순 ⚠️</option>
+                        <option value="recent">최근 접속순 ⏱️</option>
+                        <option value="id">학번(ID)순</option>
+                    </select>
+                </div>
 
             <!-- 실시간 학생 카드 목록 컨테이너 -->
             <div id="adminStudentListContainer" style="flex:1; min-height:0; overflow-y:auto; display:flex; flex-direction:column; gap:5px; padding-right:2px; margin-bottom:4px;">
@@ -4680,6 +4703,12 @@
                         </div>
                         <div class="overall-gauge-container">
                             <div class="overall-gauge-bar" id="overallGaugeBar"></div>
+                        </div>
+                        <!-- 🌟 [솔루션 A] 카드 내부 우측 하단으로 단정하게 흡수! -->
+                        <div id="wordBookFavFilterWrap" style="display:flex; justify-content:flex-end; margin-top:6px;">
+                            <button id="bookFavFilterBtn" type="button" onclick="toggleBookFavFilter()" style="background:#ede3cc; border:1px solid #c9b48c; border-radius:10px; padding:2px 8px; font-size:11px; font-weight:800; color:#785a3e; cursor:pointer;">
+                                🤍 찜한 정령만 보기
+                            </button>
                         </div>
                     </div>
                     <div id="wordListContainer"></div>
@@ -5194,8 +5223,20 @@
             safeStorageSet('spirit_emergency_cleared_date', finalEmergencyDate);
         }
 
-        const finalFavs = (cloudData && cloudData.favorites) ? cloudData.favorites : savedFavorites;
-        wordFavorites = finalFavs || {};
+        // 🌟 [배열 복원] 서버에서 내려온 리스트를 읽어 { 단어: true } 딕셔너리로 깔끔하게 변환!
+        let restoredFavs = {};
+        if (cloudData && cloudData.favorites) {
+            if (Array.isArray(cloudData.favorites)) {
+                cloudData.favorites.forEach(w => {
+                    if (w) restoredFavs[w] = true;
+                });
+            } else if (typeof cloudData.favorites === 'object') {
+                restoredFavs = cloudData.favorites; // 기존 레거시 객체 호환
+            }
+        } else {
+            restoredFavs = savedFavorites || {};
+        }
+        wordFavorites = restoredFavs;
         safeStorageSet('spirit_favorites', wordFavorites);
 
         if (savedIsAdmin) {
@@ -5373,7 +5414,7 @@
             defenseCounts: wordDefenseCounts,          
             studyHistory: wordStudyHistory,
             counselingData: wordCounselingData,
-            favorites: wordFavorites
+            favorites: Object.keys(wordFavorites || {}) // 🌟 맵 대신 배열로 전송 -> 삭제 시 서버에서도 완전 소멸!
         };
 
         db.collection(USER_COLLECTION).doc(currentUserDocId).set(payload, { merge: true })
@@ -8411,17 +8452,28 @@ const recTime = document.getElementById("recFastestTime");
         const targetSynonyms = allParts.slice(1);
         let remainingCorrect = [...targetSynonyms];
 
-        // 2. 오답 함정: 같은 영지의 다른 줄에서 낱개 단어 2~3개 추출
-        const distractorPool = [];
-        rawWords.forEach(w => {
-            if (w.eng !== q.fullEng) {
-                w.eng.split(',').forEach(s => {
-                    const word = s.trim();
-                    if (word && !allParts.includes(word)) distractorPool.push(word);
+        // 🌟 [교감실 완벽 대응] 전체 동의어 영지에서 다른 낱개 단어들을 긁어와 함정 3개 확보!
+            const distractorPool = [];
+            worldMaps.forEach(m => {
+                if (m.words) {
+                    m.words.forEach(w => {
+                        if (w.isSynonymNet && w.eng !== q.fullEng) {
+                            w.eng.split(',').forEach(s => {
+                                const word = s.trim();
+                                if (word && !allParts.includes(word)) distractorPool.push(word);
+                            });
+                        }
+                    });
+                }
+            });
+
+            // 혹시 동의어 단어가 부족하면 일반 영지 단어에서 보충하여 무조건 3개 확보!
+            if (distractorPool.length < 3) {
+                getAllUniverseWords().forEach(w => {
+                    if (!allParts.includes(w.eng)) distractorPool.push(w.eng);
                 });
             }
-        });
-        const traps = [...new Set(distractorPool)].sort(() => Math.random() - 0.5).slice(0, 3);
+            const traps = [...new Set(distractorPool)].sort(() => Math.random() - 0.5).slice(0, 3);
 
         // 3. 선지 버튼 생성 (다의어와 동일한 두루마리 버튼)
         const allTiles = [...targetSynonyms, ...traps].sort(() => Math.random() - 0.5);
@@ -8661,8 +8713,11 @@ const recTime = document.getElementById("recFastestTime");
         const arenaBox = document.querySelector(".battle-arena-box");
         const questionBox = document.querySelector(".question-box");
 
+        // 🌟 [3중 방어막] 구출전/교감실에서는 무조건 끄고, 진짜 지문 퀘스트일 때만 지문 뷰어 가동!
+        const isPassageQuiz = !isEmergencyDefenseMode && !isCounselingMode && q && q.isPassage;
+
         // 📜 지문 영지 뷰어 렌더링 및 실시간 형광펜 이동
-        if (activeMap.isPassage && viewerBox) {
+        if (isPassageQuiz && viewerBox) {
             viewerBox.style.display = "block";
             viewerBox.style.maxHeight = "none"; // 🌟 높이 제한 해제 -> 선지 위쪽 공간 100% 꽉 채움!
             if (arenaBox) arenaBox.style.display = "none";     // 일러스트 숨김
@@ -8758,7 +8813,8 @@ const recTime = document.getElementById("recFastestTime");
         }
 
         // 🌟 지문 영지가 아닐 때만 기본 28px 텍스트로 표시 (지문 영지의 알약 뱃지 보호!)
-        if (!activeMap.isPassage) {
+        // 🌟 진짜 지문 퀴즈가 아닐 때만 기본 28px 단어 텍스트 표시 (구출전/교감실 정상 복구!)
+        if (!isPassageQuiz) {
             document.getElementById("wordDisplay").innerText = q.prompt;
         }
 
@@ -8808,8 +8864,8 @@ const recTime = document.getElementById("recFastestTime");
         const parchmentInner = document.querySelector(".parchment-inner");
         let feverOverlay = document.getElementById("feverVignette");
 
-        // 📜 [지문 영지 전용] 차분한 독해 집중을 위해 콤보 알약과 여백을 완전히 숨김!
-        if (activeMap.isPassage) {
+        // 📜 지문 퀴즈일 때만 콤보 숨김 (구출전/교감실에서는 콤보 뱃지 정상 출력!)
+        if (isPassageQuiz) {
             if (streakBadge) {
                 streakBadge.style.display = "none";
                 if (streakBadge.parentElement) streakBadge.parentElement.style.display = "none";
@@ -9090,8 +9146,26 @@ const recTime = document.getElementById("recFastestTime");
             fbResonanceNotice.style.display = "none";
             fbMeaning.className = "fb-meaning";
 
-            // 💖 [교감실 판별] 진도 반영 없는 자율 훈련 모드인가?
+            // 💖 [누락 복구] 현재 퀴즈가 교감실 찜 퀴즈인지 판별하는 필수 변수!
             const isFavPractice = (isCounselingMode && !q.isCounsel);
+
+            // 💖 지문 퀴즈일 때는 찜 하트 버튼 숨김 (일반 퀴즈는 노출)
+            const fbHeart = document.getElementById("fbHeartBtn");
+            if (fbHeart) {
+            fbHeart.style.display = (q && q.isPassage) ? "none" : "block";
+            }
+
+            // -------------------------------------------------------------
+            // 📜 [지문 영지 전용 피드백] 공명/계약 대신 문맥 독해 피드백 부여
+            // -------------------------------------------------------------
+            if (q && q.isPassage) {
+                Sound.correct(streakCount);
+                fbTitle.className = "fb-hero-badge fb-theme-tuning";
+                fbTitle.innerText = `📖 문맥 파악 성공! (${elapsedSec}초)`;
+                fbResonanceNotice.style.display = "block";
+                fbResonanceNotice.innerHTML = "지문 속 어휘의 의미를 정확히 파악했다!";
+                if (fbNextBtn) fbNextBtn.innerText = "다음 문맥 어휘로 ➔";
+            } else
 
             // -------------------------------------------------------------
             // 🛋️ [경우 0: 정령 성소 문제일 때 (복구 완료!)]
@@ -9316,6 +9390,24 @@ const recTime = document.getElementById("recFastestTime");
 
             hist.hadWrong = true;
             safeStorageSet('spirit_study_history', wordStudyHistory);
+
+            // 🌟 [정확한 위치!] 여기서 문구 분기가 일어납니다
+            if (q && q.isPassage) {
+                fbTitle.className = "fb-hero-badge fb-theme-wrong";
+                fbTitle.innerText = "🍂 문맥 파악 실패... 🍂";
+                fbResonanceNotice.style.display = "block";
+                fbResonanceNotice.innerHTML = "앞뒤 문맥과 어휘의 쓰임새를 다시 한번 확인해봐.";
+                if (fbNextBtn) fbNextBtn.innerText = "오답 확인 후 계속 독해 ➔";
+            } else if (q.isDecayed) {
+                // 🌟 (안개 구출전 오답 처리 기존 코드 그대로 유지)
+                wordMastery[key] = 3;
+                roundQuestions.push(q);
+                // ...
+            } else {
+                // 일반 영지 탐험 오답
+                fbTitle.className = "fb-hero-badge fb-theme-wrong";
+                fbTitle.innerText = "🍂 교감 실패... 🍂";
+            }
 
             if (q.isDecayed) {
                 // 🌟 [강등 완전 삭제] 교감도(3점 계약)는 깨지지 않고 안전하게 유지!
@@ -11413,8 +11505,12 @@ function handleMidBossVictory() {
 
             const listContainer = document.getElementById("wordListContainer");
             listContainer.innerHTML = "";
-
             const activeMap = worldMaps.find(m => m.id === currentMapId) || worldMaps[0];
+
+            // 🌟 지문 영지에서는 찜 필터 버튼 숨김, 일반 영지에서는 노출!
+            const favFilterWrap = document.getElementById("wordBookFavFilterWrap");
+            if (favFilterWrap) favFilterWrap.style.display = activeMap.isPassage ? "none" : "flex";
+
             const currentWords = activeMap.words;
             const currentSavedMastery = safeStorageGet(`spirit_mastery_${activeMap.id}`, {});
 
@@ -11495,10 +11591,29 @@ function handleMidBossVictory() {
                 document.getElementById("mapBookTitleText").innerText = `📜 ${activeMap.name}`;
 
                 } else {
-                    // 일반 영지 단어 루프는 else 블록으로 안전하게 격리!
-                    currentWords.forEach((item, idx) => {
+                    const sectors = getMapSectors(activeMap);
+                    let currentSecIdx = -1;
+                    // 🌟 [핵심] 필터와 100% 무관하게, 영지 전체의 진짜 교감도 점수를 불변으로 항상 계산!
+                    let totalBoundCount = 0;
+                    currentWords.forEach(w => {
+                        if ((currentSavedMastery[w.eng] || 0) >= 3) totalBoundCount++;
+                    });
+                    const overallPercent = currentWords.length > 0 ? Math.round((totalBoundCount / currentWords.length) * 100) : 0;
+                    document.getElementById("overallPercentageText").innerText = `${totalBoundCount} / ${currentWords.length}마리 (${overallPercent}%)`;
+                    document.getElementById("overallGaugeBar").style.width = overallPercent + "%";
+                    document.getElementById("mapBookTitleText").innerText = `🌟 ${activeMap.name} 교감도`;
+
+                    // 🌟 찜 필터가 켜져 있으면 찜한 단어만 걸러냄
+                    const wordsToRender = showOnlyBookFavs 
+                        ? currentWords.filter(w => wordFavorites[w.eng])
+                        : currentWords;
+
+                    if (showOnlyBookFavs && wordsToRender.length === 0) {
+                        listContainer.innerHTML = `<div style="text-align:center; padding:30px 10px; font-size:12.5px; color:#785a3e; font-weight:700;">이 영지에서 찜한 정령이 없습니다.</div>`;
+                    }
+
+                    wordsToRender.forEach((item, idx) => {
                     const count = currentSavedMastery[item.eng] || 0;
-                    if (count >= 3) boundCount++;
                     
                     // 🌟 단어 고유 키(item.eng)를 넘겨 계약과 각인을 정확히 구분
                     const mInfo = getMasteryInfo(count, item.eng);
@@ -11591,11 +11706,6 @@ function handleMidBossVictory() {
 
                     listContainer.appendChild(row);
                 });
-
-                const overallPercent = currentWords.length > 0 ? Math.round((boundCount / currentWords.length) * 100) : 0;
-                document.getElementById("overallPercentageText").innerText = `${boundCount} / ${currentWords.length}마리 (${overallPercent}%)`;
-                document.getElementById("overallGaugeBar").style.width = overallPercent + "%";
-                document.getElementById("mapBookTitleText").innerText = `🌟 ${activeMap.name} 교감도`;
             }
         }
 
@@ -12009,55 +12119,65 @@ function handleMidBossVictory() {
     // 🚀 [초고속 최적화] 핵심 게임 이미지 백그라운드 사전 캐싱
     function preloadGameAssets() {
         const criticalImages = [
+            // 🌟 1단계: 접속 즉시 첫 화면에 필요한 야영지 UI & 뼈대 (0초 최우선 로딩)
+            "title_fire.webp",
+            "statusboard.webp",
+            "mr.book_glitter.webp",
+            "scroll_btn_cut.webp",
+            "scroll_btn_v.webp",
+            "parchment.webp",
+
+            // 🌟 2단계: 퀴즈 출격 시 0초 로딩되어야 할 필수 핵심 에셋
             "battle_field.webp",
-            "bg_forest.webp",
-            "bg_ruins.webp",
-            "bg_sky.webp",
-            "bg_water.webp",
-            "book_ghost.webp",
-            "boss_forest.webp",
-            "boss_forest_battle.webp",
-            "boss_ruins.webp",
-            "boss_ruins_battle.webp",
-            "boss_sky.webp",
-            "boss_sky_battle.webp",
-            "boss_status.webp",
-            "boss_water.webp",
-            "boss_water_battle.webp",
-            "clear_guardian.webp",
-            "clear_sector.webp",
-            "demon_exam.webp",
-            "drill_battle.webp",
-            "drill_intro.webp",
-            "ending_dawn.webp",
-            "fb_contract.webp",
+            "scroll_btn_bcut.webp",
             "fb_correct.webp",
             "fb_wrong.webp",
-            "intro_book.webp",
+            "fb_contract.webp",
+            "rest_fire.webp",
+
+            // 🌟 3단계: 성역 탐험 및 주요 모달 허브 배너 (누락 4종 추가 완료!)
+            "world.webp",
+            "scroll_btn.webp",
+            "shrine.webp",        // 👈 추가
+            "start_mist.webp",    // 👈 추가
+            "rest_mist.webp",     // 👈 추가
+            "start_rift.webp",    // 👈 추가
+            "clear_sector.webp",
+            "tier_up.webp",
+
+            // 🌟 4단계: 4대 영지 테마 배경 & 수호령 전투 액션
+            "bg_forest.webp",
+            "bg_water.webp",
+            "bg_sky.webp",
+            "bg_ruins.webp",
+            "boss_forest.webp",
+            "boss_water.webp",
+            "boss_sky.webp",
+            "boss_ruins.webp",
+            "boss_forest_battle.webp",
+            "boss_water_battle.webp",
+            "boss_sky_battle.webp",
+            "boss_ruins_battle.webp",
+            "boss_status.webp",
+            "clear_guardian.webp",
+
+            // 🌟 5단계: 특훈 & 마왕 레이드 & 진엔딩
+            "drill_intro.webp",
+            "drill_battle.webp",
+            "demon_exam.webp",
+            "ending_dawn.webp",
+
+            // 🌟 6단계: 프롤로그 및 보조 에셋
             "intro_boss.webp",
-            "intro_mr.book.webp",
-            "mr.book_glitter.webp",
             "intro_spirits.webp",
+            "book_ghost.webp",
+            "intro_mr.book.webp",
+            "intro_book.webp",
             "mr.book.webp",
             "mr.book_icon.webp",
-            "parchment.webp",
-            "parchment1.webp",
-            "parchment2.webp",
-            "rest_fire.webp",
-            "scroll_btn.webp",
-            "scroll_btn_bcut.webp",
-            "scroll_btn_bcut_bold.webp",
-            "scroll_btn_cut.webp",
-            "scroll_btn_cut_bold.webp",
-            "scroll_btn_v.webp",
-            "scroll_green.webp",
-            "scroll_purple.webp",
-            "scroll_red.webp",
             "seal_btn.webp",
-            "statusboard.webp",
-            "tier_up.webp",
-            "title_fire.webp",
-            "world.webp"
+            "parchment1.webp",
+            "parchment2.webp"
         ];
         criticalImages.forEach(filename => {
             const img = new Image();
@@ -12266,6 +12386,40 @@ function handleMidBossVictory() {
         if (modal) modal.style.display = "none";
     }
 
+    // ========================================================
+    // 🎛️ 관제탑 학생 목록 다중 정렬 엔진 (기본: 가나다 이름순)
+    // ========================================================
+    let currentAdminSortMode = 'name'; // 🌟 기본값: 가나다 이름순!
+
+    function sortStudentListHelper(list, mode = currentAdminSortMode) {
+        return [...list].sort((a, b) => {
+            const nameA = a.name || a.heroName || '';
+            const nameB = b.name || b.heroName || '';
+
+            if (mode === 'name') {
+                return nameA.localeCompare(nameB, 'ko'); // 한국어 가나다 정렬
+            } else if (mode === 'masteryDesc') {
+                return (b.masteryCount || 0) - (a.masteryCount || 0); // 단어 많은 순
+            } else if (mode === 'masteryAsc') {
+                return (a.masteryCount || 0) - (b.masteryCount || 0); // 단어 적은 순
+            } else if (mode === 'recent') {
+                // 최근 접속일 내림차순
+                const timeA = (a.lastLogin && a.lastLogin.toDate ? a.lastLogin.toDate().getTime() : (a.lastUpdated && a.lastUpdated.toDate ? a.lastUpdated.toDate().getTime() : 0));
+                const timeB = (b.lastLogin && b.lastLogin.toDate ? b.lastLogin.toDate().getTime() : (b.lastUpdated && b.lastUpdated.toDate ? b.lastUpdated.toDate().getTime() : 0));
+                return timeB - timeA;
+            } else if (mode === 'id') {
+                return (a.id || '').localeCompare(b.id || ''); // 학번순
+            }
+            return 0;
+        });
+    }
+
+    function changeAdminSortMode(newMode) {
+        Sound.click();
+        currentAdminSortMode = newMode;
+        filterAdminStudents(); // 현재 검색어와 정렬을 함께 적용하여 렌더
+    }
+
     // 2. 파이어베이스에서 전교생 실시간 데이터 불러오기
     async function loadAdminTowerData() {
         const container = document.getElementById("adminStudentListContainer");
@@ -12295,8 +12449,8 @@ function handleMidBossVictory() {
                 }
             });
 
-            // 학번(ID) 오름차순으로 정렬 (10101, 10102 순)
-            adminCachedStudents.sort((a, b) => (a.id || "").localeCompare(b.id || ""));
+            // 🌟 기본값인 '가나다 이름순'으로 초기 정렬!
+            adminCachedStudents = sortStudentListHelper(adminCachedStudents, 'name');
 
             if (totalEl) totalEl.innerText = `총 ${adminCachedStudents.length}명 등록`;
             renderAdminStudentCards(adminCachedStudents);
@@ -12529,17 +12683,16 @@ function handleMidBossVictory() {
     // 4. 실시간 학번/이름 검색 필터링
     function filterAdminStudents() {
         const input = document.getElementById("adminStudentSearchInput");
-        if (!input) return;
-        const query = input.value.trim().toLowerCase();
-        if (!query) {
-            renderAdminStudentCards(adminCachedStudents);
-            return;
+        const query = input ? input.value.trim().toLowerCase() : "";
+        let list = adminCachedStudents;
+        if (query) {
+            list = list.filter(s => 
+                (s.id && String(s.id).toLowerCase().includes(query)) || 
+                ((s.name || s.heroName) && String(s.name || s.heroName).toLowerCase().includes(query))
+            );
         }
-        const filtered = adminCachedStudents.filter(s => 
-            (s.id && String(s.id).toLowerCase().includes(query)) || 
-            (s.name && String(s.name).toLowerCase().includes(query))
-        );
-        renderAdminStudentCards(filtered);
+        // 🌟 현재 선택된 정렬 기준 적용 후 출력!
+        renderAdminStudentCards(sortStudentListHelper(list));
     }
 
     // 5. 📥 전교생 성적표 한글 엑셀(CSV) 원클릭 다운로드 엔진
@@ -13090,7 +13243,7 @@ function handleMidBossVictory() {
         }
 
         const exitBtn = document.getElementById("inGameExitBtn");
-        if (exitBtn) exitBtn.innerText = "🗺️ 대륙 지도로";
+        if (exitBtn) exitBtn.innerText = "🗺️ 성소로";
 
         document.getElementById("titleScreen").style.display = "none";
         document.getElementById("gameScreen").style.display = "flex";
@@ -13214,7 +13367,7 @@ function handleMidBossVictory() {
             pushNavState();
             showGameAlert(
                 "프롤로그 스킵",
-                "프롤로그 이야기를 건너뛰고\n대륙 지도로 바로 이동하시겠습니까?",
+                "프롤로그 이야기를 건너뛰고\n타이틀로 바로 이동하시겠습니까?",
                 "스킵하고 시작 ➔",
                 "📜 SKIP PROLOGUE",
                 () => {
@@ -13279,9 +13432,13 @@ function handleMidBossVictory() {
 
         // 전 대륙 모든 단어 대상 탐색
         worldMaps.forEach(map => {
-            // 🛑 [성소 격리] 비경(동의어 net_, 불규칙 irreg) 영지는 성소 입소 대상에서 제외!
             const idLower = (map.id || "").toLowerCase();
-            if (idLower.includes('net_') || idLower.includes('irreg')) return;
+
+            const nameLower = (map.name || "").toLowerCase();
+            // 🌟 치유실은 오직 정규 시험 어휘(일반 + spell_)만 케어! (지문, 불규칙, 동의어 완전 제외)
+            const isSpell = idLower.includes('spell_');
+            const isOtherSpecial = idLower.includes('irreg') || idLower.includes('net') || idLower.includes('passage') || nameLower.includes('불규칙') || nameLower.includes('동의어');
+            if (!isSpell && isOtherSpecial) return; // 비경 단어 입소 차단!
             map.words.forEach(w => {
                 // 이미 목록에 들어간 단어는 중복 차단
                 if (targets.some(item => item.eng === w.eng)) return;
@@ -13352,87 +13509,130 @@ function handleMidBossVictory() {
         if (modal) modal.style.display = "none";
     }
 
-    // 2개의 방 중 하나 선택 ➔ 단어장 먼저 띄우기!
+    // ========================================================
+    // 🏛️ 성소 단어장(치유실/교감실) 렌더러 및 2단 탭 제어
+    // ========================================================
+    let currentShrineFavTab = 'normal'; // 'normal' | 'special'
+
     function openShrineRoom(type) {
         Sound.click();
         currentShrineMode = type;
-
-        let targetWords = [];
-        const titleEl = document.getElementById("shrineWordlistTitle");
-        const descEl = document.getElementById("shrineWordlistDesc");
-        const countEl = document.getElementById("shrineWordlistCount");
-        const startBtn = document.getElementById("shrineStartQuizBtn");
-        const listContainer = document.getElementById("shrineWordlistContainer");
+        const favTabBar = document.getElementById("shrineFavTabBar");
 
         if (type === 'hurt') {
-            // [문 1: 서운해하는 정령 치유실]
-            targetWords = getCounselingTargets();
-            if (targetWords.length === 0) {
+            // [치유실] 탭 바 숨김 & 순수 정규 오답 단어만 렌더링
+            if (favTabBar) favTabBar.style.display = "none";
+            const targets = getCounselingTargets();
+            if (targets.length === 0) {
                 showGameAlert("치유실 평화", "현재 서운해하거나 상처 입은 정령은 없어. 모든 정령과 원만한 관계를 유지하고 있군.", "확인", "✨ ALL CONTENT");
                 return;
             }
-            if (titleEl) titleEl.innerText = "🍂 상처 입은 정령 명단";
-            if (descEl) descEl.innerText = "침식과 오답으로 지친 정령들이야. 꾸물거리지 말고 얼른 치유 상담을 시작해라!";
-            if (startBtn) startBtn.innerHTML = "🌿 정령들과 치유 상담 시작하기! ➔";
+            renderShrineWordListUI(targets, "🍂 상처 입은 정령 명단", "침식과 오답으로 지친 정령들이야. 얼른 치유 상담을 시작해라!", "🌿 정령들과 치유 상담 시작하기! ➔", "#ea580c");
+        } else {
+            // [교감실] 2단 탭 바 노출 & 1번 탭(일반 영지 정령) 기본 오픈
+            if (favTabBar) favTabBar.style.display = "flex";
+            // 🌟 [동기화 해결] 버튼 색상과 단어 목록을 오차 없이 100% 일치시켜 복원!
+            switchShrineFavTab(currentShrineFavTab || 'normal');
+        }
 
-        } else if (type === 'fav') {
-            // [문 2: 친해지고 싶은 정령 교감실]
-            worldMaps.forEach(map => {
+        closeShrineHub();
+        const wModal = document.getElementById("shrineWordlistModal");
+        if (wModal) wModal.style.display = "flex";
+    }
+
+    // 교감실 2단 탭 전환
+    function switchShrineFavTab(tabName) {
+        Sound.click();
+        currentShrineFavTab = tabName;
+        const btnNorm = document.getElementById("shrineFavTabBtnNormal");
+        const btnSpec = document.getElementById("shrineFavTabBtnSpecial");
+
+        if (tabName === 'normal') {
+            if (btnNorm) btnNorm.classList.add("active");
+            if (btnSpec) btnSpec.classList.remove("active");
+        } else {
+            if (btnNorm) btnNorm.classList.remove("active");
+            if (btnSpec) btnSpec.classList.add("active");
+        }
+        renderShrineFavTabList();
+    }
+
+    // 교감실 활성 탭에 맞는 단어 목록 수집 및 렌더링
+    function renderShrineFavTabList() {
+        const isSpecialTab = (currentShrineFavTab === 'special');
+        let targetWords = [];
+
+        worldMaps.forEach(map => {
+            const idLower = (map.id || "").toLowerCase();
+            const nameLower = (map.name || "").toLowerCase();
+            // 지문 영지 단어는 교감실에서도 100% 제외
+            if (idLower.includes('passage')) return;
+
+            const isSpell = idLower.includes('spell_');
+            const isSpecialMap = (idLower.includes('irreg') || idLower.includes('net') || nameLower.includes('불규칙') || nameLower.includes('동의어'));
+            
+            // 탭 판별: 비경 탭(불규칙·동의어) vs 일반 영지 탭(일반·철자)
+            const matchesTab = isSpecialTab ? isSpecialMap : (!isSpecialMap || isSpell);
+
+            if (matchesTab) {
                 map.words.forEach(w => {
                     if (wordFavorites[w.eng] && !targetWords.some(item => item.eng === w.eng)) {
                         targetWords.push({ ...w, mapId: map.id });
                     }
                 });
-            });
-
-            if (targetWords.length === 0) {
-                showGameAlert("교감실 비어있음", "아직 찜💖한 정령이 없군. 그만큼 자신이 있다는 거겠지? 그게 아니라면, 어서 영지 단어장이나 교감 성공/실패창에서 하트를 눌러 등록해봐.", "확인", "💖 NO FAVORITES");
-                return;
             }
-            if (titleEl) titleEl.innerText = "💖 친해지고 싶은 정령 명단";
-            if (descEl) descEl.innerText = "찜한 정령들과의 특별 집중 교감. 훑어본 후 교감을 시작해.";
-            if (startBtn) startBtn.innerHTML = "💖 정령들과 집중 교감 시작하기! ➔";
+        });
+
+        const titleText = isSpecialTab ? "🌀 찜한 숨겨진 비경 정령" : "💖 찜한 일반 영지 정령 명단";
+        const descText = isSpecialTab ? "불규칙 변화와 동의어 쓸어담기 특훈을 진행해보자." : "찜해둔 일반·철자 단어들과 집중 교감해보자.";
+        const btnText = isSpecialTab ? "🌀 숨겨진 비경 정령 특훈 시작하기! ➔" : "💖 일반 영지 정령 교감 시작하기! ➔";
+        const borderColor = isSpecialTab ? "#7e22ce" : "#ec4899";
+
+        renderShrineWordListUI(targetWords, titleText, descText, btnText, borderColor);
+    }
+
+    // 목록 공통 렌더러
+    function renderShrineWordListUI(words, title, desc, btnText, borderColor) {
+        document.getElementById("shrineWordlistTitle").innerText = title;
+        document.getElementById("shrineWordlistDesc").innerText = desc;
+        document.getElementById("shrineWordlistCount").innerText = `총 ${words.length}마리`;
+        const startBtn = document.getElementById("shrineStartQuizBtn");
+        if (startBtn) startBtn.innerText = btnText;
+
+        const listContainer = document.getElementById("shrineWordlistContainer");
+        listContainer.innerHTML = "";
+
+        if (words.length === 0) {
+            listContainer.innerHTML = `<div style="text-align:center; padding:30px 10px; font-size:12.5px; color:#785a3e; font-weight:700;">등록된 정령이 없습니다.</div>`;
+            return;
         }
 
-        if (countEl) countEl.innerText = `총 ${targetWords.length}마리`;
+        words.forEach(w => {
+            const isFav = !!wordFavorites[w.eng];
+            const row = document.createElement("div");
+            row.className = "word-item-clean stage-1";
+            row.style.borderLeftColor = borderColor;
 
-        // 단어장 카드 목록 렌더링
-        if (listContainer) {
-            listContainer.innerHTML = "";
-            targetWords.forEach(w => {
-                const isFav = !!wordFavorites[w.eng];
-                const row = document.createElement("div");
-                row.className = "word-item-clean stage-1";
-                row.style.borderLeftColor = (type === 'fav') ? '#ec4899' : '#ea580c';
+            const textGroup = document.createElement("div");
+            textGroup.className = "word-text-group";
+            textGroup.innerHTML = `
+                <span class="word-main-eng">${w.displayEng || w.eng}</span>
+                <span class="word-sub-kor">${w.kor}</span>
+            `;
 
-             const textGroup = document.createElement("div");
-             textGroup.className = "word-text-group";
-             textGroup.innerHTML = `
-                 <span class="word-main-eng">${w.displayEng || w.eng}</span>
-                 <span class="word-sub-kor">${w.kor}</span>
-             `;
+            const favBtn = document.createElement("button");
+            favBtn.dataset.favWord = w.eng;
+            favBtn.style.cssText = "background:none; border:none; font-size:18px; cursor:pointer;";
+            favBtn.innerText = isFav ? '💖' : '🤍';
+            favBtn.onclick = (e) => {
+                toggleWordFavorite(w.eng, e);
+                if (typeof updateShrineWordlistCount === 'function') updateShrineWordlistCount();
+            };
 
-             const favBtn = document.createElement("button");
-             favBtn.dataset.favWord = w.eng;
-             favBtn.style.cssText = "background:none; border:none; font-size:18px; cursor:pointer;";
-             favBtn.innerText = isFav ? '💖' : '🤍';
-             favBtn.onclick = (e) => {
-                 toggleWordFavorite(w.eng, e);
-                 if (typeof updateShrineWordlistCount === 'function') {
-                     updateShrineWordlistCount();
-                 }
-             };
-
-             row.appendChild(textGroup);
-             row.appendChild(favBtn);
-             listContainer.appendChild(row);
-            });
-        }
-
-        // 로비 닫고 단어장 모달 띄우기
-        closeShrineHub();
-        const wModal = document.getElementById("shrineWordlistModal");
-        if (wModal) wModal.style.display = "flex";
+            row.appendChild(textGroup);
+            row.appendChild(favBtn);
+            listContainer.appendChild(row);
+        });
     }
 
     /* ========================================================
@@ -13502,13 +13702,25 @@ function handleMidBossVictory() {
     // 💖 찜한 정령 전용 5문제 퀴즈 출격 엔진
     function startFavoritePracticeQuiz() {
         Sound.click();
+        const isSpecialTab = (currentShrineFavTab === 'special');
         const favWords = [];
+
         worldMaps.forEach(map => {
+            const idLower = (map.id || "").toLowerCase();
+            const nameLower = (map.name || "").toLowerCase();
+            if (idLower.includes('passage')) return; // 지문 영지 제외
+
+            const isSpell = idLower.includes('spell_');
+            const isSpecialMap = (idLower.includes('irreg') || idLower.includes('net') || nameLower.includes('불규칙') || nameLower.includes('동의어'));
+            const matchesTab = isSpecialTab ? isSpecialMap : (!isSpecialMap || isSpell);
+
+            if (matchesTab) {
             map.words.forEach(w => {
                 if (wordFavorites[w.eng] && !favWords.some(item => item.eng === w.eng)) {
                     favWords.push({ ...w, mapId: map.id });
                 }
             });
+            }
         });
 
         if (favWords.length === 0) return;
@@ -13522,31 +13734,38 @@ function handleMidBossVictory() {
         const pickList = [...favWords].sort(() => Math.random() - 0.5).slice(0, 5);
 
         pickList.forEach(w => {
-            const type = w.isMorph ? "E2K" : (Math.random() < 0.5 ? "E2K" : "K2E");
+            // 🌟 탭별 고유 기믹 매핑
+            let type = "E2K";
+            if (w.isSynonymNet) {
+                type = "SYNONYM_SWEEP"; // 동의어 4형제 쓸어담기!
+            } else if (!w.isMorph && !w.isSpell && Math.random() < 0.5) {
+                type = "K2E";
+            }            
             roundQuestions.push({
                 id: `fav_${w.eng}_${Date.now()}`,
                 wordKey: w.eng,
                 engWord: w.eng,
+                fullEng: w.eng,
                 korMeaning: w.kor,
                 type: type,
-                prompt: type === "E2K" ? w.eng : w.kor,
-                correct: type === "E2K" ? w.kor : w.eng,
+                prompt: (type === "SYNONYM_SWEEP") ? w.eng.split(',')[0].trim() : (type === "E2K" ? w.eng : w.kor),
+                correct: (type === "SYNONYM_SWEEP") ? w.kor : (type === "E2K" ? w.kor : w.eng),
                 pool: type === "E2K" ? allPool.map(item => item.kor) : allPool.map(item => item.eng),
                 mapId: w.mapId,
                 isCounsel: false,
-                // 🌟 [추가] 형상변환 3단 콤보 속성 전달
-                isMorph: !!w.isMorph,
+                isMorph: !!w.isMorph, // 불규칙 룬 조립 발동!
                 mutations: w.mutations || [],
-                morphPhase: 0
+                morphPhase: 0,
+                isSynonymNet: !!w.isSynonymNet
             });
         });
 
-        document.getElementById("inGameMapTitle").innerText = "💖 친해지고 싶은 정령 집중 교감";
-        document.getElementById("gameSectorBadge").innerText = "1:1 집중 교감";
-        document.getElementById("gameSectorBadge").style.backgroundColor = "#be185d";
+        document.getElementById("inGameMapTitle").innerText = isSpecialTab ? "🌀 찜한 비경 정령 특훈" : "💖 친해지고 싶은 정령 집중 교감";
+        document.getElementById("gameSectorBadge").innerText = isSpecialTab ? "비경 기믹 특훈" : "1:1 집중 교감";
+        document.getElementById("gameSectorBadge").style.backgroundColor = isSpecialTab ? "#7e22ce" : "#be185d";
 
         const exitBtn = document.getElementById("inGameExitBtn");
-        if (exitBtn) exitBtn.innerText = "🗺️ 대륙 지도로";
+        if (exitBtn) exitBtn.innerText = "🗺️ 성소로";
 
         document.getElementById("titleScreen").style.display = "none";
         document.getElementById("mapLobbyScreen").style.display = "none";
@@ -13859,6 +14078,24 @@ function handleMidBossVictory() {
         mrBookBubbleTimer = setTimeout(() => {
             bubble.style.display = "none";
         }, 3200);
+    }
+
+    // ========================================================
+    // 💖 영지 단어장 '찜한 정령만 보기' 필터 제어
+    // ========================================================
+    let showOnlyBookFavs = false;
+
+    function toggleBookFavFilter() {
+        Sound.click();
+        showOnlyBookFavs = !showOnlyBookFavs;
+        const btn = document.getElementById("bookFavFilterBtn");
+        if (btn) {
+            btn.innerHTML = showOnlyBookFavs ? "💖 찜한 정령만 (ON)" : "🤍 찜한 정령만 보기";
+            btn.style.background = showOnlyBookFavs ? "#fce7f3" : "#ede3cc";
+            btn.style.borderColor = showOnlyBookFavs ? "#f472b6" : "#c9b48c";
+            btn.style.color = showOnlyBookFavs ? "#be185d" : "#785a3e";
+        }
+        openWordBook(false); // 단어장 다시 그리기
     }
 
 </script>

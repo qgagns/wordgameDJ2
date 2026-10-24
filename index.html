@@ -11737,9 +11737,8 @@ function handleMidBossVictory() {
 
             // 📜 [지문 영지 전용 도감] 문장 하나가 카드 1장 + 그 안의 어휘들 나열!
             if (activeMap.isPassage) {
-                // 마침표/물음표/느낌표 기준으로 지문을 문장 단위로 분할
                 const sectors = getMapSectors(activeMap);
-                sectors.forEach((sec, sIdx) => {
+                sectors.forEach((sec) => {
                     // 구역 분할 헤더 생성 (1문단, 2문단 등)
                     const header = document.createElement("div");
                     header.className = "sector-divider-header conquered";
@@ -11753,9 +11752,24 @@ function handleMidBossVictory() {
                     `;
                     listContainer.appendChild(header);
 
-                    // 해당 문단의 지문에서 문장 분할
-                    const rawSentences = (sec.passageFullText || "").match(/[^.!?\n]+[.!?]?/g) || [];
-                    rawSentences.forEach((rawSent) => {
+                    // 줄바꿈(\n) 및 // 기호 기준으로 문장 덩어리 분할
+                    const rawLines = (sec.passageFullText || "").split('\n');
+                    const sentences = [];
+                    rawLines.forEach(line => {
+                        const trimmedLine = line.trim();
+                        if (!trimmedLine) return;
+                        if (trimmedLine.includes('//')) {
+                            trimmedLine.split('//').forEach(part => {
+                                const p = part.trim();
+                                if (p) sentences.push(p);
+                            });
+                        } else {
+                            sentences.push(trimmedLine);
+                        }
+                    });
+
+                    // 문장 단위로 카드 생성 (단어가 없어도 100% 노출)
+                    sentences.forEach((rawSent) => {
                     const sentTrimmed = rawSent.trim();
                     if (!sentTrimmed) return;
 
@@ -11767,9 +11781,7 @@ function handleMidBossVictory() {
                         }
                     });
 
-                    // 출제 대상 단어가 1개라도 있는 문장만 카드로 생성!
-                    if (matchedWordsInSentence.length > 0) {
-                        // 문장 본문에서 [[ ]] 괄호를 벗기고 보이는 단어만 굵은 밑줄로 표시
+                    // 문장 텍스트에서 [[ ]] 문법을 벗겨내고 황금빛 밑줄 강조
                         let sentHtml = sentTrimmed.replace(/\[\[(.*?)\]\]/g, (match, tokenContent) => {
                             let displayStr = tokenContent.trim();
                             if (tokenContent.includes('|')) {
@@ -11780,25 +11792,34 @@ function handleMidBossVictory() {
                             return `<b style="color:#b45309; text-decoration:underline;">${displayStr}</b>`;
                         });
 
-                        // 아래에 달릴 단어 목록 HTML 생성
-                        const wordsListHtml = matchedWordsInSentence.map(w => `
-                            <div style="background:#f4ecda; border-radius:6px; padding:5px 8px; margin-top:4px; display:flex; justify-content:space-between; align-items:center;">
-                                <span style="font-size:12.5px; font-weight:900; color:#78350f;"><b>${w.eng}</b> : ${w.kor}
-                            </div>
-                        `).join('');
+                        const hasWords = matchedWordsInSentence.length > 0;
 
+                        // 하단 어휘 리스트 (단어가 있을 때만 박스 생성)
+                        let wordsListSection = "";
+                        if (hasWords) {
+                            const wordsListHtml = matchedWordsInSentence.map(w => `
+                                <div style="background:#f4ecda; border-radius:6px; padding:5px 8px; margin-top:4px; display:flex; justify-content:space-between; align-items:center;">
+                                    <span style="font-size:12.5px; font-weight:900; color:#78350f;"><b>${w.eng}</b> : ${w.kor}</span>
+                                </div>
+                            `).join('');
+
+                            wordsListSection = `
+                                <div style="margin-top:6px; border-top:1px dashed #d8c7a6; padding-top:4px;">
+                                    ${wordsListHtml}
+                                </div>
+                            `;
+                        }
+
+                        // 문장 카드 (단어가 없으면 은은한 회갈색 테두리로 자연스럽게 연출)
                         const sentenceCard = document.createElement("div");
-                        sentenceCard.style.cssText = "background:#fdfaf2; border:1.5px solid #d8c7a6; border-left:5px solid #b45309; border-radius:10px; padding:10px 12px; margin-bottom:8px; text-align:left;";
+                        sentenceCard.style.cssText = `background:#fdfaf2; border:1.5px solid #d8c7a6; border-left:5px solid ${hasWords ? '#b45309' : '#a89078'}; border-radius:10px; padding:10px 12px; margin-bottom:8px; text-align:left;`;
                         sentenceCard.innerHTML = `
                             <div style="font-size:13.5px; font-weight:700; color:#2c1a0e; line-height:1.65; word-break:keep-all;">
                                 ${sentHtml}
                             </div>
-                            <div style="margin-top:6px; border-top:1px dashed #d8c7a6; padding-top:4px;">
-                                ${wordsListHtml}
-                            </div>
+                            ${wordsListSection}
                         `;
                         listContainer.appendChild(sentenceCard);
-                    }
                     });
                 });
 

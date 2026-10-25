@@ -8,7 +8,7 @@
     }
 </script>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 
     <!-- 📱 [PWA] 주소창 없는 100% 풀스크린 독립 앱 실행 설정 -->
     <link rel="manifest" href="manifest.json">
@@ -34,6 +34,12 @@
             user-select: none;
             -webkit-user-select: none;
             -webkit-touch-callout: none;
+            /* 🛡️ [더블탭 줌 방어 & 터치 반응속도 극대화] */
+            touch-action: manipulation;
+            /* 🛡️ [스마트폰 브라우저 글자 크기 120% 강제 확대 무력화] */
+            -webkit-text-size-adjust: 100%;
+            -moz-text-size-adjust: 100%;
+            text-size-adjust: 100%;
         }
         
         /* 단, 학생이 학번/이름을 입력하는 로그인/수료증 칸은 타이핑해야 하므로 드래그 허용! */
@@ -451,27 +457,25 @@
         .rank-hud-title {
             font-size: 10px;
             font-weight: 700;
-            color: #f1dfb3;
-            background: linear-gradient(135deg, rgba(65,79,43,0.96), rgba(39,49,29,0.96));
-            border: 1px solid rgba(190,157,91,0.8);
+            color: #065f46;
+            background: #ecfdf5;
+            border: 1px solid #a7f3d0;
             padding: 2px 6px;
             border-radius: 5px;
             white-space: nowrap;
-            box-shadow: inset 0 1px 1px rgba(255,224,157,0.12), 0 1px 3px rgba(0,0,0,0.3);
-            line-height: 1.1;
+            line-height: 1.2;
         }
         /* 2) 계급(티어) 알약: 버건디 브릭 레드 */
         .rank-hud-tier {
             font-size: 10px;
             font-weight: 700;
-            color: #f8e4c5;
-            background: linear-gradient(135deg, #71352c, #4b211e);
-            border: 1px solid rgba(194,130,91,0.8);
+            color: #6b21a8;
+            background: #f3e8ff;
+            border: 1px solid #e9d5ff;
             padding: 2px 6px;
             border-radius: 5px;
             white-space: nowrap;
-            box-shadow: inset 0 1px 1px rgba(255,214,166,0.1), 0 1px 3px rgba(0,0,0,0.3);
-            line-height: 1.1;
+            line-height: 1.2;
         }
         /* 🥇 1~3위 전용 입체 테두리 강조 */
         .rank-card.rank-top1 { border-color: #f59e0b; background: #fffdf5; box-shadow: 0 2px 6px rgba(245, 158, 11, 0.25); }
@@ -1192,15 +1196,15 @@
             animation: smartGlowAmber 2.2s infinite alternate ease-in-out;
         }
         @keyframes smartGlowAmber {
-            0%   { filter: drop-shadow(0 3px 6px rgba(0,0,0,0.6)) 
+            0%   { filter: drop-shadow(0 1px 1px rgba(0,0,0,0.6)) 
                 drop-shadow(0 0 1px #fde047) 
-                drop-shadow(0 0 3px #f59e0b) 
-                drop-shadow(0 0 5px #d97706); }
+                drop-shadow(0 0 2px #f59e0b) 
+                drop-shadow(0 0 3px #d97706); }
             100% { filter: 
-                drop-shadow(0 4px 10px rgba(0,0,0,0.8)) 
+                drop-shadow(0 1px 2px rgba(0,0,0,0.8)) 
                 drop-shadow(0 0 3px #fef08a) 
-                drop-shadow(0 0 5px #f59e0b) 
-                drop-shadow(0 0 8px #b45309) 
+                drop-shadow(0 0 3px #f59e0b) 
+                drop-shadow(0 0 3px #b45309) 
                 brightness(1.18); }
         }
 
@@ -1675,6 +1679,44 @@
         }
         .settings-close-btn:hover {
             background: #73492a;
+        }
+
+        /* ========================================================
+           🔥 [연속 출석 스트릭] 야영지 좌상단 불꽃 엠블럼 & 광원
+           ======================================================== */
+        .camp-streak-badge {
+            display: flex;
+            position: absolute;
+            left: 12px;
+            top: 6px;
+            z-index: 10;
+            align-items: center;
+            gap: 5px;
+            background: rgba(26, 14, 8, 0.88);
+            border: 1px solid rgba(181, 148, 97, 0.5);
+            border-radius: 20px;
+            padding: 4px 10px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.5);
+            margin-top: 8px;
+            backdrop-filter: blur(4px);
+        }
+        .camp-streak-fire { font-size: 14px; }
+        .camp-streak-txt  { font-size: 11.5px; font-weight: 800; color: #fef3c7; letter-spacing: -0.2px; }
+
+        /* 랭킹보드용 미니 불꽃 */
+        .rank-streak-pill {
+            font-size: 11px;
+            font-weight: 900;
+            color: #ea580c;
+            background: #fff7ed;
+            border: 1px solid #fdba74;
+            padding: 1px 5px;
+            border-radius: 10px;
+            display: inline-flex;
+            align-items: center;
+            gap: 2px;
+            white-space: nowrap;
+            line-height: 1.1;
         }
 
         /* ========================================================
@@ -2700,7 +2742,19 @@
              z-index:2; pointer-events:none;
          }
 
-         /* 🔥 모닥불 실시간 일렁임 앰비언트 광원 */
+        /* 🔥 1. 야영지 배경 기본 레이어: 1일차 칠흑의 어둠 세팅 */
+        .camp-bg-layer {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-image: url('images/title_fire.webp');
+            background-size: cover;
+            background-position: left center;
+            filter: brightness(0.65) contrast(1.2); /* 🌟 기본: 차가운 밤의 어둠 */
+            transition: filter 0.8s ease-in-out;
+            z-index: 1;
+        }
+
+        /* 🔥 2. 모닥불 다층 앰비언트 광원 코어 */
         .campfire-light-glow {
             position: absolute;
             /* 현재 이미지 속 모닥불의 실제 위치에 정확히 핀포인트 */
@@ -2710,21 +2764,74 @@
             height: 140px;
             transform: translate(-50%, -50%);
             border-radius: 50%;
-            /* 모닥불 중심은 밝은 노랑, 외곽은 은은한 주황/붉은 불꽃 */
-            background: radial-gradient(circle, rgba(254, 240, 138, 0.65) 0%, rgba(249, 115, 22, 0.45) 45%, rgba(220, 38, 38, 0.15) 70%, transparent 85%);
-            mix-blend-mode: screen; /* 배경 픽셀 아트 위에 자연스럽게 빛을 투과 */
+            background: radial-gradient(circle, rgba(254, 240, 138, 0.85) 0%, rgba(249, 115, 22, 0.55) 40%, rgba(220, 38, 38, 0.2) 70%, transparent 85%);
+            mix-blend-mode: screen;
             pointer-events: none;
             z-index: 3;
+            transition: all 0.6s ease-in-out;
             animation: fireFlicker 2.5s infinite ease-in-out;
         }
 
         /* 불꽃이 타닥타닥 타오르며 주변을 비추는 불규칙한 박동 */
         @keyframes fireFlicker {
-            0%   { transform: translate(-50%, -50%) scale(0.95); opacity: 0.55; }
-            /* 20%  { transform: translate(-49%, -51%) scale(1.08); opacity: 0.85; } */
-            50%  { transform: translate(-51%, -50%) scale(1.15); opacity: 0.65; }
-            /* 80%  { transform: translate(-49%, -50%) scale(1.02); opacity: 0.70; } */
-            100% { transform: translate(-50%, -50%) scale(0.95); opacity: 0.55; }
+            0%   { transform: translate(-50%, -50%) scale(0.5); opacity: 0.45; }
+            50%  { transform: translate(-51%, -49%) scale(0.9); opacity: 0.65; }
+            100% { transform: translate(-50%, -50%) scale(0.5); opacity: 0.45; }
+        }
+
+        /* ========================================================
+           ✨ 모닥불 비산 불티(Embers & Sparks) 엔진
+           ======================================================== */
+        .campfire-sparks-wrap {
+            position: absolute;
+            left: 31%;
+            top: 65%;
+            width: 20px;
+            height: 20px;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+            z-index: 4;
+        }
+        .spark-particle {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            border-radius: 50%;
+            background: #fde047;
+            box-shadow: 0 0 6px #ea580c, 0 0 2px #fff;
+            opacity: 0;
+        }
+        /* 불티 1: 왼쪽으로 하늘거리며 솟구침 */
+        .spark-1 {
+            width: 3px; height: 3.5px;
+            animation: sparkFly1 2.4s infinite ease-out;
+        }
+        /* 불티 2: 오른쪽으로 솟구침 (작고 빠름) */
+        .spark-2 {
+            width: 2px; height: 2px;
+            animation: sparkFly2 1.9s infinite 0.7s ease-out;
+        }
+        /* 불티 3: 가운데로 높게 솟구침 */
+        .spark-3 {
+            width: 2.5px; height: 3px;
+            animation: sparkFly3 2.8s infinite 1.4s ease-out;
+        }
+        @keyframes sparkFly1 {
+            0%   { transform: translate(-50%, 0); opacity: 0; }
+            20%  { opacity: 1; }
+            80%  { opacity: 0.8; }
+            100% { transform: translate(-18px, -45px); opacity: 0; }
+        }
+        @keyframes sparkFly2 {
+            0%   { transform: translate(-50%, 0); opacity: 0; }
+            30%  { opacity: 1; }
+            100% { transform: translate(14px, -38px); opacity: 0; }
+        }
+        @keyframes sparkFly3 {
+            0%   { transform: translate(-50%, 0); opacity: 0; }
+            25%  { opacity: 1; }
+            70%  { transform: translate(-4px, -35px); opacity: 0.7; }
+            100% { transform: translate(6px, -55px); opacity: 0; }
         }
 
         /* ========================================================
@@ -3176,11 +3283,18 @@
 
             
             <!-- 🌌 9:16 세로 풀스크린 모닥불 배경 레이어 -->
-            <div class="camp-bg-layer" style="position:absolute; top:0; left:0; right:0; bottom:0; background-image:url('images/title_fire.webp'); background-size:cover; background-position:left center; opacity:1; filter:none; z-index:1;"></div>
+            <div class="camp-bg-layer"></div>
             <div class="camp-vignette-overlay" style="position:absolute; top:0; left:0; right:0; bottom:0; background:radial-gradient(circle at 35% 65%, transparent 25%, rgba(10,5,2,0.5) 70%, #080302 100%), linear-gradient(180deg, rgba(8,4,2,0.88) 0%, transparent 22%, transparent 70%, #080302 96%); z-index:2; pointer-events:none;"></div>
 
             <!-- 🔥 모닥불 일렁임 광원 레이어 추가 -->
             <div class="campfire-light-glow"></div>
+
+            <!-- ✨ 타닥타닥 비산하는 모닥불 불티 3형제 -->
+            <div class="campfire-sparks-wrap">
+                <div class="spark-particle spark-1"></div>
+                <div class="spark-particle spark-2"></div>
+                <div class="spark-particle spark-3"></div>
+            </div>
 
             <!-- 캠프 콘텐츠 본체 -->
             <div class="camp-content" style="position:relative; z-index:5; width:100%; height:100%; display:flex; flex-direction:column; justify-content:space-between;">
@@ -3310,6 +3424,12 @@
 
                 <!-- 2. 중앙~우측: 🌟 2배 커진 5대 두루마리 & 9-Slice 세로 팝오버 영역 -->
                 <div class="mid-body-area" style="flex:1; position:relative; width:100%;">
+
+                    <!-- 🔥 [독립 배치] 중단 좌측 상단 불꽃 엠블럼 (우측 책 선생과 시각적 대칭) -->
+                    <div id="campStreakBadge" class="camp-streak-badge">
+                        <span class="camp-streak-fire">🔥</span>
+                        <span id="campStreakText" class="camp-streak-txt">1일 연속 탐험</span>
+                    </div>
 
                     <!-- 📖 [마스코트] 둥둥 떠 있는 책 선생 & 츤데레 말풍선 -->
                     <div class="camp-mrbook-container" onclick="triggerMrBookChat()">
@@ -4353,13 +4473,16 @@
                 <span id="adminStudentTotalCount" style="font-size:12px; font-weight:900; color:#7e22ce; background:#f3e8ff; padding:3px 8px; border-radius:8px;">총 0명 등록</span>
             </div>
 
-            <!-- 🌟 관제탑 2단 탭 바 [학생 목록] [원격 관제 기능] -->
-            <div style="display:flex; gap:6px; margin-bottom:8px; flex-shrink:0;">
-                <button id="adminTabBtn1" onclick="switchAdminTowerTab(1)" style="flex:1; padding:7px; border-radius:8px; font-size:12.5px; font-weight:900; cursor:pointer; background:#7e22ce; color:#ffffff; border:1px solid #581c87;">
+            <!-- 🌟 관제탑 3단 탭 바 [1.학생 목록] [2.취약 단어] [3.원격 관제] -->
+            <div style="display:flex; gap:4px; margin-bottom:8px; flex-shrink:0;">
+                <button id="adminTabBtn1" onclick="switchAdminTowerTab(1)" style="flex:1; padding:7px 4px; border-radius:8px; font-size:12px; font-weight:900; cursor:pointer; background:#7e22ce; color:#ffffff; border:1px solid #581c87; white-space:nowrap;">
                     👥 학생 목록
                 </button>
-                <button id="adminTabBtn2" onclick="switchAdminTowerTab(2)" style="flex:1; padding:7px; border-radius:8px; font-size:12.5px; font-weight:900; cursor:pointer; background:#ede3cc; color:#5c3a21; border:1px solid #c9b48c;">
-                    ⚙️ 원격 관제 기능
+                <button id="adminTabBtn2" onclick="switchAdminTowerTab(2)" style="flex:1; padding:7px 4px; border-radius:8px; font-size:12px; font-weight:900; cursor:pointer; background:#ede3cc; color:#5c3a21; border:1px solid #c9b48c; white-space:nowrap;">
+                    📊 취약 단어
+                </button>
+                <button id="adminTabBtn3" onclick="switchAdminTowerTab(3)" style="flex:1; padding:7px 4px; border-radius:8px; font-size:12px; font-weight:900; cursor:pointer; background:#ede3cc; color:#5c3a21; border:1px solid #c9b48c; white-space:nowrap;">
+                    ⚙️ 원격 관제
                 </button>
             </div>
 
@@ -4390,9 +4513,36 @@
         </div>
 
         <!-- ==============================================
-                 탭 2: ⚙️ 원격 관제 기능 (마왕 / 특훈 / 영지탭)
+            탭 2: 📊 전교생 최다 오답 취약 단어 분석
+            ============================================== -->
+        <div id="adminTowerTab2" style="display:none; flex-direction:column; flex:1; min-height:0;">
+            <!-- 상단 요약 바 & 수업용 복사 버튼 -->
+            <div style="display:flex; justify-content:space-between; align-items:center; background:#fff1f2; border:1.5px solid #fecdd3; border-radius:9px; padding:8px 10px; margin-bottom:6px; flex-shrink:0;">
+                <div>
+                    <div style="font-size:13px; font-weight:900; color:#9f1239;">🎯 전교생 킬러 단어 분석</div>
+                    <div style="font-size:10.5px; font-weight:700; color:#be123c;">학생들이 가장 많이 틀린 오답 빈도 순위</div>
+                </div>
+                <div style="display:flex; align-items:center; gap:6px;">
+                    <!-- 🌟 표시 개수 드롭다운 (10/20/30/전체) -->
+                    <select id="adminKillerLimitSelect" onchange="renderAdminWrongWordsAnalytics()" style="background:#ffffff; border:1.5px solid #f43f5e; border-radius:6px; padding:4px 6px; font-size:11.5px; font-weight:800; color:#9f1239; cursor:pointer;">
+                        <option value="10" selected>TOP 10</option>
+                        <option value="20">TOP 20</option>
+                        <option value="30">TOP 30</option>
+                        <option value="all">전체 오답</option>
+                    </select>
+                    <button type="button" onclick="copyAdminKillerWords()" style="background:#be123c; color:#ffffff; border:none; border-radius:6px; padding:5px 8px; font-size:11px; font-weight:900; cursor:pointer; box-shadow:0 1px 3px rgba(0,0,0,0.15); white-space:nowrap;">
+                        📋 복사
+                    </button>
+                </div>
+            </div>
+            <!-- 킬러 단어 카드 목록 컨테이너 -->
+            <div id="adminKillerWordsListContainer" style="flex:1; min-height:0; overflow-y:auto; display:flex; flex-direction:column; gap:5px; padding-right:2px;"></div>
+        </div>
+
+        <!-- ==============================================
+                 탭 3: ⚙️ 원격 관제 기능 (마왕 / 특훈 / 영지탭)
                  ============================================== -->
-        <div id="adminTowerTab2" style="display:none; flex-direction:column; flex:1; min-height:0; overflow-y:auto; padding-right:2px;">
+        <div id="adminTowerTab3" style="display:none; flex-direction:column; flex:1; min-height:0; overflow-y:auto; padding-right:2px;">
                 <!-- 1. 마왕 『EXAM』 실시간 강림 스위치 -->
                 <div id="adminBossSwitchCard" style="display:flex; justify-content:space-between; align-items:center; background:#f1f5f9; border:2px solid #cbd5e1; border-radius:10px; padding:8px 12px; margin-bottom:8px; flex-shrink:0;">
                     <div>
@@ -5535,6 +5685,8 @@
             emergencyClearedDate: lastEmergencyClearedDate || safeStorageGet('spirit_emergency_cleared_date', ""),
             tierName: getGlobalTier().tier.name,
             equippedTitle: (records && records.equippedTitle) ? records.equippedTitle : "🌱 첫 걸음의 탐색자",
+            streakDays: safeStorageGet('spirit_streak_days', 1),
+            streakLastDate: safeStorageGet('spirit_streak_last_date', ""),
             records: records,
             mastery: allMastery,
             clearedBosses: clearedBosses,
@@ -6650,8 +6802,111 @@
         { id: "boss_5", name: "⚔️ 마왕의 악몽", desc: "마왕 EXAM 누적 5회 격파 (마왕이 널 피한다)" },
         { id: "last_counter", name: "🩸 최후의 카운터", desc: "하트 0개 위기에서 부활 카운터 어택 성공" },
         { id: "drill_5", name: "🏅 스파르타의 망령", desc: "책 선생의 하드코어 특훈 누적 5회 완주" },
-        { id: "night_owl", name: "🦉 올빼미 수험생", desc: "밤 11시 ~ 새벽 3시 사이 심야 단어 열공" }
+        { id: "night_owl", name: "🦉 올빼미 수험생", desc: "밤 11시 ~ 새벽 3시 사이 심야 단어 열공" },
+        { id: "night_owl", name: "🦉 올빼미 수험생", desc: "밤 11시 ~ 새벽 3시 사이 심야 단어 열공" },
+        { id: "streak_3d", name: "🔥 피어나는 불씨", desc: "3일 연속으로 야영지 모닥불 피우기 (출석)" },
+        { id: "streak_7d", name: "🏕️ 꺼지지 않는 모닥불", desc: "7일 연속으로 야영지 모닥불 피우기 (출석)" },
+        { id: "streak_14d", name: "🕯️ 심야의 수도사", desc: "14일 연속으로 단어 정령 수련 완수" }
     ];
+
+    // ========================================================
+    // 🔥 모닥불 연속 출석(Streak) 판정 및 렌더링 엔진
+    // ========================================================
+    function checkDailyLoginStreak(onRoundComplete = false) {
+        if (!currentUserDocId) return;
+
+        const todayStr = getTodayKSTString();
+        let streakDays = safeStorageGet('spirit_streak_days', 1);
+        let lastActiveDate = safeStorageGet('spirit_streak_last_date', "");
+
+        // 1. 라운드 종료(5문제 완료) 시점에 호출되었을 때
+        if (onRoundComplete) {
+            if (lastActiveDate !== todayStr) {
+                // 어제 날짜 계산
+                const yesterday = new Date();
+                yesterday.setDate(yesterday.getDate() - 1);
+                const yYear = yesterday.getFullYear();
+                const yMonth = String(yesterday.getMonth() + 1).padStart(2, '0');
+                const yDay = String(yesterday.getDate()).padStart(2, '0');
+                const yesterdayStr = `${yYear}-${yMonth}-${yDay}`;
+
+                if (lastActiveDate === yesterdayStr) {
+                    // 어제 하고 오늘 연속 완료!
+                    streakDays += 1;
+                } else if (!lastActiveDate) {
+                    streakDays = 1;
+                } else {
+                    // 하루 이상 결석 후 재개
+                    streakDays = 1;
+                }
+
+                safeStorageSet('spirit_streak_days', streakDays);
+                safeStorageSet('spirit_streak_last_date', todayStr);
+
+                // 칭호 해금 체크
+                if (streakDays >= 3) unlockTitle("streak_3d");
+                if (streakDays >= 7) unlockTitle("streak_7d");
+                if (streakDays >= 14) unlockTitle("streak_14d");
+
+                syncToCloud(true);
+            }
+        } else {
+            // 2. 평상시 화면 렌더링 시 결석 여부만 점검 (어제도 안 하고 그저께 했다면 0/1일차 리셋 준비)
+            if (lastActiveDate && lastActiveDate !== todayStr) {
+                const yesterday = new Date();
+                yesterday.setDate(yesterday.getDate() - 1);
+                const yYear = yesterday.getFullYear();
+                const yMonth = String(yesterday.getMonth() + 1).padStart(2, '0');
+                const yDay = String(yesterday.getDate()).padStart(2, '0');
+                const yesterdayStr = `${yYear}-${yMonth}-${yDay}`;
+
+                if (lastActiveDate !== yesterdayStr) {
+                    // 이틀 이상 결석 시 리셋
+                    streakDays = 1;
+                    safeStorageSet('spirit_streak_days', streakDays);
+                }
+            }
+        }
+
+        // 3. 야영지 좌상단 뱃지 텍스트 반영
+        const streakEl = document.getElementById("campStreakText");
+        if (streakEl) {
+            const isDoneToday = (lastActiveDate === todayStr);
+            streakEl.innerText = `${streakDays}일 연속 탐험${isDoneToday ? ' ✓' : ''}`;
+        }
+
+        // 4. 🔥 [매일 점진적 성장 엔진] 1일차~7일차 매일 조금씩 차오르는 화염과 온기
+        const bgLayer = document.querySelector(".camp-bg-layer");
+        const fireGlow = document.querySelector(".campfire-light-glow");
+        const streakBadge = document.getElementById("campStreakBadge");
+
+        // 1~7일차 사이의 비율 계산 (1일차: 0.0 ~ 7일차: 1.0)
+        const cappedDays = Math.max(1, Math.min(7, streakDays));
+        const growthRatio = (cappedDays - 1) / 6;
+
+        // ① 매일 약 8px씩 커지는 광원 지름 (120px ➔ 170px)
+        const currentGlowSize = Math.round(120 + (growthRatio * 50));
+        // ② 매일 약 0.05씩 밝아지는 배경 (0.65 ➔ 0.96)
+        const currentBgBrightness = parseFloat((0.65 + (growthRatio * 0.31)).toFixed(2));
+        // ③ 매일 은은하게 차오르는 광원 밝기 (0.85 ➔ 1.2)
+        const currentFireBrightness = parseFloat((0.85 + (growthRatio * 0.35)).toFixed(2));
+
+        if (bgLayer) {
+            bgLayer.style.filter = `brightness(${currentBgBrightness}) contrast(1.18)`;
+        }
+
+        if (fireGlow) {
+            fireGlow.style.width = `${currentGlowSize}px`;
+            fireGlow.style.height = `${currentGlowSize}px`;
+            // 7일차 완주 시에만 은은한 황금빛 림라이트 결합
+            const dropShadow = (streakDays >= 7) ? "drop-shadow(0 0 6px #f59e0b)" : "";
+            fireGlow.style.filter = `brightness(${currentFireBrightness}) ${dropShadow}`.trim();
+        }
+
+        if (streakBadge) {
+            streakBadge.classList.toggle("fire-max", streakDays >= 7);
+        }
+    }
 
     let gameRecords = safeStorageGet('spirit_records_data', {
         fastestBossTime: null,
@@ -7839,8 +8094,11 @@ const recTime = document.getElementById("recFastestTime");
         document.getElementById("mapLobbyScreen").style.display = "none";
         document.getElementById("gameScreen").style.display = "none";
         document.getElementById("bossScreen").style.display = "none";
-        updateShrineBadgesOnly();
 
+        // 🔥 연속 출석 스트릭 엠블럼 및 모닥불 화력 갱신
+        checkDailyLoginStreak(false);
+
+        updateShrineBadgesOnly();
     }
 
     // 🌟 타이틀 영지 카테고리 탭 전환 상태 및 함수
@@ -9365,14 +9623,23 @@ const recTime = document.getElementById("recFastestTime");
             // 정답시 점수 계산
             let newCount = currentCountBefore;
             if (!isCounselingMode) {
+                const isSpecialGimmickWord = (q.isPoly || currentMapId.includes('net_') || q.isSpell);
+
                 // 🌟 지문 퀘스트는 1회 통과 즉시 3점 완수 처리! (3번 반복 면제)
                 if (q && (q.isPassage || (q.isMorph && q.isMorphComplete))) {
                     newCount = 3;
-                // 🌟 다의어, 동의어, 철자 영지는 3단계 특수 기믹이 있으므로 한방 계약(3점 점프) 강제 스킵 방지!
-                } else if (isInstantResonance && !q.isPoly && !currentMapId.includes('net_') && !q.isSpell) {
+
+                // 🌟 [특수 기믹 단어] 1단계(0점)에서 조율(2.5초) 이상 달성 시 ➔ 2단계 스킵하고 3단계 기믹으로 직행(2점)!
+                } else if (isSpecialGimmickWord && currentCountBefore === 0 && (isInstantResonance || isQuickTuning)) {
+                    newCount = 2;
+                    if (isInstantResonance) hist.hadInstant = true;
+                    else hist.hadQuick = true;
+                // 🌟 일반 단어의 공명(1.5초): 즉시 3점 계약 직행
+                } else if (isInstantResonance && !isSpecialGimmickWord) {
                     newCount = 3;
                     hist.hadInstant = true;
-                } else if (isQuickTuning && !q.isPoly && !currentMapId.includes('net_') && !q.isSpell) {
+                // 🌟 일반 단어의 조율(2.5초): 교감도 +2 가산
+                } else if (isQuickTuning && !isSpecialGimmickWord) {
                     newCount = Math.min(3, currentCountBefore + 2);
                     hist.hadQuick = true;
                 } else {
@@ -9553,8 +9820,16 @@ const recTime = document.getElementById("recFastestTime");
                 fbTitle.className = "fb-hero-badge fb-theme-bond";
                 fbTitle.innerText = `🛡️흔들림 없는 유대 (${elapsedSec}초)`;
                 fbResonanceNotice.style.display = "block";
-                fbResonanceNotice.innerHTML = `정령과의 굳건한 유대를 확인했습니다!`;
+                fbResonanceNotice.innerHTML = `정령과의 굳건한 유대를 확인했다!`;
                 // 🌟 날짜 되감기 코드 완전 삭제 ➔ 각인 스케줄(1일, 3일, 7일)이 지연 없이 당당히 전진!
+            
+            // [경우 2-2: 특수 단어 조율 이상으로 3단계 직행]
+            } else if ((q.isPoly || currentMapId.includes('net_') || q.isSpell) && currentCountBefore === 0 && newCount === 2) {
+                Sound.resonance();
+                fbTitle.className = "fb-hero-badge fb-theme-resonance";
+                fbTitle.innerText = `⚡ 기민한 공명! (${elapsedSec}초)`;
+                fbResonanceNotice.style.display = "block";
+                fbResonanceNotice.innerHTML = `번개 같은 통찰로 2단계를 돌파했다!<br><b>다음 조우 시 최종 계약 시련이다!</b>`;
 
             // [경우 3: 찰나의 공명 ➔ 번갯빛 뱃지]
             } else if (isInstantResonance) {
@@ -9833,6 +10108,9 @@ const recTime = document.getElementById("recFastestTime");
         
         const feverOverlay = document.getElementById("feverVignette");
         if (feverOverlay) feverOverlay.remove();
+
+        // 🔥 1라운드(5문제) 학습 완료 시 오늘치 출석 장작 인정!
+        checkDailyLoginStreak(true);
 
         // 🌟 성소 세션 종료 정산
         if (isCounselingMode) {
@@ -12827,31 +13105,141 @@ function handleMidBossVictory() {
     }
 
     // ========================================================
-    // 🎛️ 관제탑 2단 탭 전환 컨트롤러
+    // 🎛️ 관제탑 3단 탭 전환 컨트롤러
     // ========================================================
     function switchAdminTowerTab(tabNum) {
         Sound.click();
-        const btn1 = document.getElementById("adminTabBtn1");
-        const btn2 = document.getElementById("adminTabBtn2");
-        const tab1 = document.getElementById("adminTowerTab1");
-        const tab2 = document.getElementById("adminTowerTab2");
-
-        if (tabNum === 1) {
-            btn1.style.background = "#7e22ce"; btn1.style.color = "#ffffff"; btn1.style.borderColor = "#581c87";
-            btn2.style.background = "#ede3cc"; btn2.style.color = "#5c3a21"; btn2.style.borderColor = "#c9b48c";
-            tab1.style.display = "flex";
-            tab2.style.display = "none";
-        } else {
-            btn1.style.background = "#ede3cc"; btn1.style.color = "#5c3a21"; btn1.style.borderColor = "#c9b48c";
-            btn2.style.background = "#7e22ce"; btn2.style.color = "#ffffff"; btn2.style.borderColor = "#581c87";
-            tab1.style.display = "none";
-            tab2.style.display = "flex";
-            renderAdminMapTabControls(); // 2번 탭 열릴 때 컨트롤러 렌더
+        for (let i = 1; i <= 3; i++) {
+            const btn = document.getElementById(`adminTabBtn${i}`);
+            const tab = document.getElementById(`adminTowerTab${i}`);
+            const isActive = (i === tabNum);
+            if (btn) {
+                btn.style.background = isActive ? "#7e22ce" : "#ede3cc";
+                btn.style.color = isActive ? "#ffffff" : "#5c3a21";
+                btn.style.borderColor = isActive ? "#581c87" : "#c9b48c";
+            }
+            if (tab) tab.style.display = isActive ? "flex" : "none";
         }
+        if (tabNum === 2) renderAdminWrongWordsAnalytics();
+        if (tabNum === 3) renderAdminMapTabControls();
     }
 
     // 임시 토글 상태 보관 객체
     let adminPendingMapTabOverrides = null;
+
+    // ========================================================
+    // 📊 전교생 최다 오답(킬러 단어) TOP 10 집계 및 렌더러
+    // ========================================================
+    let adminCurrentKillerWords = [];
+
+    function renderAdminWrongWordsAnalytics() {
+        const container = document.getElementById("adminKillerWordsListContainer");
+        if (!container) return;
+        container.innerHTML = "";
+
+        // 1. 전교생 데이터에서 단어별 오답 횟수 및 오답 학생 수 합산
+        const wordStats = {}; // { [eng]: { wrongCount: 0, studentCount: 0, kor: '', mapName: '' } }
+
+        // 단어 메타 정보 매핑 테이블 사전 생성
+        const wordMetaMap = {};
+        worldMaps.forEach(m => {
+            m.words.forEach(w => {
+                wordMetaMap[w.eng] = { kor: w.kor, mapName: m.name };
+            });
+        });
+
+        adminCachedStudents.forEach(s => {
+            const cData = s.counselingData || {};
+            Object.keys(cData).forEach(eng => {
+                const wrong = cData[eng].wrongAccum || 0;
+                if (wrong > 0) {
+                    if (!wordStats[eng]) {
+                        const meta = wordMetaMap[eng] || { kor: '뜻 불명', mapName: '성역' };
+                        wordStats[eng] = {
+                            eng: eng,
+                            kor: meta.kor,
+                            mapName: meta.mapName,
+                            wrongCount: 0,
+                            studentCount: 0
+                        };
+                    }
+                    wordStats[eng].wrongCount += wrong;
+                    wordStats[eng].studentCount += 1;
+                }
+            });
+        });
+
+        // 2. 드롭다운 선택값 읽기 (10/20/30/all)
+        const limitSelect = document.getElementById("adminKillerLimitSelect");
+        const limitVal = limitSelect ? limitSelect.value : "10";
+
+        // 오답 수 내림차순 정렬
+        const sortedWords = Object.values(wordStats)
+            .sort((a, b) => b.wrongCount - a.wrongCount || b.studentCount - a.studentCount);
+
+        // 선택 개수만큼 추출
+        adminCurrentKillerWords = (limitVal === "all") ? sortedWords : sortedWords.slice(0, parseInt(limitVal));
+
+        if (adminCurrentKillerWords.length === 0) {
+            container.innerHTML = `<div style="text-align:center; padding:30px 10px; font-size:12.5px; color:#785a3e; font-weight:700;">아직 누적된 전교생 오답 데이터가 없습니다. (정령들이 모두 평화롭습니다!)</div>`;
+            return;
+        }
+
+        // 3. TOP 10 카드 렌더링
+        adminCurrentKillerWords.forEach((item, idx) => {
+            const rank = idx + 1;
+            let rankBadge = `<span style="font-size:13px; font-weight:900; color:#785a3e; width:24px; display:inline-block;">${rank}위</span>`;
+            let cardBg = "#ffffff";
+            let cardBorder = "#fecdd3";
+
+            if (rank === 1) { rankBadge = `<span style="font-size:17px;">🥇</span>`; cardBg = "#fff1f2"; cardBorder = "#f43f5e"; }
+            else if (rank === 2) { rankBadge = `<span style="font-size:17px;">🥈</span>`; cardBg = "#fff5f5"; cardBorder = "#fda4af"; }
+            else if (rank === 3) { rankBadge = `<span style="font-size:17px;">🥉</span>`; cardBg = "#fffafa"; cardBorder = "#fecdd3"; }
+
+            const card = document.createElement("div");
+            card.style.cssText = `display:flex; justify-content:space-between; align-items:center; background:${cardBg}; border:1.5px solid ${cardBorder}; border-radius:9px; padding:8px 11px; box-shadow:0 1px 3px rgba(0,0,0,0.05);`;
+            card.innerHTML = `
+                <div style="display:flex; align-items:center; gap:8px; min-width:0;">
+                    ${rankBadge}
+                    <div style="text-align:left; min-width:0;">
+                        <div style="display:flex; align-items:baseline; gap:5px;">
+                            <span style="font-size:15px; font-weight:900; color:#881337;">${item.eng}</span>
+                            <span style="font-size:10px; font-weight:700; color:#9f1239; background:#ffe4e6; padding:1px 5px; border-radius:4px;">${item.mapName}</span>
+                        </div>
+                        <div style="font-size:12px; font-weight:700; color:#4c0519; margin-top:1px; text-overflow:ellipsis; overflow:hidden; white-space:nowrap;">${item.kor}</div>
+                    </div>
+                </div>
+                <div style="text-align:right; flex-shrink:0; margin-left:8px;">
+                    <div style="font-size:13.5px; font-weight:900; color:#e11d48;">총 ${item.wrongCount}회 오답</div>
+                    <div style="font-size:11px; font-weight:700; color:#9f1239; margin-top:1px;">취약 학생: ${item.studentCount}명</div>
+                </div>
+            `;
+            container.appendChild(card);
+        });
+    }
+
+    // 📋 수업용 텍스트 클립보드 원클릭 복사
+    function copyAdminKillerWords() {
+        Sound.click();
+        if (!adminCurrentKillerWords || adminCurrentKillerWords.length === 0) {
+            alert("복사할 오답 단어 데이터가 없습니다.");
+            return;
+        }
+
+        const schoolName = (typeof GAME_CONFIG !== 'undefined' && GAME_CONFIG.schoolTag) ? GAME_CONFIG.schoolTag : "학교";
+        const countTitle = adminCurrentKillerWords.length >= 10 ? `TOP ${adminCurrentKillerWords.length}` : `${adminCurrentKillerWords.length}선`;
+        let text = `[${schoolName} 단어 정령 전교생 최다 오답 ${countTitle}]\n`;
+        adminCurrentKillerWords.forEach((item, idx) => {
+            text += `${idx + 1}. ${item.eng} : ${item.kor} (${item.wrongCount}회 오답 / ${item.studentCount}명 취약)\n`;
+        });
+
+        navigator.clipboard.writeText(text).then(() => {
+            Sound.fanfare();
+            alert("📋 전교생 최다 오답 TOP 10 목록이 클립보드에 복사되었습니다!\n(수업 자료나 카톡에 바로 붙여넣기 하실 수 있습니다)");
+        }).catch(() => {
+            alert("복사에 실패했습니다. 브라우저 권한을 확인해 주세요.");
+        });
+    }
 
     // ========================================================
     // 🎛️ [관제탑 원격 제어 엔진] 특훈 범위 저장 & 영지 탭 실시간 토글
@@ -13424,6 +13812,7 @@ function handleMidBossVictory() {
                             <span class="rank-user-name" style="text-overflow:ellipsis; overflow:hidden; white-space:nowrap;">${displayName}</span>
                             <span class="rank-user-id" style="white-space:nowrap;">(${u.id})</span>
                             ${isMe ? '<span class="rank-me-tag">ME</span>' : ''}
+                            ${u.streakDays && u.streakDays >= 2 ? `<span class="rank-streak-pill">🔥${u.streakDays}</span>` : ''}
                         </div>
                         <!-- 2행: 현판 동기화 칭호 & 계급 알약 2종 -->
                         <div style="display:flex; align-items:center; gap:4px; margin-top:4px; line-height:1; flex-wrap:nowrap; overflow:hidden;">
@@ -14474,6 +14863,31 @@ function handleMidBossVictory() {
         }
         openWordBook(false); // 단어장 다시 그리기
     }
+
+    // ==========================================================
+    // 🛡️ 모바일 핀치 줌(두 손가락 벌리기) 및 제스처 확대 강제 차단
+    // ==========================================================
+    // 1. iOS 사파리 제스처 확대 차단
+    document.addEventListener('gesturestart', function(e) {
+        e.preventDefault();
+    }, { passive: false });
+
+    // 2. 두 손가락 이상 터치 시 핀치 줌 방어
+    document.addEventListener('touchstart', function(e) {
+        if (e.touches.length > 1) {
+            e.preventDefault();
+        }
+    }, { passive: false });
+
+    // 3. 더블 탭 확대 2중 방어
+    let lastTouchEnd = 0;
+    document.addEventListener('touchend', function(e) {
+        const now = Date.now();
+        if (now - lastTouchEnd <= 300) {
+            e.preventDefault();
+        }
+        lastTouchEnd = now;
+    }, { passive: false });
 
 </script>
 </body>

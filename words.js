@@ -187,7 +187,7 @@ estimate	:	[동] 추정하다
 smallpox	:	[명] 천연두
 claim	:	[동] (목숨을) 앗아 가다; [동] (자신의 것이라) 주장하다; [명] 주장
 life	:	[명] 생명, 목숨; [명] 생명체, 생물
-further	:	[형/부] 그 이상의, 더 나아가
+further	:	[형][부] 그 이상의, 더 나아가
 according to ~	:	[전] ~에 따르면
 affect	:	[동] ~에 영향을 미치다
 aspect	:	[명] 일면, 측면
@@ -391,7 +391,7 @@ gift	:	[동] ~을 선물로 주다; [명] 선물; [명] 재능
 goggles	:	[명] 고글
 encourage	:	[동] 격려하다, 촉진하다
 help ~ with …	:	[동] (사람)의 …을 돕다
-underwater	:	[형/부] 수중의, 수중에
+underwater	:	[형][부] 수중의, 수중에
 exploration	:	[명] 탐험, 탐사
 gain	:	[동] 얻다, 획득하다; [명] 이득, 얻는 것
 view	:	[명] 시야; [명] 광경; [동] 보다
@@ -593,29 +593,32 @@ The 1918 [[influenza | influenza]] [[pandemic | pandemic]] is [[estimated | esti
 And of course, the recent COVID-19 [[pandemic | pandemic]] has taken several million [[lives | life]], [[affecting | affect]] almost every [[aspect | aspect]] of human [[life | life]] worldwide.
 ===
 [[Outbreaks | outbreak]] of [[viral | viral]] diseases are frequently [[linked to | link ~ to …]] contact with [[wild | wild]] animals such as bats.
-Such contacts [[allow new viruses to enter | allow ~ toR]] human bodies that have no [[prior | prior]] [[immunity | immunity]] to such viruses.
-[[Historically | historically]], [[natural | natural]] [[barriers | barrier]] such as mountains and forests [[prevented animal viruses from infecting | prevent ~ from V-ing]] humans.
+Such contacts [[allow | allow ~ toR]] new viruses [[to | allow ~ toR]] enter human bodies that have no [[prior | prior]] [[immunity | immunity]] to such viruses.
+[[Historically | historically]], [[natural | natural]] [[barriers | barrier]] such as mountains and forests [[prevented | prevent ~ from V-ing]] animal viruses [[from | prevent ~ from V-ing]] infecting humans.
 [[Industrialization | industrialization]] has [[destroyed | destroy]] these [[barriers | barrier]], and [[climate change | climate change]] has pushed some [[wild | wild]] animals out of their [[original | original]] [[habitats | habitat]].
-These changes have [[resulted in | result in ~]] an [[increase | increase]] in [[interactions | interaction]] [[between human and wild animals | between A and B]], meaning more opportunities for the viruses [[present | present]] in [[wild | wild]] animals to spread to humans.
+===
+These changes have [[resulted in | result in ~]] an [[increase | increase]] in [[interactions | interaction]] [[between | between A and B]] human [[and | between A and B]] wild animals, meaning more opportunities for the viruses [[present | present]] in [[wild | wild]] animals to spread to humans.
 This is the [[primary | primary]] reason for scientists’ [[concern | concern]] that [[pandemics | pandemic]] may [[increase | increase]] in the future.
 Then, is the virus truly a [[harmful | harmful]] presence to humans?
 [[Not necessarily | not necessarily]].
 ===
 *Keepers of the Earth*
-What is less commonly known is that viruses [[play crucial roles in | play a(n) ~ role in …]] [[supporting | support]] much of [[life | life]] on Earth.
+What is less commonly known is that viruses [[play | play a(n) ~ role in …]] crucial [[roles in | play a(n) ~ role in …]] [[supporting | support]] much of [[life | life]] on Earth.
 This is because [[researchers | researcher]] have only recently begun [[investigating | investigate]] the viruses that [[sustain | sustain]] us and [[the planet | the planet]], [[instead of | instead of ~]] just those that [[harm | harm]] us.
 Therefore, scientists have much more to learn about viruses than they currently know.
 What they do know is that viruses [[act as | act as ~]] the [[primary | primary]] [[regulators | regulator]] of [[bacterial | bacterial]] and insect [[populations | population]].
+===
 Since viruses do not have [[reproductive | reproductive]] [[functions | function]] [[on their own | on one’s own]], they steal the [[reproductive | reproductive]] [[functions | function]] of other [[organisms | organism]] to [[multiply | multiply]].
 Some types of viruses use bacteria.
-When the virus [[continues | continue]] to [[multiply | multiply]] inside the bacteria, the bacteria [[eventually | eventually]] die, and the newly [[produced | produce]] viruses [[go on to infect | go on toR]] other bacteria.
+When the virus [[continues | continue]] to [[multiply | multiply]] inside the bacteria, the bacteria [[eventually | eventually]] die, and the newly [[produced | produce]] viruses [[go on to | go on toR]] infect other bacteria.
 This [[whole | whole]] process helps viruses [[control | control]] the [[excessive | excessive]] [[growth | growth]] of [[certain | certain]] bacteria.
 ===
-The greater [[significance | significance]] of viruses [[infecting | infect]] bacteria is that they [[play a vital role in | play a(n) ~ role in …]] [[supplying oxygen to | supply ~ to …]] our planet.
+The greater [[significance | significance]] of viruses [[infecting | infect]] bacteria is that they [[play | play a(n) ~ role in …]] a vital [[role in | play a(n) ~ role in …]] [[supplying | supply ~ to …]] oxygen [[to | supply ~ to …]] our planet.
 About half of the [[oxygen | oxygen]] on Earth is [[produced | produce]] by plankton in the [[oceans | ocean]], and the [[primary | primary]] food [[source | source]] for these plankton is [[nutrients | nutrient]] [[released | release]] from bacteria killed by [[viral | viral]] [[infections | infection]].
 If viruses did not [[infect | infect]] and kill bacteria, there would be no [[bacterial | bacterial]] [[remains | remains]], [[leading to | lead to ~]] a [[lack | lack]] of plankton.
 Without plankton, half of Earth’s [[oxygen | oxygen]] would [[disappear | disappear]].
 In short, without viruses, the [[lack | lack]] of [[oxygen | oxygen]] would make it impossible for humans to [[survive | survive]].
+===
 Insect [[species | species / species]] [[populations | population]] are also [[regulated | regulate]] by viruses.
 When a specific type of insect increases [[excessively | excessively]], the viruses that [[infect | infect]] those insects also [[increase | increase]], [[reducing | reduce]] their numbers.
 This, [[in turn | in turn]], creates [[room | room]] for other types of insects to [[flourish | flourish]].
@@ -628,8 +631,9 @@ When a virus [[infects | infect]] a [[reproductive | reproductive]] [[cell | cel
 The [[insertion | insertion]] of new DNA into [[genomes | genome]] is a significant [[mechanism | mechanism]] of [[evolution | evolution]].
 Without viruses, in other words, the evolutionary [[potential | potential]] for all [[life | life]] on [[the planet | the planet]] would be impacted.
 One example of viruses’ [[contributions | contribution]] to [[evolution | evolution]] is their role in the [[development | development]] of the [[placenta | placenta]] in [[mammals | mammal]].
+===
 A [[placenta | placenta]] is a [[complex | complex]] [[organ | organ]] that helps the [[fetus | fetus]] grow securely inside its mother’s body.
-It [[facilitates | facilitate]] the [[exchange | exchange]] of [[oxygen | oxygen]], [[nutrients | nutrient]], and [[waste products | waste product]] while [[protecting the fetus from | protect ~ from …]] the mother’s [[immune | immune]] system.
+It [[facilitates | facilitate]] the [[exchange | exchange]] of [[oxygen | oxygen]], [[nutrients | nutrient]], and [[waste products | waste product]] while [[protecting | protect ~ from …]] the fetus [[from | protect ~ from …]] the mother’s [[immune | immune]] system.
 In the early days of [[evolution | evolution]], [[female | female]] animals had to [[leave | leave]] their [[offspring | offspring]] in one [[location | location]], like [[eggs | egg]] in a nest, making them [[vulnerable | vulnerable]] to [[predators | predator]].
 After the [[emergence | emergence]] of the [[placenta | placenta]], [[females | female]] were able to carry their [[young | young]] inside their bodies safely from one [[location | location]] to another.
 Viruses that [[infected | infect]] our [[remote | remote]] [[ancestors | ancestor]] more than 130 million years ago have been [[reported | report]] to have [[served | serve]] a key [[function | function]] in the [[development | development]] of this vital [[organ | organ]].
@@ -640,7 +644,8 @@ Of [[notable | notable]] [[interest | interest]] are the areas of [[gene | gene]
 [[Genes | gene]] can be [[compared to | compare ~ to …]] [[instruction | instruction]] [[guides | guide]] that [[govern | govern]] how our bodies [[function | function]].
 Sometimes, people are born with [[genetic | genetic]] [[disorders | disorder]], which can [[lead to | lead to ~]] health problems.
 [[Gene | gene]] [[therapy | therapy]] [[steps in | step in]] to [[fix | fix]] these issues.
-The [[essence | essence]] of [[gene | gene]] [[therapy | therapy]] [[lies | lie (- lay - lain)]] in [[delivering corrected genetic instructions to | deliver ~ to …]] a [[patient’s | patient]] [[cells | cell]], [[enabling them to function | enable ~ toR]] properly.
+The [[essence | essence]] of [[gene | gene]] [[therapy | therapy]] [[lies | lie (- lay - lain)]] in [[delivering | deliver ~ to …]] corrected genetic instructions [[to | deliver ~ to …]] a [[patient’s | patient]] [[cells | cell]], [[enabling them to function | enable ~ toR]] properly.
+===
 In this process, specially [[modified | modify]] viruses are used as one of the [[carriers | carrier]] of the [[genetic | genetic]] [[instructions | instruction]].
 If the [[patient’s | patient]] [[cells | cell]] [[function | function]] properly, it can potentially help the body [[fight off | fight ~ off]] [[certain | certain]] diseases.
 Using viruses to treat [[cancer | cancer]], another use of viruses, is [[based on | based on[upon] ~]] the [[notion | notion]] of [[utilizing | utilize]] their natural ability to [[infect | infect]] and kill [[cells | cell]].
@@ -667,9 +672,9 @@ Sylvia Earle was born in 1935 in New Jersey.
 Having moved to Florida at the age of twelve, she began [[exploring | explore]] the beaches and [[observing | observe]] the [[diverse | diverse]] [[marine | marine]] [[life | life]] of the [[Gulf | gulf]] of Mexico.
 On her first birthday in Florida, her parents [[gifted | gift]] her a pair of swimming [[goggles | goggles]], perfect for someone who loved the [[ocean | ocean]].
 Her father [[encouraged | encourage]] her, saying, “These will [[help | help ~ with …]] you [[with | help ~ with …]] your [[underwater | underwater]] [[explorations | exploration]].
-Now all you have to do is [[dive in | dive in]].”
+Now all you have to do is [[dive]].”
 With her [[goggles | goggles]], Earle [[gained | gain]] a clearer [[view | view]] of the [[ocean | ocean]]’s [[wonders | wonder]].
-At 17, she took her first deep [[dive | dive]], [[descending | descend]] 10 meters in a lake wearing the [[diving suit | diving suit]] that [[belonged to | belong to ~]] her friend’s father.
+At 17, she took her first deep [[dive | dive]], [[descending | descend]] 10 meters in a lake wearing the diving [[suit]] that [[belonged to | belong to ~]] her friend’s father.
 ===
 Earle was [[thrilled | thrilled]] to [[observe | observe]] fish while [[breathing | breathe]] [[naturally | naturally]] [[underwater | underwater]].
 As Earle experienced the [[excitement | excitement]] of [[diving | dive]], her [[desire | desire]] to [[explore | explore]] [[grew | grow]], and she [[eventually | eventually]] became one of the first [[marine | marine]] scientists to use [[scuba | scuba]] [[equipment | equipment]].
@@ -706,23 +711,23 @@ Therefore, she [[resigned | resign]] two years later to become a more [[active |
 Returning to the [[private | private]] [[sector | sector]] [[granted | grant]] Earle the [[freedom | freedom]] to express herself.
 Through her work in science and [[technology | technology]] [[businesses | business]], [[public | public]] [[lectures | lecture]], and writing books and [[articles | article]] for the [[mass | mass]] [[media | medium / media]], Earle has been able to use her [[expertise | expertise]] and experience to [[campaign | campaign]] for the [[ocean | ocean]]’s [[conservation | conservation]].
 ===
-Earle has [[committed herself to | commit oneself to ~]] a [[lifetime | lifetime]] of raising [[public | public]] awareness about the importance of the [[ocean | ocean]].
+Earle has [[committed | commit oneself to ~]] herself [[to | commit oneself to ~]] a [[lifetime | lifetime]] of raising [[public | public]] awareness about the importance of the [[ocean | ocean]].
 In 2009, her [[efforts | effort]] [[gained | gain]] [[prominence | prominence]] through three [[key | key]] events.
 She [[played | play a(n) ~ role in …]] an important [[role in | play a(n) ~ role in …]] [[initiating | initiate]] a [[global | global]] digital [[platform | platform]], which [[allows | allow ~ toR]] users to [[explore | explore]] [[underwater | underwater]] worlds [[virtually | virtually]], [[fostering | foster]] [[appreciation | appreciation]] for [[marine | marine]] [[ecosystems | ecosystem]].
 She was also [[awarded | award]] the TED Prize, a [[distinguished | distinguished]] [[annual | annual]] [[award | award]] that [[grants | grant]] winners a wish to change the world, [[along with | along with ~]] [[financial | financial]] [[support | support]].
 Earle’s wish was to create a [[global | global]] network of [[marine | marine]] [[protected | protect]] areas, or “Hope Spots,” which [[serve as | serve]] [[refuges | refuge]] from [[pollution | pollution]], [[overfishing | overfishing]], and other [[threats | threat]].
 ===
 Finally, this wish [[led | lead]] her to [[establish | establish]] Mission Blue, a [[non-profit | non-profit]] [[organization | organization]] that [[aims | aim]] to [[inspire | inspire]] action to [[explore | explore]] and [[protect | protect]] the [[ocean | ocean]].
-Since its [[establishment | establishment]], [[protected | protect]] [[ocean | ocean]] areas have [[increased | increase]] from [[less than | less than ~]] 1% in 2009 to [[approximately | approximately]] 8% in 2023.
+Since its [[establishment | establishment]], [[protected | protect]] [[ocean | ocean]] areas have [[increased | increase]] from [[less than | less than ~ : [형] ~미만인, ~보다 더 적은]] 1% in 2009 to [[approximately | approximately]] 8% in 2023.
 Mission Blue’s [[goal | goal]] is to [[protect | protect]] 30% of the [[ocean | ocean]] by 2030, [[in line with | in line with ~]] the International [[Union | union]] for [[Conservation | conservation]] of Nature’s [[recommended | recommend]] [[target | target]] for [[maintaining | maintain]] [[ocean | ocean]] health.
 ===
 For Earle, Mission Blue [[represents | represent]] not only an [[organization | organization]], but also a movement, [[driven | drive]] by a [[shared | share]] [[passion | passion]] for the [[ocean | ocean]] and [[dedication | dedication]] to its preservation.
 As an [[oceanographer | oceanographer]], [[author | author]], and [[lecturer | lecturer]], she [[consistently | consistently]] [[inspires | inspire]] [[individuals | individual]] to [[acknowledge | acknowledge]] the [[ocean | ocean]]’s [[significance | significance]].
 Earle said, “Since the 1980s, about half of the world’s [[coral reefs | coral reef]] have [[disappeared | disappear]].
-Ten percent of the sharks remain.
+Ten percent of the sharks [[remain]].
 They are not all gone.
 However, there is hope of preserving [[endangered | endangered]] [[marine | marine]] [[species | species / species]].
-There are more whales and turtles today than when I was [[young | young]] because most [[nations | nation]] are [[protecting | protect ~ from …]] them from [[harm | harm]].”
+There are more whales and turtles today than when I was [[young | young]] because most [[nations | nation]] are [[protecting | protect ~ from …]] them [[from | protect ~ from …]] [[harm | harm]].”
 ===
 Although humans are [[largely | largely]] [[responsible for | responsible for ~]] many of the [[stresses | stress]] on the [[ocean | ocean]], Earle believes that we also have the [[power | power]] to [[ensure | ensure]] its [[survival | survival]].
 Earle [[reminds | remind A of B]] us [[of | remind A of B]] the importance of the [[ocean | ocean]] by saying, “If you think the [[ocean | ocean]] isn’t important, [[imagine | imagine]] Earth without it.

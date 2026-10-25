@@ -19,12 +19,12 @@ const GAME_CONFIG = {
     guardianPlayerHpRepeat: 3, // 👈 2회차 수호령전 플레이어 하트 수 (기본: 3개)
 
     // 👑 [마왕전 체력 & 시간 & 플레이어 목숨]
-    bossHp1: 12,               // 1회차 마왕 체력 (기본: 10)
+    bossHp1: 20,               // 1회차 마왕 체력 (기본: 10)
     bossTime1: 4.0,            // 1회차 마왕 시간 (기본: 5.0초)
 
-    bossHpRepeat: 15,          // 2회차 마왕 체력 (기본: 12)
+    bossHpRepeat: 20,          // 2회차 마왕 체력 (기본: 12)
     bossTimeRepeat: 3.0,       // 2회차 마왕 시간 (기본: 4.0초)
-    bossPlayerHpRepeat: 1,     // 👈 2회차 마왕전 플레이어 하트 수 (기본: 3개)
+    bossPlayerHpRepeat: 2,     // 👈 2회차 마왕전 플레이어 하트 수 (기본: 3개)
 
     // 🚨 [안개 구출전 일일 쿼터 설정] (일반 단어 계약량에 따라 하루 의무 구출량 배정)
     rescueQuota: [

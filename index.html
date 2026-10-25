@@ -4396,8 +4396,8 @@
                 <!-- 책선생의 감동 츤데레 칭찬 -->
                 <div class="ending-desc" style="color:#451a03; font-size:13px; line-height:1.55; font-weight:800; margin-bottom:8px;">
                     "오호...?<br>
-                    내 지옥 특훈을 기어코 버텨냈단 말이지?<br><br>
-                    솔직히... 조금 감동했다.<br><br>
+                    내 지옥 특훈을 기어코 버텨냈단 말이지?<br>
+                    솔직히... 조금 감동했다.<br>
                     이 정도 독기면 실전에서도 <b></b>1등급</b>은 무조건 네 거다!"
                 </div>
 
@@ -4726,23 +4726,30 @@
             ============================================== -->
         <div id="adminTowerTab2" style="display:none; flex-direction:column; flex:1; min-height:0;">
             <!-- 상단 요약 바 & 수업용 복사 버튼 -->
-            <div style="display:flex; justify-content:space-between; align-items:center; background:#fff1f2; border:1.5px solid #fecdd3; border-radius:9px; padding:8px 10px; margin-bottom:6px; flex-shrink:0;">
-                <div>
-                    <div style="font-size:13px; font-weight:900; color:#9f1239;">🎯 전교생 킬러 단어 분석</div>
-                    <div style="font-size:10.5px; font-weight:700; color:#be123c;">학생들이 가장 많이 틀린 오답 빈도 순위</div>
-                </div>
-                <div style="display:flex; align-items:center; gap:6px;">
-                    <!-- 🌟 표시 개수 드롭다운 (10/20/30/전체) -->
-                    <select id="adminKillerLimitSelect" onchange="renderAdminWrongWordsAnalytics()" style="background:#ffffff; border:1.5px solid #f43f5e; border-radius:6px; padding:4px 6px; font-size:11.5px; font-weight:800; color:#9f1239; cursor:pointer;">
-                        <option value="10" selected>TOP 10</option>
-                        <option value="20">TOP 20</option>
-                        <option value="30">TOP 30</option>
-                        <option value="all">전체 오답</option>
-                    </select>
-                    <button type="button" onclick="copyAdminKillerWords()" style="background:#be123c; color:#ffffff; border:none; border-radius:6px; padding:5px 8px; font-size:11px; font-weight:900; cursor:pointer; box-shadow:0 1px 3px rgba(0,0,0,0.15); white-space:nowrap;">
-                        📋 복사
-                    </button>
-                </div>
+            <div style="display:flex; justify-content:space-between; align-items:center; gap:4px; background:#fff1f2; border:1.5px solid #fecdd3; border-radius:9px; padding:7px 8px; margin-bottom:6px; flex-shrink:0;">
+                <!-- 1. [일반 / 비경] 카테고리 선택 -->
+                <select id="adminKillerCatSelect" onchange="onAdminKillerCategoryChange()" style="background:#ffffff; border:1.5px solid #f43f5e; border-radius:6px; padding:4px 4px; font-size:11px; font-weight:800; color:#9f1239; cursor:pointer;">
+                    <option value="normal" selected>🌲 일반</option>
+                    <option value="special">🌀 비경</option>
+                </select>
+
+                <!-- 2. [전체 / 특정 영지] 선택 (동적 갱신) -->
+                <select id="adminKillerMapSelect" onchange="renderAdminWrongWordsAnalytics()" style="flex:1; min-width:0; background:#ffffff; border:1.5px solid #f43f5e; border-radius:6px; padding:4px 4px; font-size:11px; font-weight:800; color:#9f1239; cursor:pointer; text-overflow:ellipsis;">
+                    <option value="all" selected>전체 영지</option>
+                </select>
+
+                <!-- 3. [TOP 10 ~ 전체] 표시 개수 -->
+                <select id="adminKillerLimitSelect" onchange="renderAdminWrongWordsAnalytics()" style="background:#ffffff; border:1.5px solid #f43f5e; border-radius:6px; padding:4px 4px; font-size:11px; font-weight:800; color:#9f1239; cursor:pointer;">
+                    <option value="10" selected>TOP 10</option>
+                    <option value="20">TOP 20</option>
+                    <option value="30">TOP 30</option>
+                    <option value="all">전체</option>
+                </select>
+
+                <!-- 4. [복사] 버튼 -->
+                <button type="button" onclick="copyAdminKillerWords()" style="background:#be123c; color:#ffffff; border:none; border-radius:6px; padding:5px 8px; font-size:11px; font-weight:900; cursor:pointer; box-shadow:0 1px 3px rgba(0,0,0,0.15); white-space:nowrap; flex-shrink:0;">
+                    📋 복사
+                </button>
             </div>
             <!-- 킬러 단어 카드 목록 컨테이너 -->
             <div id="adminKillerWordsListContainer" style="flex:1; min-height:0; overflow-y:auto; display:flex; flex-direction:column; gap:5px; padding-right:2px;"></div>
@@ -5660,6 +5667,10 @@
         const todayStr = getTodayKSTString();
         const savedTodayCount = safeStorageGet(`spirit_defense_today_count_${todayStr}`, 0);
         const savedEmergencyDate = safeStorageGet('spirit_emergency_cleared_date', "");
+        // 🔥 연속 출석 로컬 데이터 사전 백업 (clear 전 보호!)
+        const savedStreakDays = safeStorageGet('spirit_streak_days', 0);
+        const savedStreakDate = safeStorageGet('spirit_streak_last_date', "");
+        const savedTodayQuizCnt = safeStorageGet(`spirit_streak_quiz_cnt_${todayStr}`, 0);
         const savedFavorites = safeStorageGet('spirit_favorites', {}); // 👈 🌟 찜한 목록 사전 보존!
         const savedIsAdmin = safeStorageGet('spirit_is_admin', false); // 🌟 관리자 권한 사전 보존!
         const savedAutoSkip = safeStorageGet('spirit_auto_skip_enabled', {});
@@ -5812,6 +5823,19 @@
             safeStorageSet('spirit_counseling_data', wordCounselingData);
         }
 
+        // 🔥 [연속 출석 클라우드 & 로컬 스마트 병합 복원]
+        const finalStreakDate = (cloudData.streakLastDate && cloudData.streakLastDate > savedStreakDate)
+            ? cloudData.streakLastDate
+            : savedStreakDate;
+        const finalStreakDays = Math.max(cloudData.streakDays || 0, savedStreakDays || 0, 1);
+        const finalTodayQuizCnt = Math.max(
+            (cloudData.streakTodayDate === todayStr ? (cloudData.streakTodayQuizCnt || 0) : 0),
+            savedTodayQuizCnt
+        );
+        safeStorageSet('spirit_streak_days', finalStreakDays);
+        safeStorageSet('spirit_streak_last_date', finalStreakDate);
+        safeStorageSet(`spirit_streak_quiz_cnt_${todayStr}`, finalTodayQuizCnt);
+
         // 내 로컬의 최신 저장 시각 갱신
         safeStorageSet('spirit_last_local_save', Date.now());
 
@@ -5896,6 +5920,8 @@
             equippedTitle: (records && records.equippedTitle) ? records.equippedTitle : "🌱 첫 걸음의 탐색자",
             streakDays: safeStorageGet('spirit_streak_days', 1),
             streakLastDate: safeStorageGet('spirit_streak_last_date', ""),
+            streakTodayDate: getTodayKSTString(),
+            streakTodayQuizCnt: safeStorageGet(`spirit_streak_quiz_cnt_${getTodayKSTString()}`, 0),
             records: records,
             mastery: allMastery,
             clearedBosses: clearedBosses,
@@ -7059,17 +7085,36 @@
     ];
 
     // ========================================================
-    // 🔥 모닥불 연속 출석(Streak) 판정 및 렌더링 엔진
+    // 🔥 모닥불 연속 출석(Streak) & 일일 5문제 카운트 통합 엔진
     // ========================================================
-    function checkDailyLoginStreak(onRoundComplete = false) {
+    function incrementDailyQuizCount(addCount = 1) {
+        if (!currentUserDocId) return;
+        const todayStr = getTodayKSTString();
+        let cnt = safeStorageGet(`spirit_streak_quiz_cnt_${todayStr}`, 0);
+        cnt += addCount;
+        safeStorageSet(`spirit_streak_quiz_cnt_${todayStr}`, cnt);
+
+        // 🌟 오늘 누적 5문제에 도달하는 순간 출석 완료 처리!
+        if (cnt >= 5) {
+            checkDailyLoginStreak(true);
+        } else {
+            checkDailyLoginStreak(false);
+        }
+    }
+
+    function checkDailyLoginStreak(forceCompleteToday = false) {
         if (!currentUserDocId) return;
 
         const todayStr = getTodayKSTString();
         let streakDays = safeStorageGet('spirit_streak_days', 1);
         let lastActiveDate = safeStorageGet('spirit_streak_last_date', "");
+        let todayQuizCnt = safeStorageGet(`spirit_streak_quiz_cnt_${todayStr}`, 0);
 
-        // 1. 라운드 종료(5문제 완료) 시점에 호출되었을 때
-        if (onRoundComplete) {
+        // 이미 오늘 5문제 이상 풀었다면 완료 플래그 자동 활성화
+        if (todayQuizCnt >= 5) forceCompleteToday = true;
+
+        // 1. 오늘 5문제 달성 시점
+        if (forceCompleteToday) {
             if (lastActiveDate !== todayStr) {
                 // 어제 날짜 계산
                 const yesterday = new Date();
@@ -7091,6 +7136,7 @@
 
                 safeStorageSet('spirit_streak_days', streakDays);
                 safeStorageSet('spirit_streak_last_date', todayStr);
+                lastActiveDate = todayStr;
 
                 // 칭호 해금 체크
                 if (streakDays >= 3) unlockTitle("streak_3d");
@@ -7100,7 +7146,7 @@
                 syncToCloud(true);
             }
         } else {
-            // 2. 평상시 화면 렌더링 시 결석 여부만 점검 (어제도 안 하고 그저께 했다면 0/1일차 리셋 준비)
+            // 2. 평상시 화면 렌더링 시 결석 여부만 점검
             if (lastActiveDate && lastActiveDate !== todayStr) {
                 const yesterday = new Date();
                 yesterday.setDate(yesterday.getDate() - 1);
@@ -7132,7 +7178,7 @@
                 streakSubEl.innerText = "✨ 오늘 출석 완료!";
             } else {
                 streakSubEl.className = "camp-streak-sub todo";
-                streakSubEl.innerText = "⏳ 오늘 미완료 (5문제 필요)";
+                streakSubEl.innerText = `⏳ 오늘 미완료 (${Math.min(5, todayQuizCnt)} / 5문제)`;
             }
         }
 
@@ -7175,11 +7221,12 @@
         const todayStr = getTodayKSTString();
         const streakDays = safeStorageGet('spirit_streak_days', 1);
         const lastActiveDate = safeStorageGet('spirit_streak_last_date', "");
-        const isDoneToday = (lastActiveDate === todayStr);
+        const todayQuizCnt = safeStorageGet(`spirit_streak_quiz_cnt_${todayStr}`, 0);
+        const isDoneToday = (lastActiveDate === todayStr || todayQuizCnt >= 5);
 
         const statusBadge = isDoneToday 
             ? `<b style="color:#15803d;">[오늘 출석 완료]</b>` 
-            : `<b style="color:#dc2626;">[오늘 미완료 (5문제 필요)]</b>`;
+            : `<b style="color:#dc2626;">[오늘 미완료 (${Math.min(5, todayQuizCnt)} / 5문제)]</b>`;
 
         showGameAlert(
             `🔥 ${streakDays}일 연속 탐험 중`,
@@ -8003,7 +8050,12 @@ const recTime = document.getElementById("recFastestTime");
         // 1. 성소 두루마리 우상단 미니 알약 2종
         const mistPill = document.getElementById("pillMistNotice");
         if (mistPill) {
-            if (decayedWords.length > 0 && !isTodayCleared) {
+            // 일일 구출 임무가 끝나면 알약이 안 뜨도록 하는 코드. 아래의 코드와 택1하여 적용
+            // if (decayedWords.length > 0 && !isTodayCleared) {
+
+            // 🌟 일일 임무 완료 여부와 무관하게, 침식된 정령이 남아있다면 항상 표시!
+            if (decayedWords.length > 0) {
+
                 mistPill.innerText = `🚨 ${decayedWords.length}`;
                 mistPill.style.display = "inline-block";
             } else {
@@ -9920,6 +9972,7 @@ const recTime = document.getElementById("recFastestTime");
         if (isCorrect) {
             streakCount++;
             roundCorrectCount++;
+            incrementDailyQuizCount(1); // 🔥 모든 퀴즈 정답 시 일일 출석 카운트 +1
 
             if (q && q.isPassage) {
                 window.passageWordAnswerStatus = window.passageWordAnswerStatus || {};
@@ -10442,8 +10495,8 @@ const recTime = document.getElementById("recFastestTime");
         const feverOverlay = document.getElementById("feverVignette");
         if (feverOverlay) feverOverlay.remove();
 
-        // 🔥 1라운드(5문제) 학습 완료 시 오늘치 출석 장작 인정!
-        checkDailyLoginStreak(true);
+        // 🔥 라운드 종료 시 출석 상태 재점검
+        checkDailyLoginStreak(false);
 
         // 🌟 성소 세션 종료 정산
         if (isCounselingMode) {
@@ -11997,6 +12050,7 @@ const recTime = document.getElementById("recFastestTime");
         clearInterval(bossTimerInterval);
 
         if (choice === currentBossQuestion.correct) {
+            incrementDailyQuizCount(1); // 🔥 보스전/특훈 정답 시 일일 출석 카운트 +1
             // 🌟 마왕전 연속 타격 누적 및 최고 기록 저장
             window.curBossHitStreak = (window.curBossHitStreak || 0) + 1;
             if (window.curBossHitStreak > (gameRecords.bossMaxStreak || 0)) {
@@ -13296,6 +13350,7 @@ function handleMidBossVictory() {
                     // ⭕ 정답! ➔ 초록 알약 + 참격 대미지!
                     pill.classList.add("eval-correct");
                     correctCount++;
+                    incrementDailyQuizCount(1); // 🔥 반정령 융합 맞힌 단어당 +1
                     bossHp = Math.max(0, bossHp - 1);
                     Sound.hit(false);
                     triggerBossHitEffect(false);
@@ -13346,6 +13401,8 @@ function handleMidBossVictory() {
             "fb_wrong.webp",
             "fb_contract.webp",
             "rest_fire.webp",
+            "parchment1.webp",
+            "parchment2.webp",
 
             // 🌟 3단계: 성역 탐험 및 주요 모달 허브 배너 (누락 4종 추가 완료!)
             "world.webp",
@@ -13387,9 +13444,8 @@ function handleMidBossVictory() {
             "intro_book.webp",
             "mr.book.webp",
             "mr.book_icon.webp",
-            "seal_btn.webp",
-            "parchment1.webp",
-            "parchment2.webp"
+            "seal_btn.webp"
+            
         ];
         criticalImages.forEach(filename => {
             const img = new Image();
@@ -13743,7 +13799,7 @@ function handleMidBossVictory() {
             }
             if (tab) tab.style.display = isActive ? "flex" : "none";
         }
-        if (tabNum === 2) renderAdminWrongWordsAnalytics();
+        if (tabNum === 2) onAdminKillerCategoryChange(); // 🌟 탭 진입 시 영지 목록 초기화 및 렌더링
         if (tabNum === 3) renderAdminMapTabControls();
     }
 
@@ -13751,33 +13807,68 @@ function handleMidBossVictory() {
     let adminPendingMapTabOverrides = null;
 
     // ========================================================
-    // 📊 전교생 최다 오답(킬러 단어) TOP 10 집계 및 렌더러
+    // 📊 전교생 최다 오답(킬러 단어) 카테고리/영지별 정밀 분석 엔진
     // ========================================================
     let adminCurrentKillerWords = [];
+
+    // 1차 드롭다운([일반/비경]) 변경 시 ➔ 2차 드롭다운([전체/특정 영지]) 목록 동적 생성
+    function onAdminKillerCategoryChange() {
+        const catSelect = document.getElementById("adminKillerCatSelect");
+        const mapSelect = document.getElementById("adminKillerMapSelect");
+        if (!catSelect || !mapSelect) return;
+
+        const isSpecialCat = (catSelect.value === "special");
+        mapSelect.innerHTML = `<option value="all" selected>전체 ${isSpecialCat ? '비경' : '일반'} 영지</option>`;
+
+        worldMaps.forEach(m => {
+            const isSpec = isMapSpecial(m);
+            if ((isSpecialCat && isSpec) || (!isSpecialCat && !isSpec)) {
+                const opt = document.createElement("option");
+                opt.value = m.id;
+                opt.innerText = m.name;
+                mapSelect.appendChild(opt);
+            }
+        });
+
+        renderAdminWrongWordsAnalytics();
+    }
 
     function renderAdminWrongWordsAnalytics() {
         const container = document.getElementById("adminKillerWordsListContainer");
         if (!container) return;
         container.innerHTML = "";
 
-        // 1. 전교생 데이터에서 단어별 오답 횟수 및 오답 학생 수 합산
-        const wordStats = {}; // { [eng]: { wrongCount: 0, studentCount: 0, kor: '', mapName: '' } }
+        const catVal = document.getElementById("adminKillerCatSelect")?.value || "normal";
+        const mapVal = document.getElementById("adminKillerMapSelect")?.value || "all";
+        const limitVal = document.getElementById("adminKillerLimitSelect")?.value || "10";
+        const isSpecialCat = (catVal === "special");
 
-        // 단어 메타 정보 매핑 테이블 사전 생성
-        const wordMetaMap = {};
+        // 1. 현재 선택된 카테고리 및 특정 영지에 속하는 '현역 단어' 사전 생성 (옛날 유령 단어 원천 배제!)
+        const activeWordMetaMap = {};
         worldMaps.forEach(m => {
+            const isSpec = isMapSpecial(m);
+            // 카테고리 필터 검사
+            if ((isSpecialCat && !isSpec) || (!isSpecialCat && isSpec)) return;
+            // 특정 영지 선택 필터 검사
+            if (mapVal !== "all" && m.id !== mapVal) return;
+
             m.words.forEach(w => {
-                wordMetaMap[w.eng] = { kor: w.kor, mapName: m.name };
+                activeWordMetaMap[w.eng] = { kor: w.kor, mapName: m.name, mapId: m.id };
             });
         });
 
+        // 2. 전교생 데이터에서 activeWordMetaMap에 존재하는 단어만 오답 합산
+        const wordStats = {};
         adminCachedStudents.forEach(s => {
             const cData = s.counselingData || {};
             Object.keys(cData).forEach(eng => {
+                // 🛑 현재 선택된 현역 영지에 없는 단어(과거 삭제 단어 등)는 100% 무시!
+                const meta = activeWordMetaMap[eng];
+                if (!meta) return;
+
                 const wrong = cData[eng].wrongAccum || 0;
                 if (wrong > 0) {
                     if (!wordStats[eng]) {
-                        const meta = wordMetaMap[eng] || { kor: '뜻 불명', mapName: '성역' };
                         wordStats[eng] = {
                             eng: eng,
                             kor: meta.kor,
@@ -13792,23 +13883,18 @@ function handleMidBossVictory() {
             });
         });
 
-        // 2. 드롭다운 선택값 읽기 (10/20/30/all)
-        const limitSelect = document.getElementById("adminKillerLimitSelect");
-        const limitVal = limitSelect ? limitSelect.value : "10";
-
-        // 오답 수 내림차순 정렬
+        // 3. 오답 수 내림차순 정렬 및 개수 슬라이싱
         const sortedWords = Object.values(wordStats)
             .sort((a, b) => b.wrongCount - a.wrongCount || b.studentCount - a.studentCount);
 
-        // 선택 개수만큼 추출
         adminCurrentKillerWords = (limitVal === "all") ? sortedWords : sortedWords.slice(0, parseInt(limitVal));
 
         if (adminCurrentKillerWords.length === 0) {
-            container.innerHTML = `<div style="text-align:center; padding:30px 10px; font-size:12.5px; color:#785a3e; font-weight:700;">아직 누적된 전교생 오답 데이터가 없습니다. (정령들이 모두 평화롭습니다!)</div>`;
+            container.innerHTML = `<div style="text-align:center; padding:30px 10px; font-size:12.5px; color:#785a3e; font-weight:700;">해당 영지 범위에서 누적된 오답 데이터가 없습니다.</div>`;
             return;
         }
 
-        // 3. TOP 10 카드 렌더링
+        // 4. 카드 렌더링
         adminCurrentKillerWords.forEach((item, idx) => {
             const rank = idx + 1;
             let rankBadge = `<span style="font-size:13px; font-weight:900; color:#785a3e; width:24px; display:inline-block;">${rank}위</span>`;
@@ -13825,9 +13911,9 @@ function handleMidBossVictory() {
                 <div style="display:flex; align-items:center; gap:8px; min-width:0;">
                     ${rankBadge}
                     <div style="text-align:left; min-width:0;">
-                        <div style="display:flex; align-items:baseline; gap:5px;">
+                        <div style="display:flex; align-items:baseline; gap:5px; flex-wrap:wrap;">
                             <span style="font-size:15px; font-weight:900; color:#881337;">${item.eng}</span>
-                            <span style="font-size:10px; font-weight:700; color:#9f1239; background:#ffe4e6; padding:1px 5px; border-radius:4px;">${item.mapName}</span>
+                            <span style="font-size:10px; font-weight:700; color:#9f1239; background:#ffe4e6; padding:1px 5px; border-radius:4px; white-space:nowrap;">${item.mapName}</span>
                         </div>
                         <div style="font-size:12px; font-weight:700; color:#4c0519; margin-top:1px; text-overflow:ellipsis; overflow:hidden; white-space:nowrap;">${item.kor}</div>
                     </div>
@@ -13841,7 +13927,7 @@ function handleMidBossVictory() {
         });
     }
 
-    // 📋 수업용 텍스트 클립보드 원클릭 복사
+    // 📋 수업용 텍스트 클립보드 원클릭 복사 (선택된 영지명 포함)
     function copyAdminKillerWords() {
         Sound.click();
         if (!adminCurrentKillerWords || adminCurrentKillerWords.length === 0) {
@@ -13850,15 +13936,18 @@ function handleMidBossVictory() {
         }
 
         const schoolName = (typeof GAME_CONFIG !== 'undefined' && GAME_CONFIG.schoolTag) ? GAME_CONFIG.schoolTag : "학교";
+        const mapSelect = document.getElementById("adminKillerMapSelect");
+        const scopeName = mapSelect ? mapSelect.options[mapSelect.selectedIndex].text : "전체";
         const countTitle = adminCurrentKillerWords.length >= 10 ? `TOP ${adminCurrentKillerWords.length}` : `${adminCurrentKillerWords.length}선`;
-        let text = `[${schoolName} 단어 정령 전교생 최다 오답 ${countTitle}]\n`;
+
+        let text = `[${schoolName} - ${scopeName} 최다 오답 ${countTitle}]\n`;
         adminCurrentKillerWords.forEach((item, idx) => {
             text += `${idx + 1}. ${item.eng} : ${item.kor} (${item.wrongCount}회 오답 / ${item.studentCount}명 취약)\n`;
         });
 
         navigator.clipboard.writeText(text).then(() => {
             Sound.fanfare();
-            alert("📋 전교생 최다 오답 TOP 10 목록이 클립보드에 복사되었습니다!\n(수업 자료나 카톡에 바로 붙여넣기 하실 수 있습니다)");
+            alert(`📋 [${scopeName}] 최다 오답 목록이 클립보드에 복사되었습니다!`);
         }).catch(() => {
             alert("복사에 실패했습니다. 브라우저 권한을 확인해 주세요.");
         });

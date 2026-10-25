@@ -1949,8 +1949,8 @@
 
         /* 좌측 정렬을 유지하며 커졌다 작아지는 키프레임 */
         @keyframes pulseComboLeft {
-            0% { transform: scale(0.96); }
-            100% { transform: scale(1.05); }
+            0% { transform: scale(0.94); }
+            100% { transform: scale(1.00); }
         }
 
         .question-box {
@@ -2002,6 +2002,11 @@
             line-height: 1.15;
             text-align: center;
             line-height: 1.2;
+        }
+
+        /* 🛡️ 퀴즈 선택지 좌우 흔들림 시 가로 스크롤바 생성 완전 차단 */
+        #choicesGrid, #bossChoicesGrid, #gameScreen, #bossScreen {
+            overflow-x: hidden !important;
         }
 
         .choices-grid { 
@@ -2364,11 +2369,11 @@
 
         @keyframes feverBtnPulseAnim {
             0% {
-                transform: scale(1);
+                transform: scale(0.9);
                 box-shadow: 0 0 10px rgba(234, 88, 12, 0.5), 0 0 15px rgba(253, 224, 71, 0.3);
             }
             100% {
-                transform: scale(1.03);
+                transform: scale(1.0);
                 box-shadow: 0 0 22px rgba(234, 88, 12, 0.9), 0 0 35px rgba(253, 224, 71, 0.8);
             }
         }
@@ -3216,6 +3221,183 @@
             min-height: 18px;
             opacity: 0.9;
         }
+
+        /* ========================================================
+           ⚔️ [반정령 스와이프 배틀] 전용 스타일시트
+           ======================================================== */
+        .polar-battle-stage {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            flex: 1; /* 🌟 타이머 아래 남은 화면 전체를 100% 꽉 채움 */
+            min-height: 0;
+            justify-content: space-between;
+            align-items: stretch;
+            box-sizing: border-box;
+            position: relative;
+            user-select: none;
+            padding: 4px 0;
+            overflow-x: hidden !important; /* 🌟 무대 전체 가로 스크롤 완전 차단 */
+        }
+        /* 상단 좌우 진영 헤더 */
+        .polar-teams-header {
+            display: flex;
+            justify-content: space-between;
+            gap: 8px;
+            margin-bottom: 6px;
+            overflow-x: hidden !important; /* 🌟 무대 전체 가로 스크롤 완전 차단 */
+        }
+        /* 🌟 [개편] 하단 A/B 진영 바구니: 9-Slice 세로 두루마리(scroll_btn_v) 스킨 */
+        .polar-bucket-card {
+             flex: 1;
+            /* 🌟 알림창(#fbCardBody)과 100% 동일한 9-Slice 세로 두루마리 규격 */
+            background: transparent !important;
+            border-radius: 0 !important;
+            /* box-shadow: none !important; */
+            border-style: solid !important;
+            border-width: 25px 5px 25px 5px !important;
+            border-image: url('images/scroll_btn_v.webp') 18% 10% 18% 10% fill stretch !important;
+            filter: drop-shadow(0 3px 8px rgba(0,0,0,0.5));
+            padding: 0 2px !important;
+            text-align: center;
+            min-height: 220px;
+            max-height: 240px;
+            overflow: hidden;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            transition: transform 0.12s ease;
+            cursor: pointer;
+            touch-action: manipulation;
+         }
+        .polar-bucket-card:active { transform: scale(0.97); }
+        .polar-bucket-card.bucket-a { border-color: #0284c7; background: rgba(240, 249, 255, 0.8); }
+        .polar-bucket-card.bucket-b { border-color: #ea580c; background: rgba(255, 247, 237, 0.8); }
+        .polar-bucket-title { font-size: 13.5px; font-weight: 900; line-height: 1.2; word-break: keep-all; }
+        .bucket-a .polar-bucket-title { color: #0369a1; }
+        .bucket-b .polar-bucket-title { color: #c2410c; }
+
+        /* 바구니 안 적립 미니 알약 슬롯 */
+        .polar-stacked-slots {
+            display: flex;
+            flex-direction: column;
+            gap: 1px;
+            width: 100%;
+            margin-top: 2px;
+            overflow-y: auto;   /* 🌟 6~8개 몰빵 시에만 바구니 내부에서 슬림하게 스크롤 */
+            flex: 1;
+            min-height: 0;
+            padding-right: 1px;
+            background: transparent; /* 🌟 뒤의 하얀 박스 제거! */
+            overflow-x: hidden !important; /* 🌟 무대 전체 가로 스크롤 완전 차단 */
+        }
+        .polar-pill-item {
+            font-size: 15px;
+            font-weight: 800;
+            color: #2c1a0e; /* 🌟 양피지 먹물 글씨 톤 */
+            background: none !important; /* 🌟 알약 박스 및 배경 완전 소각 */
+            border: none !important;
+            box-shadow: none !important;
+            line-height: 1.25;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            width: 100%;
+            box-sizing: border-box;
+            transition: color 0.2s ease, transform 0.2s ease;
+        }
+        .polar-pill-item.eval-correct {
+            color: #15803d !important; /* 🌟 정답: 선명한 에메랄드 초록 글씨 */
+            font-weight: 900 !important;
+            text-shadow: 0 0 6px rgba(21, 128, 61, 0.3);
+        }
+        .polar-pill-item.eval-wrong {
+            color: #dc2626 !important; /* 🌟 오답: 선명한 붉은 글씨 + 진동 */
+            font-weight: 900 !important;
+            animation: wrongShakeAnim 0.35s ease-out;
+        }
+
+        /* 중앙 스와이프 메인 카드 */
+        .polar-swipe-arena {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start; /* 🌟 상단으로 바짝 밀착! */
+            align-items: center;
+            position: relative;
+            min-height: 20px;
+            padding-top: 20px; /* 👈 여기서 숫자를 늘리거나 줄여 Y축 위치를 미세 조절! */
+        }
+        .polar-main-card {
+            width: 85%;
+            max-width: 280px;
+            min-height: 70px;
+            background: transparent url('images/scroll_btn_bcut.webp') no-repeat center;
+            background-size: 100% 100%;
+            border: none;
+            border-radius: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 25px;
+            font-weight: 900;
+            color: #2c1a0e;
+            filter: drop-shadow(0 4px 10px rgba(0,0,0,0.4));
+            cursor: grab;
+            touch-action: none;
+            transition: transform 0.15s ease, opacity 0.15s ease;
+        }
+        .polar-main-card:active { cursor: grabbing; }
+
+        /* 보조 탭 버튼 바 */
+        .polar-btn-bar {
+            display: flex;
+            gap: 8px;
+            width: 100%;
+            margin-top: 6px;
+            margin-bottom: 4px;
+        }
+        .polar-nav-btn {
+            flex: 1;
+            padding: 9px;
+            font-size: 13px;
+            font-weight: 900;
+            border-radius: 9px;
+            cursor: pointer;
+            border: 1.5px solid;
+            transition: all 0.1s ease;
+        }
+        .polar-nav-btn.btn-to-a { background: #f0f9ff; border-color: #0284c7; color: #0369a1; }
+        .polar-nav-btn.btn-to-b { background: #fff7ed; border-color: #ea580c; color: #c2410c; }
+        .polar-nav-btn:active { transform: scale(0.96); }
+
+        /* 하단 최종 주문 시전 버튼 */
+        .polar-submit-btn {
+            width: 100%;
+            padding: 13px;
+            font-size: 15px;
+            font-weight: 900;
+            border-radius: 12px;
+            border: 2px solid #57534e;
+            background: #a8a29e;
+            color: #f5f5f4;
+            cursor: not-allowed;
+            transition: all 0.2s ease;
+            box-shadow: none;
+            flex-shrink: 0; /* 🌟 위가 아무리 넘쳐도 버튼은 화면 맨 밑바닥에 절대 고정! */
+        }
+        .polar-submit-btn.ready {
+            background: linear-gradient(180deg, #b45309 0%, #78350f 100%);
+            border-color: #f59e0b;
+            color: #ffffff;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(180, 83, 9, 0.45);
+            animation: pulseComboLeft 1.0s infinite alternate ease-in-out;
+        }
+        .polar-submit-btn.ready:active { transform: scale(0.98); }
+
 
     </style>
 </head>
@@ -4066,17 +4248,14 @@
                 </div>
             </div>
         </div>
-        <div>
+        <div style="width:100%; flex-shrink:0;">
             <button id="midBossNoticeStartBtn" class="btn-wood theme-emerald" style="margin-bottom:6px;" onclick="confirmStartMidBoss()">
                 ⚔️ 수호령과의 시련 시작! ➔
             </button>
-            
-            <!-- 🌟 하얀 스티커 같던 style 싹 지우고 순수 서브 버튼으로 통일 -->
             <button class="btn-sub-wood" style="margin-bottom:6px;" onclick="openWordBook(false)">
                 📖 정령도감(단어장) 최종 복습하기
             </button>
-            
-            <button class="btn-sub-wood" onclick="backToLobbyFromMidBossNotice()">
+            <button class="btn-sub-wood" style="margin-bottom:0;" onclick="backToLobbyFromMidBossNotice()">
                 🏕️ 전초기지로 돌아가기
             </button>
         </div>
@@ -4095,7 +4274,7 @@
                 <span class="ending-badge-top" style="color:#2563eb; letter-spacing:2px; font-size:10px; margin-bottom:2px;">✦ MIST RESCUE BRIEFING ✦</span>
                 <h2 class="ending-title" style="color:#1e3a8a; font-size:18px; margin:2px 0 4px 0;">🚨 안개 속 구출</h2>
                 <div class="ending-divider" style="color:#3b82f6; margin-bottom:4px;">❖ ❖ ❖</div>
-                <div class="ending-desc">
+                <div class="ending-desc" style="color:#1e3a8a;">
                     망각의 안개에 휩싸인 정령들을 구출해라.<br>
                     그 정령들이 네 영혼에 <b>진명의 각인</b>을 새겨줄 거다!
                 </div>
@@ -6144,9 +6323,6 @@
                     return;
                 }
 
-                // 🌐 [동의어 영지] <=> 기호는 건너뛰고, 쉼표 묶음 전체를 1개의 영단어로 취급
-                if (line.includes('<=>')) return;
-
                 let eng = "", kor = "";
                 if (line.includes(':')) {
                     const p = line.split(':');
@@ -6157,6 +6333,49 @@
                     eng = p[0].trim();
                     kor = p.slice(1).join(' ').trim();
                 }
+                // 🌐 [NEW: 넷 영지 줄바꿈 <=> 양극 진영 파싱 엔진]
+                const isNetMap = currentMap && currentMap.id && currentMap.id.toLowerCase().includes('net_');
+                if (isNetMap) {
+                    if (!currentMap.polarPairs) currentMap.polarPairs = [];
+                    if (!currentMap.pendingNetLine) currentMap.pendingNetLine = null;
+                    if (!currentMap.awaitingPolarOpposite) currentMap.awaitingPolarOpposite = false;
+
+                    // 1) 독립된 <=> 구분자 라인을 만났을 때
+                    if (line === '<=>' || line.includes('<=>')) {
+                        currentMap.awaitingPolarOpposite = true;
+                        return;
+                    }
+
+                    // 2) 일반 단어 라인 파싱
+                    if (eng && kor) {
+                        const wordsList = eng.split(',').map(s => s.trim()).filter(Boolean);
+                        const netItem = {
+                            eng: eng,
+                            kor: kor,
+                            words: wordsList,
+                            isSynonymNet: true
+                        };
+
+                        // <=> 직후의 반대편 진영 라인인 경우 ➔ 양극 세트(polarPair)로 결합!
+                        if (currentMap.awaitingPolarOpposite && currentMap.pendingNetLine) {
+                            currentMap.polarPairs.push({
+                                teamA: currentMap.pendingNetLine,
+                                teamB: netItem,
+                                totalWordsCount: currentMap.pendingNetLine.words.length + wordsList.length
+                            });
+                            currentMap.pendingNetLine = null;
+                            currentMap.awaitingPolarOpposite = false;
+                        } else {
+                            // <=> 이전의 첫 번째 진영 라인 임시 보관
+                            currentMap.pendingNetLine = netItem;
+                        }
+
+                        // 일반 구역 훈련용 words에도 정상 등록
+                        currentMap.words.push(netItem);
+                    }
+                    return;
+                }
+
                 if (eng && kor) {
                     // 🌟 영지 ID에 'irreg'가 들어간 전용 맵에서만 형상변환 정령으로 정식 파싱!
                     const isIrregMap = currentMap.id && currentMap.id.toLowerCase().includes('irreg');
@@ -8086,7 +8305,7 @@ const recTime = document.getElementById("recFastestTime");
             const hours = String(lastMod.getHours()).padStart(2, '0');
             const minutes = String(lastMod.getMinutes()).padStart(2, '0');
             
-            buildEl.innerText = `v1.3.8 · Update: ${year}.${month}.${day} ${hours}:${minutes}\n© 2025-${new Date().getFullYear()} Jayden. All Rights Reserved`;
+            buildEl.innerText = `v1.4.0 · Update: ${year}.${month}.${day} ${hours}:${minutes}\n© 2025-${new Date().getFullYear()} Jayden. All Rights Reserved`;
         }
 
         // 8. 최종 화면 뷰 전환
@@ -8376,14 +8595,19 @@ const recTime = document.getElementById("recFastestTime");
             guardianBtn.style.display = "block";
         }
 
+        // 🌐 net_ 영지 전용 시련 명칭 분기
+        const isNet = (activeMap.id || "").toLowerCase().includes("net_");
+        const trialTitle = isNet ? "반정령 융합 결전" : `${mapTheme.guardianName}의 시련`;
+        const reTrialTitle = isNet ? "반정령 융합 재도전" : `${mapTheme.guardianName} 재대결`;
+
         if (bossDefeated) {
-            // 🌟 JS의 촌스러운 색상 덧칠 삭제
+            // 🌟 토벌 완료 후 재도전: 에메랄드 그린 톤
             guardianBtn.className = "guardian-trial-btn theme-emerald";
-            guardianBtn.innerHTML = `⚔️ ${mapTheme.guardianName} 재대결 ➔`;
+            guardianBtn.innerHTML = `⚔️ ${reTrialTitle} ➔`;
         } else if (allSectorsConquered) {
-            // 🌟 촌스러운 형광 초록 덧칠 삭제
-            guardianBtn.className = "guardian-trial-btn theme-emerald";
-            guardianBtn.innerHTML = `⚔️ ${mapTheme.guardianName}의 시련 ➔`;
+            // 🌟 첫 도전 (정복 완료 직후): 황금빛 웜 앰버 톤으로 통일
+            guardianBtn.className = "guardian-trial-btn theme-amber";
+            guardianBtn.innerHTML = `⚔️ ${trialTitle} ➔`;
         } else {
             const unlockPercent = Math.round((conqueredSectorsCount / sectors.length) * 100);
             if (unlockPercent > 0) {
@@ -8466,6 +8690,11 @@ const recTime = document.getElementById("recFastestTime");
         document.getElementById("mapLobbyScreen").style.display = "none";
         document.getElementById("gameScreen").style.display = "flex";
         updateInGameTiers();
+
+        // 🌟 [핵심] 카운트다운이 뜨기 직전, 이전 화면의 모든 잔상을 영구 소각!
+        hardResetQuizUI();
+        const wordDisplay = document.getElementById("wordDisplay");
+        if (wordDisplay) wordDisplay.innerText = "불러오는 중...";
         
         // 🚦 0.7초 GO! 후 라운드 시작
         runQuickGoCountdown(() => {
@@ -9232,8 +9461,50 @@ const recTime = document.getElementById("recFastestTime");
             container.appendChild(btn);
         });
     }
+
+    // ========================================================
+    // 🧹 [하드 리셋] 모든 퀴즈 UI 및 잔상 완전 소각 엔진
+    // ========================================================
+    function hardResetQuizUI() {
+        // 1. 일반/특수 퀴즈 선지 그리드 완전 리셋
+        const grid = document.getElementById("choicesGrid");
+        if (grid) {
+            grid.innerHTML = "";
+            grid.className = "choices-grid";
+        }
+
+        // 2. 보스전 선지 그리드 완전 리셋
+        const bossGrid = document.getElementById("bossChoicesGrid");
+        if (bossGrid) {
+            bossGrid.innerHTML = "";
+            bossGrid.className = "choices-grid";
+        }
+
+        // 3. 지문 독해 뷰어 초기화 및 숨김
+        const viewerBox = document.getElementById("passageViewerBox");
+        if (viewerBox) {
+            viewerBox.style.display = "none";
+            viewerBox.innerHTML = "";
+        }
+
+        // 4. 피드백 모달 강제 닫기
+        const fbModal = document.getElementById("feedbackModal");
+        if (fbModal) fbModal.style.display = "none";
+
+        // 5. 콤보 뱃지 및 태그 임시 숨김
+        const streakBadge = document.getElementById("comboStreakBadge");
+        if (streakBadge) streakBadge.style.display = "none";
+    }
     
     function loadQuestion() {
+        // 🌟 [강제 클린업] 이전 문제의 선지, 잔상, 애니메이션 클래스 완전 소각
+        const grid = document.getElementById("choicesGrid");
+        if (grid) {
+            grid.innerHTML = "";
+            grid.className = "choices-grid"; // 오답/정답 이펙트 클래스 초기화
+        }
+        const feedbackModal = document.getElementById("feedbackModal");
+        if (feedbackModal) feedbackModal.style.display = "none";
         if (currentQuestionIdx >= roundQuestions.length) {
             showRoundResult();
             return;
@@ -10198,7 +10469,7 @@ const recTime = document.getElementById("recFastestTime");
                     unlockTitle("peace_keeper");
                     const commentEl = document.getElementById("emergencyTeacherComment");
                     if (commentEl) {
-                        commentEl.innerHTML = "👑 <b>대륙 전역의 망각의 안개 소탕 완료!</b><br><br>모든 침식 정령이 마침내 빛을 되찾았군.<br>고생했다, 제자.";
+                        commentEl.innerHTML = "👑 <b>대륙 전역의 망각의 안개 소탕 완료!<br>모든 침식 정령이 마침내 빛을 되찾았군.<br>고생했다, 제자.</b>";
                     }
 
                     // 인라인 보라색 덮어쓰기 박멸 ➔ 표준 사파이어 테마로 통일
@@ -10451,6 +10722,24 @@ const recTime = document.getElementById("recFastestTime");
         const activeMap = worldMaps.find(m => m.id === currentMapId) || worldMaps[0];
         const theme = getMapTheme(activeMap.name, activeMap.id);
         const bossDefeated = isMapBossDefeated(activeMap.id);
+        const isNet = (activeMap.id || "").toLowerCase().includes("net_");
+
+        // 🌐 [반정령 융합 전용 브리핑 모달 분기]
+        if (isNet) {
+            document.getElementById("midBossNoticeSubBadge").innerText = "POLAR SPIRIT FUSION";
+            document.getElementById("midBossNoticeTitle").innerText = `[${activeMap.name}] 반정령 융합의 시련`;
+            document.getElementById("midBossNoticeDesc").innerHTML = `
+                이번 수호령은 만만치 않아. 두 극단의 정령의 힘이 필요하다!<br>
+                각 정령들을 분류해 <b>반정령 융합 주문</b>을 완성해라.<br><br>
+                가운데 단어를 스와이프하거나, 아래 바구니를 터치하여 분류!<br>
+                (제한시간 <b>30초</b> 타임어택)
+            `;
+            document.getElementById("midBossNoticeStartBtn").innerText = `⚔️ 반정령 융합 결전 시작! ➔`;
+            // 🌟 영지별 수호령 보스 일러스트 동적 연동
+            document.getElementById("midBossNoticeArtBox").innerHTML = getThemeGuardianBossSVG(theme.type);
+            document.getElementById("midBossNoticeModal").style.display = "flex";
+            return;
+        }
 
         if (bossDefeated) {
             document.getElementById("midBossNoticeSubBadge").innerText = "GUARDIAN RE-EXAM";
@@ -10604,7 +10893,21 @@ const recTime = document.getElementById("recFastestTime");
 
     // 수호령전 함수
     function startMidBossRaid() {
+        hardResetQuizUI(); // 🌟 보스전 진입 잔상 차단
         const activeMap = worldMaps.find(m => m.id === currentMapId) || worldMaps[0];
+        if (activeMap) activeMap._shuffledPolarPairs = null;
+        polarCurrentPairIdx = 0;
+        const normalQBox = document.querySelector("#bossScreen .question-box");
+        if (normalQBox) normalQBox.style.display = "flex";
+
+        // 일반 선지 컨테이너 스타일 복원
+        const grid = document.getElementById("bossChoicesGrid");
+        if (grid) {
+            grid.style.flex = "";
+            grid.style.maxHeight = "";
+            grid.style.minHeight = "";
+            grid.style.marginTop = "";
+        }
         const theme = getMapTheme(activeMap.name, activeMap.id);
         const isReExam = isMapBossDefeated(activeMap.id);
 
@@ -10623,18 +10926,33 @@ const recTime = document.getElementById("recFastestTime");
         playerShields = playerMaxShields;
         bossTimeLimit = isReExam ? timeRepeat : time1;
 
-        // 🛑 [비경 보스전 전용 타이머] 룬 조립/쓸어담기 호흡을 위해 9.0초 부여
-        const idLower = (activeMap.id || "").toLowerCase();
-        if (idLower.includes('irreg') || idLower.includes('net_')) {
-            bossTimeLimit = isReExam ? 8.0 : 9.5;
-        }
-        // 🌟 [철자 영지 전용 보스 스펙] 체력 10 / 하트 3 / 시간 14초
-        if (idLower.includes('spell_')) {
+        const isNetMap = (activeMap.id || "").toLowerCase().includes("net_");
+        const isIrregMap = (activeMap.id || "").toLowerCase().includes("irreg");
+        const isSpellMap = (activeMap.id || "").toLowerCase().includes("spell_");
+        window.isPolarClashBoss = isNetMap;
+
+        // 🌟 [통합 정리] 보스전 영지별 타이머 및 스펙 단일 결정부
+        if (isNetMap && activeMap.polarPairs && activeMap.polarPairs.length > 0) {
+            // 1) 반정령 융합 결전 (넷 영지): 30.0초 고정 & 단어 총합 HP
+            let totalWordsInPairs = 0;
+            activeMap.polarPairs.forEach(pair => {
+                totalWordsInPairs += pair.totalWordsCount || (pair.teamA.words.length + pair.teamB.words.length);
+            });
+            bossMaxHp = Math.max(6, totalWordsInPairs); // 최소 6 이상 보장
+            bossHp = bossMaxHp;
+            playerMaxShields = 3;
+            playerShields = 3;
+            bossTimeLimit = 30.0; // 반정령 제한시간
+        } else if (isSpellMap) {
+            // 2) 철자 영지: 14.0초 & 10 HP
             bossMaxHp = 10;
             bossHp = 10;
             playerMaxShields = 3;
             playerShields = 3;
             bossTimeLimit = 14.0;
+        } else if (isIrregMap) {
+            // 3) 불규칙 영지: 룬 조립 호흡 8~9.5초
+            bossTimeLimit = isReExam ? 8.0 : 9.5;
         }
 
         isPhase2Enraged = false;
@@ -10725,6 +11043,7 @@ const recTime = document.getElementById("recFastestTime");
 
     // 📖 2. [각오하고 특훈 시작!] 클릭 시 진짜 출격 개시
     function startHardcoreBossRaidActual() {
+        hardResetQuizUI(); // 🌟 특훈 진입 잔상 차단
         closeHardcoreNotice();
         closeRiftHub(); // 🌟 진짜 전투로 출격할 때는 뒤에 있던 틈새 허브도 완전히 닫기
         // 🌟 1순위: 관제탑 원격 특훈 설정 ➔ 2순위: words.js 기본 설정
@@ -10800,6 +11119,7 @@ const recTime = document.getElementById("recFastestTime");
 
     // 마왕 레이드 함수
     function startFinalBossRaid() {
+        hardResetQuizUI(); // 🌟 마왕전 진입 잔상 차단
         Sound.click();
         window.curBossHitStreak = 0
         bossStartTime = Date.now();
@@ -11027,12 +11347,19 @@ const recTime = document.getElementById("recFastestTime");
         isLastStandMode = false;
 
         // 3. 먼저 문제와 보기 4개를 완벽하게 세팅!
-       if (bossWordPool.length === 0) {
+        if (bossWordPool.length === 0) {
             // 🎲 단어 소진 시 수호령전은 현재 영지 단어를, 마왕전은 전 대륙 단어를 무작위 리필
             const curMap = worldMaps.find(m => m.id === currentMapId);
             const refillSource = (bossMode === "mid" && curMap) ? curMap.words : getAllUniverseWords();
             bossWordPool = [...refillSource].sort(() => Math.random() - 0.5);
         }
+
+        // 🌐 [NEW: net_ 양극 진영 스와이프 배틀 렌더러 분기]
+        if (bossMode === "mid" && window.isPolarClashBoss) {
+            renderPolarClashBossRound();
+            return;
+        }
+
         const targetWord = bossWordPool.shift(); // 👈 뽑고 덱에서 삭제!
         const isE2K = Math.random() < 0.5;
 
@@ -11685,7 +12012,7 @@ function handleMidBossVictory() {
         document.getElementById("endingTitle").innerText = `정화된 ${activeMap.name}`;
         document.getElementById("endingDesc").innerHTML = `
             ${theme.guardianName}의 시련을 완벽하게 통과했구나!<br>
-            성역의 수호령이 네 능력을 인정하고<br>이곳에 낙원의 축복이 내렸다.<br><br>
+            성역의 수호령이 네 능력을 인정하고<br>이곳에 낙원의 축복이 내렸다.<br>
             크흠... 잘했다. 하지만 이게 끝은 아니니까!<br>
             자, 계속해서 다음 모험으로 나아가자고!
         `;
@@ -12704,7 +13031,241 @@ function handleMidBossVictory() {
         }
     });
 
-    
+    // ========================================================
+    // ⚔️ 반정령 융합 스와이프 보스전 인터랙션 엔진
+    // ========================================================
+    let polarCurrentPairIdx = 0;
+    let polarQueue = [];          // 이번 세트에서 분류해야 할 단어들
+    let polarCurrentWordObj = null;
+    let polarBucketA = [];        // 좌측 진영에 담긴 단어들
+    let polarBucketB = [];        // 우측 진영에 담긴 단어들
+    let isPolarEvaluating = false;
+
+    function renderPolarClashBossRound() {
+        // 🌟 기존 4지선다용 문제 상자(READY 글씨)를 완전히 숨겨 겹침 현상 원천 차단!
+        const normalQBox = document.querySelector("#bossScreen .question-box");
+        if (normalQBox) normalQBox.style.display = "none";
+
+        // 🌟 선지 박스가 화면 전체를 꽉 채우도록 flex 확장!
+        const grid = document.getElementById("bossChoicesGrid");
+        if (grid) grid.innerHTML = ""; // 🌟 이전 세트의 바구니/카드 잔상 완전 소각
+        grid.style.flex = "1";
+        grid.style.maxHeight = "none";
+        grid.style.minHeight = "0";
+        grid.style.marginTop = "0";
+        grid.style.opacity = "1";
+
+        startBossTimer();
+
+        const activeMap = worldMaps.find(m => m.id === currentMapId) || worldMaps[0];
+        // 🌟 [랜덤 세트 셔플] 매 판마다 보스전 세트 출현 순서를 무작위로 섞음!
+        if (!activeMap._shuffledPolarPairs || polarCurrentPairIdx === 0) {
+            activeMap._shuffledPolarPairs = [...(activeMap.polarPairs || [])].sort(() => Math.random() - 0.5);
+        }
+        const pairs = activeMap._shuffledPolarPairs;
+
+        if (pairs.length === 0 || polarCurrentPairIdx >= pairs.length) {
+            polarCurrentPairIdx = 0; // 순환
+            activeMap._shuffledPolarPairs = [...(activeMap.polarPairs || [])].sort(() => Math.random() - 0.5);
+        }
+
+        const curPair = pairs[polarCurrentPairIdx];
+        const teamAWords = curPair.teamA.words.map(w => ({ eng: w, team: 'A' }));
+        const teamBWords = curPair.teamB.words.map(w => ({ eng: w, team: 'B' }));
+
+        // 셔플하여 출제 큐 생성
+        polarQueue = [...teamAWords, ...teamBWords].sort(() => Math.random() - 0.5);
+        polarBucketA = [];
+        polarBucketB = [];
+        isPolarEvaluating = false;
+
+        // 보스 화면 헤더 문구
+        document.getElementById("bossQuestionTag").innerText = `⚔️ 반정령 융합 결전 (30초)`;
+        grid.innerHTML = `
+            <div class="polar-battle-stage">
+                <!-- 1. 🌟 [신설] 일반 영지 스타일의 상단 안내 알약 뱃지 -->
+                <div style="display:flex; justify-content:center; margin-bottom:4px;">
+                    <span class="tag" style="background:#5b3b8c; color:#ffffff; font-size:12px; font-weight:800; padding:3px 12px; border-radius:12px; box-shadow:0 1px 4px rgba(0,0,0,0.2);">
+                        ⚔️ 반정령 융합 결전
+                    </span>
+                </div>
+
+                <!-- 2. 🌟 [상단 밀착] 큼직한 출제 단어 카드 -->
+                <div class="polar-swipe-arena" style="min-height:85px; margin-bottom:6px;">
+                    <div id="polarMainCard" class="polar-main-card">READY</div>
+                </div>
+
+                <!-- 3. 🌟 [크기 고정 140px] 좌우 진영 바구니 카드 -->
+                <div class="polar-teams-header">
+                    <div class="polar-bucket-card bucket-a" onclick="sendPolarCardTo('A')" title="터치하여 A진영으로 분류">
+                        <span class="polar-bucket-title">${curPair.teamA.kor}</span>
+                        <span style="font-size:9.5px; color:#0369a1; opacity:0.75; margin-top:1px;">(좌로 스와이프 or 터치)</span>
+                        <div id="polarSlotsA" class="polar-stacked-slots"></div>
+                    </div>
+                    <div class="polar-bucket-card bucket-b" onclick="sendPolarCardTo('B')" title="터치하여 B진영으로 분류">
+                        <span class="polar-bucket-title">${curPair.teamB.kor}</span>
+                        <span style="font-size:9.5px; color:#c2410c; opacity:0.75; margin-top:1px;">(우로 스와이프 or 터치)</span>
+                        <div id="polarSlotsB" class="polar-stacked-slots"></div>
+                    </div>
+                </div>
+                <!-- 4. 하단 최종 주문 시전 버튼 -->
+                <button id="polarSubmitBtn" class="polar-submit-btn" style="margin-top:auto;" onclick="submitPolarClashSpell()">
+                    ⚡ 반정령 융합 주문 시전!
+                </button>
+            </div>
+        `;
+
+        setupPolarSwipeTouchEvents();
+        popNextPolarWord();
+    }
+
+    // 다음 단어 가운데에 띄우기
+    function popNextPolarWord() {
+        const cardEl = document.getElementById("polarMainCard");
+        const submitBtn = document.getElementById("polarSubmitBtn");
+        if (!cardEl) return;
+
+        if (polarQueue.length > 0) {
+            polarCurrentWordObj = polarQueue.shift();
+            cardEl.style.display = "flex";
+            cardEl.style.transform = "none";
+            cardEl.style.opacity = "1";
+            cardEl.innerText = polarCurrentWordObj.eng;
+            speakWord(polarCurrentWordObj.eng);
+        } else {
+            // 모든 단어를 다 던짐 ➔ 중앙 카드 숨기고 버튼 활성화!
+            polarCurrentWordObj = null;
+            cardEl.style.display = "none";
+            if (submitBtn) {
+                submitBtn.classList.add("ready");
+                Sound.fanfare();
+            }
+        }
+    }
+
+    // 카드를 특정 진영(A 또는 B)으로 날려 적립
+    function sendPolarCardTo(chosenTeam) {
+        if (!polarCurrentWordObj || isPolarEvaluating) return;
+        Sound.click();
+
+        const card = polarCurrentWordObj;
+        const targetSlots = (chosenTeam === 'A') ? document.getElementById("polarSlotsA") : document.getElementById("polarSlotsB");
+
+        if (chosenTeam === 'A') polarBucketA.push(card);
+        else polarBucketB.push(card);
+
+        // 슬롯에 13px 미니 알약 생성
+        if (targetSlots) {
+            const pill = document.createElement("div");
+            pill.className = "polar-pill-item";
+            pill.innerText = card.eng;
+            pill.dataset.actualTeam = card.team;
+            pill.dataset.chosenTeam = chosenTeam;
+            targetSlots.appendChild(pill);
+        }
+
+        popNextPolarWord();
+    }
+
+    // 모바일 터치 스와이프 제스처 바인딩
+    function setupPolarSwipeTouchEvents() {
+        const cardEl = document.getElementById("polarMainCard");
+        if (!cardEl) return;
+
+        let startX = 0;
+        let currentX = 0;
+        let isDragging = false;
+
+        cardEl.addEventListener("touchstart", (e) => {
+            if (!polarCurrentWordObj || isPolarEvaluating) return;
+            startX = e.touches[0].clientX;
+            isDragging = true;
+            cardEl.style.transition = "none";
+        }, { passive: true });
+
+        cardEl.addEventListener("touchmove", (e) => {
+            if (!isDragging) return;
+            currentX = e.touches[0].clientX;
+            const diffX = currentX - startX;
+            cardEl.style.transform = `translate(${diffX}px, 0) rotate(${diffX * 0.08}deg)`;
+        }, { passive: true });
+
+        cardEl.addEventListener("touchend", () => {
+            if (!isDragging) return;
+            isDragging = false;
+            cardEl.style.transition = "transform 0.15s ease, opacity 0.15s ease";
+            const diffX = currentX - startX;
+
+            // 왼쪽으로 60px 이상 스와이프 ➔ A진영
+            if (diffX < -60) {
+                sendPolarCardTo('A');
+            }
+            // 오른쪽으로 60px 이상 스와이프 ➔ B진영
+            else if (diffX > 60) {
+                sendPolarCardTo('B');
+            } else {
+                // 원위치 복귀
+                cardEl.style.transform = "none";
+            }
+        }, { passive: true });
+    }
+
+    // ⚡ 최종 [주문 시전!] 클릭 시 일괄 채점 & 참격 대미지 작렬!
+    function submitPolarClashSpell() {
+        const submitBtn = document.getElementById("polarSubmitBtn");
+        if (!submitBtn || !submitBtn.classList.contains("ready") || isPolarEvaluating) return;
+
+        isPolarEvaluating = true;
+        clearInterval(bossTimerInterval); // 타이머 멈춤
+        submitBtn.classList.remove("ready");
+        submitBtn.innerText = "⚡ 주문 검증 및 타격 중...";
+
+        const allPills = document.querySelectorAll(".polar-pill-item");
+        let correctCount = 0;
+        let wrongCount = 0;
+
+        // 순차 채점 연출 (0.2초 간격으로 착! 착! 참격 작렬)
+        allPills.forEach((pill, idx) => {
+            setTimeout(() => {
+                const actual = pill.dataset.actualTeam;
+                const chosen = pill.dataset.chosenTeam;
+
+                if (actual === chosen) {
+                    // ⭕ 정답! ➔ 초록 알약 + 참격 대미지!
+                    pill.classList.add("eval-correct");
+                    correctCount++;
+                    bossHp = Math.max(0, bossHp - 1);
+                    Sound.hit(false);
+                    triggerBossHitEffect(false);
+                    updateBossUI();
+                } else {
+                    // ❌ 오답! ➔ 붉은 알약 + 플레이어 피격!
+                    pill.classList.add("eval-wrong");
+                    wrongCount++;
+                    Sound.damage();
+                }
+
+                // 모든 카드 채점이 끝난 시점
+                if (idx === allPills.length - 1) {
+                    setTimeout(() => {
+                        if (wrongCount > 0) {
+                            playerShields = Math.max(0, playerShields - 1); // 오답이 있으면 하트 -1
+                            triggerPlayerDamageEffect();
+                            updateBossUI();
+                        }
+
+                        // 다음 세트로 넘어가거나 클리어 판정
+                        polarCurrentPairIdx++;
+                        setTimeout(() => {
+                            loadNextBossQuestion();
+                        }, 800);
+                    }, 600);
+                }
+            }, idx * 220);
+        });
+    }
+
+
     // 🚀 [초고속 최적화] 핵심 게임 이미지 백그라운드 사전 캐싱
     function preloadGameAssets() {
         const criticalImages = [

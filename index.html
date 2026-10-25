@@ -446,7 +446,37 @@
         .rank-user-name  { font-size: 14.5px; font-weight: 900; color: #2e1065; } /* 학생 이름 */
         .rank-user-id    { font-size: 11.5px; font-weight: 700; color: #7e22ce; } /* 학번 */
         .rank-me-tag     { font-size: 10px; background: #d946ef; color: white; padding: 2px 6px; border-radius: 4px; margin-left: 3px; font-weight: 900; }
-        .rank-user-tier  { font-size: 11.5px; font-weight: 700; color: #6b21a8; margin-top: 1px; } /* 계급 */
+        /* 🌟 [현판 1:1 일치] 랭킹 미니 알약 뱃지 2종 */
+        /* 1) 칭호 알약: 올리브 세이지 골드 */
+        .rank-hud-title {
+            font-size: 10px;
+            font-weight: 700;
+            color: #f1dfb3;
+            background: linear-gradient(135deg, rgba(65,79,43,0.96), rgba(39,49,29,0.96));
+            border: 1px solid rgba(190,157,91,0.8);
+            padding: 2px 6px;
+            border-radius: 5px;
+            white-space: nowrap;
+            box-shadow: inset 0 1px 1px rgba(255,224,157,0.12), 0 1px 3px rgba(0,0,0,0.3);
+            line-height: 1.1;
+        }
+        /* 2) 계급(티어) 알약: 버건디 브릭 레드 */
+        .rank-hud-tier {
+            font-size: 10px;
+            font-weight: 700;
+            color: #f8e4c5;
+            background: linear-gradient(135deg, #71352c, #4b211e);
+            border: 1px solid rgba(194,130,91,0.8);
+            padding: 2px 6px;
+            border-radius: 5px;
+            white-space: nowrap;
+            box-shadow: inset 0 1px 1px rgba(255,214,166,0.1), 0 1px 3px rgba(0,0,0,0.3);
+            line-height: 1.1;
+        }
+        /* 🥇 1~3위 전용 입체 테두리 강조 */
+        .rank-card.rank-top1 { border-color: #f59e0b; background: #fffdf5; box-shadow: 0 2px 6px rgba(245, 158, 11, 0.25); }
+        .rank-card.rank-top2 { border-color: #94a3b8; background: #f8fafc; }
+        .rank-card.rank-top3 { border-color: #d97706; background: #fffbeb; }
         .rank-mastery-val{ font-size: 13.5px; font-weight: 900; color: #15803d; } /* 마스터 단어수 */
         .rank-boss-val   { font-size: 11.5px; font-weight: 800; color: #b91c1c; margin-top: 1px; } /* 마왕 기록 */
 
@@ -3192,21 +3222,6 @@
                                     flex-direction:row; align-items:center;
                                     gap:4px; margin:1px 0 4px 0;">
 
-                            <span id="titleEquippedBadge"
-                                style="background:linear-gradient(
-                                            135deg,
-                                            rgba(65,79,43,0.96),
-                                            rgba(39,49,29,0.96));
-                                        border:1px solid rgba(190,157,91,0.8);
-                                        color:#f1dfb3;
-                                        font-weight:800; font-size:11px;
-                                        padding:3px 8px; border-radius:5px;
-                                        white-space:nowrap;
-                                        box-shadow:inset 0 1px 2px rgba(255,224,157,0.12),
-                                                    0 2px 3px rgba(0,0,0,0.35);">
-                                🌱 첫 걸음의 탐색자
-                            </span>
-
                             <span id="titleGlobalTierBadge"
                                 class="hud-tier-pill"
                                 style="font-size:11px; font-weight:800;
@@ -3217,8 +3232,23 @@
                                         padding:2px 7px; border-radius:5px;
                                         white-space:nowrap;
                                         box-shadow:inset 0 1px 2px rgba(255,214,166,0.1),
-                                                    0 2px 4px rgba(0,0,0,0.4);">
+                                                    0 2px 3px rgba(0,0,0,0.4);">
                                 마왕의 대적자 ⚔️
+                            </span>
+
+                            <span id="titleEquippedBadge"
+                                style="background:linear-gradient(
+                                            135deg,
+                                            rgba(65,79,43,0.96),
+                                            rgba(39,49,29,0.96));
+                                        border:1px solid rgba(190,157,91,0.8);
+                                        color:#f1dfb3;
+                                        font-weight:800; font-size:11px;
+                                        padding:2px 7px; border-radius:5px;
+                                        white-space:nowrap;
+                                        box-shadow:inset 0 1px 2px rgba(255,224,157,0.12),
+                                                    0 2px 3px rgba(0,0,0,0.35);">
+                                🌱 첫 걸음의 탐색자
                             </span>
                         </div>
 
@@ -3852,8 +3882,9 @@
                      <div style="font-size:13px; font-weight:900; color:#1d4ed8;">🌀 숨겨진 비경 (특수 마력 영지)</div>
                      <div style="font-size:12px; color:#451a03; line-height:1.45; margin-top:5px; font-weight:600;">
                          대륙 지도에서 들어갈 수 있는 마력이 뒤틀린 특수 영지들이다:<br>
-                         • <b>[불규칙 영지]</b>: <b>알파벳 룬 타일을 직접 조립</b>해 해당 정령의 올바른 변화형을 맞혀야 한다. 한 글자라도 틀리면 그 정령과는 계약할 수 없어.<br>
-                         • <b>[동의어 영지]</b>: 3단계에서 대표 단어의 <b>모든 형제 동의어 정령을 쓸어담아</b> 최종 단계인 <b>🔗 얽힌 운명</b>을 맺어야 하는 비경이다.
+                         • <b>[지문 영지]</b>: 실제 원문 지문을 읽어 내려가며, <b>황금빛으로 빛나는 어휘의 문맥상 의미</b>를 차례대로 꿰뚫어야 한다. 마지막 문단까지 완주하면 즉시 지문 독파 완료!<br>
+                         • <b>[불규칙 영지]</b>: <b>알파벳 룬 타일을 직접 조립</b>해 해당 정령의 올바른 변화형을 맞혀야 한다.<br>
+                         • <b>[동의어 영지]</b>: 3단계에서 대표 단어의 <b>모든 형제 동의어 정령을 쓸어담아</b> 최종 단계인 <b>🔗 얽힌 운명</b>을 맺어야 한다.
                     </div>
                 </div>
 
@@ -5503,6 +5534,7 @@
             isExamCleared: isFinalExamDefeated(),
             emergencyClearedDate: lastEmergencyClearedDate || safeStorageGet('spirit_emergency_cleared_date', ""),
             tierName: getGlobalTier().tier.name,
+            equippedTitle: (records && records.equippedTitle) ? records.equippedTitle : "🌱 첫 걸음의 탐색자",
             records: records,
             mastery: allMastery,
             clearedBosses: clearedBosses,
@@ -5745,8 +5777,14 @@
             setTimeout(() => {
                 if (alertModal && alertModal.style.display === "flex") return;
 
-                // 🌟 TTS 발음 시 "far (거리)"에서 괄호 부분은 쏙 빼고 "far"만 유창하게 발음!
-                const cleanText = text.replace(/\([^)]+\)/g, '').trim();
+                // 🌟 TTS 발음 정제: 괄호 내용 삭제 및 물결표(~), 밑줄(_) 등 불필요한 기호 제거
+                const cleanText = text
+                    .replace(/\([^)]+\)/g, '')   // 괄호 및 괄호 안 내용 삭제
+                    .replace(/[~～_]/g, ' ')      // 물결표(~, 전각～), 밑줄(_)을 자연스러운 공백으로 치환
+                    .replace(/\s+/g, ' ')        // 연속된 공백을 단일 공백으로 정리
+                    .trim();
+
+                if (!cleanText) return;
                 const uttr = new SpeechSynthesisUtterance(cleanText);
                 uttr.lang = 'en-US';
                 uttr.volume = 1.0; // 🌟 스마트폰 표준 미디어 최대치로 일관 고정
@@ -6513,6 +6551,9 @@
         if (Object.keys(wordFavorites).length >= 10) {
             unlockTitle("fav_10");
         }
+        if (Object.keys(wordFavorites).length >= 30) {
+            unlockTitle("fav_30");
+        }
 
         syncToCloud(); // 클라우드 동기화
 
@@ -6578,22 +6619,38 @@
         { id: "combo_7", name: "🔥 불꽃의 암기 머신", desc: "퀴즈에서 7연속 콤보 달성" },
         { id: "combo_15", name: "⚡ 신들린 뇌세포", desc: "퀴즈에서 15연속 콤보 달성" },
         { id: "combo_30", name: "🌪️ 폭풍 질주", desc: "퀴즈에서 30연속 콤보 달성" },
+        { id: "combo_40", name: "🎯 노 미스 퍼펙트", desc: "퀴즈에서 40연속 콤보 달성" },
         { id: "combo_50", name: "☄️ 멈추지 않아 BOY", desc: "퀴즈에서 50연속 콤보 달성" },
         { id: "combo_77", name: "🎰 행운 & 실력", desc: "퀴즈에서 77연속 콤보 달성" },
         { id: "combo_100", name: "🌌 주모 여기 단어 더!", desc: "전설의 100연속 콤보 대기록 달성!" },
         { id: "speed_08", name: "⚡ 찰나의 눈빛", desc: "0.8초 이내 초광속 정답 성공" },
         { id: "speed_05", name: "🚀 광속의 손길", desc: "0.5초 이내 신의 반사신경 달성" },
-        { id: "fav_10", name: "💖 플러팅 전문가", desc: "친해지고 싶은 정령(하트) 10마리 찜하기" },
+        { id: "overclock_03", name: "⚡ 오버클럭", desc: "0.3초 이내 인간의 한계를 넘은 정답 성공" },
+        { id: "fav_10", name: "💖 열정적 플러팅", desc: "친해지고 싶은 정령(하트) 10마리 찜하기" },
+        { id: "fav_30", name: "💖 플러팅 전문가", desc: "친해지고 싶은 정령(하트) 30마리 찜하기" },
         { id: "imprint_1", name: "⚜️ 영혼에 새기다", desc: "안개 구출전 3차 통과로 첫 진명의 각인 달성" },
+        { id: "imprint_10", name: "⚜️ 영혼의 조각가", desc: "누적 10마리 정령에게 진명의 각인 완성" },
+        { id: "imprint_50", name: "👑 불멸의 성역", desc: "누적 50마리 정령에게 진명의 각인 완성" },
+        { id: "rescue_20", name: "🚨 119 구급대원", desc: "안개 속 구출 작전 누적 20마리 구출 성공" },
+        { id: "peace_keeper", name: "🕊️ 평화주의자", desc: "대륙 내 모든 침식 정령 0마리 완전 소탕" },
+        { id: "passage_3", name: "📜 문맥의 지배자", desc: "지문 영지 누적 3개 완전 독파 달성" },
+        { id: "rune_meister", name: "🔤 룬 마이스터", desc: "불규칙/철자 룬 조립 20회 성공" },
+        { id: "spider_web", name: "🔗 거미줄 술사", desc: "동의어 영지 3단계 얽힌 운명 10회 결속" },
+        { id: "counsel_10", name: "🩺 정령 심리상담사", desc: "정령 치유실 심층 면담 10회 완치 성공" },
         { id: "mid_no_dmg", name: "🛡️ 철벽의 결계사", desc: "수호령전을 노데미지(하트 3개 온존)로 클리어" },
         { id: "wrong_20", name: "🍂 정령 기피 1호", desc: "누적 오답 20회 달성 (정령들이 널 피하는데?)" },
         { id: "wrong_50", name: "🌾 오답도 거름이...", desc: "누적 오답 50회 달성 (실패는 1등급의 어머니)" },
         { id: "grit_100", name: "💎 꺾이지 않는 마음", desc: "누적 오답 100회 달성 (백 번 넘어져도 백 번 일어난다!)" },
         { id: "book_poke_10", name: "📖 잔소리 좋아요", desc: "야영지 책 선생을 10번 찔러 대화 나누기" },
         { id: "book_poke_30", name: "📚 책 선생의 찐팬", desc: "야영지 책 선생을 30번 찔러 괴롭히기" },
+        { id: "book_poke_50", name: "☕ 책 선생의 티타임", desc: "야영지 책 선생을 50번 찔러 도를 닦기" },
         { id: "time_out", name: "⏳ 그냥 멍때림", desc: "보스전에서 시간 초과(Time Over) 3회 겪음" },
         { id: "mental_break", name: "💔 유리 멘탈", desc: "보스전에서 하트 3개를 모두 잃고 패배" },
-        { id: "phoenix", name: "🩹 칠전팔기", desc: "보스전에서 패배한 직후 다시 도전해서 승리" }
+        { id: "phoenix", name: "🩹 칠전팔기", desc: "보스전에서 패배한 직후 다시 도전해서 승리" },
+        { id: "boss_5", name: "⚔️ 마왕의 악몽", desc: "마왕 EXAM 누적 5회 격파 (마왕이 널 피한다)" },
+        { id: "last_counter", name: "🩸 최후의 카운터", desc: "하트 0개 위기에서 부활 카운터 어택 성공" },
+        { id: "drill_5", name: "🏅 스파르타의 망령", desc: "책 선생의 하드코어 특훈 누적 5회 완주" },
+        { id: "night_owl", name: "🦉 올빼미 수험생", desc: "밤 11시 ~ 새벽 3시 사이 심야 단어 열공" }
     ];
 
     let gameRecords = safeStorageGet('spirit_records_data', {
@@ -8407,6 +8464,9 @@ const recTime = document.getElementById("recFastestTime");
 
                 if (q.morphPhase >= q.mutations.length) {
                     q.isMorphComplete = true;
+                    gameRecords.runeSuccessCount = (gameRecords.runeSuccessCount || 0) + 1;
+                        if (gameRecords.runeSuccessCount >= 20) unlockTitle("rune_meister");
+                        saveRecords();
                     selectAnswer(q.correct, q); // 최종 성공 피드백 창으로 진입!
                 } else {
                     q.morphPhase++;
@@ -8715,6 +8775,9 @@ const recTime = document.getElementById("recFastestTime");
 
                     if (remainingCorrect.length === 0) {
                         Sound.resonance();
+                        gameRecords.synonymSuccessCount = (gameRecords.synonymSuccessCount || 0) + 1;
+                        if (gameRecords.synonymSuccessCount >= 10) unlockTitle("spider_web");
+                        saveRecords();
                         setTimeout(() => { selectAnswer(q.correct, q); }, 250);
                     }
                 } else {
@@ -9285,6 +9348,7 @@ const recTime = document.getElementById("recFastestTime");
             if (streakCount >= 7) unlockTitle("combo_7");
             if (streakCount >= 15) unlockTitle("combo_15");
             if (streakCount >= 30) unlockTitle("combo_30");
+            if (streakCount >= 40) unlockTitle("combo_40");
             if (streakCount >= 50) unlockTitle("combo_50");
             if (streakCount >= 77) unlockTitle("combo_77");
             if (streakCount >= 100) unlockTitle("combo_100");
@@ -9292,6 +9356,11 @@ const recTime = document.getElementById("recFastestTime");
             // 초광속 반응속도 칭호
             if (elapsedSec <= 0.8) unlockTitle("speed_08");
             if (elapsedSec <= 0.5) unlockTitle("speed_05");
+            if (elapsedSec <= 0.3) unlockTitle("overclock_03");
+
+            // 심야 열공 체크 (23시 ~ 03시)
+            const curHour = new Date().getHours();
+            if (curHour >= 23 || curHour < 4) unlockTitle("night_owl");
 
             // 정답시 점수 계산
             let newCount = currentCountBefore;
@@ -9382,7 +9451,7 @@ const recTime = document.getElementById("recFastestTime");
             } else
 
             // -------------------------------------------------------------
-            // 🛋️ [경우 0: 정령 성소 문제일 때 (복구 완료!)]
+            // 🛋️ [경우 0: 정령 성소 문제일 때 - 각인도/교감도 절대 불변]
             // -------------------------------------------------------------
             if (q.isCounsel) {
                 const cData = wordCounselingData[key] || { wrongAccum: 2, step: 0, lastTime: 0 };
@@ -9402,42 +9471,42 @@ const recTime = document.getElementById("recFastestTime");
                     cData.step = 2;
                     cData.wrongAccum = 0; // 누적 오답 0으로 초기화
                     Sound.fanfare();
+                    gameRecords.counselClearCount = (gameRecords.counselClearCount || 0) + 1;
+                    if (gameRecords.counselClearCount >= 10) unlockTitle("counsel_10");
+                    saveRecords();
 
-                    // 🌟 [비 온 뒤 땅 굳기] 7일차 구출전 오답 정령은 고난도 2차 통과 시 즉시 '진명의 각인' 승격!
-                    if (cData.isFromMistRescue && cData.mistStage >= 2) {
-                        wordDefenseCounts[key] = 3; // ⚜️ 진명의 각인 부여!
-                        safeStorageSet('spirit_defense_counts', wordDefenseCounts);
-                        wordMasteryTimestamps[key] = Date.now();
-                        safeStorageSet('spirit_mastery_timestamps', wordMasteryTimestamps);
-
-                        fbTitle.className = "fb-hero-badge fb-theme-contract";
-                        fbTitle.innerText = "⚜️ 진명의 각인 달성! ⚜️";
-                        fbResonanceNotice.style.display = "block";
-                        fbResonanceNotice.innerHTML = "안개의 혼란을 딛고, 너와의 진정한 유대를 증명했군.<br><b>⚜️ 진명의 각인</b>을 얻어냈다!";
-                    } else {
-                        // 1일차/3일차 구출전 출신 정령은 정상적으로 다음 방어 주기(3일 뒤, 7일 뒤)로 안착!
-                        if (cData.isFromMistRescue) {
-                            wordDefenseCounts[key] = Math.min(2, (cData.mistStage || 0) + 1);
-                            safeStorageSet('spirit_defense_counts', wordDefenseCounts);
-                            wordMasteryTimestamps[key] = Date.now();
-                            safeStorageSet('spirit_mastery_timestamps', wordMasteryTimestamps);
-                        }
-
-                        fbTitle.className = "fb-hero-badge fb-theme-success";
-                        fbTitle.innerText = "✨ 안개 혼란 완전 해소! ✨";
-                        fbResonanceNotice.style.display = "block";
-                        fbResonanceNotice.innerHTML = "정령이 기억을 완전히 되찾고 안정을 찾았다.<br>기분 좋은 표정인걸?";
-                    }
+                     // 🌟 성소 치유는 순수 완치 케어 목적이며 각인도를 건드리지 않음
+                    fbTitle.className = "fb-hero-badge fb-theme-success";
+                    fbTitle.innerText = "✨ 안개 혼란 완전 해소! ✨";
+                    fbResonanceNotice.style.display = "block";
+                    fbResonanceNotice.innerHTML = "정령이 기억을 완전히 되찾고 안정을 찾았다.<br>기분 좋은 표정인걸?";
                 }
                 safeStorageSet('spirit_counseling_data', wordCounselingData);
 
             // [경우 1: 성역 긴급 수호전]
             } else if (q.isDecayed) {
-                const prevStage = wordDefenseCounts[key] || 0;
-                const nextStage = prevStage + 1;
-                wordDefenseCounts[key] = nextStage;
-                safeStorageSet('spirit_defense_counts', wordDefenseCounts);
-                if (nextStage >= 3) unlockTitle("imprint_1"); // ⚜️ 첫 각인 달성!
+                // 🌟 [세션 1회 승급 제한] 이번 구출전 출격에서 이미 승급된 단어는 중복 승급 방지!
+                window.sessionRescuedWords = window.sessionRescuedWords || new Set();
+                let nextStage = wordDefenseCounts[key] || 0;
+
+                if (!window.sessionRescuedWords.has(key)) {
+                    window.sessionRescuedWords.add(key);
+                    const prevStage = wordDefenseCounts[key] || 0;
+                    nextStage = Math.min(3, prevStage + 1); // 🌟 최대 3(각인)까지만 상승
+                    wordDefenseCounts[key] = nextStage;
+                    safeStorageSet('spirit_defense_counts', wordDefenseCounts);
+                    if (nextStage >= 3) {
+                        unlockTitle("imprint_1");
+                        // 전체 각인 수 세기
+                        const totalImprints = Object.values(wordDefenseCounts).filter(c => c >= 3).length;
+                        if (totalImprints >= 10) unlockTitle("imprint_10");
+                        if (totalImprints >= 50) unlockTitle("imprint_50");
+                    }
+                    // 누적 구출 수 카운트
+                    gameRecords.totalRescueCount = (gameRecords.totalRescueCount || 0) + 1;
+                    if (gameRecords.totalRescueCount >= 20) unlockTitle("rescue_20");
+                    saveRecords();
+                }
 
                 let safePeriod = (nextStage >= 3) ? "영구 봉인 완료! 👑" : (nextStage === 2 ? "7일간 결계 유지 🛡️" : "3일간 결계 유지 🛡️");
                 Sound.resonance();
@@ -9848,6 +9917,7 @@ const recTime = document.getElementById("recFastestTime");
 
                 } else {
                     // 대륙의 모든 침식 단어 0개 완전 소탕!
+                    unlockTitle("peace_keeper");
                     const commentEl = document.getElementById("emergencyTeacherComment");
                     if (commentEl) {
                         commentEl.innerHTML = "👑 <b>대륙 전역의 망각의 안개 소탕 완료!</b><br><br>모든 침식 정령이 마침내 빛을 되찾았군.<br>고생했다, 제자.";
@@ -9900,6 +9970,9 @@ const recTime = document.getElementById("recFastestTime");
 
             // 🌟 [개선] 지문 영지의 마지막 구역 완주 시 ➔ 곧바로 지문 완전 독파 엔딩 모달(endingModal) 가동!
             if (activeMap.isPassage && nextSecIdx >= sectors.length) {
+                gameRecords.clearedPassageCount = (gameRecords.clearedPassageCount || 0) + 1;
+                if (gameRecords.clearedPassageCount >= 3) unlockTitle("passage_3");
+                saveRecords();
                 document.getElementById("endingSubBadge").innerText = "PASSAGE MASTERED";
                 document.getElementById("endingTitle").innerText = `${activeMap.name} 독파 완료!`;
                 document.getElementById("endingDesc").innerHTML = `
@@ -10579,6 +10652,7 @@ const recTime = document.getElementById("recFastestTime");
                     gameRecords.fastestDrillTime = elapsedSec;
                 }
                 gameRecords.drillClearCount = (gameRecords.drillClearCount || 0) + 1;
+                if (gameRecords.drillClearCount >= 5) unlockTitle("drill_5");
                 saveRecords();
                 syncToCloud(true); // 클라우드에 즉시 영구 저장
 
@@ -10607,6 +10681,7 @@ const recTime = document.getElementById("recFastestTime");
                 }
                 gameRecords.bossClearCount = (gameRecords.bossClearCount || 0) + 1;
                 if (elapsedSec <= 35.0) unlockTitle("speed_demon");
+                if (gameRecords.bossClearCount >= 5) unlockTitle("boss_5");
                 if (playerShields === 3) {
                     gameRecords.bossNoDamage = true;
                     unlockTitle("legend_ok");
@@ -11220,6 +11295,7 @@ const recTime = document.getElementById("recFastestTime");
                 if (choice === currentBossQuestion.correct) {
                     btn.classList.add("correct");
                     Sound.fanfare();
+                    unlockTitle("last_counter"); // 🩸 부활 카운터 적중!
                     playerShields = 1; // 🌟 하트 1개로 극적 부활!
                     bossHp--;
                     bossTimeLimit = isPhase2Enraged ? 3.5 : 5.0;
@@ -11551,11 +11627,8 @@ function handleMidBossVictory() {
         let totalImprintedAll = 0;
 
         worldMaps.forEach(map => {
-            // 🌟 비경 영지(불규칙, 동의어 등)는 각인 도감 및 게이지 계산에서 완전히 제외
-            const idLower = (map.id || "").toLowerCase();
-            const nameLower = (map.name || "").toLowerCase();
-            const isSpecialMap = idLower.includes("irreg") || idLower.includes("net") || nameLower.includes("불규칙") || nameLower.includes("동의어");
-            if (isSpecialMap) return;
+            // 🌟 비경 영지(지문, 불규칙, 동의어 등)는 각인 대상(안개 침식)이 아니므로 100% 완전 제외!
+            if (isMapSpecial(map)) return;
             totalWordsAll += map.words.length;
             
             // 해당 영지에서 3차 수호전을 이겨낸(각인 완료) 단어만 추출
@@ -13323,9 +13396,13 @@ function handleMidBossVictory() {
             
             // 메달/등수 뱃지 분기
             let rankBadge = `<span class="rank-badge-text">${rank}위</span>`;
-            if (rank === 1) rankBadge = `<span class="rank-badge-medal">🥇</span>`;
-            else if (rank === 2) rankBadge = `<span class="rank-badge-medal">🥈</span>`;
-            else if (rank === 3) rankBadge = `<span class="rank-badge-medal">🥉</span>`;
+            let topClass = "";
+            if (rank === 1) { rankBadge = `<span class="rank-badge-medal">🥇</span>`; topClass = "rank-top1"; }
+            else if (rank === 2) { rankBadge = `<span class="rank-badge-medal">🥈</span>`; topClass = "rank-top2"; }
+            else if (rank === 3) { rankBadge = `<span class="rank-badge-medal">🥉</span>`; topClass = "rank-top3"; }
+ 
+            // 장착 칭호 추출
+            const titleName = u.equippedTitle || (u.records && u.records.equippedTitle) || "🌱 첫 걸음의 탐색자";
 
             // 토벌 횟수 및 시간 문자열 조합
             const clearCount = u.bossClearCount || (u.records && u.records.bossClearCount) || 0;
@@ -13337,21 +13414,27 @@ function handleMidBossVictory() {
 
             // 🌟 인라인 style을 100% 제거하고 순수 class로만 조립
             const card = document.createElement("div");
-            card.className = `rank-card ${isMe ? 'my-card' : ''}`;
+            card.className = `rank-card ${topClass} ${isMe ? 'my-card' : ''}`;
             card.innerHTML = `
-                <div style="display:flex; align-items:center; gap:8px;">
+                <div style="display:flex; align-items:center; gap:8px; min-width:0;">
                     ${rankBadge}
-                    <div style="text-align:left;">
-                        <div class="rank-user-name">
-                            ${displayName} <span class="rank-user-id">(${u.id})</span>
+                    <div style="text-align:left; min-width:0;">
+                        <!-- 1행: 이름 & 학번 & ME -->
+                        <div style="display:flex; align-items:center; gap:4px; line-height:1.2;">
+                            <span class="rank-user-name" style="text-overflow:ellipsis; overflow:hidden; white-space:nowrap;">${displayName}</span>
+                            <span class="rank-user-id" style="white-space:nowrap;">(${u.id})</span>
                             ${isMe ? '<span class="rank-me-tag">ME</span>' : ''}
                         </div>
-                        <div class="rank-user-tier">${u.tierName || '입문 술사'}</div>
+                        <!-- 2행: 현판 동기화 칭호 & 계급 알약 2종 -->
+                        <div style="display:flex; align-items:center; gap:4px; margin-top:4px; line-height:1; flex-wrap:nowrap; overflow:hidden;">
+                            <span class="rank-hud-tier">${u.tierName || '입문 술사 🌱'}</span>
+                            <span class="rank-hud-title">${titleName}</span>
+                        </div>
                     </div>
                 </div>
-                <div style="text-align:right;">
-                    <div class="rank-mastery-val">${u.masteryCount || 0} 마리 마스터</div>
-                    <div class="rank-boss-val">${bossText}</div>
+                <div style="text-align:right; flex-shrink:0; margin-left:8px;">
+                    <div class="rank-mastery-val" style="white-space:nowrap;">${u.masteryCount || 0}마리 계약</div>
+                    <div class="rank-boss-val" style="white-space:nowrap;">${bossText}</div>
                 </div>
             `;
             container.appendChild(card);
@@ -13494,6 +13577,7 @@ function handleMidBossVictory() {
         }
 
         isEmergencyDefenseMode = true;
+        window.sessionRescuedWords = new Set(); // 🌟 이번 구출 세션 승급 추적기 초기화!
         roundQuestions = [];
         currentQuestionIdx = 0;
         roundCorrectCount = 0;
@@ -14347,6 +14431,7 @@ function handleMidBossVictory() {
         saveRecords();
         if (gameRecords.bookPokeCount >= 10) unlockTitle("book_poke_10");
         if (gameRecords.bookPokeCount >= 30) unlockTitle("book_poke_30");
+        if (gameRecords.bookPokeCount >= 50) unlockTitle("book_poke_50");
 
         // 1. 펄쩍 뛰는 점프 모션 재생
         sprite.classList.remove("jump");

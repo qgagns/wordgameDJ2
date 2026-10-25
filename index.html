@@ -2290,6 +2290,42 @@
         /* ========================================================
            📜 지문 순차 돌파 퀘스트 전용 하이라이트 스타일
            ======================================================== */
+
+        /* 📜 [지문 독해 뷰어] 실제 양피지 고문서 스킨 클래스 */
+        .passage-frame-container {
+            display: none;
+            flex: 1;
+            position: relative;
+            width: calc(100% + 28px);
+            left: 50%;    
+            transform: translateX(-50%); /* 🌟 정확히 좌우 대칭으로 50%씩 분할 확장 */
+            min-height: 200px;
+            max-height: 320px;
+            background: url('images/parchment1.webp') no-repeat center !important;
+            background-size: 100% 100% !important;
+            border-radius: 12px;
+            box-shadow: 0 6px 18px rgba(0,0,0,0.35);
+            margin-bottom: 6px;
+            box-sizing: border-box;
+        }
+
+        /* 📜 2. 그 안의 순수한 텍스트 전용 레터박스 (오직 여기서만 스크롤 발생) */
+        .passage-letterbox {
+            position: absolute;
+            top: 20px;    /* 양피지 액자 상단 테두리를 피함 */
+            bottom: 20px; /* 양피지 액자 하단 테두리를 피함 */
+            left: 25px;   /* 양피지 액자 좌측 테두리를 피함 */
+            right: 25px;  /* 양피지 액자 우측 테두리를 피함 */
+            overflow-y: auto;
+            text-align: left;
+            font-size: 14.5px;
+            font-weight: 600;
+            line-height: 1.75;
+            color: #2c1a0e;
+            word-break: keep-all;
+            box-sizing: border-box;
+        }
+
         .passage-token {
             display: inline-block;
             padding: 1px 3px;
@@ -3848,26 +3884,9 @@
             </div>
             </div>
 
-            <!-- 📜 [NEW] 지문 퀘스트 전용 양피지 스크롤 뷰어 박스 (평소엔 숨김) -->
-            <div id="passageViewerBox" class="scroll-fade-bottom" style="
-                display:none; 
-                flex:1; 
-                min-height:160px; 
-                max-height:220px; 
-                background:rgba(253, 250, 242, 0.85); 
-                border:1.5px solid #c9b48c; 
-                border-radius:12px; 
-                padding:10px 14px; 
-                overflow-y:auto; 
-                text-align:left; 
-                /* font-family: Georgia, 'Times New Roman', serif; */
-                font-size:14.5px; 
-                font-weight:500;
-                line-height:1.75; 
-                color:#2c1a0e; 
-                word-break:keep-all; 
-                box-shadow:inset 0 0 10px rgba(181,148,97,0.18); 
-                margin-bottom:6px;">
+            <!-- 📜 [NEW] 양피지 액자 + 내부 레터박스 2중 분리 구조 -->
+            <div id="passageViewerBox" class="scroll-fade-bottom passage-frame-container">
+                <div class="passage-letterbox"></div>
             </div>
 
             <div class="battle-arena-box">
@@ -9484,7 +9503,7 @@ const recTime = document.getElementById("recFastestTime");
         const viewerBox = document.getElementById("passageViewerBox");
         if (viewerBox) {
             viewerBox.style.display = "none";
-            viewerBox.innerHTML = "";
+            viewerBox.querySelector(".passage-letterbox").innerHTML = "";
         }
 
         // 4. 피드백 모달 강제 닫기
@@ -9587,7 +9606,7 @@ const recTime = document.getElementById("recFastestTime");
                 }
                 return displayStr;
             });
-            viewerBox.innerHTML = html.replace(/\n/g, '<br>');
+            viewerBox.querySelector(".passage-letterbox").innerHTML = html.replace(/\n/g, '<br>');
 
             // 현재 문제 단어가 지문 중간에 있어도 보이도록 자동 부드러운 스크롤!
             requestAnimationFrame(() => {

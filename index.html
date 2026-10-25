@@ -1686,22 +1686,30 @@
            ======================================================== */
         .camp-streak-badge {
             display: flex;
+            flex-direction: column;
             position: absolute;
             left: 12px;
             top: 6px;
             z-index: 10;
-            align-items: center;
-            gap: 5px;
+            align-items: flex-start;
+            gap: 2px;
             background: rgba(26, 14, 8, 0.88);
             border: 1px solid rgba(181, 148, 97, 0.5);
-            border-radius: 20px;
-            padding: 4px 10px;
+            border-radius: 12px;
+            padding: 6px 11px;
             box-shadow: 0 2px 6px rgba(0,0,0,0.5);
             margin-top: 8px;
             backdrop-filter: blur(4px);
+            cursor: pointer;
+            transition: transform 0.12s ease;
         }
+        .camp-streak-badge:active { transform: scale(0.95); }
         .camp-streak-fire { font-size: 14px; }
-        .camp-streak-txt  { font-size: 11.5px; font-weight: 800; color: #fef3c7; letter-spacing: -0.2px; }
+        .camp-streak-txt  { font-size: 12.5px; font-weight: 900; color: #fef3c7; letter-spacing: -0.2px; }
+        .camp-streak-sub  { font-size: 10.5px; font-weight: 800; letter-spacing: -0.2px; line-height: 1.1; }
+        .camp-streak-sub.todo { color: #fb923c; } /* 미완료: 주황빛 */
+        .camp-streak-sub.done { color: #4ade80; } /* 완료: 초록빛 */
+
 
         /* 랭킹보드용 미니 불꽃 */
         .rank-streak-pill {
@@ -3644,9 +3652,12 @@
                 <div class="mid-body-area" style="flex:1; position:relative; width:100%;">
 
                     <!-- 🔥 [독립 배치] 중단 좌측 상단 불꽃 엠블럼 (우측 책 선생과 시각적 대칭) -->
-                    <div id="campStreakBadge" class="camp-streak-badge">
-                        <span class="camp-streak-fire">🔥</span>
-                        <span id="campStreakText" class="camp-streak-txt">1일 연속 탐험</span>
+                    <div id="campStreakBadge" class="camp-streak-badge" onclick="showStreakGuidePopup()">
+                        <div style="display:flex; align-items:center; gap:4px;">
+                            <span class="camp-streak-fire">🔥</span>
+                            <span id="campStreakText" class="camp-streak-txt">1일 연속 탐험</span>
+                        </div>
+                        <span id="campStreakSubText" class="camp-streak-sub todo">⏳ 오늘 미완료 (5문제 필요)</span>
                     </div>
 
                     <!-- 📖 [마스코트] 둥둥 떠 있는 책 선생 & 츤데레 말풍선 -->
@@ -7108,9 +7119,21 @@
 
         // 3. 야영지 좌상단 뱃지 텍스트 반영
         const streakEl = document.getElementById("campStreakText");
+        const streakSubEl = document.getElementById("campStreakSubText");
+        const isDoneToday = (lastActiveDate === todayStr);
+
         if (streakEl) {
-            const isDoneToday = (lastActiveDate === todayStr);
-            streakEl.innerText = `${streakDays}일 연속 탐험${isDoneToday ? ' ✓' : ''}`;
+            streakEl.innerText = `${streakDays}일 연속 탐험`;
+        }
+
+        if (streakSubEl) {
+            if (isDoneToday) {
+                streakSubEl.className = "camp-streak-sub done";
+                streakSubEl.innerText = "✨ 오늘 출석 완료!";
+            } else {
+                streakSubEl.className = "camp-streak-sub todo";
+                streakSubEl.innerText = "⏳ 오늘 미완료 (5문제 필요)";
+            }
         }
 
         // 4. 🔥 [매일 점진적 성장 엔진] 1일차~7일차 매일 조금씩 차오르는 화염과 온기
@@ -7144,6 +7167,26 @@
         if (streakBadge) {
             streakBadge.classList.toggle("fire-max", streakDays >= 7);
         }
+    }
+
+    // 🔥 불꽃 배지 터치 시 출석 규칙 안내 팝업 출력
+    function showStreakGuidePopup() {
+        Sound.click();
+        const todayStr = getTodayKSTString();
+        const streakDays = safeStorageGet('spirit_streak_days', 1);
+        const lastActiveDate = safeStorageGet('spirit_streak_last_date', "");
+        const isDoneToday = (lastActiveDate === todayStr);
+
+        const statusBadge = isDoneToday 
+            ? `<b style="color:#15803d;">[오늘 출석 완료]</b>` 
+            : `<b style="color:#dc2626;">[오늘 미완료 (5문제 필요)]</b>`;
+
+        showGameAlert(
+            `🔥 ${streakDays}일 연속 탐험 중`,
+            `현재 상태: ${statusBadge}\n• 단순 접속만으로는 출석이 인정되지 않아!\n• 매일 밤 <b>자정(00:00)</b> 기준으로 <b>퀴즈 1판(5문제)을 끝까지 완료</b>해야 그날의 모닥불에 장작이 들어간다.\n• 매일 꾸준히 불을 피우면 야영지가 환해지고 특별 칭호를 얻을 수 있어!`,
+            "확인",
+            "✦ DAILY STREAK ✦"
+        );
     }
 
     let gameRecords = safeStorageGet('spirit_records_data', {

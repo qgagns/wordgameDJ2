@@ -270,7 +270,7 @@ When the virus [[continues | continue]] to [[multiply | multiply]] inside the ba
 This [[whole | whole]] process helps viruses [[control | control]] the [[excessive | excessive]] [[growth | growth]] of [[certain | certain]] bacteria.
 ===
 The greater [[significance | significance]] of viruses [[infecting | infect]] bacteria is that they [[play | play a(n) ~ role in …]] a vital [[role in | play a(n) ~ role in …]] [[supplying | supply ~ to …]] oxygen [[to | supply ~ to …]] our planet.
-About half of the [[oxygen | oxygen]] on Earth is [[produced | produce]] by plankton in the [[oceans | ocean]], and the [[primary | primary]] food [[source | source]] for these plankton is [[nutrients | nutrient]] [[released | release]] from bacteria killed by [[viral | viral]] [[infections | infection]].
+About half of the [[oxygen | oxygen]] on Earth is [[produced | produce]] by plankton in the [[oceans | ocean: [명] 바다, 대양]], and the [[primary | primary]] food [[source | source]] for these plankton is [[nutrients | nutrient]] [[released | release]] from bacteria killed by [[viral | viral]] [[infections | infection]].
 If viruses did not [[infect | infect]] and kill bacteria, there would be no [[bacterial | bacterial]] [[remains | remains]], [[leading to | lead to ~]] a [[lack | lack]] of plankton.
 Without plankton, half of Earth’s [[oxygen | oxygen]] would [[disappear | disappear]].
 In short, without viruses, the [[lack | lack]] of [[oxygen | oxygen]] would make it impossible for humans to [[survive | survive]].
@@ -295,7 +295,7 @@ After the [[emergence | emergence]] of the [[placenta | placenta]], [[females | 
 Viruses that [[infected | infect]] our [[remote | remote]] [[ancestors | ancestor]] more than 130 million years ago have been [[reported | report]] to have [[served | serve]] a key [[function | function]] in the [[development | development]] of this vital [[organ | organ]].
 ===
 *Means for Cures*
-As [[scientific | scientific]] knowledge about viruses [[continues | continue]] to [[expand | expand]], new opportunities for [[utilizing | utilize]] them in the battle against diseases are [[arising | arise]].
+As [[scientific | scientific: [형] 과학적인, 과학의]] knowledge about viruses [[continues | continue]] to [[expand | expand]], new opportunities for [[utilizing | utilize]] them in the battle against diseases are [[arising | arise]].
 Of [[notable | notable]] [[interest | interest]] are the areas of [[gene | gene]] [[therapy | therapy]] and [[cancer | cancer]] treatment.
 [[Genes | gene]] can be [[compared to | compare ~ to …]] [[instruction | instruction]] [[guides | guide]] that [[govern | govern]] how our bodies [[function | function]].
 Sometimes, people are born with [[genetic | genetic]] [[disorders | disorder]], which can [[lead to | lead to ~]] health problems.

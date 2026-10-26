@@ -54,9 +54,7 @@
             margin: 0;
             padding: 0;
             background: #1c0e07; /* PC용 바깥 배경 */
-            position: fixed;
-            top: 0; left: 0; right: 0; bottom: 0;
-            overflow: hidden;
+            overflow-x: hidden;
         }
         
         body {
@@ -65,15 +63,13 @@
             height: 100%;
             margin: 0;
             padding: 0;
-            position: fixed;
-            top: 0; left: 0; right: 0; bottom: 0;
-            overflow: hidden;
             display: flex;
             justify-content: center;
             align-items: stretch; /* 👈 위아래로 꽉 채우도록 스트레칭! */
             color: #2c1a0e;
-            overscroll-behavior-y: none;
+            overscroll-behavior-y: auto;
             overscroll-behavior-x: none;
+            overflow-x: hidden;
         }
 
         /* 📱 메인 프레임: 모바일 화면을 1밀리미터의 오차도 없이 100% 빈틈없이 장악! */

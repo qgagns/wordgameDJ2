@@ -2101,7 +2101,7 @@
             justify-content: center;
             align-items: center;
             flex: 1;
-            min-height: 80px;
+            min-height: 70px;
             margin: 6px 0;
             padding: 0;
         }
@@ -2153,12 +2153,12 @@
         .choices-grid { 
             display: flex;
             flex-direction: column;
-            gap: 8px; 
+            gap: 6px; 
             width: 100%;
             margin-top: auto;
             flex-shrink: 0;
-            min-height: 40%;
-            max-height: 60%;
+            min-height: 45%;
+            max-height: 65%;
             overflow-y: auto;
             padding: 2px 2px 4px 2px;
             box-sizing: border-box;
@@ -2205,6 +2205,35 @@
         }
         .choices-grid .choice-btn:active {
             transform: scale(0.98);
+        }
+
+        /* ========================================================
+           🎭 [NEW] 다의어 모든 뜻 쓸어담기(POLY_SWEEP) 전용 스타일
+           ======================================================== */
+        .poly-sweep-container {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            width: 100%;
+            height: 100%;
+            min-height: 0;
+            justify-content: flex-end;
+            margin-top: auto;
+            box-sizing: border-box;
+            overflow: hidden;
+            padding: 0;
+        }
+
+        .poly-sweep-container .choice-btn {
+            flex: 1 1 0;
+            /* min-height: 0; */
+            min-height: 30px;
+            max-height: 70px;
+            padding: 2px 16px;
+            font-size: clamp(16px, 4.4vw, 19px);
+        }
+        .poly-sweep-container .choice-btn.correct {
+            pointer-events: none;
         }
 
         /* 🌟 [정답] 두루마리 질감을 100% 살린 에메랄드 네온 발광 오라 */
@@ -2400,33 +2429,6 @@
             letter-spacing: -0.3px;
         }
         .morph-btn-submit:active { transform: scale(0.98);}
-
-
-        /* ========================================================
-           🎭 [NEW] 다의어 모든 뜻 쓸어담기(POLY_SWEEP) 전용 스타일
-           ======================================================== */
-        .poly-sweep-container {
-            display: flex;
-            flex-direction: column;
-            gap: 4px;
-            width: 100%;
-            height: 100%;
-            margin-top: auto; /* 바닥에 딱 밀착되도록 아래로 밀어줌 */
-            box-sizing: border-box;
-            overflow: visible;
-            padding: 0;
-        }
-
-        .poly-sweep-container .choice-btn {
-            min-height: 40px;
-            flex: 1 1 0;
-            min-height: 30px;
-            max-height: 48px;
-            font-size: clamp(16px, 4.4vw, 19px);
-        }
-        .poly-sweep-container .choice-btn.correct {
-            pointer-events: none;
-        }
 
 
         /* ========================================================

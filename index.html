@@ -6566,6 +6566,7 @@
         let currentMap = null;
         let currentMapSyn = null;  // 🌟 net_ 동의어 분할 영지
         let currentMapOppo = null; // 🌟 net_ 반의어 분할 영지
+        const seenNormalWords = new Set(); // 🧹 일반 영지 중복 단어 자동 필터링 장부
 
         lines.forEach(line => {
             line = line.trim();
@@ -6766,6 +6767,9 @@
                             isSpell: true
                         });
                     } else {
+                        const wordKeyLower = eng.toLowerCase();
+                        if (seenNormalWords.has(wordKeyLower)) return; // 🧹 앞선 영지 중복 시 자동 제외!
+                        seenNormalWords.add(wordKeyLower);
                         currentMap.words.push({ 
                             eng: eng, 
                             kor: kor,

@@ -243,66 +243,67 @@ working	:	[명] 작동[운용/작용] (방식).
 
 [mg_h2 26.10_1: 26.10모 1]
 #고2 26.10모 단어를 쪼갠거
-possibility	:
-suitable	:
-pace	:
-spontaneously	:
-curiosity	:
-independence	:
-dare toR	:
-initiative	:
-possess	:
-autonomy	:
-accustomed to ~	:
-instruction	:
-arrange	:
-fertile	:
-soil	:
-core	:
-according to ~	:
-carpenter	:
-at one's own pace	:
-environment	:
-explore	:
-creativity	:
-challenge	:
-gradually	:
-rather than ~	:
-actively	:
-naturally	:
-carve	:
-will	:
-complex	:
-worldview	:
-perception	:
-interest	:
-repay	:
-opportunity cost	:
-term	:
-by definition	:
-unknowable	:
-worthwhile	:
-income	:
-factor	:
-to put it another way	:
-credit	:
-loan	:
-rate of interest	:
-consider	:
-rate	:
-imagine	:
-chance	:
-definition	:
-value	:
-benefit from ~	:
-involve	:
-amount	:
-ethical	:
-consideration	:
-awareness	:
-sustainability	:
-called upon toR	:
-address	:
+possibility	:	[명] 가능성
+suitable	:	[형] 적합한, 알맞은
+pace	:	[명] 속도, 보조
+spontaneously	:	[부] 자발적으로, 저절로
+curiosity	:	[명] 호기심
+independence	:	[명] 독립(심), 자립
+dare toR	:	[동] 감히 ~하다, 담대하게 ~하다
+initiative	:	[명] 진취성, 주도권
+possess	:	[동] 소유하다, 지니다
+autonomy	:	[명] 자율(성)
+accustomed to ~	:	[형] ~에 익숙한
+instruction	:	[명] 지시, 설명
+arrange	:	[동] 준비하다, 배치하다
+fertile	:	[형] 비옥한
+soil	:	[명] 흙, 토양
+core	:	[명] 핵심, 중심
+according to ~	:	[전] ~에 따르면
+carpenter	:	[명] 목수
+at one's own pace	:	[숙] 자신의 속도로
+environment	:	[명] 환경
+explore	:	[동] 탐사하다, 탐구하다
+creativity	:	[명] 창의성
+challenge	:	[명] 도전, 과제; [동] 도전하다; [동] 이의를 제기하다
+gradually	:	[부] 서서히, 점진적으로
+rather than ~	:	[숙] ~보다는, ~가 아니라
+actively	:	[부] 적극적으로
+naturally	:	[부] 자연스럽게, 편안하게
+carve	:	[동] 조각하다, 깎아서 만들다
+will	:	[명] 의지; [명] 유언장
+complex	:	[형] 복잡한; [명] 복합단지
+worldview	:	[명] 세계관
+perception	:	[명] 인식, 지각
+interest	:	[명] 이자, 이득; [명] 관심, 흥미; [동] 관심을 끌다
+repay	:	[동] 갚다, 상환하다
+opportunity cost	:	[숙] 기회비용
+term	:	[명] 기간, 조건; [명] 용어, 말; [명] (-s) 관점, 측면
+by definition	:	[숙] 정의상, 본질적으로
+unknowable	:	[형] 알 수 없는
+worthwhile	:	[형] 가치 있는, 보람 있는
+income	:	[명] 소득, 수입
+factor	:	[명] 요인; [동] (in) 고려하다, 감안하다
+to put it another way	:	[부] 다시 말해서, 달리 표현하면
+credit	:	[명] 신용; [명] 학점
+loan	:	[명] 대출
+rate of interest	:	[숙] 이자율
+consider	:	[동] 고려하다
+rate	:	[명] 비율, 요율
+imagine	:	[동] 상상하다, 마음속에 그리다
+chance	:	[명] 가능성, 기회
+definition	:	[명] 정의
+value	:	[명] 가치; [동] 가치를 매기다; [동] 소중히 여기다
+benefit from ~	:	[숙] ~로부터 이익을 얻다
+involve	:	[동] 포함하다, 수반하다
+amount	:	[명] 양, 액수
+ethical	:	[형] 윤리적인
+consideration	:	[명] 고려, 숙고
+awareness	:	[명] 인식, 자각
+sustainability	:	[명] 지속 가능성
+called upon toR	:	[형] ~하도록 요구받은
+address	:	[동] (문제를) 다루다, 해결하려 하다
+
 
 [mg_h2 26.10_2: 26.10모 2]
 #고2 26.10모 단어를 쪼갠거

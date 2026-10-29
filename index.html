@@ -2541,18 +2541,6 @@
             background: linear-gradient(180deg, #ea580c 0%, #c2410c 100%) !important;
             border-color: #fde047 !important;
             box-shadow: 0 0 16px rgba(234, 88, 12, 0.7), 0 0 25px rgba(253, 224, 71, 0.5) !important;
-            animation: feverBtnPulseAnim 1.2s infinite alternate ease-in-out !important;
-        }
-
-        @keyframes feverBtnPulseAnim {
-            0% {
-                transform: scale(0.9);
-                box-shadow: 0 0 10px rgba(234, 88, 12, 0.5), 0 0 15px rgba(253, 224, 71, 0.3);
-            }
-            100% {
-                transform: scale(1.0);
-                box-shadow: 0 0 22px rgba(234, 88, 12, 0.9), 0 0 35px rgba(253, 224, 71, 0.8);
-            }
         }
 
         /* 🌟 팝업 플로팅 콤보 이펙트 */
@@ -5301,7 +5289,7 @@
                     이제... 진짜 결전이다!
                 </div>
                 <div class="ending-stat-pill" style="background:#fee2e2; border-color:#ef4444; color:#991b1b; font-weight:900;">
-                    👑 전설의 계급: [정령왕의 벗] 각성 완료
+                    👑 [마왕의 대적자]로 각성 완료
                 </div>
             </div>
         </div>
@@ -7167,7 +7155,8 @@
             { req: 315, name: "Ⅷ. 영혼의 조율사 🍃", color: "#059669", reqText: "315마리 계약 달성" },
             { req: 400, name: "Ⅸ. 빛의 수호자 🛡️", color: "#2563eb", reqText: "400마리 계약 달성" },
             { req: 500, name: "Ⅹ. 지혜의 대현자 📜", color: "#b45309", reqText: "500마리 계약 달성" },
-            { req: 500, name: "정령의 구원자 👑", color: "#be185d", reqText: "마왕 토벌 👑", isBossRequired: true }
+            { req: 700, name: "정령왕의 벗 🤝", color: "#4a044e", reqText: "700마리 계약 달성" }, // 🌟 로마자 없는 초월 티어
+            { req: 9999, name: "정령의 구원자 👑", color: "#be185d", reqText: "마왕 토벌 👑", isBossRequired: true }
         ];
     }
 
@@ -7177,13 +7166,13 @@
         const isExamDefeated = isFinalExamDefeated(); // 마왕 토벌 여부
 
         let idx = 0;
-        // 0~9단계(입문 ~ 대현자) 누적 계약 수 판정
+        // 🌟 순수 단어 계약 수(0 ~ 700마리)에 따른 계급 판정
         for (let i = 0; i < tiers.length - 1; i++) {
             if (totalContracted >= tiers[i].req) idx = i;
             else break;
         }
 
-        // 🌟 마왕 토벌 성공 시에만 최종 칭호인 '정령의 구원자 👑' 각성
+         // 🌟 단어 수와 완전 독립: 700마리를 채웠든 못 채웠든, 마왕을 토벌하면 즉시 '정령의 구원자 👑'로 최종 각성!
         if (isExamDefeated) {
             idx = tiers.length - 1; // 정령의 구원자
         }
@@ -8281,12 +8270,16 @@ const recTime = document.getElementById("recFastestTime");
             const mapSectors = getMapSectors(map);
             let minMapLoopCount = 9999;
             mapSectors.forEach(sec => {
-                const c = safeStorageGet(`spirit_clear_cnt_${map.id}_sec_${sec.index}`, 0);
+                let c = safeStorageGet(`spirit_clear_cnt_${map.id}_sec_${sec.index}`, 0);
+                // 🌟 과거에 이미 클리어된 영지는 최소 1회 완주로 자동 소급 보정!
+                if (isCleared && c === 0) c = 1;
                 if (c < minMapLoopCount) minMapLoopCount = c;
             });
             if (minMapLoopCount === 9999) minMapLoopCount = 0;
+            if (isCleared && minMapLoopCount === 0) minMapLoopCount = 1;
+
             const mapLoopBadge = (isCleared && minMapLoopCount > 0)
-                ? `<span style="background:#fef3c7; border:1px solid #f59e0b; color:#92400e; font-size:10px; font-weight:900; padding:1px 6px; border-radius:10px; margin-left:5px; vertical-align:middle; line-height:1.2;">🏅 ${minMapLoopCount}회 완주</span>`
+                ? `<span style="background:#fef3c7; border:1px solid #f59e0b; color:#92400e; font-size:10px; font-weight:900; padding:1px 6px; border-radius:10px; margin-left:5px; vertical-align:middle; line-height:1.2;">🏅 ${minMapLoopCount}회</span>`
                 : '';
 
             // 🌟 전초기지의 sector-card 클래스를 그대로 사용하여 완벽한 통일성 부여
@@ -8563,10 +8556,11 @@ const recTime = document.getElementById("recFastestTime");
             countTextEl.innerText = `${totalContracted} / ${totalWords}마리 (${totalPct}%)`;
         }
 
-        if (tierIndex === 11) {
-            if (nextText) nextText.innerHTML = "「정령의 구원자 👑」달성!";
+        if (isBossDefeated) {
+            if (nextText) nextText.innerHTML = "「정령의 구원자 👑」최종 각성 완료!";
             if (progBar) progBar.style.width = "100%";
         } else if (tierIndex === 10) {
+            // 🌟 700마리 '정령왕의 벗' 상태에서 마왕만 남았을 때
             if (nextText) nextText.innerHTML = "다음 「정령의 구원자 👑」:『마왕』 토벌 필요!";
             if (progBar) progBar.style.width = "100%";
         } else if (next) {
@@ -9033,9 +9027,12 @@ const recTime = document.getElementById("recFastestTime");
             else allSectorsConquered = false;
 
             // 🌟 해당 구역의 누적 완주 횟수 추출
-            const secLoopCount = safeStorageGet(`spirit_clear_cnt_${currentMapId}_sec_${sec.index}`, 0);
+            let secLoopCount = safeStorageGet(`spirit_clear_cnt_${currentMapId}_sec_${sec.index}`, 0);
+            // 🌟 과거에 이미 정복 완료된 구역은 최소 1회차 훈장 즉시 부여!
+            if (isSecDone && secLoopCount === 0) secLoopCount = 1;
+
             const secLoopBadge = (isSecDone && secLoopCount > 0)
-                ? `<span style="background:#fef3c7; border:1px solid #f59e0b; color:#92400e; font-size:10px; font-weight:900; padding:1px 6px; border-radius:10px; margin-left:5px; vertical-align:middle; line-height:1.2;">🏅 ${secLoopCount}회 완주</span>`
+                ? `<span style="background:#fef3c7; border:1px solid #f59e0b; color:#92400e; font-size:10px; font-weight:900; padding:1px 6px; border-radius:10px; margin-left:5px; vertical-align:middle; line-height:1.2;">🏅 ${secLoopCount}회</span>`
                 : '';
 
             const secCard = document.createElement("div");
@@ -9129,37 +9126,25 @@ const recTime = document.getElementById("recFastestTime");
         isFetchingConquerors = true;
 
         try {
-            const snapshot = await db.collection(USER_COLLECTION).get();
+            // 🌟 [트래픽 동결] 전교생 전체 조회를 폐지하고, 깬 학생 중 최대 3명만 핀포인트 조회! (최대 3 Read)
+            const snapshot = await db.collection(USER_COLLECTION)
+                .where("clearedBosses", "array-contains", mapId)
+                .limit(3)
+                .get();
             const conquerors = [];
             const masterId = (typeof GAME_CONFIG !== 'undefined' && GAME_CONFIG.adminId) ? GAME_CONFIG.adminId : "admin";
 
             snapshot.forEach(doc => {
                 if (doc.id.startsWith('_') || doc.id === masterId) return;
                 const data = doc.data();
-
-                // 지문 영지는 단어 전체 완주 기준, 일반 영지는 수호령 토벌(clearedBosses) 기준 판별!
-                let isConquered = false;
-                if (activeMap.isPassage) {
-                    const studentMastery = (data.mastery && data.mastery[mapId]) || {};
-                    let contracted = 0;
-                    activeMap.words.forEach(w => { if ((studentMastery[w.eng] || 0) >= 3) contracted++; });
-                    isConquered = (activeMap.words.length > 0 && contracted >= activeMap.words.length);
-                } else {
-                    const clearedBosses = Array.isArray(data.clearedBosses) ? data.clearedBosses : [];
-                    isConquered = clearedBosses.includes(mapId) || (activeMap.oldHashId && clearedBosses.includes(activeMap.oldHashId));
-                }
-
-                if (isConquered) {
-                    let displayName = data.name || data.heroName || '무명 술사';
-                    displayName = displayName.replace(doc.id, '').replace(/^[0-9\s]+/, '').trim() || displayName;
-                    conquerors.push({
-                        id: doc.id,
-                        name: displayName,
-                        tierName: data.tierName || '입문 술사',
-                        title: (data.records && data.records.equippedTitle) || '첫 걸음의 탐색자',
-                        streak: data.streakDays || 1
-                    });
-                }
+                let displayName = data.name || data.heroName || '무명 술사';
+                displayName = displayName.replace(doc.id, '').replace(/^[0-9\s]+/, '').trim() || displayName;
+                conquerors.push({
+                    id: doc.id,
+                    name: displayName,
+                    tierName: data.tierName || '입문 술사',
+                    title: (data.records && data.records.equippedTitle) || '첫 걸음의 탐색자'
+                });
             });
 
             // 🌟 2. 60초간 메모리에 저장
@@ -9187,29 +9172,30 @@ const recTime = document.getElementById("recFastestTime");
                     + '<div style="font-size:12px; font-weight:700; color:#92400e; line-height:1.4;">이 성역을 전교 최초로 완전 정복하여<br>명예의 선발대가 되어라!</div>'
                 + '</div>';
         } else {
+            const medals = ['🥇', '🥈', '🥉'];
             const itemsHtml = list.map((s, idx) => ''
-                + '<div style="display:flex; justify-content:space-between; align-items:center; background:#ffffff; border:1px solid #d8c7a6; border-radius:7px; padding:5px 8px; font-size:12px;">'
+                + '<div style="display:flex; justify-content:space-between; align-items:center; background:#ffffff; border:1.5px solid #d8c7a6; border-radius:8px; padding:6px 10px; font-size:12.5px;">'
                     + '<div style="display:flex; align-items:center; gap:5px;">'
-                        + '<span style="font-weight:900; color:#b45309; width:18px;">#' + (idx + 1) + '</span>'
+                        + '<span style="font-size:16px;">' + (medals[idx] || '🎖️') + '</span>'
                         + '<span style="font-weight:900; color:#2c1a0e;">' + s.name + '</span>'
-                        + '<span style="font-size:10.5px; color:#785a3e;">(' + s.id + ')</span>'
+                        + '<span style="font-size:11px; color:#785a3e;">(' + s.id + ')</span>'
                     + '</div>'
-                    + '<span style="font-size:10px; font-weight:800; color:#065f46; background:#ecfdf5; border:1px solid #a7f3d0; padding:1px 5px; border-radius:5px;">완전 정복 ✓</span>'
+                    + '<span style="font-size:10px; font-weight:900; color:#065f46; background:#ecfdf5; border:1px solid #a7f3d0; padding:2px 6px; border-radius:5px;">선발대 ✓</span>'
                 + '</div>'
             ).join('');
 
             listContentHtml = ''
-                + '<div style="text-align:right; font-size:11px; font-weight:800; color:#15803d; margin-bottom:5px;">명예 정복자 총 ' + list.length + '명</div>'
-                + '<div style="display:flex; flex-direction:column; gap:4px; max-height:220px; overflow-y:auto; padding-right:2px; margin-bottom:4px;">'
+                + '<div style="text-align:center; font-size:11.5px; font-weight:800; color:#b45309; margin-bottom:6px;">✦ 성역을 가장 먼저 정복한 TOP 3 ✦</div>'
+                + '<div style="display:flex; flex-direction:column; gap:5px; margin-bottom:4px;">'
                     + itemsHtml
                 + '</div>';
         }
 
         showGameAlert(
-            `🏛️ [${map.name}] 정복자`,
+            `🏛️ [${map.name}] 명예의 선발대`,
             listContentHtml,
             "확인",
-            "✦ HALL OF CONQUERORS ✦"
+            "✦ FIRST CONQUERORS TOP 3 ✦"
         );
     }
 
@@ -10159,12 +10145,17 @@ const recTime = document.getElementById("recFastestTime");
         // 1. 오답 함정 뜻 3개 수집 (다른 단어들에서 긁어오기)
         let distractorPool = [];
         worldMaps.forEach(m => {
+            // if (m.isPassage || m.isPolarMap) return; // 특수 영지 제외
             m.words.forEach(w => {
                 if (w.eng !== q.engWord && w.kor) {
-                    if (w.meanings && w.meanings.length > 0) {
-                        w.meanings.forEach(dm => distractorPool.push(dm));
+                    // 🌟 세미콜론(;)이 들어있는 모든 통짜 뜻을 낱개로 분해하여 단일 조각만 수집!
+                    if (w.kor.includes(';')) {
+                        w.kor.split(';').forEach(part => {
+                            const clean = part.trim();
+                            if (clean) distractorPool.push(clean);
+                        });
                     } else {
-                        distractorPool.push(w.kor);
+                        distractorPool.push(w.kor.trim());
                     }
                 }
             });
@@ -10538,12 +10529,48 @@ const recTime = document.getElementById("recFastestTime");
 
         // 3단계: 품사 태그가 없거나 전 대륙을 뒤져도 3개가 안 모이면, 기존처럼 안전하게 무작위 추출
         if (wrongChoices.length < 3) {
-            wrongChoices = q.pool.filter(item => item !== q.correct && !wrongChoices.includes(item))
-                                 .sort(() => Math.random() - 0.5)
-                                 .slice(0, 3 - wrongChoices.length);
+            const cleanCorrect = (q.correct || "").trim();
+            const addList = q.pool
+                .map(item => (item || "").trim())
+                .filter(item => item && item !== cleanCorrect && !wrongChoices.includes(item))
+                .sort(() => Math.random() - 0.5);
+            
+            for (const item of addList) {
+                if (wrongChoices.length >= 3) break;
+                if (!wrongChoices.includes(item)) wrongChoices.push(item);
+            }
         }
 
-        const choices = [...wrongChoices, q.correct].sort(() => Math.random() - 0.5);
+        // 🛡️ [중복 0% & 4지선다 100% 보장 단일화 루프]
+        const correctClean = (q.correct || "").trim();
+        const uniqueChoices = new Set([correctClean]);
+        
+        // 기존에 모아둔 오답들 중 중복 없이 투입
+        wrongChoices.forEach(choice => {
+            const c = (choice || "").trim();
+            // 🌟 반의어 세트(<=>) 기호가 섞여 있으면 무조건 폐기!
+            if (c && c !== correctClean && !c.includes('<=>') && uniqueChoices.size < 4) {
+                uniqueChoices.add(c);
+            }
+        });
+
+        // 여전히 4개가 안 채워졌다면(동일 뜻 중복 제거로 모자라진 경우 포함) 전 대륙에서 고유 보기 강제 보충!
+        if (uniqueChoices.size < 4) {
+            const universeWords = getAllUniverseWords();
+            const fallbackList = (q.type === "E2K") 
+                ? universeWords.map(w => (w.kor || "").trim()) 
+                : universeWords.map(w => (w.eng || "").trim());
+
+            for (const item of fallbackList.sort(() => Math.random() - 0.5)) {
+                if (uniqueChoices.size >= 4) break;
+                if (item && !item.includes('<=>') && !uniqueChoices.has(item)) {
+                    uniqueChoices.add(item);
+                }
+            }
+        }
+
+        // 셔플하여 최종 4지선다 확정
+        const choices = Array.from(uniqueChoices).sort(() => Math.random() - 0.5);
 
         const choicesGrid = document.getElementById("choicesGrid");
         choicesGrid.innerHTML = "";
@@ -11348,7 +11375,7 @@ const recTime = document.getElementById("recFastestTime");
 
                 if (window.isSectorReviewMode) {
                     if (badgeTop) badgeTop.innerText = "SECTOR DEEP MASTERY";
-                    if (titleEl) titleEl.innerHTML = `🏆 ${sec.name} 심화 완주! <span style="font-size:12px; background:#fef3c7; border:1px solid #f59e0b; color:#92400e; padding:1px 8px; border-radius:10px; vertical-align:middle;">🏅 누적 ${newLoopCnt}회차</span>`;
+                    if (titleEl) titleEl.innerHTML = `🏆 ${sec.name} 심화 완주! <span style="font-size:11.5px; background:#fef3c7; border:1px solid #f59e0b; color:#92400e; padding:1px 7px; border-radius:10px; vertical-align:middle;">🏅 누적 ${newLoopCnt}회</span>`;
                     if (descEl) descEl.innerHTML = `
                         오호... 이미 클리어한 구역인데도 이 악물고 심화 훈련까지 끝마쳤단 말이지?<br>
                         솔직히 네 근성 인정한다!<br>
@@ -12066,10 +12093,11 @@ const recTime = document.getElementById("recFastestTime");
         const pool = [];
         worldMaps.forEach(map => {
             // 🛑 [보스전 제외] 비경 영지(지문, 불규칙, 동의어 등)는 보스전 문제 풀에서 100% 완전 차단!
-            if (isMapSpecial(map)) return;
+            if (isMapSpecial(map) || map.isPolarMap) return; // 🌟 반의어 영지 원천 차단!
             map.words.forEach(w => {
                 if (w.isMorph) return; // 2중 방어
                 if (w.isSpell) return;
+                if (w.isPolarPair) return; // 🌟 반의어 대립 쌍 절대 제외!
                 if (!pool.some(item => item.eng === w.eng)) pool.push(w);
             });
         });
@@ -13188,11 +13216,15 @@ function handleMidBossVictory() {
             document.getElementById("titleTotalWordsSummary").innerText = `${totalContracted} / ${totalWords}마리`;
 
             const goalEl = document.getElementById("titleReportNextGoal");
-            if (next) {
-                const remain = next.req - totalContracted;
+            if (isFinalExamDefeated()) {
+                goalEl.innerText = "👑 최종 승급 완수 (구원자)";
+            } else if (tierIndex === 10) { // 정령왕의 벗 달성 상태
+                goalEl.innerHTML = `다음 승급: <b>마왕 『EXAM』 토벌 필요!</b>`;
+            } else if (next && next.req < 9999) {
+                const remain = Math.max(0, next.req - totalContracted);
                 goalEl.innerHTML = `[${next.name}]까지 <b>${remain}마리</b>`;
             } else {
-                goalEl.innerText = "👑 최고 등급 도달!";
+                goalEl.innerText = "👑 최고 계급 도달!";
             }
 
             // 2. 시험 점수 산정 대상 영지 필터링 (일반 영지 + spell_ 영지만 포함, irreg/net 제외)

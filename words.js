@@ -442,7 +442,7 @@ manipulate	:	[동] (배후에서) 조작하다; [동] (자료 등을) 가공하�
 verbal	:	[형] 언어의, 말로 하는
 accompany	:	[동] 동반하다, 수반하다
 match	:	[동] 일치하다; [명] 경기, 매치; [명] 성냥
-inclined toR	:	[형] ~하는 경향이 있는
+inclined toR	:	[형] ~하는 경향이 있는, 마음이 기우는
 workload	:	[명] 업무량
 take over	:	[동] 인계받다, 떠맡다
 replace	:	[동] 대신하다, 대체하다
@@ -457,7 +457,6 @@ i.e.	:	[부] 즉
 spoken	:	[형] 구어의, 말로 하는
 notice	:	[동] 알아차리다; [명] 공지, [동] 공지하다
 force	:	[동] 억지로 ~하다, 강요하다; [명] 힘; [명] 군대
-inclined	:	[형] ~하고 싶은, 마음이 기우는
 colleague	:	[명] 동료
 expression	:	[명] 표정, 표현
 overwhelming	:	[형] 압도적인
@@ -469,7 +468,7 @@ inspect	:	[동] 점검하다, 검사하다
 triumph	:	[명] 승리, 대성공
 engineering	:	[명] 공학, 설계
 consciously	:	[부] 의식적으로
-deliberate	:	[형] 신중한, 의도적인
+deliberate	:	[형] 신중한; [형] 의도적인
 costly	:	[형] 비용이 많이 드는
 outcompete	:	[동] 경쟁에서 이기다
 free	:	[동] 해방하다, 자유롭게 하다; [형] 자유로운; [형] 무료인, 공짜인
@@ -485,7 +484,7 @@ in one light	:	[숙] 어떤 관점에서
 behaviour	:	[명] 행동, 행위
 decade	:	[명] 10년
 hopeless	:	[형] 가망 없는, 절망적인
-fork	:	[명] 갈림길, 분기점
+fork	:	[명] 갈림길, 분기점; [명] 포크
 in real time	:	[숙] 실시간으로
 creature	:	[명] 생명체, 생물
 precisely	:	[부] 정확히
@@ -533,7 +532,7 @@ minority	:	[명] 소수, 소수자
 responsive	:	[형] 반응하는, 호응하는
 expectation	:	[명] 기대
 ongoing	:	[형] 계속 진행 중인
-evolving	:	[형] 진화하는, 발전하는
+evolve	:	[동] 진화하다, 서서히 발전하다
 sequence	:	[명] 순서, 연속
 plasticity	:	[명] 가소성, 유연성
 perspective	:	[명] 관점, 시각
@@ -573,7 +572,7 @@ stage	:	[명] 단계; [명] 무대, 스테이지
 emotional	:	[형] 감정적인
 behavioural	:	[형] 행동의
 pattern	:	[명] 패턴, 양식
-demand	:	[명] 요구
+demand	:	[명] 요구; [동] 요구하다; [명] 수요
 biological	:	[형] 생물학적인
 view	:	[명] 시야, 광경; [명] 견해, 관점; [동] 보다
 adulthood	:	[명] 성인기
@@ -604,7 +603,7 @@ politics	:	[명] 정치, 정치학
 household	:	[명] 가정, 가구
 take place	:	[동] (행사 등이) 열리다, 개최되다
 strategy	:	[명] 전략
-separate	:	[형] 분리된, 별개의
+separate	:	[형] 분리된, 별개의; [동] 분리하다, 나누다
 effect	:	[명] 영향, 효과
 no longer	:	[숙] 더 이상 ~않는
 enormously	:	[부] 엄청나게, 대단히
@@ -635,7 +634,7 @@ hygiene	:	[명] 위생
 therapy	:	[명] 치료, 요법
 chronic	:	[형] 만성의
 enormous	:	[형] 막대한, 엄청난
-progress	:	[명] 진보, 발전
+progress	:	[명] 진보, 발전; [동] 진보하다, 발전하다
 treatment	:	[명] 치료, 치료법
 deadly	:	[형] 치명적인
 laboratory	:	[명] 실험실
@@ -680,19 +679,18 @@ method	:	[명] 방법
 discover	:	[동] 발견하다
 opportunity	:	[명] 기회
 reappraisal	:	[명] 재평가, 재해석
-avenue	:	[명] 방법, 수단
+avenue	:	[명] 거리, 길; [명] 방법, 수단
 regulate	:	[동] 조절하다, 조정하다, 규제하다
 
 [mg_h2 26.10_8: 26.10모 8]
 #고2 26.10모 단어를 쪼갠거
 transform	:	[동] 변형시키다, 바꾸다
-illustrate	:	[동] 보여 주다, 설명하다
+illustrate	:	[동] 보여 주다, 설명하다; [동] 그리다, 삽화를 넣다
 accumulate	:	[동] 쌓이다, 축적하다
 resilience	:	[명] (힘든 상황으로부터의) 회복력, 탄력
 adverse	:	[형] 부정적인, 불리한
 divorce	:	[명] 이혼, [동] 이혼하다
 construe	:	[동] 해석하다
-overpowering	:	[형] 압도적인, 억누를 수 없는
 alternatively	:	[부] 그 대신에, 다른 방법으로
 in the long run	:	[숙] 장기적으로 보면
 construal	:	[명] 해석, 이해 방식
@@ -723,7 +721,7 @@ anger	:	[명] 분노
 utilize	:	[동] 활용하다, 이용하다
 one size fits all	:	[숙] 모두에게 맞는, 획일적인
 diverse	:	[형] 여러 가지의, 다양한
-criteria	:	[명] 기준들 (criterion의 복수)
+criterion / criteria	:	[명] 기준들
 benchmark	:	[명] 기준, 척도
 guideline	:	[명] 지침, 가이드라인
 inform A of B	:	[동] A에게 B를 알려 주다
@@ -734,8 +732,7 @@ power plant	:	[숙] 발전소
 generator	:	[명] 발전기
 tap	:	[명] 수도꼭지
 dependent	:	[형] (on) ~에 달려 있는, ~에 의존하는
-water quality	:	[명] 수질
-quality	:	[명] 질, 품질
+quality	:	[명] 질, 품질; [명] 특성, 성질; [형] 질좋은
 physical	:	[형] 육체의; [형] 물리적인
 cool down	:	[숙] 식히다, 진정시키다
 a set of ~	:	[숙] 일련의, 한 벌의 ~
@@ -788,7 +785,7 @@ echolocation	:	[명] 반향 위치 측정
 acoustic	:	[형] 음향의, 청각의
 pathway	:	[명] 경로, 통로
 transmit	:	[동] 전달하다, 전송하다
-auditory	:	[형] 청각의
+auditory	:	[형] 귀의, 청각의
 cortex	:	[명] (대뇌) 피질
 mammal	:	[명] 포유동물, 포유류
 distinct	:	[형] 뚜렷이 다른, 별개의
@@ -797,7 +794,7 @@ intensity	:	[명] 강도, 세기
 in parallel	:	[숙] 동시에, 병행하여
 assembly line	:	[숙] 조립 라인
 cognitive load	:	[숙] 인지 부하
-serially	:	[부] 연속적으로, 순차적으로
+serially	:	[부] 연속적으로, 연속물로
 simultaneously	:	[부] 동시에
 sequentially	:	[부] 순차적으로
 disrupt	:	[동] 방해하다, 지장을 주다
@@ -826,7 +823,7 @@ irritation	:	[명] 짜증, 화
 idle	:	[형] 한가한, 놀고 있는
 troubling	:	[형] 골치 아픈, 걱정스러운
 self-improvement	:	[명] 자기 계발
-reflection	:	[명] 숙고, 성찰
+reflection	:	[명] 숙고, 성찰; [명] 반사, 반영
 indulgence	:	[명] 탐닉, 방종
 pastime	:	[명] 취미, 소일거리
 luxury	:	[명] 사치, 호사
@@ -834,10 +831,10 @@ perceive	:	[동] 인식하다, 여기다
 manifest	:	[동] 나타나다, 드러내다
 inactive	:	[형] 활동하지 않는, 비활동적인
 occasion	:	[명] 기회, 경우
-comprehend	:	[동] 이해하다
+comprehend	:	[동] 이해하다; [동] 포괄하다
 hazardous	:	[형] 위험한
 paramount	:	[형] 가장 중요한
-profound	:	[형] 깊은, 심오한
+profound	:	[형] 깊은, 심오한; [형] 상당한
 regard	:	[동] 여기다, 간주하다
 constructive	:	[형] 건설적인
 in disguise	:	[숙] 변장한, 위장한
@@ -857,7 +854,7 @@ circumstance	:	[명] 상황, 환경
 represent	:	[동] 나타내다; [동] 대리하다, 대표하다
 observe	:	[동] 관찰하다; [동] 준수하다; [동] 말하다
 express	:	[동] 표현하다, 나타내다
-balance	:	[명] 균형
+balance	:	[명] 균형; [동] 균형을 잡다
 waste	:	[명] 쓰레기, 폐기물; [동] 낭비하다
 identification	:	[명] 식별, 정체성 확인
 unavailable	:	[형] 이용할 수 없는

@@ -721,8 +721,8 @@ anger	:	[명] 분노
 utilize	:	[동] 활용하다, 이용하다
 one size fits all	:	[숙] 모두에게 맞는, 획일적인
 diverse	:	[형] 여러 가지의, 다양한
-criterion / criteria	:	[명] 기준들
-benchmark	:	[명] 기준, 척도
+criterion / criteria	:	[명] (당락, 분류의) 기준
+benchmark	:	[명] (비교를 위한) 기준점
 guideline	:	[명] 지침, 가이드라인
 inform A of B	:	[동] A에게 B를 알려 주다
 crop	:	[명] 작물, 농작물; [동] 잘라내다, 베어내다

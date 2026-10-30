@@ -94,7 +94,6 @@ increase	:	[명] 증가, 상승; [동] 증가하다, 늘다
 interaction	:	[명] 상호 작용
 between A and B	:	[전] A와 B 사이의
 present	:	[형] 있는, 현존하는; [동] 제시하다, 제공하다; [명] 현재, 선물
-primary	:	[형] 주된, 주요한
 concern	:	[명] 우려, 근심, 걱정; [동] 걱정시키다
 harmful	:	[형] 해로운, 유해한
 not necessarily	:	[숙] 반드시 ~은 아닌
@@ -137,7 +136,6 @@ nutrient	:	[명] 영양소, 영양분
 release	:	[동] 방출하다, 내뿜다, [명] 배출; [동] 발매하다, [명] 발매
 infection	:	[명] 감염, 전염
 remains	:	[명] 유해, 사체, 남아있는 것
-lead to ~	:	[동] (결과 등)으로 이어지다
 lack	:	[명] 결여, 부족; [동] ~가 결여되어있다, 부족하다
 disappear	:	[동] 사라지다
 survive	:	[동] (사건 등에서) 생존하다, 살아남다
@@ -164,7 +162,6 @@ pass ~ down to …	:	[동] ~을 …에게 물려주다
 offspring	:	[명] (동물의) 새끼
 insertion	:	[명] 삽입
 genome	:	[명] 게놈, 유전체
-mechanism	:	[명] 메커니즘, 기제(機制)
 potential	:	[명] 잠재력; [형] 잠재적인
 development	:	[명] 발달, 성장; [명] (사진의) 현상; [명] (병의) 발병
 placenta	:	[명] 태반
@@ -172,7 +169,7 @@ mammal	:	[명] 포유동물, 포유류
 complex	:	[형] 복잡한; [명] 복합단지
 organ	:	[명] 장기, 기관
 fetus	:	[명] 태아
-facilitate	:	[동] 용이하게 하다
+facilitate	:	[동] 촉진하다, 용이하게 하다
 exchange	:	[명] 교환; [동] 교환하다
 waste product	:	[명] (신체의) 노폐물
 protect ~ from …	:	[동] ~을 …로부터 보호하다
@@ -202,7 +199,6 @@ gene	:	[명] 유전자
 therapy	:	[명] 치료, 요법
 cancer	:	[명] 암, 종양
 compare ~ to …	:	[동] ~를 …와 비교하다
-instruction	:	[명] 지시 (사항)
 guide	:	[명] 안내서, 지침; [동] 인도하다, 가이드하다
 govern	:	[동] 지배하다
 genetic	:	[형] 유전자의
@@ -259,7 +255,6 @@ arrange	:	[동] 준비하다, 배치하다
 fertile	:	[형] 비옥한
 soil	:	[명] 흙, 토양
 core	:	[명] 핵심, 중심
-according to ~	:	[전] ~에 따르면
 carpenter	:	[명] 목수
 at one's own pace	:	[숙] 자신의 속도로
 environment	:	[명] 환경
@@ -275,7 +270,6 @@ will	:	[명] 의지; [명] 유언장
 complex	:	[형] 복잡한; [명] 복합단지
 worldview	:	[명] 세계관
 perception	:	[명] 인식, 지각
-interest	:	[명] 이자, 이득; [명] 관심, 흥미; [동] 관심을 끌다
 repay	:	[동] 갚다, 상환하다
 opportunity cost	:	[숙] 기회비용
 term	:	[명] 기간, 조건; [명] 용어, 말; [명] (-s) 관점, 측면
@@ -321,7 +315,6 @@ content	:	[명] 내용(물), 콘텐츠; [형] 만족하는
 impact	:	[명] 영향, 충격
 include	:	[동] 포함하다
 sustainable	:	[형] 지속 가능한
-support	:	[명] 격려, 도움, 지지; [동] 도와주다, 지지하다; [동] 지탱하다 연명시키다
 related to ~	:	[숙] ~와 관련된
 raise	:	[동] 높이다, 올리다
 focus on ~	:	[동] ~에 집중하다, 초점을 맞추다
@@ -379,7 +372,6 @@ contemplation	:	[명] 사색, 숙고
 worthy	:	[형] ~을 받을 만한, 가치 있는
 assertion	:	[명] 주장
 self-serving	:	[형] 자기 잇속만 차리는
-flourish	:	[동] 번성하다, 번창하다
 inclusive	:	[형] 포용적인, 차별 없는
 indicator	:	[명] 지표, 척도
 elite	:	[명] 엘리트, 상류층
@@ -512,7 +504,6 @@ convert A into B	:	[숙] A를 B로 전환하다, 바꾸다
 virtual	:	[형] 가상의
 dimension	:	[명] 차원, 영역
 democratic	:	[형] 민주적인, 민주주의의
-immune	:	[형] (to) (~에) 면역이 된, 영향받지 않는
 negotiation	:	[명] 협상
 square	:	[명] 광장; [명] 정사각형; [명] 제곱
 state	:	[명] 국가; [명] 상태; [동] 말하다, 언급하다
@@ -568,7 +559,6 @@ merely	:	[부] 그저, 단지
 phase	:	[명] 단계, 시기
 entire	:	[형] 전체의
 room	:	[명] 여지, 기회, 가능성; [명] 방, 공간
-stage	:	[명] 단계; [명] 무대, 스테이지
 emotional	:	[형] 감정적인
 behavioural	:	[형] 행동의
 pattern	:	[명] 패턴, 양식
@@ -647,7 +637,6 @@ disease	:	[명] 질병
 discovery	:	[명] 발견
 receive	:	[동] 받다, 수령하다
 battle	:	[명] 싸움, 전투
-protect	:	[동] 보호하다, 지키다
 average	:	[형] 평균의
 medicine	:	[명] 약; [명] 의학
 damage	:	[명] 피해, 손해; [동] 피해를 끼치다, 손상시키다
@@ -798,7 +787,6 @@ serially	:	[부] 연속적으로, 연속물로
 simultaneously	:	[부] 동시에
 sequentially	:	[부] 순차적으로
 disrupt	:	[동] 방해하다, 지장을 주다
-facilitate	:	[동] 촉진하다, 용이하게 하다
 rapidly	:	[부] 빠르게
 responsible for ~	:	[형] ~에 책임이 있는; [형] ~의 원인이 되는; [형] ~을 관장하는
 aspect	:	[명] 일면, 측면
@@ -816,7 +804,6 @@ divide	:	[동] 나누다
 efficiently	:	[부] 효율적으로
 load	:	[명] 부담, 짐; [동] (짐을) 싣다
 react	:	[동] 반응하다
-enable	:	[동] 가능하게 하다
 boredom	:	[명] 지루함, 따분함
 despair	:	[명] 절망
 irritation	:	[명] 짜증, 화

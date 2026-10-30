@@ -4908,91 +4908,34 @@
                 <span id="adminStudentTotalCount" style="font-size:12px; font-weight:900; color:#7e22ce; background:#f3e8ff; padding:3px 8px; border-radius:8px;">총 0명 등록</span>
             </div>
 
-            <!-- 🌟 관제탑 3단 탭 바 [1.학생 목록] [2.취약 단어] [3.원격 관제] -->
-            <div style="display:flex; gap:4px; margin-bottom:8px; flex-shrink:0;">
-                <button id="adminTabBtn1" onclick="switchAdminTowerTab(1)" style="flex:1; padding:7px 4px; border-radius:8px; font-size:12px; font-weight:900; cursor:pointer; background:#7e22ce; color:#ffffff; border:1px solid #581c87; white-space:nowrap;">
+            <!-- 🌟 관제탑 4단 탭 바 [1.원격관제(기본)] [2.중복어휘] [3.학생목록] [4.취약단어] -->
+            <div style="display:flex; gap:3px; margin-bottom:6px; flex-shrink:0;">
+                <button id="adminTabBtn1" onclick="switchAdminTowerTab(1)" style="flex:1; padding:7px 2px; border-radius:8px; font-size:11.5px; font-weight:900; cursor:pointer; background:#7e22ce; color:#ffffff; border:1px solid #581c87; white-space:nowrap;">
+                    ⚙️ 원격 관제
+                </button>
+                <button id="adminTabBtn2" onclick="switchAdminTowerTab(2)" style="flex:1; padding:7px 2px; border-radius:8px; font-size:11.5px; font-weight:900; cursor:pointer; background:#ede3cc; color:#5c3a21; border:1px solid #c9b48c; white-space:nowrap;">
+                    📋 중복 어휘<span id="adminDupBadge" style="display:none; font-size:10px; background:#ef4444; color:#fff; border-radius:10px; padding:0 4px; margin-left:2px;"></span>
+                </button>
+                <button id="adminTabBtn3" onclick="switchAdminTowerTab(3)" style="flex:1; padding:7px 2px; border-radius:8px; font-size:11.5px; font-weight:900; cursor:pointer; background:#ede3cc; color:#5c3a21; border:1px solid #c9b48c; white-space:nowrap;">
                     👥 학생 목록
                 </button>
-                <button id="adminTabBtn2" onclick="switchAdminTowerTab(2)" style="flex:1; padding:7px 4px; border-radius:8px; font-size:12px; font-weight:900; cursor:pointer; background:#ede3cc; color:#5c3a21; border:1px solid #c9b48c; white-space:nowrap;">
+                <button id="adminTabBtn4" onclick="switchAdminTowerTab(4)" style="flex:1; padding:7px 2px; border-radius:8px; font-size:11.5px; font-weight:900; cursor:pointer; background:#ede3cc; color:#5c3a21; border:1px solid #c9b48c; white-space:nowrap;">
                     📊 취약 단어
-                </button>
-                <button id="adminTabBtn3" onclick="switchAdminTowerTab(3)" style="flex:1; padding:7px 4px; border-radius:8px; font-size:12px; font-weight:900; cursor:pointer; background:#ede3cc; color:#5c3a21; border:1px solid #c9b48c; white-space:nowrap;">
-                    ⚙️ 원격 관제
                 </button>
             </div>
 
             <!-- ==============================================
-                 탭 1: 👥 학생 목록 및 성적 관리
+                 탭 1: ⚙️ 원격 관제 기능 (마왕 / 특훈 / 영지탭)
                  ============================================== -->
-            <div id="adminTowerTab1" style="display:flex; flex-direction:column; flex:1; min-height:0;">
-
-            <!-- 실시간 검색창 + 정렬 드롭다운 (기본: 가나다 이름순) -->
-                <div style="display:flex; gap:6px; margin-bottom:8px; flex-shrink:0;">
-                    <input id="adminStudentSearchInput" type="text" placeholder="🔍 검색..." oninput="filterAdminStudents()" 
-                           style="flex:1; padding:7px 10px; border-radius:8px; border:1.5px solid #c9b48c; font-size:12.5px; font-weight:800; box-sizing:border-box;">
-                    <select id="adminStudentSortSelect" onchange="changeAdminSortMode(this.value)" style="background:#ffffff; border:1.5px solid #c084fc; border-radius:8px; padding:7px 8px; font-size:12px; font-weight:800; color:#4a044e; cursor:pointer;">
-                        <option value="name" selected>이름 가나다순</option>
-                        <option value="masteryDesc">단어 많은순 👑</option>
-                        <option value="masteryAsc">단어 적은순 ⚠️</option>
-                        <option value="recent">최근 접속순 ⏱️</option>
-                        <option value="id">학번(ID)순</option>
-                    </select>
-                </div>
-
-            <!-- 실시간 학생 카드 목록 컨테이너 -->
-            <div id="adminStudentListContainer" style="flex:1; min-height:0; overflow-y:auto; display:flex; flex-direction:column; gap:5px; padding-right:2px; margin-bottom:4px;">
-                <div style="text-align:center; padding:20px; font-size:13px; color:#785a3e;">
-                    ☁️ 학생 데이터를 불러오는 중...
-                </div>
-            </div>
-        </div>
-
-        <!-- ==============================================
-            탭 2: 📊 전교생 최다 오답 취약 단어 분석
-            ============================================== -->
-        <div id="adminTowerTab2" style="display:none; flex-direction:column; flex:1; min-height:0;">
-            <!-- 상단 요약 바 & 수업용 복사 버튼 -->
-            <div style="display:flex; justify-content:space-between; align-items:center; gap:4px; background:#fff1f2; border:1.5px solid #fecdd3; border-radius:9px; padding:7px 8px; margin-bottom:6px; flex-shrink:0;">
-                <!-- 1. [일반 / 비경] 카테고리 선택 -->
-                <select id="adminKillerCatSelect" onchange="onAdminKillerCategoryChange()" style="background:#ffffff; border:1.5px solid #f43f5e; border-radius:6px; padding:4px 4px; font-size:11px; font-weight:800; color:#9f1239; cursor:pointer;">
-                    <option value="normal" selected>🌲 일반</option>
-                    <option value="special">🌀 비경</option>
-                </select>
-
-                <!-- 2. [전체 / 특정 영지] 선택 (동적 갱신) -->
-                <select id="adminKillerMapSelect" onchange="renderAdminWrongWordsAnalytics()" style="flex:1; min-width:0; background:#ffffff; border:1.5px solid #f43f5e; border-radius:6px; padding:4px 4px; font-size:11px; font-weight:800; color:#9f1239; cursor:pointer; text-overflow:ellipsis;">
-                    <option value="all" selected>전체 영지</option>
-                </select>
-
-                <!-- 3. [TOP 10 ~ 전체] 표시 개수 -->
-                <select id="adminKillerLimitSelect" onchange="renderAdminWrongWordsAnalytics()" style="background:#ffffff; border:1.5px solid #f43f5e; border-radius:6px; padding:4px 4px; font-size:11px; font-weight:800; color:#9f1239; cursor:pointer;">
-                    <option value="10" selected>TOP 10</option>
-                    <option value="20">TOP 20</option>
-                    <option value="30">TOP 30</option>
-                    <option value="all">전체</option>
-                </select>
-
-                <!-- 4. [복사] 버튼 -->
-                <button type="button" onclick="copyAdminKillerWords()" style="background:#be123c; color:#ffffff; border:none; border-radius:6px; padding:5px 8px; font-size:11px; font-weight:900; cursor:pointer; box-shadow:0 1px 3px rgba(0,0,0,0.15); white-space:nowrap; flex-shrink:0;">
-                    📋 복사
-                </button>
-            </div>
-            <!-- 킬러 단어 카드 목록 컨테이너 -->
-            <div id="adminKillerWordsListContainer" style="flex:1; min-height:0; overflow-y:auto; display:flex; flex-direction:column; gap:5px; padding-right:2px;"></div>
-        </div>
-
-        <!-- ==============================================
-                 탭 3: ⚙️ 원격 관제 기능 (마왕 / 특훈 / 영지탭)
-                 ============================================== -->
-        <div id="adminTowerTab3" style="display:none; flex-direction:column; flex:1; min-height:0; overflow-y:auto; padding-right:2px;">
+            <div id="adminTowerTab1" style="display:flex; flex-direction:column; flex:1; min-height:0; overflow-y:auto; padding-right:2px;">
                 <!-- 1. 마왕 『EXAM』 실시간 강림 스위치 -->
                 <div id="adminBossSwitchCard" style="display:flex; justify-content:space-between; align-items:center; background:#f1f5f9; border:2px solid #cbd5e1; border-radius:10px; padding:8px 12px; margin-bottom:8px; flex-shrink:0;">
                     <div>
                         <span style="font-size:10px; font-weight:900; color:#64748b; letter-spacing:1px; display:block;">✦ RAID EVENT SWITCH ✦</span>
-                         <div id="adminBossStatusText" style="font-size:14px; font-weight:900; color:#334155; margin-top:1px;">🔒 마왕 심연 봉인 중 (평상시)</div>
+                        <div id="adminBossStatusText" style="font-size:14px; font-weight:900; color:#334155; margin-top:1px;">🔒 마왕 심연 봉인 중 (평상시)</div>
                     </div>
                     <button id="adminBossToggleBtn" style="padding:6px 12px; font-size:12px; font-weight:900; border-radius:8px; cursor:pointer; border:1.5px solid #dc2626; background:#fee2e2; color:#dc2626; transition:all 0.15s ease;" onclick="toggleBossRaidSwitch()">
-                          🔥 강림 선포
+                        🔥 강림 선포
                     </button>
                 </div>
 
@@ -5025,8 +4968,82 @@
                     <div id="adminMapTabList" style="display:flex; flex-direction:column; gap:4px; flex:1; min-height:0; overflow-y:auto; padding-right:2px;"></div>
                 </div>
             </div>
+            
+
+            <!-- ==============================================
+                 탭 2: 📋 중복 어휘 감지 리포트 (0 Read)
+                 ============================================== -->
+            <div id="adminTowerTab2" style="display:none; flex-direction:column; justify-content:flex-start; align-items:stretch; flex:1; min-height:0; margin-top:0; padding-top:0;">
+                <div style="font-size:12px; color:#78350f; background:#fffbeb; border:1px solid #f59e0b; border-radius:8px; padding:7px 10px; margin-bottom:6px; line-height:1.4;">
+                    💡 <b>철자는 같으나 뜻이 다른 어휘 감지 리포트</b><br>
+                    앞선 영지 단어는 자동 제외되고, <b>최신 영지에 0점(새 교감도)으로 이사</b>되었습니다.
+                </div>
+                <div id="adminDuplicateListContainer" style="flex:1; min-height:0; overflow-y:auto; display:flex; flex-direction:column; gap:5px; padding-right:2px;"></div>
+            </div>
+
+
+            <!-- ==============================================
+                 탭 3: 👥 학생 목록 및 성적 관리
+                 ============================================== -->
+            <div id="adminTowerTab3" style="display:none; flex-direction:column; justify-content:flex-start; align-items:stretch; flex:1; min-height:0; margin-top:0; padding-top:0;">
+
+            <!-- 실시간 검색창 + 정렬 드롭다운 (기본: 가나다 이름순) -->
+                <div style="display:flex; gap:6px; margin-bottom:8px; flex-shrink:0;">
+                    <input id="adminStudentSearchInput" type="text" placeholder="🔍 검색..." oninput="filterAdminStudents()" 
+                           style="flex:1; padding:7px 10px; border-radius:8px; border:1.5px solid #c9b48c; font-size:12.5px; font-weight:800; box-sizing:border-box;">
+                    <select id="adminStudentSortSelect" onchange="changeAdminSortMode(this.value)" style="background:#ffffff; border:1.5px solid #c084fc; border-radius:8px; padding:7px 8px; font-size:12px; font-weight:800; color:#4a044e; cursor:pointer;">
+                        <option value="name" selected>이름 가나다순</option>
+                        <option value="masteryDesc">단어 많은순 👑</option>
+                        <option value="masteryAsc">단어 적은순 ⚠️</option>
+                        <option value="recent">최근 접속순 ⏱️</option>
+                        <option value="id">학번(ID)순</option>
+                    </select>
+                </div>
+
+            <!-- 실시간 학생 카드 목록 컨테이너 -->
+            <div id="adminStudentListContainer" style="flex:1; min-height:0; overflow-y:auto; display:flex; flex-direction:column; gap:5px; padding-right:2px; margin-bottom:4px;">
+                <div style="text-align:center; padding:20px; font-size:13px; color:#785a3e;">
+                    ☁️ 학생 데이터를 불러오는 중...
+                </div>
+            </div>
         </div>
 
+        <!-- ==============================================
+            탭 4: 📊 전교생 최다 오답 취약 단어 분석
+            ============================================== -->
+        <div id="adminTowerTab4" style="display:none; flex-direction:column; justify-content:flex-start; align-items:stretch; flex:1; min-height:0; margin-top:0; padding-top:0;">
+            <!-- 상단 요약 바 & 수업용 복사 버튼 -->
+            <div style="display:flex; justify-content:space-between; align-items:center; gap:4px; background:#fff1f2; border:1.5px solid #fecdd3; border-radius:9px; padding:7px 8px; margin-bottom:6px; flex-shrink:0;">
+                <!-- 1. [일반 / 비경] 카테고리 선택 -->
+                <select id="adminKillerCatSelect" onchange="onAdminKillerCategoryChange()" style="background:#ffffff; border:1.5px solid #f43f5e; border-radius:6px; padding:4px 4px; font-size:11px; font-weight:800; color:#9f1239; cursor:pointer;">
+                    <option value="normal" selected>🌲 일반</option>
+                    <option value="special">🌀 비경</option>
+                </select>
+
+                <!-- 2. [전체 / 특정 영지] 선택 (동적 갱신) -->
+                <select id="adminKillerMapSelect" onchange="renderAdminWrongWordsAnalytics()" style="flex:1; min-width:0; background:#ffffff; border:1.5px solid #f43f5e; border-radius:6px; padding:4px 4px; font-size:11px; font-weight:800; color:#9f1239; cursor:pointer; text-overflow:ellipsis;">
+                    <option value="all" selected>전체 영지</option>
+                </select>
+
+                <!-- 3. [TOP 10 ~ 전체] 표시 개수 -->
+                <select id="adminKillerLimitSelect" onchange="renderAdminWrongWordsAnalytics()" style="background:#ffffff; border:1.5px solid #f43f5e; border-radius:6px; padding:4px 4px; font-size:11px; font-weight:800; color:#9f1239; cursor:pointer;">
+                    <option value="10" selected>TOP 10</option>
+                    <option value="20">TOP 20</option>
+                    <option value="30">TOP 30</option>
+                    <option value="all">전체</option>
+                </select>
+
+                <!-- 4. [복사] 버튼 -->
+                <button type="button" onclick="copyAdminKillerWords()" style="background:#be123c; color:#ffffff; border:none; border-radius:6px; padding:5px 8px; font-size:11px; font-weight:900; cursor:pointer; box-shadow:0 1px 3px rgba(0,0,0,0.15); white-space:nowrap; flex-shrink:0;">
+                    📋 복사
+                </button>
+            </div>
+            <!-- 킬러 단어 카드 목록 컨테이너 -->
+            <div id="adminKillerWordsListContainer" style="flex:1; min-height:0; overflow-y:auto; display:flex; flex-direction:column; gap:5px; padding-right:2px;"></div>
+        </div>
+    </div>
+
+        
         <!-- 하단 액션 버튼 (새로고침 & 닫기) -->
         <div style="width:100%; display:flex; gap:6px; margin-top:4px; flex-shrink:0;">
             <button class="btn-sub-wood" style="flex:1; margin-bottom:0;" onclick="loadAdminTowerData()">
@@ -6576,6 +6593,8 @@
         return { eng: target, kor: `[문맥] ${target}`, displayWord: target };
     }
 
+    // 📋 관제탑 [중복 어휘] 탭에서 공유할 전역 리포트 장부
+    window.adminDuplicateWordReports = [];
 
     function parseTextToWorlds(rawText) {
         if (!rawText) return [];
@@ -6584,7 +6603,13 @@
         let currentMap = null;
         let currentMapSyn = null;  // 🌟 net_ 동의어 분할 영지
         let currentMapOppo = null; // 🌟 net_ 반의어 분할 영지
-        const seenNormalWords = new Set(); // 🧹 일반 영지 중복 단어 자동 필터링 장부
+        const normalWordRegistry = {}; // 🧹 { wordLower: { mapObj, wordObj, kor, mapName } }
+        window.adminDuplicateWordReports = [];
+
+        // 🌟 [신규] 영단어의 물결표(~), 점, 하이픈 등 특수문자를 벗겨낸 순수 알맹이 추출 헬퍼
+        function sanitizeEngToken(str) {
+            return (str || "").toLowerCase().replace(/[~～._\-]/g, ' ').replace(/\s+/g, ' ').trim();
+        }
 
         lines.forEach(line => {
             line = line.trim();
@@ -6785,15 +6810,81 @@
                             isSpell: true
                         });
                     } else {
-                        const wordKeyLower = eng.toLowerCase();
-                        if (seenNormalWords.has(wordKeyLower)) return; // 🧹 앞선 영지 중복 시 자동 제외!
-                        seenNormalWords.add(wordKeyLower);
-                        currentMap.words.push({ 
+                        const wordKeyLower = eng.toLowerCase().trim();
+                        const cleanKor = kor.trim();
+                        const sanitizedCurrentEng = sanitizeEngToken(eng);
+                        const prevEntry = normalWordRegistry[wordKeyLower];
+
+                        if (prevEntry) {
+                            if (prevEntry.kor === cleanKor) {
+                                // 1) 단어 + 뜻 완벽 일치 (복붙 실수): 뒤쪽 영지 제외 + 관제탑 리포트 기록!
+                                window.adminDuplicateWordReports.push({
+                                    type: 'exact',
+                                    eng: eng,
+                                    oldMapName: prevEntry.mapName,
+                                    oldKor: prevEntry.kor,
+                                    newMapName: currentMap.name,
+                                    newKor: cleanKor
+                                });
+                                return;
+                            } else {
+                                // 2) 철자는 같으나 뜻이 다름: 앞 영지에서 단어 삭제 ➔ 최신 영지로 이사(0점 재교감)
+                                const prevWords = prevEntry.mapObj.words;
+                                const rmIdx = prevWords.findIndex(w => w.eng.toLowerCase() === wordKeyLower);
+                                if (rmIdx !== -1) prevWords.splice(rmIdx, 1);
+
+                                window.adminDuplicateWordReports.push({
+                                    type: 'different',
+                                    eng: eng,
+                                    oldMapName: prevEntry.mapName,
+                                    oldKor: prevEntry.kor,
+                                    newMapName: currentMap.name,
+                                    newKor: cleanKor
+                                });
+                            }
+                            } else {
+                            // 🌟 3) [신규: 🔍 유사/숙어 의심 탐지]
+                            // 철자는 완전히 같지 않지만, 기호 차이이거나 구동사(숙어) 파생 관계인 경우 감지!
+                            for (const [registeredKey, regData] of Object.entries(normalWordRegistry)) {
+                                const sanitizedRegEng = sanitizeEngToken(regData.wordObj.eng);
+
+                                // ① 물결표(~)나 기호만 다른 동일 단어 (예: beneath vs beneath ~)
+                                const isSymbolDiff = (sanitizedCurrentEng === sanitizedRegEng && eng !== regData.wordObj.eng);
+
+                                // ② 숙어/구동사 파생 관계 (예: move vs move away, result in vs result in ~)
+                                const isIdiomPair = (
+                                    (sanitizedCurrentEng.startsWith(sanitizedRegEng + ' ') || sanitizedRegEng.startsWith(sanitizedCurrentEng + ' '))
+                                );
+
+                                if (isSymbolDiff || isIdiomPair) {
+                                    window.adminDuplicateWordReports.push({
+                                        type: 'suspect',
+                                        reason: isSymbolDiff ? '기호/물결표 차이' : '숙어/구동사 파생',
+                                        eng: eng,
+                                        oldEng: regData.wordObj.eng,
+                                        oldMapName: regData.mapName,
+                                        oldKor: regData.kor,
+                                        newMapName: currentMap.name,
+                                        newKor: cleanKor
+                                    });
+                                    break; // 1개 단어당 1회만 경고
+                                }
+                            }
+                        }
+
+                        const newWordItem = { 
                             eng: eng, 
                             kor: kor,
                             isPoly: isPoly,
                             meanings: meanings
-                        });
+                        };
+                        currentMap.words.push(newWordItem);
+                        normalWordRegistry[wordKeyLower] = {
+                            mapObj: currentMap,
+                            wordObj: newWordItem,
+                            kor: cleanKor,
+                            mapName: currentMap.name
+                        };
                     }
                 }
             }
@@ -14635,6 +14726,7 @@ function handleMidBossVictory() {
     // 🎛️ [NEW] 교사용 비밀 관제탑 종합 엔진
     // ========================================================
     let adminCachedStudents = [];
+    let hasLoadedAdminStudents = false; // 지연 로딩 플래그
 
     // 1. 관제탑 창 열기 및 닫기
     function openAdminTower() {
@@ -14643,7 +14735,11 @@ function handleMidBossVictory() {
 
         const modal = document.getElementById("adminTowerModal");
         if (modal) modal.style.display = "flex";
-        loadAdminTowerData(); // 전교생 최신 진도 즉시 호출
+
+        // 🌟 1번 탭(원격 관제)을 기본으로 열고, 학생 데이터는 호출하지 않음! (단 1 Read)
+        hasLoadedAdminStudents = false;
+        switchAdminTowerTab(1);
+        renderAdminDuplicateReports(); // 2번 탭 리포트 사전 준비 (0 Read)
     }
 
     function closeAdminTower() {
@@ -14745,11 +14841,11 @@ function handleMidBossVictory() {
     }
 
     // ========================================================
-    // 🎛️ 관제탑 3단 탭 전환 컨트롤러
+    // 🎛️ 관제탑 4단 탭 전환 & 스마트 지연 로딩 컨트롤러
     // ========================================================
     function switchAdminTowerTab(tabNum) {
         Sound.click();
-        for (let i = 1; i <= 3; i++) {
+        for (let i = 1; i <= 4; i++) {
             const btn = document.getElementById(`adminTabBtn${i}`);
             const tab = document.getElementById(`adminTowerTab${i}`);
             const isActive = (i === tabNum);
@@ -14760,8 +14856,20 @@ function handleMidBossVictory() {
             }
             if (tab) tab.style.display = isActive ? "flex" : "none";
         }
-        if (tabNum === 2) onAdminKillerCategoryChange(); // 🌟 탭 진입 시 영지 목록 초기화 및 렌더링
-        if (tabNum === 3) renderAdminMapTabControls();
+        if (tabNum === 1) renderAdminMapTabControls();
+        if (tabNum === 2) renderAdminDuplicateReports();
+        
+        // 🌟 3번(학생목록)이나 4번(취약단어)을 눌렀을 때만 전교생 데이터 1회 지연 로드!
+        if (tabNum === 3 || tabNum === 4) {
+            if (!hasLoadedAdminStudents) {
+                hasLoadedAdminStudents = true;
+                loadAdminTowerData().then(() => {
+                    if (tabNum === 4) onAdminKillerCategoryChange();
+                });
+            } else if (tabNum === 4) {
+                onAdminKillerCategoryChange();
+            }
+        }
     }
 
     // 임시 토글 상태 보관 객체
@@ -14794,6 +14902,79 @@ function handleMidBossVictory() {
         });
 
         renderAdminWrongWordsAnalytics();
+    }
+
+    // 🌟 [신규] 관제탑 2번 탭: 중복 어휘 감지 리포트 렌더러 (0 Read)
+    function renderAdminDuplicateReports() {
+        const container = document.getElementById("adminDuplicateListContainer");
+        const badge = document.getElementById("adminDupBadge");
+        const reports = window.adminDuplicateWordReports || [];
+
+        if (badge) {
+            if (reports.length > 0) {
+                badge.innerText = reports.length;
+                badge.style.display = "inline-block";
+            } else {
+                badge.style.display = "none";
+            }
+        }
+
+        if (!container) return;
+        container.innerHTML = "";
+
+        if (reports.length === 0) {
+            container.innerHTML = `
+                <div style="text-align:center; padding:35px 10px; font-size:13px; color:#15803d; font-weight:800;">
+                    ✨ 감지된 중복 어휘가 없습니다.<br>
+                    <span style="font-size:11.5px; color:#785a3e; font-weight:600;">(완전 일치 단어는 앞 영지만 남기고 자동 정돈됨)</span>
+                </div>
+            `;
+            return;
+        }
+
+        reports.forEach(r => {
+            const card = document.createElement("div");
+            const isDifferent = (r.type === 'different');
+            const isSuspect = (r.type === 'suspect');
+        
+        let borderColor = "#cbd5e1";
+        let badgeText = "뒤쪽 영지 제외 (앞 영지 유지)";
+        let badgeBg = "#f1f5f9";
+        let badgeColor = "#475569";
+        let icon = "🧹";
+
+        if (isDifferent) {
+            borderColor = "#f59e0b";
+            badgeText = "최신 영지로 이사 (0점 리셋)";
+            badgeBg = "#fef3c7";
+            badgeColor = "#92400e";
+            icon = "⚠️";
+        } else if (isSuspect) {
+            borderColor = "#c084fc";
+            badgeText = `의심: ${r.reason || '유사 어휘'}`;
+            badgeBg = "#f3e8ff";
+            badgeColor = "#6b21a8";
+            icon = "🔍";
+        }
+
+            card.style.cssText = `background:#ffffff; border:1.5px solid ${borderColor}; border-radius:8px; padding:7px 10px; font-size:12px; text-align:left; box-shadow:0 1px 3px rgba(0,0,0,0.05);`;
+
+            const titleWord = isSuspect ? `${r.oldEng} ↔ ${r.eng}` : r.eng;
+
+            card.innerHTML = `
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
+                    <span style="font-size:13px; font-weight:900; color:#2c1a0e;">${icon} ${titleWord}</span>
+                <span style="font-size:10px; font-weight:900; background:${badgeBg}; color:${badgeColor}; padding:1px 6px; border-radius:5px;">${badgeText}</span>
+                </div>
+                <div style="color:#64748b; font-size:11.5px; margin-bottom:2px;">
+                    이전: <b>[${r.oldMapName}]</b> ${r.oldKor}
+                </div>
+                <div style="color:${isDifferent ? '#15803d' : (isSuspect ? '#6b21a8' : '#94a3b8')}; font-size:11.5px; font-weight:700;">
+                ${isDifferent ? '현재: ' : (isSuspect ? '의심: ' : '중복: ')}<b>[${r.newMapName}]</b> ${r.newKor}
+                </div>
+            `;
+            container.appendChild(card);
+        });
     }
 
     function renderAdminWrongWordsAnalytics() {

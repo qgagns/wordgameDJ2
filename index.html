@@ -9870,7 +9870,11 @@ const recTime = document.getElementById("recFastestTime");
                     if (!allParts.includes(w.eng)) distractorPool.push(w.eng);
                 });
             }
-            const traps = [...new Set(distractorPool)].sort(() => Math.random() - 0.5).slice(0, 3);
+            // 🌟 정답 동의어 묶음(allParts)과 유사한 단어는 함정 후보에서 전면 배제!
+            const cleanTraps = [...new Set(distractorPool)].filter(trapWord => {
+                return !allParts.some(targetW => isConfusinglySimilar(trapWord, targetW, trapWord, targetW));
+            }).sort(() => Math.random() - 0.5).slice(0, 3);
+            const traps = cleanTraps;
 
         // 3. 선지 버튼 생성 (다의어와 동일한 두루마리 버튼)
         const allTiles = [...targetSynonyms, ...traps].sort(() => Math.random() - 0.5);
@@ -10250,6 +10254,58 @@ const recTime = document.getElementById("recFastestTime");
         const streakBadge = document.getElementById("comboStreakBadge");
         if (streakBadge) streakBadge.style.display = "none";
     }
+
+    // ========================================================
+    // 🛡️ [공용 유사어 심사관] 복수 정답 및 유사어 함정 출제 원천 차단 엔진
+    // ========================================================
+    function isConfusinglySimilar(candidateText, correctText, candidateEng = null, correctEng = null) {
+        if (!candidateText || !correctText) return false;
+        const cClean = candidateText.trim();
+        const targetClean = correctText.trim();
+        if (cClean === targetClean) return true; // 완전 일치 차단
+
+        // 🌟 1. 동의어 넷(net_) 그룹 교차 검증: 같은 net_ 줄에 묶여 있다면 무조건 차단!
+        if (candidateEng && correctEng) {
+            const cLower = candidateEng.toLowerCase().trim();
+            const tLower = correctEng.toLowerCase().trim();
+            for (const map of worldMaps) {
+                if (!map.words) continue;
+                for (const w of map.words) {
+                    if (w.isSynonymNet && w.words && Array.isArray(w.words)) {
+                        const netWordsLower = w.words.map(x => x.toLowerCase().trim());
+                        if (netWordsLower.includes(cLower) && netWordsLower.includes(tLower)) {
+                            return true; // 같은 동의어 식구 발견 ➔ 즉시 탈락!
+                        }
+                    }
+                }
+            }
+        }
+
+        // 🌟 2. 한글 어간/핵심 명사 형태소 추출 및 겹침 검사
+        function extractCoreTokens(text) {
+            // 품사 태그 [동], (명) 및 특수문자 제거
+            let t = text.replace(/\[.*?\]|\(.*?\)/g, ' ');
+            // 동사/형용사 대표 어미 제거
+            t = t.replace(/하다|되다|시키다|받다|스럽다|롭다|적/g, ' ');
+            // 쉼표, 세미콜론, 슬래시 기준 쪼개기
+            const parts = t.split(/[,;\/\s]+/).map(p => p.trim()).filter(p => p.length >= 2);
+            return parts;
+        }
+
+        const cTokens = extractCoreTokens(cClean);
+        const targetTokens = extractCoreTokens(targetClean);
+
+        // 핵심 2글자 이상 단어가 하나라도 겹치면 차단 (예: "거절"하다 vs "거절")
+        for (const ct of cTokens) {
+            for (const tt of targetTokens) {
+                if (ct === tt) return true;
+                // 한쪽이 다른 쪽에 완전히 포함되는 경우도 차단 (예: "신청서" vs "신청")
+                if (ct.includes(tt) || tt.includes(ct)) return true;
+            }
+        }
+
+        return false;
+    }
     
     function loadQuestion() {
         // 🌟 [강제 클린업] 이전 문제의 선지, 잔상, 애니메이션 클래스 완전 소각
@@ -10545,11 +10601,12 @@ const recTime = document.getElementById("recFastestTime");
         const correctClean = (q.correct || "").trim();
         const uniqueChoices = new Set([correctClean]);
         
-        // 기존에 모아둔 오답들 중 중복 없이 투입
+        // 기존에 모아둔 오답들 중 중복 및 유사어 없는 단어만 투입
         wrongChoices.forEach(choice => {
             const c = (choice || "").trim();
-            // 🌟 반의어 세트(<=>) 기호가 섞여 있으면 무조건 폐기!
-            if (c && c !== correctClean && !c.includes('<=>') && uniqueChoices.size < 4) {
+            // 🌟 유사어 심사관 통과 여부 검사 (넷 영지 동의어 및 어간 겹침 차단!)
+            const isSimilar = isConfusinglySimilar(c, correctClean, null, q.engWord);
+            if (c && c !== correctClean && !c.includes('<=>') && !isSimilar && uniqueChoices.size < 4) {
                 uniqueChoices.add(c);
             }
         });
@@ -10558,13 +10615,17 @@ const recTime = document.getElementById("recFastestTime");
         if (uniqueChoices.size < 4) {
             const universeWords = getAllUniverseWords();
             const fallbackList = (q.type === "E2K") 
-                ? universeWords.map(w => (w.kor || "").trim()) 
-                : universeWords.map(w => (w.eng || "").trim());
+                ? universeWords.map(w => ({ val: (w.kor || "").trim(), eng: w.eng })) 
+                : universeWords.map(w => ({ val: (w.eng || "").trim(), eng: w.eng }));
 
             for (const item of fallbackList.sort(() => Math.random() - 0.5)) {
                 if (uniqueChoices.size >= 4) break;
-                if (item && !item.includes('<=>') && !uniqueChoices.has(item)) {
-                    uniqueChoices.add(item);
+                const candidateVal = item.val;
+                if (candidateVal && !candidateVal.includes('<=>') && !uniqueChoices.has(candidateVal)) {
+                    const isSim = isConfusinglySimilar(candidateVal, correctClean, item.eng, q.engWord);
+                    if (!isSim) {
+                        uniqueChoices.add(candidateVal);
+                    }
                 }
             }
         }
@@ -12308,7 +12369,9 @@ const recTime = document.getElementById("recFastestTime");
                                 ? w.kor
                                 : w.eng;
 
-                            if (candidate !== currentBossQuestion.correct) {
+                            // 🌟 보스전 오답 선지도 유사어 심사관 통과 필수!
+                            const isSim = isConfusinglySimilar(candidate, currentBossQuestion.correct, w.eng, currentBossQuestion.engWord);
+                            if (candidate !== currentBossQuestion.correct && !isSim) {
                                 allValidWrongPool.push(candidate);
                             }
                         }

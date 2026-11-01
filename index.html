@@ -1047,8 +1047,25 @@
             font-weight: 800;
             color: #581c87;
             cursor: pointer;
+            box-sizing: border-box;
+            height: 26px;
         }
 
+        /* 🔍 [신규] 드롭다운과 1:1 크기/디자인을 공유하는 슬림 검색 인풋 */
+        .book-smart-search-input {
+            flex: 1;
+            min-width: 0;
+            background: #ffffff;
+            border: 1.5px solid #d8b4fe;
+            border-radius: 7px;
+            padding: 3px 6px;
+            font-size: 11px;
+            font-weight: 800;
+            color: #581c87;
+            box-sizing: border-box;
+            height: 26px;
+            outline: none;
+        }
 
         /* 전대륙 영지별 요약 카드 박스 */
         .world-summary-card {
@@ -4750,6 +4767,7 @@
             </div>
             <div class="book-smart-control-bar" style="margin-top:4px;">
                 <button id="shrineFavOnlyBtn" type="button" class="book-fav-toggle-btn" onclick="toggleShrineFavOnly()">🤍 찜만</button>
+                <input id="shrineSearchInput" type="text" class="book-smart-search-input" placeholder="🔍 검색" oninput="renderShrineFavTabList()">
                 <select id="shrineStatusFilterSelect" class="book-smart-select" onchange="renderShrineFavTabList()">
                     <option value="all" selected>전체 정령</option>
                     <option value="uncontracted">🌿 미계약만</option>
@@ -5000,8 +5018,7 @@
                  ============================================== -->
             <div id="adminTowerTab2" style="display:none; flex-direction:column; justify-content:flex-start; align-items:stretch; flex:1; min-height:0; margin-top:0; padding-top:0;">
                 <div style="font-size:12px; color:#78350f; background:#fffbeb; border:1px solid #f59e0b; border-radius:8px; padding:7px 10px; margin-bottom:6px; line-height:1.4;">
-                    💡 <b>철자는 같으나 뜻이 다른 어휘 감지 리포트</b><br>
-                    앞선 영지 단어는 자동 제외되고, <b>최신 영지에 0점(새 교감도)으로 이사</b>되었습니다.
+                    💡 <b>중복 어휘 감지 리포트</b><br>
                 </div>
                 <div id="adminDuplicateListContainer" style="flex:1; min-height:0; overflow-y:auto; display:flex; flex-direction:column; gap:5px; padding-right:2px;"></div>
             </div>
@@ -5467,6 +5484,7 @@
                         </div>
                         <div id="wordBookFavFilterWrap" class="book-smart-control-bar">
                             <button id="bookFavFilterBtn" type="button" class="book-fav-toggle-btn" onclick="toggleBookFavFilter()">🤍 찜만</button>
+                            <input id="bookSearchInput" type="text" class="book-smart-search-input" placeholder="🔍 검색" oninput="openWordBook(false)">
                             <select id="bookStatusFilterSelect" class="book-smart-select" onchange="openWordBook(false)">
                                 <option value="all" selected>전체 정령</option>
                                 <option value="uncontracted">🌿 미계약만</option>
@@ -5580,8 +5598,14 @@
                     <div class="overall-gauge-container" style="height:9px; margin-bottom:5px; border-radius:5px; background:#e9d5ff;">
                         <div class="overall-gauge-bar" id="imprintOverallGaugeBar" style="background:linear-gradient(90deg, #a855f7, #eab308); width:0%;"></div>
                     </div>
-                    <div style="font-size:12.5px; font-weight:800; color:#7e22ce; text-align:right;" id="imprintTotalWordsSummary">
-                        0 / 0마리 각인 완료
+                    <!-- 🌟 [신규] '각인만 모아보기' 컨트롤 바 -->
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-top:6px;">
+                        <button id="imprintOnlyToggleBtn" type="button" class="book-fav-toggle-btn" onclick="toggleImprintOnlyFilter()" style="padding:3px 8px; font-size:11px;">
+                            ⚜️ 각인만
+                        </button>
+                        <div style="font-size:12px; font-weight:800; color:#7e22ce;" id="imprintTotalWordsSummary">
+                            0 / 0마리 각인 완료
+                        </div>
                     </div>
                 </div>
 
@@ -6632,7 +6656,8 @@
         let currentMap = null;
         let currentMapSyn = null;  // 🌟 net_ 동의어 분할 영지
         let currentMapOppo = null; // 🌟 net_ 반의어 분할 영지
-        const normalWordRegistry = {}; // 🧹 { wordLower: { mapObj, wordObj, kor, mapName } }
+        // 🌟 [통합 추적기] { wordLower: { eng, occurrences: [ { mapName, kor } ] } }
+        const normalWordRegistry = {};
         window.adminDuplicateWordReports = [];
 
         // 🌟 [신규] 영단어의 물결표(~), 점, 하이픈 등 특수문자를 벗겨낸 순수 알맹이 추출 헬퍼
@@ -6832,69 +6857,26 @@
                             isSynonymNet: true
                         });
                     } else if (isSpellMap) {
+                        const wordKeyLower = eng.toLowerCase().trim();
+                        const cleanKor = kor.trim();
+                        if (!normalWordRegistry[wordKeyLower]) {
+                            normalWordRegistry[wordKeyLower] = { eng: eng, occurrences: [] };
+                        }
+                        normalWordRegistry[wordKeyLower].occurrences.push({ mapName: currentMap.name, kor: cleanKor });
                         // 🌟 [철자 특화 영지] 플래그 부여
-                        currentMap.words.push({
+                        const newSpellWord = {
                             eng: eng,
                             kor: kor,
                             isSpell: true
-                        });
+                        };
+                        currentMap.words.push(newSpellWord);
                     } else {
                         const wordKeyLower = eng.toLowerCase().trim();
                         const cleanKor = kor.trim();
-                        const sanitizedCurrentEng = sanitizeEngToken(eng);
-                        const prevEntry = normalWordRegistry[wordKeyLower];
-
-                        if (prevEntry) {
-                            if (prevEntry.kor === cleanKor) {
-                                // 1) 단어 + 뜻 완벽 일치: 두 영지 모두 단어 유지 + 관제탑 리포트 기록
-                                window.adminDuplicateWordReports.push({
-                                    type: 'exact',
-                                    eng: eng,
-                                    oldMapName: prevEntry.mapName,
-                                    oldKor: prevEntry.kor,
-                                    newMapName: currentMap.name,
-                                    newKor: cleanKor
-                                });
-                            } else {
-                                // 2) 철자는 같으나 뜻이 다름: 두 영지 모두 단어 유지 + 선생님 수정 유도 리포트
-                                window.adminDuplicateWordReports.push({
-                                    type: 'different',
-                                    eng: eng,
-                                    oldMapName: prevEntry.mapName,
-                                    oldKor: prevEntry.kor,
-                                    newMapName: currentMap.name,
-                                    newKor: cleanKor
-                                });
-                            }
-                            } else {
-                            // 🌟 3) [신규: 🔍 유사/숙어 의심 탐지]
-                            // 철자는 완전히 같지 않지만, 기호 차이이거나 구동사(숙어) 파생 관계인 경우 감지!
-                            for (const [registeredKey, regData] of Object.entries(normalWordRegistry)) {
-                                const sanitizedRegEng = sanitizeEngToken(regData.wordObj.eng);
-
-                                // ① 물결표(~)나 기호만 다른 동일 단어 (예: beneath vs beneath ~)
-                                const isSymbolDiff = (sanitizedCurrentEng === sanitizedRegEng && eng !== regData.wordObj.eng);
-
-                                // ② 숙어/구동사 파생 관계 (예: move vs move away, result in vs result in ~)
-                                const isIdiomPair = (
-                                    (sanitizedCurrentEng.startsWith(sanitizedRegEng + ' ') || sanitizedRegEng.startsWith(sanitizedCurrentEng + ' '))
-                                );
-
-                                if (isSymbolDiff || isIdiomPair) {
-                                    window.adminDuplicateWordReports.push({
-                                        type: 'suspect',
-                                        reason: isSymbolDiff ? '기호/물결표 차이' : '숙어/구동사 파생',
-                                        eng: eng,
-                                        oldEng: regData.wordObj.eng,
-                                        oldMapName: regData.mapName,
-                                        oldKor: regData.kor,
-                                        newMapName: currentMap.name,
-                                        newKor: cleanKor
-                                    });
-                                    break; // 1개 단어당 1회만 경고
-                                }
-                            }
+                        if (!normalWordRegistry[wordKeyLower]) {
+                            normalWordRegistry[wordKeyLower] = { eng: eng, occurrences: [] };
                         }
+                        normalWordRegistry[wordKeyLower].occurrences.push({ mapName: currentMap.name, kor: cleanKor });
 
                         // 🌟 [1단계 핵심] 단어를 지우지 않고 무조건 현재 영지에 정상 등록!
                         const newWordItem = { 
@@ -6904,16 +6886,25 @@
                             meanings: meanings
                         };
                         currentMap.words.push(newWordItem);
-                        normalWordRegistry[wordKeyLower] = {
-                            mapObj: currentMap,
-                            wordObj: newWordItem,
-                            kor: cleanKor,
-                            mapName: currentMap.name
-                        };
                     }
                 }
             }
         });
+
+        // 🌟 [통합 조립] 2개 이상의 영지에 출현한 모든 단어를 종합 리포트로 생성!
+        for (const [key, item] of Object.entries(normalWordRegistry)) {
+            if (item.occurrences.length > 1) {
+                // 뜻이 모두 같은지, 다른 뜻이 섞여 있는지 판별
+                const firstKor = item.occurrences[0].kor;
+                const hasDifferentMeaning = item.occurrences.some(o => o.kor !== firstKor);
+                window.adminDuplicateWordReports.push({
+                    type: hasDifferentMeaning ? 'different' : 'exact',
+                    eng: item.eng,
+                    count: item.occurrences.length,
+                    occurrences: item.occurrences
+                });
+            }
+        }
 
         maps.forEach(m => {
             // 지문 영지 후처리: 본문에서 [[단어]]들을 1번부터 차례대로 번호 매겨 추출
@@ -13369,13 +13360,35 @@ function handleMidBossVictory() {
         if (tabNum === 5) loadLiveLeaderboard();         // 5번: 실시간 전교 랭킹
     }
 
+    let showOnlyImprinted = false; // 🌟 각인만 보기 토글 상태
+
+    function toggleImprintOnlyFilter() {
+        Sound.click();
+        showOnlyImprinted = !showOnlyImprinted;
+        const btn = document.getElementById("imprintOnlyToggleBtn");
+        if (btn) {
+            btn.innerHTML = showOnlyImprinted ? "⚜️ 각인만 ON" : "⚜️ 각인만";
+            btn.classList.toggle("active", showOnlyImprinted);
+            if (showOnlyImprinted) {
+                btn.style.background = "#f3e8ff";
+                btn.style.borderColor = "#a855f7";
+                btn.style.color = "#6b21a8";
+            } else {
+                btn.style.background = "";
+                btn.style.borderColor = "";
+                btn.style.color = "";
+            }
+        }
+        renderImprintBookTab();
+    }
+
     /* ⚜️ [개편] 2번 탭: 포켓몬 도감 스타일 3열 각인 트로피 진열장 */
     function renderImprintBookTab() {
         const container = document.getElementById("imprintListContainer");
         if (!container) return;
         container.innerHTML = "";
 
-        // 🌟 전 대륙 일반 영지의 고유 단어들을 중복 없이 수집
+        // 🌟 1. 전 대륙 일반 영지의 고유 단어들을 중복 없이 수집
         const uniqueWordsMap = new Map();
         worldMaps.forEach(map => {
             if (isMapSpecial(map) || map.isPolarMap || map.isPassage) return;
@@ -13387,21 +13400,28 @@ function handleMidBossVictory() {
             });
         });
 
-        // 🌟 [전국도감] 전 대륙 고유 단어를 알파벳(A~Z) 순서로 정렬하여 No.001 부여!
+        // 🌟 2. 전 대륙 고유 단어를 알파벳(A~Z) 순서로 정렬하여 No.001부터 부여!
         const allUniqueList = Array.from(uniqueWordsMap.values()).sort((a, b) => a.eng.localeCompare(b.eng));
         const totalWordsAll = allUniqueList.length;
         let totalImprintedAll = 0;
- 
-        // 상단 컨테이너 박스 생성
+
+        // 🌟 3. 상단 진열장 박스 생성
         const section = document.createElement("div");
         section.style.cssText = "background:#fdfaf2; border:1.5px solid #d8c7a6; border-radius:10px; padding:9px 10px; margin-bottom:8px;";
 
         const grid = document.createElement("div");
         grid.className = "imprint-pokedex-grid";
 
+        let renderedCardCount = 0;
+
         allUniqueList.forEach((w, idx) => {
             const isImprinted = (wordDefenseCounts[w.eng] || 0) >= 3;
             if (isImprinted) totalImprintedAll++;
+
+            // 🌟 '각인만' 필터가 켜져 있고 아직 각인되지 않은 단어라면 건너뜀!
+            if (showOnlyImprinted && !isImprinted) return;
+
+            renderedCardCount++;
             const slotNo = String(idx + 1).padStart(3, '0');
             const slot = document.createElement("div");
 
@@ -13435,85 +13455,23 @@ function handleMidBossVictory() {
             grid.appendChild(slot);
         });
 
+        // 각인만 필터가 켜져 있는데 각인 단어가 0개일 때 친절한 안내
+        if (showOnlyImprinted && renderedCardCount === 0) {
+            grid.innerHTML = `<div style="grid-column: 1 / -1; text-align:center; padding:30px 10px; font-size:12.5px; color:#785a3e; font-weight:800;">아직 각인된 정령이 없습니다.<br><span style="font-size:11px; color:#6b21a8; font-weight:600;">안개 속 구출 작전(3차)을 완수하여 진명을 새겨보세요!</span></div>`;
+        }
+
         section.appendChild(grid);
         container.appendChild(section);
 
-        worldMaps.forEach(map => {
-            if (isMapSpecial(map)) return; // 비경 제외
-            totalWordsAll += map.words.length;
-
-            const imprintedWords = map.words.filter(w => (wordDefenseCounts[w.eng] || 0) >= 3);
-            totalImprintedAll += imprintedWords.length;
-
-            const section = document.createElement("div");
-            section.style.cssText = "background:#fdfaf2; border:1.5px solid #d8c7a6; border-radius:10px; padding:9px 10px; margin-bottom:8px;";
-
-            const header = document.createElement("div");
-            header.style.cssText = "display:flex; justify-content:space-between; align-items:center; font-size:13px; font-weight:900; color:#451a03; border-bottom:1px dashed #d8c7a6; padding-bottom:5px; margin-bottom:7px;";
-            header.innerHTML = `
-                <span>📍 ${map.name}</span>
-                <span style="font-size:11px; color:${imprintedWords.length > 0 ? '#7e22ce' : '#94a3b8'}; font-weight:900;">
-                    ⚜️ ${imprintedWords.length} / ${map.words.length}
-                </span>
-            `;
-            section.appendChild(header);
-
-            // 3열 포켓몬 도감 그리드
-            const grid = document.createElement("div");
-            grid.className = "imprint-pokedex-grid";
-
-            map.words.forEach(w => {
-                const isImprinted = (wordDefenseCounts[w.eng] || 0) >= 3;
-                const slotNo = String(globalNo++).padStart(3, '0');
-                const slot = document.createElement("div");
-
-                if (isImprinted) {
-                    slot.className = "imprint-slot-card unlocked";
-                    // 🌟 글자 길이에 따라 폰트 크기 자동 조절 (긴 단어도 최대한 안 잘리게!)
-                    const len = w.eng.length;
-                    const fontSize = len >= 14 ? "10px" : (len >= 10 ? "11px" : "12.5px");
-                    slot.innerHTML = `
-                        <span class="imprint-slot-eng" style="font-size:${fontSize};">${w.eng}</span>
-                    `;
-                    slot.onclick = () => {
-                        // 🌟 각인 달성 날짜 포맷팅
-                        const ts = wordMasteryTimestamps[w.eng];
-                        let dateStr = "기록된 날짜 없음";
-                        if (ts && ts > 0) {
-                            const d = new Date(ts);
-                            dateStr = `${d.getFullYear()}. ${String(d.getMonth() + 1).padStart(2, '0')}. ${String(d.getDate()).padStart(2, '0')}.`;
-                        }
-
-                        showGameAlert(
-                            `⚜️ ${w.eng} ⚜️`,
-                            `<div style="font-size:15px; font-weight:900; color:#4a044e; margin-bottom:8px;">${w.kor}</div>` +
-                            `<div style="font-size:11.5px; color:#6b21a8; background:#faf5ff; border:1px solid #e9d5ff; border-radius:8px; padding:6px 8px; line-height:1.5;">` +
-                            `📍 영지: <b>${map.name}</b><br>` +
-                            `🗓️ 각인일: <b>${dateStr}</b>` +
-                            `</div>`,
-                            "도감으로 돌아가기",
-                            `✦ NO.${slotNo} IMPRINTED ✦`
-                        );
-                        // 알림창 오픈과 함께 원어민 발음 재생!
-                        speakWord(w.eng, true);
-                    };
-                } else {
-                    slot.className = "imprint-slot-card locked";
-                    slot.innerHTML = `
-                        <span class="imprint-slot-lock-txt" style="font-size:10.5px;">#${slotNo} 🔒</span>
-                    `;
-                }
-                grid.appendChild(slot);
-            });
-
-            section.appendChild(grid);
-            container.appendChild(section);
-        });
-
+        // 🌟 4. 게이지바 및 분모/분자 정확한 실시간 갱신!
         const percent = totalWordsAll > 0 ? Math.round((totalImprintedAll / totalWordsAll) * 100) : 0;
-        document.getElementById("imprintOverallPercentText").innerText = `${percent}%`;
-        document.getElementById("imprintOverallGaugeBar").style.width = `${percent}%`;
-        document.getElementById("imprintTotalWordsSummary").innerText = `${totalImprintedAll} / ${totalWordsAll}마리 각인 완료`;
+        const percentTextEl = document.getElementById("imprintOverallPercentText");
+        const gaugeBarEl = document.getElementById("imprintOverallGaugeBar");
+        const summaryEl = document.getElementById("imprintTotalWordsSummary");
+
+        if (percentTextEl) percentTextEl.innerText = `${percent}%`;
+        if (gaugeBarEl) gaugeBarEl.style.width = `${percent}%`;
+        if (summaryEl) summaryEl.innerText = `${totalImprintedAll} / ${totalWordsAll}마리 각인 완료`;
     }
 
     function openWordBook(fromTitle = false) {
@@ -13744,6 +13702,7 @@ function handleMidBossVictory() {
                     const isSpecial = isMapSpecial(activeMap);
                     const statusFilter = document.getElementById("bookStatusFilterSelect")?.value || "all";
                     const sortMode = document.getElementById("bookSortSelect")?.value || "default";
+                    const searchQuery = (document.getElementById("bookSearchInput")?.value || "").trim().toLowerCase();
 
                     // 🌟 1. 스마트 게이지 계산 (찜만 ON이면 찜한 단어 모수 기준, 각인/미각인 필터면 각인율 기준!)
                     const gaugePool = showOnlyBookFavs ? currentWords.filter(w => wordFavorites[w.eng]) : currentWords;
@@ -13776,6 +13735,15 @@ function handleMidBossVictory() {
                         wordsToRender = wordsToRender.filter(w => (wordDefenseCounts[w.eng] || 0) < 3);
                     } else if (statusFilter === "imprinted") {
                         wordsToRender = wordsToRender.filter(w => (wordDefenseCounts[w.eng] || 0) >= 3);
+                    }
+
+                    // 🌟 [신규] 영단어 또는 한글 뜻 실시간 검색 필터링
+                    if (searchQuery) {
+                        wordsToRender = wordsToRender.filter(w => {
+                            const engMatch = (w.eng || "").toLowerCase().includes(searchQuery);
+                            const korMatch = (w.kor || "").toLowerCase().includes(searchQuery);
+                            return engMatch || korMatch;
+                        });
                     }
 
                     // 🌟 3. 정렬 적용
@@ -15126,7 +15094,7 @@ function handleMidBossVictory() {
             container.innerHTML = `
                 <div style="text-align:center; padding:35px 10px; font-size:13px; color:#15803d; font-weight:800;">
                     ✨ 감지된 중복 어휘가 없습니다.<br>
-                    <span style="font-size:11.5px; color:#785a3e; font-weight:600;">(완전 일치 단어는 앞 영지만 남기고 자동 정돈됨)</span>
+                    <span style="font-size:11.5px; color:#785a3e; font-weight:600;">(완전 일치 단어는 모든 영지에서 유지)</span>
                 </div>
             `;
             return;
@@ -15135,42 +15103,27 @@ function handleMidBossVictory() {
         reports.forEach(r => {
             const card = document.createElement("div");
             const isDifferent = (r.type === 'different');
-            const isSuspect = (r.type === 'suspect');
-        
-        let borderColor = "#cbd5e1";
-        let badgeText = "모든 영지에서 유지";
-        let badgeBg = "#f1f5f9";
-        let badgeColor = "#475569";
-        let icon = "🧹";
-
-        if (isDifferent) {
-            borderColor = "#f59e0b";
-            badgeText = "모든 영지에서 유지. 뜻을 확인해주세요.";
-            badgeBg = "#fef3c7";
-            badgeColor = "#92400e";
-            icon = "⚠️";
-        } else if (isSuspect) {
-            borderColor = "#c084fc";
-            badgeText = `의심: ${r.reason || '유사 어휘'}`;
-            badgeBg = "#f3e8ff";
-            badgeColor = "#6b21a8";
-            icon = "🔍";
-        }
+            const borderColor = isDifferent ? "#f59e0b" : "#cbd5e1";
+            const badgeText = isDifferent ? `⚠️ 뜻 다름 (총 ${r.count}개 영지)` : `🧹 완전 일치 (총 ${r.count}개 영지)`;
+            const badgeBg = isDifferent ? "#fef3c7" : "#f1f5f9";
+            const badgeColor = isDifferent ? "#92400e" : "#475569";
 
             card.style.cssText = `background:#ffffff; border:1.5px solid ${borderColor}; border-radius:8px; padding:7px 10px; font-size:12px; text-align:left; box-shadow:0 1px 3px rgba(0,0,0,0.05);`;
 
-            const titleWord = isSuspect ? `${r.oldEng} ↔ ${r.eng}` : r.eng;
+            // 해당 단어가 출몰한 모든 영지 목록 1줄씩 조립
+            const occurrencesHtml = r.occurrences.map((o, idx) => `
+                <div style="font-size:11.5px; line-height:1.4; color:#2c1a0e; margin-top:2px;">
+                    <span style="font-weight:900; color:#b45309;">${idx + 1}.</span> <b>[${o.mapName}]</b> : ${o.kor}
+                </div>
+            `).join('');
 
             card.innerHTML = `
-                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
-                    <span style="font-size:13px; font-weight:900; color:#2c1a0e;">${icon} ${titleWord}</span>
-                <span style="font-size:10px; font-weight:900; background:${badgeBg}; color:${badgeColor}; padding:1px 6px; border-radius:5px;">${badgeText}</span>
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px; border-bottom:1px dashed #d8c7a6; padding-bottom:3px;">
+                    <span style="font-size:14px; font-weight:900; color:#2c1a0e;">${r.eng}</span>
+                    <span style="font-size:10px; font-weight:900; background:${badgeBg}; color:${badgeColor}; padding:1px 6px; border-radius:5px;">${badgeText}</span>
                 </div>
-                <div style="color:#64748b; font-size:11.5px; margin-bottom:2px;">
-                    이전: <b>[${r.oldMapName}]</b> ${r.oldKor}
-                </div>
-                <div style="color:${isDifferent ? '#15803d' : (isSuspect ? '#6b21a8' : '#94a3b8')}; font-size:11.5px; font-weight:700;">
-                ${isDifferent ? '현재: ' : (isSuspect ? '의심: ' : '중복: ')}<b>[${r.newMapName}]</b> ${r.newKor}
+                <div style="display:flex; flex-direction:column; gap:1px;">
+                    ${occurrencesHtml} 
                 </div>
             `;
             container.appendChild(card);
@@ -16690,6 +16643,7 @@ function handleMidBossVictory() {
         const isSpecialTab = (currentShrineFavTab === 'special');
         const statusFilter = document.getElementById("shrineStatusFilterSelect")?.value || "all";
         const sortMode = document.getElementById("shrineSortSelect")?.value || "default";
+        const searchQuery = (document.getElementById("shrineSearchInput")?.value || "").trim().toLowerCase();
         const gaugeSection = document.getElementById("shrineGaugeSection");
 
         // 🌟 비경 탭일 때는 상단 게이지 영역 숨김! (일반 영지 탭일 때만 표시)
@@ -16712,11 +16666,13 @@ function handleMidBossVictory() {
                 const key = w.eng.toLowerCase().trim();
                 const mScore = getEffectiveWordMastery(w.eng, map.id);
                 const dScore = wordDefenseCounts[w.eng] || 0;
+                const cleanKor = (w.kor || "").trim();
                 const wordData = {
                     ...w,
                     mapId: map.id,
                     mapName: map.name,
-                    allMapNames: [map.name], // 🌟 출현 영지 목록 초기화
+                    allMapNames: [map.name],
+                    meaningsByMap: [{ kor: cleanKor, mapName: map.name }], // 🌟 영지별 뜻 보관함
                     masteryScore: mScore,
                     defScore: dScore
                 };
@@ -16732,6 +16688,10 @@ function handleMidBossVictory() {
                         existing.defScore = Math.max(existing.defScore, dScore);
                         if (!existing.allMapNames.includes(map.name)) {
                             existing.allMapNames.push(map.name); // 🌟 다른 영지 이름도 함께 누적!
+                        }
+                        // 🌟 새로운 뜻이 들어오면 영지별 뜻 보관함에 추가 (뜻이 다를 때 분리 출력용)
+                        if (!existing.meaningsByMap.some(m => m.kor === cleanKor)) {
+                            existing.meaningsByMap.push({ kor: cleanKor, mapName: map.name });
                         }
                     } else {
                         wordsMap.set(key, wordData);
@@ -16781,6 +16741,15 @@ function handleMidBossVictory() {
             filtered = filtered.filter(w => w.defScore < 3);
         } else if (statusFilter === "imprinted") {
             filtered = filtered.filter(w => w.defScore >= 3);
+        }
+
+        // 🌟 [신규] 영단어 또는 한글 뜻 실시간 검색 필터링
+        if (searchQuery) {
+            filtered = filtered.filter(w => {
+                const engMatch = (w.eng || "").toLowerCase().includes(searchQuery);
+                const korMatch = (w.kor || "").toLowerCase().includes(searchQuery);
+                return engMatch || korMatch;
+            });
         }
 
         // 4. 정렬 적용
@@ -16865,9 +16834,19 @@ function handleMidBossVictory() {
                     </div>
                 `;
             } else {
+                // 🌟 영지별로 뜻이 다를 경우 각 뜻 옆에 (📍 영지명)을 붙여 분리 출력!
+                let korMeaningHtml = `<span class="word-sub-kor">${w.kor}</span>${mapBadgeHtml}`;
+                if (!isDefaultMapOrder && w.meaningsByMap && w.meaningsByMap.length > 1) {
+                    const splitLines = w.meaningsByMap.map(m => `
+                        <div style="font-size:12px; font-weight:700; color:#5c3a21; line-height:1.35; margin-top:2px;">
+                            ${m.kor} <span style="font-size:10px; color:#785a3e; font-weight:600;">(📍 ${m.mapName})</span>
+                        </div>
+                    `).join('');
+                    korMeaningHtml = `<div style="display:flex; flex-direction:column; gap:1px;">${splitLines}</div>`;
+                }
                 textGroup.innerHTML = `
                     <span class="word-main-eng">${w.displayEng || w.eng}</span>
-                    <span class="word-sub-kor">${w.kor}</span>${mapBadgeHtml}
+                    ${korMeaningHtml}
                 `;
             }
 

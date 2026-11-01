@@ -426,7 +426,7 @@ dominance	:	[명] 우세, 지배
 [mg_h2 26.10_4: 26.10모 4]
 #고2 26.10모 단어를 쪼갠거
 nonverbal	:	[형] 비언어적인
-phenomenon	:	[명] 현상
+phenomenon / phenomena	:	[명] 현상
 pronounced	:	[형] 뚜렷한, 현저한
 conflict	:	[명] 갈등, 충돌; [동] 상충하다, 모순되다
 differ	:	[동] 다르다
@@ -988,7 +988,7 @@ Things were little better for our [[hunter-gatherer | hunter-gatherer]] [[ancest
 # 지문을 읽으며 그 속의 단어 뜻을 살펴보자.
 === 30번 ===
 A study by Eva McMahan, professor of speech communication, [[confirmed | confirm]] the [[dominance | dominance]] of [[nonverbal | nonverbal]] signals.
-The [[phenomenon | phenomenon]], however, was especially [[pronounced | pronounced]] when adults found themselves in situations with conflicting messages ([[i.e. | i.e.]], situations in which the contents of the [[verbal | verbal]] and [[nonverbal | nonverbal]] messages [[differ | differ]]).
+The [[phenomenon | phenomenon / phenomena]], however, was especially [[pronounced | pronounced]] when adults found themselves in situations with conflicting messages ([[i.e. | i.e.]], situations in which the contents of the [[verbal | verbal]] and [[nonverbal | nonverbal]] messages [[differ | differ]]).
 [[Attempts | attempt]] to [[manipulate | manipulate]] another person [[verbally | verbally]] are therefore likely to fail if the [[accompanying | accompany]] [[nonverbal | nonverbal]] communication does not [[match | match]] the [[spoken | spoken]] message.
 This is because people [[trust | trust]] [[nonverbal | nonverbal]] messages more than [[verbal | verbal]] ones.
 When somebody tells you that they enjoy spending time with you, but you [[notice | notice]] how they are [[looking away | look away]] and are [[forcing a smile | force a smile]], you are probably less [[inclined to | inclined toR]] believe their words.

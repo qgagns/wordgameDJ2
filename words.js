@@ -325,7 +325,7 @@ audience	:	[명] 청중, 관객
 influence	:	[명] 영향력; [동] 영향을 미치다
 responsibility	:	[명] 책임
 broad	:	[형] 넓은
-behavior	:	[명] 행동
+behavior / behaviour	:	[명] 행동, 행위
 not only ~ but also	:	[숙] ~뿐만 아니라 ~도
 cephalopod	:	[명] 두족류
 neurobiology	:	[명] 신경생물학
@@ -473,7 +473,7 @@ automation	:	[명] 자동화
 manipulation	:	[명] 조작, 교묘한 조종
 calculation	:	[명] 계산
 in one light	:	[숙] 어떤 관점에서
-behaviour	:	[명] 행동, 행위
+behavior / behaviour	:	[명] 행동, 행위
 decade	:	[명] 10년
 hopeless	:	[형] 가망 없는, 절망적인
 fork	:	[명] 갈림길, 분기점; [명] 포크

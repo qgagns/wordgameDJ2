@@ -13959,6 +13959,7 @@ function handleMidBossVictory() {
     function getWordOriginalMapName(wordEng, currentMapId) {
         for (const m of worldMaps) {
             if (m.id === currentMapId) continue;
+            if (m.isPassage) continue; // 🛡️ 지문 영지는 일반 영지의 인연(승계) 출처가 될 수 없음!
             const mMastery = safeStorageGet(`spirit_mastery_${m.id}`, {});
             if ((mMastery[wordEng] || 0) >= 3) {
                 return m.name; // 최초 계약 영지 이름 반환!

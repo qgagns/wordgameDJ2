@@ -131,12 +131,12 @@ certain	:	[형] 어떤, 특정의; [형] 확신하는
 significance	:	[명] 중요성, 의의
 supply ~ to …	:	[동] ~을 …에게 공급하다
 oxygen	:	[명] 산소
-source	:	[명] 원천, 공급원, 출처
+source	:	[명] 원천, 근원, 출처
 nutrient	:	[명] 영양소, 영양분
 release	:	[동] 방출하다, 내뿜다, [명] 배출; [동] 발매하다, [명] 발매
 infection	:	[명] 감염, 전염
 remains	:	[명] 유해, 사체, 남아있는 것
-lack	:	[명] 결여, 부족; [동] ~가 결여되어있다, 부족하다
+lack	:	[명] 결여, 부족; [동] ~가 결여되어 있다, 부족하다
 disappear	:	[동] 사라지다
 survive	:	[동] (사건 등에서) 생존하다, 살아남다
 species / species	:	[명] (생물학적) 종

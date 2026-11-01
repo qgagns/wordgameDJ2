@@ -921,4 +921,192 @@ We have yet to [[find out | find ~ out]] how many virus types even [[exist | exi
 The more we learn about viruses, however, the better [[equipped | equip ~ toR]] we will be to use [[certain | certain]] viruses for [[beneficial | beneficial]] [[purposes | purpose]] and to develop [[defenses | defense]] against viruses that could [[lead to | lead to ~]] the next [[pandemic | pandemic]].
 More than that, learning more about [[viral | viral]] [[diversity | diversity]] will help us [[reach | reach]] a deeper understanding of the [[working | working]] of our planet, [[ecosystems | ecosystem]], and our own bodies.
 
+
+[passage_mg_h2_26.10_1: 모고 지문 1 (20~29)]
+# 지문을 읽으며 그 속의 단어 뜻을 살펴보자.
+=== 20번 ===
+[[Life | life]] is full of [[possibilities | possibility]].
+If we, like gardeners, provide a [[suitable | suitable]] [[environment | environment]] and let children [[grow | growth]] [[at their own pace | at one's own pace]], they will [[spontaneously | spontaneously]] [[explore | explore]] the world, developing [[curiosity | curiosity]], [[creativity | creativity]], and [[independence | independence]].
+Such children love [[life | life]], [[dare to | dare toR]] [[challenge | challenge]], and [[possess | possess]] [[initiative | initiative]].
+But if we, like carpenters, always try to "shape" children into our ideal image, they will [[gradually | gradually]] lose [[autonomy | autonomy]], becoming [[accustomed to | accustomed to ~]] following others' [[instructions | instruction]].
+Such children quickly lose their sense of direction as they [[grow | growth]], because they are used to being arranged for, [[rather than | rather than ~]] [[actively | actively]] choosing their path.
+As parents, our role should be that of gardeners, providing sunlight, rain, and [[fertile | fertile]] [[soil | soil]], allowing children to [[grow | growth]] [[naturally | naturally]] [[at their own pace | at one's own pace]].
+It should not be that of carpenters, trying to [[carve | carve]] out a "perfect" piece [[according to | according to ~]] our [[will | will]].
+The [[core | core]] of education starts with understanding [[life | life]] and helping children find their own "map" to find their direction in a [[complex | complex]] world.
+
+=== 21번 ===
+To see how borrowing and lending changes a person's [[worldview | worldview]], [[consider | consider]] what the [[rate of interest | rate of interest]] does to people's [[perception | perception]] of time.
+[[Imagine | imagine]] you are lending to somebody at an [[interest | interest]] [[rate | rate]] of 10 percent per year for five years.
+This [[rate | rate]] tells us that the money lent has a cost that reflects the risk of you not being repaid and the [[opportunity cost | opportunity cost]] of not spending that money yourself.
+The longer the [[term | term]] of the [[loan | loan]], the higher the [[chance | chance]] you won't be paid back because it is [[further | further]] into the future ― which [[by definition | by definition]] is [[unknowable | unknowable]] ― and the longer you will have to wait before spending the money yourself.
+In order to make this [[worthwhile | worthwhile]] for the lender, money has to have a price ― a cost to the borrower and [[income | income]] to the lender.
+This price [[factors in | factor]] the [[value | value]] of time.
+[[To put it another way | to put it another way]], a bird in the hand is worth two in the bush.
+
+=== 22번 ===
+Social and environmental [[responsibility | responsibility]] has become an [[increasingly | increasingly]] important [[ethical | ethical]] [[consideration | consideration]] for [[content | content]] creators.
+As global [[awareness | awareness]] of social, environmental, and [[sustainability | sustainability]] issues grows, many [[content | content]] creators are being [[called upon to | called upon toR]] [[consider | consider]] the broader [[impact | impact]] of their work.
+This [[includes | include]] [[addressing | address]] topics such as [[climate change | climate change]], social [[justice | justice]], and [[ethical | ethical]] [[consumerism | consumerism]] in their [[content | content]].
+[[Content | content]] creators have a [[platform | platform]] that can [[influence | influence]] their audience's [[attitudes | attitude]] and [[behaviors | behavior / behaviour]], and they have a [[responsibility | responsibility]] to use that [[platform | platform]] for positive change.
+For example, [[promoting | promote]] environmentally [[sustainable | sustainable]] products or supporting [[causes | cause]] [[related to | related to ~]] [[equality | equality]] and [[justice | justice]] can help [[raise | raise]] [[awareness | awareness]] and [[drive | drive]] [[meaningful | meaningful]] social [[impact | impact]].
+[[Ethical | ethical]] [[content | content]] creators not only [[focus on | focus on ~]] [[promoting | promote]] their products or services [[but also | not only ~ but also]] [[consider | consider]] the values and [[causes | cause]] they [[support | support]], [[ensuring | ensure]] that their [[content | content]] aligns with their social and environmental principles.
+
+=== 23번 ===
+Research on [[cephalopod | cephalopod]] [[neurobiology | neurobiology]] [[suggests | suggest]] that an octopus [[possesses | possess]] [[roughly | roughly]] five hundred million [[neurons | neuron]].
+What makes this system [[unusual | unusual]] is where many of those [[neurons | neuron]] are [[located | locate]].
+More than half are [[distributed | distribute]] throughout the arms [[rather than | rather than ~]] concentrated [[entirely | entirely]] in the central brain.
+Each arm contains networks of [[nerve | nerve]] cells [[capable of | capable]] controlling [[complex | complex]] movements and [[responding to | respond to ~]] [[sensory | sensory]] input [[locally | locally]].
+This means that many actions do not require [[detailed | detailed]] [[instructions | instruction]] from the brain itself.
+Instead, the arms [[function | function]] as highly [[capable | capable]] extensions of the [[nervous system | nervous system]] that [[interact | interact]] with the [[environment | environment]] directly.
+The [[suckers | sucker]] [[lining | line]] each arm play an important role in this [[process | process]].
+These [[structures | structure]] provide strong [[grip | grip]] but also [[detect | detect]] [[chemical | chemical]] signals on surfaces they contact.
+[[Marine | marine]] biologists studying octopus [[behavior | behavior / behaviour]] have shown that this allows the animal to gather [[chemical | chemical]] information through touch.
+In [[practical | practical]] terms, an octopus can [[effectively | effectively]] taste what it touches.
+
+=== 24번 ===
+[[Consistent | consistent]] though he may be, some of Aristotle's ideas meet us today as strange.
+He had no [[difficulty | have no difficulty (in) V-ing]] [[justifying | justify]] [[slavery | slavery]], for example, and in his [[era | era]], philosophers enjoyed positions of high [[privilege | privilege]] and [[influence | influence]].
+Because of their [[practice | practice]] of [[contemplation | contemplation]] for the highest human good, philosophers were considered [[worthy | worthy]] to have all the best things in [[life | life]].
+[[Somehow | somehow]] that [[assertion | assertion]] seems [[oddly | oddly]] [[self-serving | self-serving]].
+It [[serves | serve]] us to remember that every great [[thinker | thinker]] is of her own time and speaks to a [[particular | particular]] [[audience | audience]], and certainly Aristotle is no [[exception | exception]].
+Human flourishing as he understood it probably would not be [[nearly | nearly]] as [[inclusive | inclusive]] as we would want it to be today.
+How he understood right and good is best taken to be an [[indicator | indicator]] of how the privileged [[elite | elite]] of ancient Greek [[society | society]] [[tended to | tend toR]] understand right and good.
+[[As a result | as a result]], [[for all | for all]] it does well, it is also deeply [[flawed | flawed]].
+
+=== 29번 ===
+You might think of [[survival | survival]] as a race in which a [[hurdle | hurdle]] has to be jumped every year.
+The early hurdles were once very high, and many people fell before [[clearing | clear]] the first few.
+[[Demographically | demographically]], [[humankind | humankind]] was living close to a [[state of nature | state of nature]], and nature is extremely [[wasteful | wasteful]] of [[life | life]].
+From only a very small number of [[figs | fig]] will even one of many [[seeds | seed]] become a [[fig | fig]] tree.
+Almost a [[quarter | quarter]] of baboons born in the [[wild | wild]] die before they are a year old, which is [[fairly | fairly]] [[typical | typical]] for [[primates | primate]].
+[[Infant | infant]] [[mortality | mortality]] rates for humans in [[pre-modern | pre-modern]] [[agricultural | agricultural]] societies were similar to, and sometimes higher, than those of apes.
+Things were little better for our [[hunter-gatherer | hunter-gatherer]] [[ancestors | ancestor]], a [[quarter | quarter]] of whom failed to [[reach | reach]] their first birthday, while another [[quarter | quarter]] didn't live long enough to [[reproduce | reproduce]] just about everywhere until the nineteenth century.
+[[Had it been otherwise | had it been otherwise]], the huge [[recent | recent]] [[growth | growth]] in human [[population | population]] would have [[occurred | occur]] much earlier.
+
+
+[passage_mg_h2_26.10_2: 모고 지문 2 (30~35)]
+# 지문을 읽으며 그 속의 단어 뜻을 살펴보자.
+=== 30번 ===
+A study by Eva McMahan, professor of speech communication, [[confirmed | confirm]] the [[dominance | dominance]] of [[nonverbal | nonverbal]] signals.
+The [[phenomenon | phenomenon]], however, was especially [[pronounced | pronounced]] when adults found themselves in situations with conflicting messages ([[i.e. | i.e.]], situations in which the contents of the [[verbal | verbal]] and [[nonverbal | nonverbal]] messages [[differ | differ]]).
+[[Attempts | attempt]] to [[manipulate | manipulate]] another person [[verbally | verbally]] are therefore likely to fail if the [[accompanying | accompany]] [[nonverbal | nonverbal]] communication does not [[match | match]] the [[spoken | spoken]] message.
+This is because people [[trust | trust]] [[nonverbal | nonverbal]] messages more than [[verbal | verbal]] ones.
+When somebody tells you that they enjoy spending time with you, but you [[notice | notice]] how they are [[looking away | look away]] and are [[forcing a smile | force a smile]], you are probably less [[inclined to | inclined toR]] believe their words.
+The same is probably true when you are back at the office after a sickness and your [[colleague | colleague]] tells you with a [[displeased | displeased]] [[expression | expression]] that they were happy to [[take over | take over]] your [[workload | workload]].
+You might not believe that they enjoyed [[replacing | replace]] you while you were gone.
+
+=== 31번 ===
+A person who lives eighty years lives some twentynine thousand days, and the [[overwhelming | overwhelming]] [[majority | majority]] of the [[behaviour | behavior / behaviour]] packed into them runs on settings [[laid down | lay down]], most of them, [[decades | decade]] earlier and rarely [[inspected | inspect]] since.
+This need not be a [[hopeless | hopeless]] thought.
+[[In one light | in one light]] it is a [[triumph | triumph]] of [[engineering | engineering]].
+If you had to [[consciously | consciously]] decide every footstep and every forkgrip and every word, you would never make it out of bed; the [[deliberate | deliberate]] mind is far too slow and too [[costly | costly]] to run a [[whole | whole]] [[life | life]] [[in real time | in real time]], and any [[creature | creature]] that tried would be [[outcompeted | outcompete]] by a [[creature | creature]] that didn't.
+The [[automation | automation]] is [[precisely | precisely]] what [[frees | free]] the [[captain | captain]] to [[come up | come up]] on [[deck | deck]] for the few problems that actually require him.
+The [[default | default]] is not a [[flaw | flaw]] in the human design.
+It is [[arguably | arguably]] the central feature, the thing that makes a [[complex | complex]] [[life | life]] [[affordable | affordable]] at all.
+
+=== 32번 ===
+If we understand mass culture as a weakening factor of the cultural [[ties | tie]] that [[unite | unite A to B]] people [[to | unite A to B]] their traditions, mass culture [[weakens | weaken]] the [[intermediary | intermediary]] [[institutions | institution]] in [[society | society]] (e.g. the family or the school), diminishing their role and [[overlapping | overlap]] these [[institutions | institution]].
+For example, courts are traditional social [[institutions | institution]] and important for the normal and [[harmonious | harmonious]] [[functioning | functioning]] of [[collective | collective]] [[life | life]].
+However, when people turn to social networks to [[put pressure on | put pressure on ~]] [[judicial | judicial]] decisions in [[certain | certain]] mediated and [[politicized | politicize]] processes, this [[practice | practice]] is [[popularized | popularize]] and becomes a [[habitual | habitual]] form of culture, which is [[harmful | harmful]].
+Justice must not be done in the [[public square | public square]], which today is [[converted into | convert A into B]] a [[virtual | virtual]] [[dimension | dimension]], the social networks.
+In a [[democratic | democratic]] [[state of law | state of law]], the [[appropriate | appropriate]] place to [[judge | judge]] and make [[justice | justice]] is the [[court | court]] and in a way that is immune to popular [[pressure | pressure]].
+
+=== 33번 ===
+Human [[development | development]] is now [[increasingly | increasingly]] understood as an [[ongoing | ongoing]], [[flexible | flexible]], and [[evolving | evolve]] [[process | process]] [[rather than | rather than ~]] a fixed [[sequence | sequence]] of stages.
+At the [[core | core]] of this [[perspective | perspective]] [[lies | lie (- lay - lain)]] the [[concept | concept]] of [[plasticity | plasticity]].
+[[Plasticity | plasticity]] [[refers to | refer to ~]] the human [[capacity | capacity]] to change, [[adapt | adapt]], and [[reorganize | reorganize]] [[cognitive | cognitive]], [[emotional | emotional]], and [[behavioural | behavioural]] [[patterns | pattern]] [[in response to | in response to ~]] [[life | life]] experiences, environmental [[demands | demand]], and [[biological | biological]] changes.
+It [[highlights | highlight]] that [[individuals | individual]] are not [[merely | merely]] [[passive | passive]] [[recipients | recipient]] of [[development | development]] but active [[agents | agent]] [[capable of | capable]] [[growth | growth]] throughout their lives.
+In earlier views, [[development | development]] was believed to [[occur | occur]] mainly during childhood, with [[adulthood | adulthood]] seen as a period of [[stability | stability]] and old age as a [[phase | phase]] of [[decline | decline]].
+The [[concept | concept]] of [[plasticity | plasticity]] challenges this [[rigid | rigid]] [[outlook | outlook]] by emphasizing that [[development | development]] [[continues | continue]] across the [[entire | entire]] [[lifespan | lifespan]].
+Although the [[extent | extent]] of change may [[vary | vary]] at different stages, every [[phase | phase]] of [[life | life]] allows [[room | room]] for [[adaptation | adaptation]] and [[transformation | transformation]].
+
+=== 34번 ===
+Social media has [[altered | alter]] business, [[politics | politics]], and friendships, making [[going viral | go viral]] a [[household term | household term]].
+The global financial industry links every bank and [[countless | countless]] [[households | household]] in every country, making us [[vulnerable | vulnerable]] to human error [[taking place | take place]] on the other side of the world.
+As Columbia University [[strategy | strategy]] professor Rita McGrath explains, years ago most of our [[institutions | institution]] were [[separate | separate]] and [[thereby | thereby]] [[buffered | buffer]] from the [[effects | effect]] of errors outside their walls.
+That is [[no longer | no longer]] the case.
+The [[digitization | digitization]] of [[massive | massive]] amounts of information has continued to [[grow | growth]] [[enormously | enormously]] as the cost of computing power has [[decreased | decrease]].
+The [[development | development]] of smart systems that communicate [[autonomously | autonomously]] [[gave rise to | give rise to ~]] an [[infinite | infinite]] variety of [[potential | potential]] [[breakdowns | breakdown]].
+This [[interdependence | interdependence]] is a [[breeding ground | breeding ground]] for [[complex | complex]] failure.
+As Rita puts it, when "things that [[used to | used toR]] be kept [[separate | separate]] [[bump up against | bump]] each other, it becomes far more difficult to predict what's going to happen next."
+Information technology creates new [[vulnerabilities | vulnerability]] because [[interconnectedness | interconnectedness]] [[instantly | instantly]] [[spreads | spread]] the [[impact | impact]] of small failures.
+
+=== 35번 ===
+Scientific developments and technologies in medical [[practice | practice]] have brought us [[enormous | enormous]] [[progress | progress]] in the [[treatment | treatment]] and [[prevention | prevention]] of [[infectious | infectious]] diseases.
+The [[discovery | discovery]] of penicillin in 1928 by Alexander Fleming, for which he later [[received | receive]] the Nobel Prize, was one of the biggest [[breakthroughs | breakthrough]] in the [[battle | battle]] against [[infectious | infectious]] diseases.
+Edward Jenner [[discovered | discover]] around 1796 that humans were protected against the [[deadly | deadly]] [[smallpox | smallpox]] virus after [[exposure | exposure]] to the cowpox virus, which is [[harmless | harmless]] to humans.
+[[Vaccines | vaccine]] developed in laboratories have [[contributed | contribute]] [[enormously | enormously]] to the [[reduction | reduction]] of the [[burden | burden]] of [[bacterial | bacterial]] and [[viral | viral]] diseases and have even [[led to | lead to ~]] the [[elimination | elimination]] of poxvirus.
+For other [[infectious | infectious]] diseases (for example [[cholera | cholera]] and malaria), [[control | control]] and [[hygiene | hygiene]] [[management | management]] [[measures | measure]] have [[reduced | reduce]] their [[burden | burden]], while for others [[treatment | treatment]] [[therapies | therapy]] turned [[viral | viral]] diseases that were [[deadly | deadly]] into [[chronic | chronic]] manageable diseases.
+
+
+[passage_mg_h2_26.10_3: 모고 지문 3 (36~41)]
+# 지문을 읽으며 그 속의 단어 뜻을 살펴보자.
+=== 36번 ===
+A simple truth that designers must [[embrace | embrace]] [[in order to | in order toR]] create more [[effective | effective]] products and experiences is the fact that we are not the user.
+We're much too close to what we build to [[objectively | objectively]] see it and understand how users will [[interact | interact]] with it.
+The best user [[interfaces | interface]] are those that have been shaped by [[observations | observation]] of real users and their [[interactions | interaction]] with them.
+So how can designers [[shape | shape]] their work to be more [[effective | effective]]?
+An [[incredibly | incredibly]] [[effective | effective]] way is with [[usability | usability]] testing.
+The goal of this [[method | method]] is to [[uncover | uncover]] problems in a design, [[discover | discover]] [[existing | existing]] [[opportunities | opportunity]], and learn more about the [[behaviors | behavior / behaviour]] and [[preferences | preference]] of users by asking participants to [[engage in | engage in ~]] [[realistic | realistic]] activities.
+This [[technique | technique]] is [[effective | effective]] for understanding how well a design will [[perform | perform]] once it is in the hands of real users.
+Designers can use this [[method | method]] to [[improve | improve]] their work through [[subsequent | subsequent]] [[revisions | revision]] [[based on | base on]] the [[findings | finding]] from [[representative | representative]] users.
+
+=== 37번 ===
+[[Reappraisal | reappraisal]] ― changing the way one thinks about [[emotional | emotional]] situations ― might [[present | present]] a [[particularly | particularly]] [[effective | effective]] [[avenue | avenue]] to [[regulating | regulate]] emotions because it transforms emotions [[at their root | at one's root]].
+[[Take | take ~ for example]], for example, someone who is [[going through | go through ~]] a [[divorce | divorce]].
+This is often an [[adverse | adverse]] event, [[and yet | and yet]], it can be [[construed | construe]] in different ways.
+One might [[view | view A as B]] it [[as | view A as B]] an [[overpowering | overpower]] [[loss | loss]] that will [[mark | mark]] one's family for [[life | life]].
+[[Alternatively | alternatively]], one might see it as something that is [[painful | painful]] but that might [[lead to | lead to ~]] positive outcomes [[in the long run | in the long run]], such as improved relationships.
+[[As a result of | as a result of ~]] these different [[construals | construal]], one might feel different emotions.
+The first [[construal | construal]] may bring [[intense | intense]] [[sadness | sadness]] and [[anger | anger]].
+The second [[construal | construal]] might also bring [[sadness | sadness]] and [[anger | anger]] but perhaps at lower levels.
+[[Crucially | crucially]], it might also bring some positive emotions, such as hope, [[strength | strength]], or [[gratitude | gratitude]].
+This example [[illustrates | illustrate]] how [[reappraisal | reappraisal]] might powerfully [[transform | transform]] [[short-term | short-term]] [[emotional | emotional]] [[responses | response]].
+When repeated over time, these [[short-term | short-term]] [[emotional | emotional]] [[consequences | consequence]] of [[reappraisal | reappraisal]] might [[accumulate | accumulate]] to [[shape | shape]] people's [[psychological | psychological]] health.
+[[Thereby | thereby]], [[reappraisal | reappraisal]] might be a key to [[resilience | resilience]].
+
+=== 38번 ===
+When we say that water is "clean," we don't just mean that it looks like a glass of water.
+Water [[quality | quality]] is about following a [[certain | certain]] [[set of | a set of ~]] [[criteria | criterion / criteria]], or "[[benchmarks | benchmark]]."
+These [[guidelines | guideline]] inform us exactly how much [[physical | physical]], [[chemical | chemical]], or [[biological | biological]] stuff can be in the water.
+These rules [[ensure | ensure]] the water is safe for anything we want to do with it, whether that's drinking it at home, watering [[crops | crop]] on a farm, or running it through a huge [[industrial | industrial]] [[boiler | boiler]].
+We can't [[utilize | utilize]] the same "[[one size fits all | one size fits all]]" rule for everyone because we use water for so many [[diverse | diverse]] things.
+For instance, the water that [[cools down | cool down]] a huge [[power plant | power plant]] [[generator | generator]] doesn't need to be as clean as the water you drink from the kitchen [[tap | tap]].
+This is why groups set different "safety limits" for the water [[dependent | dependent]] on how it will be [[utilized | utilize]].
+
+=== 39번 ===
+Like all historians, social historians [[draw | draw]] from [[a variety of | a variety of ~]] [[primary sources | primary source]].
+Social history often emphasizes [[ordinary | ordinary]] people [[rather than | rather than ~]] elites.
+Yet, in most places and times, nonelites [[lacked | lack]] [[access | access]] to education and, thus, did not [[produce | produce]] [[substantial | substantial]] amounts of [[documentation | documentation]].
+Even when they did [[produce | produce]] [[documentation | documentation]], these [[materials | material]] rarely [[ended up | end up V-ing]] in [[archives | archive]] where they could be [[preserved | preserve]] and made [[available | available]] to [[researchers | researcher]].
+Because of such [[biases | bias]] in the [[historical | historical]] [[record | record]], social historians have to be very [[creative | creative]] in their work.
+Like other historians, social historians [[analyze | analyze]] [[textual | textual]] [[sources | source]] produced by government [[officials | official]], employers, and other elites.
+Yet [[rather than | rather than ~]] simply take such [[sources | source]] [[at face value | at face value]], they read them "[[against the grain | against the grain]]".
+So, for example, a social historian will read [[legal | legal]] [[documents | document]] not only for the "facts" provided by slaveowners; she will also [[examine | examine]] the silences, interruptions, rumors, and other [[details | detail]] that [[offer | offer]] hints about the enslaved peoples' [[attitudes | attitude]] and actions.
+
+=== 40번 ===
+Dolphins' brains have [[evolved | evolve]] [[specialized | specialized]] areas [[dedicated | dedicated]] to [[echolocation | echolocation]], allowing them to [[process | process]] [[acoustic | acoustic]] information more quickly and with less energy.
+One key [[adaptation | adaptation]] is the [[structure | structure]] of the dolphin's [[auditory | auditory]] [[pathway | pathway]].
+The signals from the ears are [[rapidly | rapidly]] [[transmitted | transmit]] to the [[auditory | auditory]] [[cortex | cortex]], the brain region [[responsible for | responsible for ~]] processing sound.
+However, unlike many other [[mammals | mammal]], dolphins have a highly [[specialized | specialized]] [[auditory | auditory]] [[cortex | cortex]] with [[distinct | distinct]] areas [[dedicated | dedicated]] to processing different [[aspects | aspect]] of [[echolocation | echolocation]] signals.
+Some areas may be [[responsible for | responsible for ~]] analyzing the [[timing | timing]] of echoes, while others [[focus on | focus on ~]] the [[frequency | frequency]] [[content | content]] or the [[intensity | intensity]] of the sound.
+This [[specialization | specialization]] allows the dolphin's brain to [[process | process]] echo information [[in parallel | in parallel]], [[rather than | rather than ~]] [[sequentially | sequentially]].
+[[Imagine | imagine]] a factory [[assembly line | assembly line]], where different workers are [[responsible for | responsible for ~]] different tasks.
+By dividing the work among [[specialized | specialized]] areas, the brain can [[process | process]] information much faster and more [[efficiently | efficiently]].
+This [[parallel | parallel]] processing reduces the [[cognitive load | cognitive load]] [[associated with | associate A with B]] [[echolocation | echolocation]], allowing dolphins to [[react | react]] quickly to changes in their [[environment | environment]].
+
+=== 41~42번 ===
+It is [[crucial | crucial]] to [[recognize | recognize]] that [[boredom | boredom]] can [[give rise to | give rise to ~]] [[harmful | harmful]] emotions such as [[depression | depression]], [[despair | despair]], and [[irritation | irritation]] if not [[adequately | adequately]] addressed.
+When we believe that the only way to be happy is by searching for fun activities, then we become [[dependent | dependent]] on those activities, and negative thoughts and emotions [[arise | arise]].
+It is suggested that '[[Idle | idle]] time is the devil's [[workshop | workshop]]' implies that those with too much time on their hands may fill that time with [[troubling | troubling]] thoughts and [[behavior | behavior / behaviour]].
+The [[balance | balance]] is to not see it as [[idle | idle]] time, wasted time, or [[boredom | boredom]] but rather as a perfect time for [[self-improvement | self-improvement]], self-identification, and positive [[reflection | reflection]] time.
+[[Reflecting | reflect]], just how lucky are we to be bored?
+[[Boredom | boredom]] doesn't [[exist | exist]] [[in the presence of | in the presence of ~]] danger, as it is only an [[indulgence | indulgence]] [[pastime | pastime]] in a safe zone.
+[[Boredom | boredom]] can be [[perceived | perceive]] as a [[luxury | luxury]] that typically [[manifests | manifest]] in safe and [[inactive | inactive]] situations, providing an [[occasion | occasion]] to [[appreciate | appreciate]] and [[comprehend | comprehend]] the [[environment | environment]].
+In [[hazardous | hazardous]] circumstances, the [[luxury | luxury]] of [[boredom | boredom]] is [[unavailable | unavailable]].
+Thus, it is [[paramount | paramount]] to [[utilize | utilize]] [[idle | idle]] moments for [[profound | profound]] self-reflection.
+It represents an [[occasion | occasion]] to listen, [[observe | observe]], and [[appreciate | appreciate]] before expressing.
+[[Rather than | rather than ~]] viewing [[boredom | boredom]] as [[unproductive | unproductive]], it should be [[regarded | regard]] as an [[opportunity | opportunity]] for personal [[development | development]] and [[constructive | constructive]] [[contemplation | contemplation]].
+
+
 `;

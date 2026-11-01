@@ -7902,6 +7902,13 @@ const recTime = document.getElementById("recFastestTime");
 
     // 🌟 [신규] 모든 영지 저장소를 뒤져 해당 단어의 가장 높은 숙련도(Max)를 가져오는 헬퍼
     function getEffectiveWordMastery(wordEng, mapId = currentMapId) {
+        const targetMap = worldMaps.find(m => m.id === mapId);
+        // 🛡️ 지문 영지는 실전 독해 퀘스트이므로 다른 영지 점수를 절대 승계받지 않음!
+        if (targetMap && targetMap.isPassage) {
+            const passageMastery = safeStorageGet(`spirit_mastery_${mapId}`, {});
+            return passageMastery[wordEng] || 0;
+        }
+
         let maxScore = 0;
         // 1. 현재 영지 점수
         const curMapMastery = safeStorageGet(`spirit_mastery_${mapId}`, {});
@@ -7909,6 +7916,8 @@ const recTime = document.getElementById("recFastestTime");
 
         // 2. 다른 모든 영지 점수도 대조하여 더 높은 점수(계약 상태)가 있다면 승계!
         worldMaps.forEach(m => {
+            // 🛡️ 지문 영지의 점수는 일반 영지 승계 대상에서 제외
+            if (m.isPassage) return;
             const otherMastery = safeStorageGet(`spirit_mastery_${m.id}`, {});
             if ((otherMastery[wordEng] || 0) > maxScore) {
                 maxScore = otherMastery[wordEng];

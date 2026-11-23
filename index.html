@@ -2128,12 +2128,13 @@
             left: 50%;
             transform: translateX(-50%);
             display: flex; 
+            flex-direction: row;
             flex-direction: column; /* 🌟 2단 세로 배치 */
             justify-content: center; 
             align-items: center; 
+            flex-wrap: wrap;        /* 🌟 넘칠 때만 자동으로 2줄 줄바꿈 */
             max-width: 96%;
             gap: 2.5px;             /* 1행과 2행 사이의 틈 */
-            white-space: nowrap;
             z-index: 2;
         }
 
@@ -4120,7 +4121,6 @@
                 <div class="tags-wrapper">
                     <!-- 1행: 상태 및 출처 알약 줄 (경계 / 이어진 인연) -->
                     <div id="tagRowMeta" style="display:flex; justify-content:center; align-items:center; gap:4px; flex-wrap:wrap;">
-                        <span id="reviewTag" class="tag review-tag" style="display:none;">🍂 경계하는 정령</span>
                         <span id="inheritedBondTag" class="tag" style="display:none; background:rgba(254, 243, 199, 0.85); font-size: 12px; color:#785a3e; border:1px solid #d4c29d; font-weight:800;">✨ 이어진 인연</span>
                     </div>
                     <!-- 2행: 핵심 미션 및 교감도 알약 줄 (야생 / 다의어 쓸어담기 등) -->
@@ -8929,8 +8929,8 @@ const recTime = document.getElementById("recFastestTime");
             const day = String(lastMod.getDate()).padStart(2, '0');
             const hours = String(lastMod.getHours()).padStart(2, '0');
             const minutes = String(lastMod.getMinutes()).padStart(2, '0');
-            
-            buildEl.innerText = `v1.4.1 · Update: ${year}.${month}.${day} ${hours}:${minutes}\n© 2025-${new Date().getFullYear()} Jayden. All Rights Reserved`;
+            // 버전 표기
+            buildEl.innerText = `v1.4.2 · Update: ${year}.${month}.${day} ${hours}:${minutes}\n© 2025-${new Date().getFullYear()} Jayden. All Rights Reserved`;
         }
 
         // 8. 최종 화면 뷰 전환
@@ -10000,7 +10000,18 @@ const recTime = document.getElementById("recFastestTime");
     // 🌐 [3단계] 맨 왼쪽 단어 제시 ➔ 오른쪽 동의어들 쓸어담기
     function renderSynonymSweepQuestion(q) {
         questionStartTime = Date.now();
-        document.getElementById("wordDisplay").innerText = q.prompt;
+        const wordEl = document.getElementById("wordDisplay");
+            wordEl.innerText = q.prompt;
+
+            // 🌟 긴 동의어 묶음이나 긴 문장형 뜻일 때 글자 크기 자동 축소 (상단 알약과 안전 간격 확보!)
+            const pLen = (q.prompt || "").length;
+            if (pLen >= 32) {
+                wordEl.style.fontSize = "19px";
+            } else if (pLen >= 20 || (q.prompt && q.prompt.includes(','))) {
+                wordEl.style.fontSize = "21.5px";
+            } else {
+                wordEl.style.fontSize = "28px";
+            }
         speakWord(q.prompt);
 
         const mTag = document.getElementById("masteryTag");
@@ -10021,32 +10032,79 @@ const recTime = document.getElementById("recFastestTime");
         const targetSynonyms = allParts.slice(1);
         let remainingCorrect = [...targetSynonyms];
 
-        // 🌟 [교감실 완벽 대응] 전체 동의어 영지에서 다른 낱개 단어들을 긁어와 함정 3개 확보!
-            const distractorPool = [];
+        const traps = [];
+        const usedTrapLower = new Set(allParts.map(s => s.toLowerCase()));
+        const korStr = q.fullKor || q.korMeaning || q.correct || "";
+        const posMatch = korStr.match(/\[.*?\]/);
+        const targetPos = posMatch ? posMatch[0] : null;
+
+        // 1순위: 매칭되는 반의어군에서 함정 우선 추출
+        const oppoPool = [];
+        worldMaps.forEach(m => {
+            if (m.isPolarMap && Array.isArray(m.polarPairs)) {
+                m.polarPairs.forEach(pair => {
+                    if (pair.teamA && pair.teamB) {
+                        if (pair.teamA.eng === q.fullEng) oppoPool.push(...pair.teamB.words);
+                        else if (pair.teamB.eng === q.fullEng) oppoPool.push(...pair.teamA.words);
+                    }
+                });
+            }
+        });
+        oppoPool.sort(() => Math.random() - 0.5).forEach(word => {
+            const wClean = (word || "").trim();
+            if (traps.length < 3 && wClean && !usedTrapLower.has(wClean.toLowerCase())) {
+                usedTrapLower.add(wClean.toLowerCase());
+                traps.push(wClean);
+            }
+        });
+
+        // 2순위: 부족 시 같은 품사를 가진 다른 동의어군에서 추출
+        if (traps.length < 3) {
+            const samePosSynPool = [];
             worldMaps.forEach(m => {
                 if (m.words) {
                     m.words.forEach(w => {
                         if (w.isSynonymNet && w.eng !== q.fullEng) {
-                            w.eng.split(',').forEach(s => {
-                                const word = s.trim();
-                                if (word && !allParts.includes(word)) distractorPool.push(word);
-                            });
+                            if (!targetPos || (w.kor && w.kor.includes(targetPos))) {
+                                w.eng.split(',').forEach(s => {
+                                    const word = s.trim();
+                                    if (word && !usedTrapLower.has(word.toLowerCase())) {
+                                        samePosSynPool.push({ word, kor: w.kor || "" });
+                                    }
+                                });
+                            }
                         }
                     });
                 }
             });
 
-            // 혹시 동의어 단어가 부족하면 일반 영지 단어에서 보충하여 무조건 3개 확보!
-            if (distractorPool.length < 3) {
-                getAllUniverseWords().forEach(w => {
-                    if (!allParts.includes(w.eng)) distractorPool.push(w.eng);
-                });
+            samePosSynPool.sort(() => Math.random() - 0.5).forEach(item => {
+                if (traps.length < 3 && !usedTrapLower.has(item.word.toLowerCase())) {
+                    const isSim = allParts.some(targetW => isConfusinglySimilar(item.kor, korStr, item.word, targetW));
+                    if (!isSim) {
+                        usedTrapLower.add(item.word.toLowerCase());
+                        traps.push(item.word);
+                    }
+                }
+            });
+        }
+
+        // 3순위: 그래도 부족하면 일반 영지에서 동품사 우선(부족 시 품사 무관) 보충
+        if (traps.length < 3) {
+            const universeWords = getAllUniverseWords().sort(() => Math.random() - 0.5);
+            const samePosUniv = targetPos ? universeWords.filter(w => w.kor && w.kor.includes(targetPos)) : universeWords;
+            for (const w of [...samePosUniv, ...universeWords]) {
+                if (traps.length >= 3) break;
+                const wClean = (w.eng || "").trim();
+                if (wClean && !usedTrapLower.has(wClean.toLowerCase())) {
+                    const isSim = allParts.some(targetW => isConfusinglySimilar(w.kor || "", korStr, wClean, targetW));
+                    if (!isSim) {
+                        usedTrapLower.add(wClean.toLowerCase());
+                        traps.push(wClean);
+                    }
+                }
             }
-            // 🌟 정답 동의어 묶음(allParts)과 유사한 단어는 함정 후보에서 전면 배제!
-            const cleanTraps = [...new Set(distractorPool)].filter(trapWord => {
-                return !allParts.some(targetW => isConfusinglySimilar(trapWord, targetW, trapWord, targetW));
-            }).sort(() => Math.random() - 0.5).slice(0, 3);
-            const traps = cleanTraps;
+        }
 
         // 3. 선지 버튼 생성 (다의어와 동일한 두루마리 버튼)
         const allTiles = [...targetSynonyms, ...traps].sort(() => Math.random() - 0.5);
@@ -10612,7 +10670,8 @@ const recTime = document.getElementById("recFastestTime");
             speakWord(q.engWord);
         }
 
-        document.getElementById("reviewTag").style.display = q.isReview ? "inline-block" : "none";
+        const revEl = document.getElementById("reviewTag");
+        if (revEl) revEl.style.display = "none"; // 완전 삭제 호환 방어
 
             // 🌟 앞선 영지에서 계약된 단어일 때 '✨ 이어진 인연 (영지이름)' 알약 점등!
             const bondTag = document.getElementById("inheritedBondTag");
@@ -12752,17 +12811,76 @@ const recTime = document.getElementById("recFastestTime");
         document.getElementById("bossWordDisplay").innerText = promptWord;
         speakWord(promptWord);
 
-        // 함정 수집
-        const distractorPool = [];
-        bossWordPool.forEach(w => {
-            if (w.eng !== targetWord.eng) {
-                w.eng.split(',').forEach(s => {
-                    const wSingle = s.trim();
-                    if (wSingle && !allParts.includes(wSingle)) distractorPool.push(wSingle);
+        // 1순위: 매칭되는 반의어군 ➔ 2순위: 동품사 동의어군 ➔ 3순위: 동품사 일반 영지 보충 (최대 2개)
+        const traps = [];
+        const usedTrapLower = new Set(allParts.map(s => s.toLowerCase()));
+        const korStr = targetWord.kor || "";
+        const posMatch = korStr.match(/\[.*?\]/);
+        const targetPos = posMatch ? posMatch[0] : null;
+
+        const oppoPool = [];
+        worldMaps.forEach(m => {
+            if (m.isPolarMap && Array.isArray(m.polarPairs)) {
+                m.polarPairs.forEach(pair => {
+                    if (pair.teamA && pair.teamB) {
+                        if (pair.teamA.eng === targetWord.eng) oppoPool.push(...pair.teamB.words);
+                        else if (pair.teamB.eng === targetWord.eng) oppoPool.push(...pair.teamA.words);
+                    }
                 });
             }
         });
-        const traps = [...new Set(distractorPool)].sort(() => Math.random() - 0.5).slice(0, 2);
+        oppoPool.sort(() => Math.random() - 0.5).forEach(word => {
+            const wClean = (word || "").trim();
+            if (traps.length < 2 && wClean && !usedTrapLower.has(wClean.toLowerCase())) {
+                usedTrapLower.add(wClean.toLowerCase());
+                traps.push(wClean);
+            }
+        });
+
+        if (traps.length < 2) {
+            const samePosSynPool = [];
+            worldMaps.forEach(m => {
+                if (m.words) {
+                    m.words.forEach(w => {
+                        if (w.isSynonymNet && w.eng !== targetWord.eng) {
+                            if (!targetPos || (w.kor && w.kor.includes(targetPos))) {
+                                w.eng.split(',').forEach(s => {
+                                    const wSingle = s.trim();
+                                    if (wSingle && !usedTrapLower.has(wSingle.toLowerCase())) {
+                                        samePosSynPool.push({ word: wSingle, kor: w.kor || "" });
+                                    }
+                                });
+                            }
+                        }
+                    });
+                }
+            });
+            samePosSynPool.sort(() => Math.random() - 0.5).forEach(item => {
+                if (traps.length < 2 && !usedTrapLower.has(item.word.toLowerCase())) {
+                    const isSim = allParts.some(targetW => isConfusinglySimilar(item.kor, korStr, item.word, targetW));
+                    if (!isSim) {
+                        usedTrapLower.add(item.word.toLowerCase());
+                        traps.push(item.word);
+                    }
+                }
+            });
+        }
+
+        if (traps.length < 2) {
+            const universeWords = getAllUniverseWords().sort(() => Math.random() - 0.5);
+            const samePosUniv = targetPos ? universeWords.filter(w => w.kor && w.kor.includes(targetPos)) : universeWords;
+            for (const w of [...samePosUniv, ...universeWords]) {
+                if (traps.length >= 2) break;
+                const wClean = (w.eng || "").trim();
+                if (wClean && !usedTrapLower.has(wClean.toLowerCase())) {
+                    const isSim = allParts.some(targetW => isConfusinglySimilar(w.kor || "", korStr, wClean, targetW));
+                    if (!isSim) {
+                        usedTrapLower.add(wClean.toLowerCase());
+                        traps.push(wClean);
+                    }
+                }
+            }
+        }
         const allTiles = [...targetSynonyms, ...traps].sort(() => Math.random() - 0.5);
 
         const grid = document.getElementById("bossChoicesGrid");

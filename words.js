@@ -848,6 +848,268 @@ unavailable	:	[형] 이용할 수 없는
 unproductive	:	[형] 비생산적인
 
 
+[aio_dj2_1: AIO 선지 단어 1]
+# AIO 속 단어를 적당히 쪼갠 것
+reinforce	:	[동] 강화하다, 보강하다
+unrestrained	:	[형] 억제되지 않은, 제지당하지 않는
+trivial	:	[형] 사소한, 하찮은
+emit	:	[동] 방출하다, 내뿜다
+keep in check	:	[동] ~을 억제하다, 통제하다
+evolutionary	:	[형] 진화의, 진화론적인
+lie in	:	[동] ~에 있다, ~에 놓여 있다
+empower	:	[동] 권한을 주다, 힘을 실어주다
+intact	:	[형] 온전한, 손상되지 않은
+obstacle	:	[명] 장애물, 방해물
+detrimental	:	[형] 해로운, 유해한
+unforeseen	:	[형] 예상치 못한, 뜻밖의
+ecological	:	[형] 생태학적인, 생태계의
+strain	:	[명] 부담, 긴장, 압박
+applicable	:	[형] 적용 가능한, 해당되는
+exponential	:	[형] 기하급수적인, 지수의
+persistent	:	[형] 지속적인, 끈질긴
+unavoidable	:	[형] 피할 수 없는
+reconsider	:	[동] 재고하다, 다시 생각하다
+devastation	:	[명] 파괴, 황폐화
+likelihood	:	[명] 가능성
+wildlife	:	[명] 야생 동물
+transmission	:	[명] 전파, 전염; 전송
+eliminate	:	[동] 제거하다, 없애다
+inherently	:	[부] 본질적으로, 선천적으로
+despite	:	[전] ~에도 불구하고
+demonstrate	:	[동] 보여 주다, 시연하다, 입증하다
+fundamentally	:	[부] 근본적으로, 본질적으로
+hostile	:	[형] 적대적인, (환경이) 험한
+overcome	:	[동] 극복하다, 이겨내다
+settlement	:	[명] 정착(지); 해결, 합의
+confine	:	[동] 제한하다, 가두다
+encounter	:	[동] 마주치다, 접하다
+isolate	:	[동] 분리하다, 고립시키다
+restore	:	[동] 되찾다, 회복하다, 복구하다
+approximately	:	[부] 대략, 약
+exclusive	:	[형] 배타적인, 독점적인, 한정된
+culprit	:	[명] 원인, 범인, 주범
+dismantle	:	[동] 해체하다, 철폐하다
+cite	:	[동] 인용하다, 언급하다
+unrelated	:	[형] 관련이 없는, 무관한
+accelerate	:	[동] 가속화하다, 촉진하다
+viable	:	[형] 실행 가능한, 생존 가능한
+originate	:	[동] 비롯되다, 유래하다
+intentional	:	[형] 의도적인, 계획적인
+inflict	:	[동] (고통·피해 등을) 가하다, 주다
+underlie	:	[동] ~의 기저를 이루다, 기초가 되다
+occurrence	:	[명] 발생, 사건
+significant	:	[형] 중요한, 유의미한, 상당한
+immediate	:	[형] 즉각적인, 당면한, 바로 주변의
+combat	:	[동] 싸우다, 맞서다; [명] 전투
+forcible	:	[형] 강제적인, 힘에 의한
+relocate	:	[동] 이주하다, 이전하다
+probability	:	[명] 확률, 가능성
+expansion	:	[명] 확대, 확장
+surge	:	[명] 급증, 쇄도; [동] 급증하다
+climatic	:	[형] 기후의, 기후와 관련된
+exploit	:	[동] 활용하다, 개발하다; [동] 착취하다
+perish	:	[동] 죽다, 소멸하다
+foster	:	[동] 조장하다, 촉진하다, 육성하다; [형] 입양의
+dependence	:	[명] 의존, 종속
+replication	:	[명] 복제
+restrict	:	[동] 제한하다, 한정하다
+
+[aio_dj2_2: AIO 선지 단어 2]
+# AIO 속 단어를 적당히 쪼갠 것
+multiplication	:	[명] 증식, 증가; 곱셈
+neighbor	:	[명] 이웃; [형] 이웃하다, 옆에 있다
+adequate	:	[형] 적절한, 충분한
+conclude	:	[동] 결론을 내리다; 끝내다
+overlook	:	[동] 간과하다, 못 보고 넘어가다
+exaggerate	:	[동] 과장하다
+diversify	:	[동] 다양화하다, 다각화하다
+neglect	:	[동] 방치하다, 소홀히 하다; [명] 태만
+acknowledge	:	[동] 인정하다, 시인하다
+under-explored	:	[형] 충분히 탐구되지 않은
+unnecessary	:	[형] 불필요한
+planetary	:	[형] 행성의, 지구의
+discontinue	:	[동] 중단하다, 그만두다
+resistant	:	[형] 저항력이 있는, 저항하는
+outnumber	:	[동] ~보다 수가 더 많다
+decisive	:	[형] 결정적인, 단호한
+eradicate	:	[동] 근절하다, 박멸하다
+fatal	:	[형] 치명적인, 죽음을 초래하는
+biodiversity	:	[명] 생물 다양성
+overpopulation	:	[명] 인구 과잉, 개체 수 과잉
+extinction	:	[명] 멸종, 소멸
+voluntary	:	[형] 자발적인
+sacrifice	:	[명] 희생; [동] 희생하다
+threaten	:	[동] 위협하다
+dedicate	:	[동] 바치다, 전념하다
+indispensable	:	[형] 필수적인, 없어서는 안 될
+shortage	:	[명] 부족, 결핍
+restrain	:	[동] 억제하다, 제지하다
+indirect	:	[형] 간접적인
+intricate	:	[형] 복잡한, 정교한
+dominant	:	[형] 지배적인, 우세한
+secure	:	[동] 확보하다, 얻다; [형] 안전한
+favorable	:	[형] 호의적인, 유리한
+deplete	:	[동] 고갈시키다, 소모하다
+portion	:	[명] 부분, 몫
+abundant	:	[형] 풍부한
+trace	:	[동] 추적하다; [명] 흔적
+surround	:	[동] 둘러싸다
+regulatory	:	[형] 규제의, 조절하는
+sufficient	:	[형] 충분한
+definitive	:	[형] 확정적인, 결정적인
+measurable	:	[형] 측정 가능한, 상당한
+continuation	:	[명] 계속, 지속, 연장
+substance	:	[명] 실체, 물질
+nourishment	:	[명] 영양분, 자양분
+cease	:	[동] 중단하다, 그치다
+vigorous	:	[형] 활발한, 왕성한
+thrive	:	[동] 번성하다, 잘 자라다
+reproduction	:	[명] 번식, 생식; 복제
+overabundance	:	[명] 과잉, 지나치게 많음
+populate	:	[동] 거주하다, 서식하다
+overabundant	:	[형] 지나치게 많은, 과잉의
+uncontrollable	:	[형] 통제할 수 없는
+derive	:	[동] 얻다, 끌어내다; 유래하다
+vanish	:	[동] 사라지다
+prosper	:	[동] 번영하다, 번창하다
+contributor	:	[명] 기여자; [명] (부분적인) 원인, 요인
+inaccessible	:	[형] 접근할 수 없는
+inherit	:	[동] 물려받다, 상속받다
+inheritance	:	[명] 유전, 상속
+gradual	:	[형] 점진적인, 서서히 일어나는
+disappearance	:	[명] 사라짐, 실종, 소멸
+unaffected	:	[형] 영향을 받지 않은
+
+[aio_dj2_3: AIO 선지 단어 3]
+# AIO 속 단어를 적당히 쪼갠 것
+suppress	:	[동] 억누르다, 억제하다
+progression	:	[명] 진행, 발전, 추이
+transformative	:	[형] 변화를 가져오는, 혁신적인
+synthetic	:	[형] 합성의, 인조의
+diversification	:	[명] 다양화, 다각화
+diagnose	:	[동] 진단하다
+experimental	:	[형] 실험의, 실험적인
+unmask	:	[동] 정체를 폭로하다, 드러내다
+resist	:	[동] 저항하다
+instructive	:	[형] 유익한, 교훈적인
+advancement	:	[명] 발전, 진보
+undesirable	:	[형] 바람직하지 않은
+structural	:	[형] 구조적인
+curable	:	[형] 치료 가능한
+untreatable	:	[형] 치료할 수 없는
+functionality	:	[명] 기능성, 기능
+investigation	:	[명] 조사, 연구, 수사
+deem	:	[동] 여기다, 간주하다
+defective	:	[형] 결함이 있는
+unsolvable	:	[형] 해결할 수 없는
+alteration	:	[명] 변화, 변경, 수정
+harness	:	[동] 활용하다, 이용하다; [명] 마구
+abandon	:	[동] 버리다, 포기하다
+indefinite	:	[형] 무기한의, 불명확한
+innate	:	[형] 타고난, 선천적인
+penetrate	:	[동] 침투하다, 뚫고 들어가다
+assumption	:	[명] 가정, 추정
+enhance	:	[동] 향상시키다, 높이다
+emerge	:	[동] 나타나다, 생겨나다, 부상하다
+dictate	:	[동] 좌우하다, 결정하다
+trait	:	[명] 특성, 특징
+forbid	:	[동] 금지하다
+mitigate	:	[동] 완화하다, 경감하다
+marginal	:	[형] 미미한, 주변의
+dense	:	[형] 밀집한, 빽빽한
+effectiveness	:	[명] 효과, 유효성
+inhabit	:	[동] 거주하다, 서식하다
+instability	:	[명] 불안정
+interference	:	[명] 간섭, 방해
+susceptible	:	[형] 취약한, 민감한, ~에 걸리기 쉬운
+incorporate	:	[동] 포함하다, 통합하다, 흡수하다
+faulty	:	[형] 결함이 있는, 잘못된
+instruct	:	[동] 지시하다, 가르치다
+nurture	:	[동] 양육하다, 육성하다
+criticize	:	[동] 비판하다, 비난하다
+uncertainty	:	[명] 불확실성
+consumption	:	[명] 소비, 소모
+offset	:	[동] 상쇄하다, 보완하다
+conscience	:	[명] 양심
+advertise	:	[동] 광고하다, 알리다
+influential	:	[형] 영향력 있는
+controversial	:	[형] 논란의 여지가 있는
+embody	:	[동] 구현하다, 구체화하다, 포함하다
+prevail	:	[동] 우세하다, 만연하다, 널리 퍼지다
+flawless	:	[형] 흠잡을 데 없는
+applicability	:	[명] 적용 가능성, 타당성
+credibility	:	[명] 신뢰성, 신빙성
+reexamine	:	[동] 재검토하다, 다시 조사하다
+hinder	:	[동] 방해하다, 저해하다
+advantageous	:	[형] 유리한, 이로운
+devote	:	[동] 바치다, 헌신하다
+unpredictable	:	[형] 예측할 수 없는
+undermine	:	[동] 약화시키다, 훼손하다
+
+[aio_dj2_4: AIO 선지 단어 4]
+# AIO 속 단어를 적당히 쪼갠 것
+erode	:	[동] 침식하다, 약화시키다
+successive	:	[형] 연속적인, 잇따른
+adaptable	:	[형] 적응할 수 있는, 융통성 있는
+innumerable	:	[형] 무수한, 셀 수 없이 많은
+empirical	:	[형] 경험적인, 실증적인
+iterative	:	[형] 반복적인
+anticipate	:	[동] 예상하다, 기대하다
+draw on	:	[동] ~을 이용하다, ~에 의지하다
+evidence-based	:	[형] 증거에 기반한
+sophistication	:	[명] 정교함, 세련됨
+inaccurate	:	[형] 부정확한
+refinement	:	[명] 정제, 개선, 세련됨
+interpretation	:	[명] 해석, 이해
+irrelevant	:	[형] 무관한, 상관없는
+adversity	:	[명] 역경, 고난
+illustrative	:	[형] 설명하는, 예증이 되는
+superiority	:	[명] 우월성, 우수성
+compromise	:	[명] 타협(안), 절충(안); [동] 타협하다; [동] 악화시키다
+extensive	:	[형] 광범위한, 대규모의
+acceptable	:	[형] 받아들일 수 있는, 허용 가능한
+disregard	:	[동] 무시하다, 경시하다
+threshold	:	[명] 문턱, 한계점, 기준치
+explicit	:	[형] 명시적인, 분명한
+scarcity	:	[명] 희소성, 부족, 결핍
+abundance	:	[명] 풍부함, 풍요
+skeptical	:	[형] 회의적인
+literal	:	[형] 글자 그대로의, 문자의
+trade-off	:	[명] 상충 관계, 균형
+forgo	:	[동] 포기하다, ~없이 지내다
+contemplative	:	[형] 사색하는, 명상적인
+sway	:	[동] 흔들다, 동요시키다, 설득하다
+contradict	:	[동] 모순되다, 반박하다
+convince	:	[동] 확신시키다, 설득하다
+re-evaluate	:	[동] 재평가하다
+depress	:	[동] 우울하게 만들다; 침체시키다
+complicate	:	[동] 복잡하게 만들다
+apparent	:	[형] 명백한, 겉으로 보이는
+societal	:	[형] 사회의, 사회적인
+obedient	:	[형] 순종적인, 말을 잘 듣는
+orientation	:	[명] 방향, 성향, 지향
+transcend	:	[동] 초월하다
+interfere with ~	:	[동] ~을 방해하다
+compel	:	[동] 강요하다, ~하게 만들다
+legitimacy	:	[명] 정당성, 합법성
+maturation	:	[명] 성숙, 완성
+distress	:	[명] 고통, 괴로움
+speculation	:	[명] 추측, 억측; 투기
+uneven	:	[형] 고르지 않은, 불균등한
+ripple	:	[동] 파문을 일으키다, 퍼져 나가다; [명] 잔물결
+outward	:	[형] 겉으로 드러나는, 외적인
+oversight	:	[명] 감독, 감시; 간과
+resilient	:	[형] 회복력 있는, 탄력 있는
+lighten	:	[동] 가볍게 하다, 줄이다
+proactiveness	:	[명] 주도성, 적극성
+disperse	:	[동] 흩어지다, 분산시키다
+unworthy	:	[형] 가치가 없는, ~할 자격이 없는
+peculiar	:	[형] 특이한, 기이한, 고유의
+impartial	:	[형] 공정한, 편견 없는
+impractical	:	[형] 비현실적인, 비실용적인
+incapable	:	[형] ~할 수 없는, 무능한
+pristine	:	[형] 원래 상태의, 아주 깨끗한, 오염되지 않은
+
 
 [passage_E2_L3: 3과 본문]
 # 지문을 읽으며 그 속의 단어 뜻을 살펴보자.
